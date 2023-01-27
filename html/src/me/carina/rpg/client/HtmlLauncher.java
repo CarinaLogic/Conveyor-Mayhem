@@ -3,6 +3,7 @@ package me.carina.rpg.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
+import com.github.czyzby.websocket.GwtWebSockets;
 import me.carina.rpg.GameInstance;
 
 public class HtmlLauncher extends GwtApplication {
@@ -17,6 +18,7 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener createApplicationListener () {
-                return new GameInstance();
+                GwtWebSockets.initiate();
+                return new GameInstance(new NullExternalServer());
         }
 }

@@ -1,5 +1,6 @@
 package me.carina.rpg;
 
+import com.github.czyzby.websocket.CommonWebSockets;
 import org.robovm.apple.foundation.NSAutoreleasePool;
 import org.robovm.apple.uikit.UIApplication;
 
@@ -10,8 +11,9 @@ import me.carina.rpg.GameInstance;
 public class IOSLauncher extends IOSApplication.Delegate {
     @Override
     protected IOSApplication createApplication() {
+        CommonWebSockets.initiate();
         IOSApplicationConfiguration config = new IOSApplicationConfiguration();
-        return new IOSApplication(new GameInstance(), config);
+        return new IOSApplication(new GameInstance(new CommonExternalServer()), config);
     }
 
     public static void main(String[] argv) {

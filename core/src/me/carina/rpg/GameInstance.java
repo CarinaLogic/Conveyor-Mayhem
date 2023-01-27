@@ -1,33 +1,36 @@
 package me.carina.rpg;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.Gdx;
+import me.carina.rpg.client.ExternalClient;
+import me.carina.rpg.server.AbstractExternalServer;
 
 public class GameInstance extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
+	ExternalClient client;
+	AbstractExternalServer server;
+	public GameInstance(AbstractExternalServer server){
+		this.server = server;
+	}
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		Gdx.app.setLogLevel(Application.LOG_DEBUG);
+		server.open(18273);
+		client = new ExternalClient();
+		client.connect("localhost",18273);
 	}
 
 	@Override
 	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
-		Array<String> array = new Array<>();
+		if (client.isConnected()){
+			Gdx.app.debug("Main","Client has reported active connection");
+			client.send("LMAOOOOOO");
+			server.send("Hello world!");
+		}
 	}
 	
 	@Override
 	public void dispose () {
-		batch.dispose();
-		img.dispose();
+
 	}
 }
