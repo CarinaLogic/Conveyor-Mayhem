@@ -2,14 +2,12 @@ package me.carina.rpg.client;
 
 import com.badlogic.gdx.Gdx;
 import com.github.czyzby.websocket.WebSocket;
-import com.github.czyzby.websocket.WebSocketHandler;
 import com.github.czyzby.websocket.WebSocketListener;
 import com.github.czyzby.websocket.WebSockets;
 import com.github.czyzby.websocket.data.WebSocketException;
-import com.github.czyzby.websocket.serialization.Serializer;
 import com.github.czyzby.websocket.serialization.impl.JsonSerializer;
 
-public class ExternalClient extends AbstractClient{
+public class ExternalClient extends Client {
     WebSocket socket;
     WebSocketListener listener;
     public void connect(String host, int port){

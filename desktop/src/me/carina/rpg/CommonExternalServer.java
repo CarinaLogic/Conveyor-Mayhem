@@ -5,7 +5,6 @@ import com.github.czyzby.websocket.data.WebSocketException;
 import com.github.czyzby.websocket.serialization.Serializer;
 import com.github.czyzby.websocket.serialization.impl.JsonSerializer;
 import me.carina.rpg.server.AbstractExternalServer;
-import me.carina.rpg.server.AbstractServer;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;

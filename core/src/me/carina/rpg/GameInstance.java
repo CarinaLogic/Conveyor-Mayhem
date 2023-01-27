@@ -3,30 +3,26 @@ package me.carina.rpg;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import me.carina.rpg.client.Client;
 import me.carina.rpg.client.ExternalClient;
 import me.carina.rpg.server.AbstractExternalServer;
+import me.carina.rpg.server.Server;
 
 public class GameInstance extends ApplicationAdapter {
-	ExternalClient client;
-	AbstractExternalServer server;
+	Client client;
+	Server server;
+	AbstractExternalServer externalServer;
 	public GameInstance(AbstractExternalServer server){
-		this.server = server;
+		this.externalServer = server;
 	}
 	@Override
 	public void create () {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
-		server.open(18273);
-		client = new ExternalClient();
-		client.connect("localhost",18273);
 	}
 
 	@Override
 	public void render () {
-		if (client.isConnected()){
-			Gdx.app.debug("Main","Client has reported active connection");
-			client.send("LMAOOOOOO");
-			server.send("Hello world!");
-		}
+
 	}
 	
 	@Override

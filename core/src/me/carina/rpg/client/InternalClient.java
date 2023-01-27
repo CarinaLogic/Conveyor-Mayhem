@@ -2,7 +2,7 @@ package me.carina.rpg.client;
 
 import me.carina.rpg.server.InternalServer;
 
-public class InternalClient extends AbstractClient{
+public class InternalClient extends Client {
     InternalServer server;
 
     public InternalClient(){

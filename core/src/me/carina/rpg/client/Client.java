@@ -6,7 +6,7 @@ import com.badlogic.gdx.Gdx;
 /**
  * Abstract implementation of a client.
  */
-public abstract class AbstractClient extends Game {
+public abstract class Client extends Game {
     @Override
     public void create() {
 
