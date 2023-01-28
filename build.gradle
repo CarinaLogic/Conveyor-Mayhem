@@ -56,6 +56,7 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
         implementation "com.github.MrStahlfelge.gdx-websockets:common:$wsVersion"
         implementation 'org.java-websocket:Java-WebSocket:1.5.3'
+        implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
         
     }
 }
@@ -81,6 +82,7 @@ project(":android") {
         api "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         implementation "com.github.MrStahlfelge.gdx-websockets:common:$wsVersion"
         implementation 'org.java-websocket:Java-WebSocket:1.5.3'
+        implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
     }
 }
 
@@ -99,6 +101,7 @@ project(":ios") {
         api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-ios"
         implementation "com.github.MrStahlfelge.gdx-websockets:common:$wsVersion"
         implementation 'org.java-websocket:Java-WebSocket:1.5.3'
+        implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
     }
 }
 
