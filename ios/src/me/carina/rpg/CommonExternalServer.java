@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.github.czyzby.websocket.data.WebSocketException;
 import com.github.czyzby.websocket.serialization.Serializer;
 import com.github.czyzby.websocket.serialization.impl.JsonSerializer;
+import me.carina.rpg.packets.C2SPacket;
+import me.carina.rpg.packets.S2CPacket;
 import me.carina.rpg.server.AbstractExternalServer;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
@@ -17,6 +19,7 @@ import java.net.InetSocketAddress;
 public class CommonExternalServer extends AbstractExternalServer {
     public WebSocketServer server;
     Serializer serializer = new JsonSerializer();
+    boolean isOpen = false;
     public void open(int port){
         server = new WebSocketServer(new InetSocketAddress(port)) {
             @Override
@@ -50,6 +53,7 @@ public class CommonExternalServer extends AbstractExternalServer {
             }
         };
         server.start();
+        isOpen = true;
     }
 
     @Override
@@ -59,11 +63,17 @@ public class CommonExternalServer extends AbstractExternalServer {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+        isOpen = false;
     }
 
     @Override
     public boolean isValid() {
         return true;
+    }
+
+    @Override
+    public boolean isOpen() {
+        return isOpen;
     }
 
     @Override

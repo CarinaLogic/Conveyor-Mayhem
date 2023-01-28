@@ -1,6 +1,7 @@
 package me.carina.rpg.server;
 
 import me.carina.rpg.client.InternalClient;
+import me.carina.rpg.packets.S2CPacket;
 
 public class InternalServer extends Server {
     InternalClient client;

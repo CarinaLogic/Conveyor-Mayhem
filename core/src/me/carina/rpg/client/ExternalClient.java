@@ -6,6 +6,8 @@ import com.github.czyzby.websocket.WebSocketListener;
 import com.github.czyzby.websocket.WebSockets;
 import com.github.czyzby.websocket.data.WebSocketException;
 import com.github.czyzby.websocket.serialization.impl.JsonSerializer;
+import me.carina.rpg.packets.C2SPacket;
+import me.carina.rpg.packets.S2CPacket;
 
 public class ExternalClient extends Client {
     WebSocket socket;
