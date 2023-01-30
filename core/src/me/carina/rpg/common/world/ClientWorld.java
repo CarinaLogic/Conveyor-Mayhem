@@ -21,7 +21,7 @@ public class ClientWorld extends BaseWorld{
                 batch.draw(component.getTextureRegion(),pos.x,pos.y,component.getWidth(),component.getHeight());
             }
         });
-        debugRenderer.render(world, getStage().getCamera().combined);
+        //debugRenderer.render(world, getStage().getCamera().combined);
     }
 
 }
