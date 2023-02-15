@@ -15,6 +15,8 @@ import com.badlogic.gdx.graphics.g2d.PixmapPackerIO;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.OrderedMap;
+import me.carina.rpg.common.util.ArrayMap;
+import me.carina.rpg.common.util.TripleMap;
 
 import java.util.Objects;
 import java.util.Stack;
@@ -23,34 +25,28 @@ public class AssetGroup {
     Assets assets;
     FileHandle rootFile;
     AssetManager manager;
-    static ObjectMap<Files.FileType,FileHandleResolver> resolvers = new ObjectMap<>(){{
+    static final ObjectMap<Files.FileType,FileHandleResolver> resolvers = new ObjectMap<>(){{
         put(Files.FileType.Internal, new InternalFileHandleResolver());
         put(Files.FileType.External, new ExternalFileHandleResolver());
         put(Files.FileType.Local, new LocalFileHandleResolver());
     }};
-    static ObjectMap<Class<?>,Array<String>> extMap = new ObjectMap<>(){{
-        put(Object.class, new Array<>(){{add("json");}});
-        put(Texture.class, new Array<>(){{add("png","jpg","bmp");}});
+    static final ArrayMap<Class<?>,String> extMap = new ArrayMap<>(){{
+        put(Object.class, "json");
+        put(Texture.class, "png", "bmp", "jpg");
         //put other things you need to load
     }};
-    public static Class<?> getLoadClass(String ext){
-        for (ObjectMap.Entry<Class<?>, Array<String>> entry : extMap) {
-            if (entry.value.contains(ext,false)) return entry.key;
-        }
-        return null;
-    }
-    public static Array<String> addExt(FileHandle handle, Class<?> loadClass){
-        Array<String> paths = new Array<>();
-        extMap.get(loadClass).forEach(s -> paths.add(handle.pathWithoutExtension()+"."+s));
-        return paths;
-    }
+    TripleMap<String,Class<?>,FileHandle> pathMap = new TripleMap<>();
     public AssetGroup(FileHandle rootFile, Assets assets){
         this.rootFile = rootFile;
         this.manager = new AssetManager(resolvers.get(rootFile.type()));
         this.assets = assets;
     }
     public void queueFiles(){
-        getFiles().forEach(f -> manager.load(f.path(), getLoadClass(f.extension())));
+        getFiles().forEach(f -> {
+            Class<?> cls = extMap.findKey(f.extension(),false);
+            manager.load(f.path(), cls);
+            pathMap.put(getShortenedPath(f),cls,f);
+        });
     }
     public void progressLoad(){
         if (!manager.isFinished()) {
@@ -60,10 +56,10 @@ public class AssetGroup {
             if (assets.assetFilter.shouldPack()) {
                 PixmapPacker pixmapPacker = new PixmapPacker(1024,1024, Pixmap.Format.RGBA8888,2, true);
                 getFiles().forEach(f -> {
-                    if (Texture.class.equals(getLoadClass(f.extension()))){
+                    if (Texture.class.equals(extMap.findKey(f.extension(),false))){
                         Texture t = manager.get(f.path());
                         Pixmap p = t.getTextureData().consumePixmap();
-                        pixmapPacker.pack(f.pathWithoutExtension(),p);
+                        pixmapPacker.pack(f.path(),p);
                     }
                 });
                 pixmapPacker.updateTextureAtlas(assets.atlas, Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
@@ -72,28 +68,28 @@ public class AssetGroup {
 
     }
     public boolean finished(){return manager.isFinished();}
-    public <T> T get(String path, Class<T> cls){
-        for (String s : addExt(getHandle(path), cls)) {
-            if (manager.contains(s)) return manager.get(s);
-        }
-        return null;
+    public <T> T get(String path, Class<T> type){
+        return get(path,type,null);
+    }
+    public <T> T get(String path, Class<T> type, T defaultValue){
+        FileHandle f = pathMap.get(path,type);
+        if (f != null) return manager.get(f.path(),type);
+        return defaultValue;
+    }
+    public String getShortenedPath(FileHandle handle){
+        String[] paths = handle.pathWithoutExtension().replace(rootFile.path()+"/","").split("/");
+        return paths[0] + "/" + paths[paths.length-1];
     }
     //already filtered by assetFilter
+    //absolute path, root already added
     public Array<FileHandle> getFiles(){
         Array<FileHandle> files = new Array<>();
         return addChildren(rootFile,files);
     }
-    public FileHandle getHandle(String path){
-        FileHandle handle = rootFile;
-        for (String s : path.split("/")) {
-            handle = handle.child(s);
-        }
-        return handle;
-    }
     protected Array<FileHandle> addChildren(FileHandle fileHandle, Array<FileHandle> array){
         for (FileHandle childHandle : fileHandle.list()) {
             if (childHandle.isDirectory()) addChildren(childHandle,array);
-            else if (assets.assetFilter.shouldLoad(childHandle)) array.add(childHandle);
+            else if (assets.assetFilter.shouldLoad(childHandle,extMap.findKey(childHandle.extension(), false))) array.add(childHandle);
         }
         return array;
     }

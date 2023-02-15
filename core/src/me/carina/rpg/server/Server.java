@@ -12,12 +12,12 @@ import me.carina.rpg.packets.Packet;
 
 public abstract class Server extends AbstractGameInstance {
     public Server() {
-        super(new ServerWorld());
+        super(new ServerWorld(),"Server");
     }
 
     @Override
-    public boolean shouldLoad(FileHandle handle) {
-        return !Texture.class.equals(AssetGroup.getLoadClass(handle.extension()));
+    public boolean shouldLoad(FileHandle handle, Class<?> loadClass) {
+        return !Texture.class.equals(loadClass);
     }
 
     @Override

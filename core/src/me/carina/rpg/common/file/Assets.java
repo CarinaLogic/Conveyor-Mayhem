@@ -12,12 +12,15 @@ public class Assets {
     public Assets(AssetFilterProvider filter){
         assetFilter = filter;
     }
-    public <T> T get(String path, Class<T> cls){
+    public <T> T get(String path, Class<T> type, T defaultValue){
         for (AssetGroup group : assetGroups) {
-            T t = group.get(path,cls);
+            T t = group.get(path,type);
             if (t != null) return t;
         }
-        return null;
+        return defaultValue;
+    }
+    public <T> T get(String path, Class<T> type){
+        return get(path, type, null);
     }
     public void queue(FileHandle root){
         AssetGroup newGroup = null;

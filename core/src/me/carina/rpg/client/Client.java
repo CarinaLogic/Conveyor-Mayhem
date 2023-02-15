@@ -13,7 +13,7 @@ import me.carina.rpg.packets.S2CPacket;
  */
 public abstract class Client extends AbstractGameInstance{
     public Client() {
-        super(new ClientWorld());
+        super(new ClientWorld(),"Client");
     }
 
     @Override
@@ -22,7 +22,7 @@ public abstract class Client extends AbstractGameInstance{
     }
 
     @Override
-    public boolean shouldLoad(FileHandle handle) {
+    public boolean shouldLoad(FileHandle handle, Class<?> loadClass) {
         return true;
     }
 }
