@@ -1,5 +1,6 @@
 package me.carina.rpg.common.world;
 
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Logger;
 import me.carina.rpg.common.file.AssetFilterProvider;
 import me.carina.rpg.common.file.Assets;
@@ -9,6 +10,7 @@ public abstract class AbstractGameInstance implements PacketHandler, AssetFilter
     BaseWorld world;
     Logger logger;
     Assets assets;
+    Json json = new Json();
     public AbstractGameInstance(BaseWorld world, String loggerTag){
         this.world = world;
         this.assets = new Assets(this);

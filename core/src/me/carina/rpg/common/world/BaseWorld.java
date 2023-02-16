@@ -16,7 +16,7 @@ public abstract class BaseWorld extends Actor {
                     Object dataA = fixtureA.getBody().getUserData();
                     Object dataB = fixtureB.getBody().getUserData();
                     if (dataA instanceof WorldComponent componentA && dataB instanceof WorldComponent componentB) {
-                        return !componentA.getCollisionType().collideWith(componentB.getCollisionType());
+                        return !componentA.collisionType.collideWith(componentB.collisionType);
                     }
                     return false;
                 }
@@ -25,16 +25,16 @@ public abstract class BaseWorld extends Actor {
 
     public void addComponent(WorldComponent component, float x, float y){
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(x+component.getWidth()/2, y+component.getHeight()/2);
-        bodyDef.type = component.getBodyType();
+        bodyDef.position.set(x+component.width/2, y+component.height/2);
+        bodyDef.type = component.bodyType;
         Body body = world.createBody(bodyDef);
         PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(component.getWidth()/2,component.getHeight()/2);
+        polygonShape.setAsBox(component.width/2,component.height/2);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = polygonShape;
-        fixtureDef.density = component.getDensity();
-        fixtureDef.friction = component.getFriction();
-        fixtureDef.restitution = component.getRestitution();
+        fixtureDef.density = component.density;
+        fixtureDef.friction = component.friction;
+        fixtureDef.restitution = component.restitution;
         body.createFixture(fixtureDef);
         body.setUserData(component);
         polygonShape.dispose();
