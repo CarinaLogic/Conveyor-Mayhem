@@ -1,7 +1,6 @@
 package me.carina.rpg.common.file;
 
 import com.badlogic.gdx.Files;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.ExternalFileHandleResolver;
@@ -11,15 +10,10 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
-import com.badlogic.gdx.graphics.g2d.PixmapPackerIO;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.badlogic.gdx.utils.OrderedMap;
 import me.carina.rpg.common.util.ArrayMap;
 import me.carina.rpg.common.util.TripleMap;
-
-import java.util.Objects;
-import java.util.Stack;
 
 public class AssetGroup {
     Assets assets;
@@ -31,7 +25,7 @@ public class AssetGroup {
         put(Files.FileType.Local, new LocalFileHandleResolver());
     }};
     static final ArrayMap<Class<?>,String> extMap = new ArrayMap<>(){{
-        put(Object.class, "json");
+        put(JsonAssetLoader.class, "json");
         put(Texture.class, "png", "bmp", "jpg");
         //put other things you need to load
     }};
@@ -67,18 +61,28 @@ public class AssetGroup {
         }
 
     }
+    public boolean contains(String path, Class<?> type){
+        return manager.contains(pathMap.get(path,type).path(),type);
+    }
     public boolean finished(){return manager.isFinished();}
     public <T> T get(String path, Class<T> type){
         return get(path,type,null);
     }
     public <T> T get(String path, Class<T> type, T defaultValue){
         FileHandle f = pathMap.get(path,type);
-        if (f != null) return manager.get(f.path(),type);
+        if (f != null && type == null) return manager.get(f.path());
+        else if (f != null) return manager.get(f.path(),type);
         return defaultValue;
     }
     public String getShortenedPath(FileHandle handle){
         String[] paths = handle.pathWithoutExtension().replace(rootFile.path()+"/","").split("/");
         return paths[0] + "/" + paths[paths.length-1];
+    }
+    public FileHandleResolver getResolver(){
+        return manager.getFileHandleResolver();
+    }
+    public FileHandle getHandle(String path, Class<?> type){
+        return pathMap.get(path, type);
     }
     //already filtered by assetFilter
     //absolute path, root already added

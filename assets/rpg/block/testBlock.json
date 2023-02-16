@@ -1,0 +1,4 @@
+{
+  "parent": "block.baseBlock",
+  "id": "block.testBlock"
+}

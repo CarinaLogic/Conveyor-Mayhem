@@ -1,12 +1,13 @@
 package me.carina.rpg.common.world;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Logger;
 import me.carina.rpg.common.file.AssetFilterProvider;
 import me.carina.rpg.common.file.Assets;
 import me.carina.rpg.packets.Packet;
 
-public abstract class AbstractGameInstance implements PacketHandler, AssetFilterProvider {
+public abstract class AbstractGameInstance extends Game implements PacketHandler, AssetFilterProvider {
     BaseWorld world;
     Logger logger;
     Assets assets;

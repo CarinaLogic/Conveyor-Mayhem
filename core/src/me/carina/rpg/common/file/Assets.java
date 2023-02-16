@@ -4,8 +4,11 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 
 public class Assets {
+    static Json json = new Json();
     Array<AssetGroup> assetGroups = new Array<>();
     AssetFilterProvider assetFilter;
     TextureAtlas atlas = new TextureAtlas();
@@ -17,10 +20,29 @@ public class Assets {
             T t = group.get(path,type);
             if (t != null) return t;
         }
+        for (AssetGroup group : assetGroups) {
+            JsonValue value = group.get(path, JsonValue.class);
+            if (value != null){
+                return json.readValue(type,value);
+            }
+        }
         return defaultValue;
     }
     public <T> T get(String path, Class<T> type){
         return get(path, type, null);
+    }
+    public AssetGroup getGroup(String path, Class<?> type){
+        for (AssetGroup group : assetGroups) {
+            if (group.contains(path, type)) return group;
+        }
+        return null;
+    }
+    public boolean isLoadedBefore(String path, Class<?> type, AssetGroup group){
+        for (AssetGroup assetGroup : assetGroups) {
+            if (assetGroup.equals(group)) return false;
+            if (group.contains(path, type)) return true;
+        }
+        return false;
     }
     public void queue(FileHandle root){
         AssetGroup newGroup = null;
