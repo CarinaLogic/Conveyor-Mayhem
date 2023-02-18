@@ -55,9 +55,9 @@ public class JsonAssetLoader extends AsynchronousAssetLoader<JsonValue, AssetLoa
         String parentName = value.getString("parent",null);
         if (parentName != null){
             JsonValue t = Assets.json.readValue(null, value);
-            if (!game.getAssets().isLoadedBefore(parentName,t.getClass(),group)){
+            if (!game.getAssets().isLoadedBefore(parentName, JsonValue.class,group)){
                 return new Array<>(){{
-                    add(new AssetDescriptor<>(group.getHandle(parentName,t.getClass()),t.getClass()));
+                    add(new AssetDescriptor<>(group.getHandle(parentName, JsonValue.class), JsonValue.class));
                 }};
             }
         }

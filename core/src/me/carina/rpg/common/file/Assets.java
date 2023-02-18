@@ -6,14 +6,17 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import me.carina.rpg.common.world.AbstractGameInstance;
 
 public class Assets {
     static Json json = new Json();
+    AbstractGameInstance game;
     Array<AssetGroup> assetGroups = new Array<>();
     AssetFilterProvider assetFilter;
     TextureAtlas atlas = new TextureAtlas();
-    public Assets(AssetFilterProvider filter){
+    public Assets(AbstractGameInstance game, AssetFilterProvider filter){
         assetFilter = filter;
+        this.game = game;
     }
     public <T> T get(String path, Class<T> type, T defaultValue){
         for (AssetGroup group : assetGroups) {
@@ -50,7 +53,7 @@ public class Assets {
             if (assetGroup.rootFile.equals(root)) newGroup = assetGroup;
         }
         if (newGroup == null){
-            newGroup = new AssetGroup(root,this);
+            newGroup = new AssetGroup(game,root,this);
             assetGroups.add(newGroup);
         }
         newGroup.queueFiles();

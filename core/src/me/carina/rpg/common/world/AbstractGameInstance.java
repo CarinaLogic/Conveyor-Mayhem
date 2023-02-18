@@ -1,5 +1,6 @@
 package me.carina.rpg.common.world;
 
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Logger;
@@ -12,9 +13,9 @@ public abstract class AbstractGameInstance extends Game implements PacketHandler
     Logger logger;
     Assets assets;
     Json json = new Json();
-    public AbstractGameInstance(BaseWorld world, String loggerTag){
+    public AbstractGameInstance(BaseWorld world, String loggerTag) {
         this.world = world;
-        this.assets = new Assets(this);
+        this.assets = new Assets(this,this);
         this.logger = new Logger(loggerTag);
     }
 
@@ -23,6 +24,7 @@ public abstract class AbstractGameInstance extends Game implements PacketHandler
         if (object instanceof Packet packet) packet.onRecieve(this);
         else logger.error("Received non-packet object ("+object.getClass().getSimpleName()+"), ignoring");
     }
+
 
     public Assets getAssets() {
         return assets;

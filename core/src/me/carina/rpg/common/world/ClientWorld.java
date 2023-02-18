@@ -17,8 +17,8 @@ public class ClientWorld extends BaseWorld{
         bodies.forEach(body -> {
             Object o = body.getUserData();
             if (o instanceof WorldComponent component){
-                Vector2 pos = body.getPosition().add(-component.getWidth()/2,-component.getHeight()/2);
-                batch.draw(component.getTextureRegion(),pos.x,pos.y,component.getWidth(),component.getHeight());
+                Vector2 pos = body.getPosition().add(-component.width/2,-component.height/2);
+                batch.draw(component.texture,pos.x,pos.y,component.width,component.height);
             }
         });
         //debugRenderer.render(world, getStage().getCamera().combined);

@@ -11,11 +11,14 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.ObjectMap;
 import me.carina.rpg.common.util.ArrayMap;
 import me.carina.rpg.common.util.TripleMap;
+import me.carina.rpg.common.world.AbstractGameInstance;
 
 public class AssetGroup {
+    AbstractGameInstance game;
     Assets assets;
     FileHandle rootFile;
     AssetManager manager;
@@ -25,15 +28,17 @@ public class AssetGroup {
         put(Files.FileType.Local, new LocalFileHandleResolver());
     }};
     static final ArrayMap<Class<?>,String> extMap = new ArrayMap<>(){{
-        put(JsonAssetLoader.class, "json");
+        put(JsonValue.class, "json");
         put(Texture.class, "png", "bmp", "jpg");
         //put other things you need to load
     }};
     TripleMap<String,Class<?>,FileHandle> pathMap = new TripleMap<>();
-    public AssetGroup(FileHandle rootFile, Assets assets){
+    public AssetGroup(AbstractGameInstance game,FileHandle rootFile, Assets assets){
         this.rootFile = rootFile;
         this.manager = new AssetManager(resolvers.get(rootFile.type()));
         this.assets = assets;
+        this.game = game;
+        this.manager.setLoader(JsonValue.class,new JsonAssetLoader(this,game));
     }
     public void queueFiles(){
         getFiles().forEach(f -> {

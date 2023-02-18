@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import me.carina.rpg.common.file.JsonAssetLoader;
 
-public abstract class WorldComponent{
+public abstract class WorldComponent {
     String id;
     transient TextureRegion texture;
     transient AbstractGameInstance game;

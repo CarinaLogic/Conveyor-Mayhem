@@ -10,17 +10,24 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import me.carina.rpg.client.Client;
+import me.carina.rpg.common.world.AbstractGameInstance;
 
 public abstract class BaseScreen implements Screen {
     InputMultiplexer multiplexer = new InputMultiplexer();
+    Client game;
+
+    public BaseScreen(Client game){
+        this.game = game;
+        Gdx.input.setInputProcessor(multiplexer);
+    }
 
     public abstract void show();
 
 
-    public Stage addStage(Viewport viewport){
-        Stage s = new Stage(viewport);
-        multiplexer.addProcessor(s);
-        return s;
+    public Stage addStage(Stage stage){
+        multiplexer.addProcessor(stage);
+        return stage;
     }
 
     @Override

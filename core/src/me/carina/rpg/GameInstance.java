@@ -16,7 +16,7 @@ import me.carina.rpg.server.AbstractExternalServer;
 import me.carina.rpg.server.InternalServer;
 import me.carina.rpg.server.Server;
 
-public class GameInstance extends Game{
+public class GameInstance extends ApplicationAdapter{
 	Client client;
 	Server server;
 	AbstractExternalServer externalServer;
@@ -27,13 +27,40 @@ public class GameInstance extends Game{
 	public void create () {
 		Box2D.init();
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
-		client = new ExternalClient();
-		server = externalServer;
-		client.getWorld().addComponent(new Block(),0,0);
-		client.getWorld().addComponent(new Block(),1,0);
-		client.getWorld().addComponent(new Block(),0,1);
-		setScreen(new WorldScreen(client));
+		client = new InternalClient();
+		server = new InternalServer((InternalClient) client);
+		client.create();
+		server.create();
 		//((AbstractExternalServer) server).open(18273);
 		//((ExternalClient) client).connect("localhost",18273);
+	}
+
+	@Override
+	public void render() {
+		server.render();
+		client.render();
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		client.resize(width, height);
+	}
+
+	@Override
+	public void pause() {
+		client.pause();
+		server.pause();
+	}
+
+	@Override
+	public void resume() {
+		client.resume();
+		server.resume();
+	}
+
+	@Override
+	public void dispose() {
+		client.dispose();
+		server.dispose();
 	}
 }
