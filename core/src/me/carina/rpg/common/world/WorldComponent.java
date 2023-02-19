@@ -1,5 +1,6 @@
 package me.carina.rpg.common.world;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import me.carina.rpg.common.file.JsonAssetLoader;
@@ -27,4 +28,10 @@ public abstract class WorldComponent {
                 ", which does not fit the desired type "+type.getSimpleName());
         return null;
     }
+
+    public TextureRegion getTexture() {
+        if (texture == null) texture = game.getAssets().get(id, TextureRegion.class);
+        return texture;
+    }
+
 }

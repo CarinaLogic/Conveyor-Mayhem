@@ -9,7 +9,9 @@ import com.badlogic.gdx.assets.loaders.resolvers.LocalFileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -18,6 +20,7 @@ import me.carina.rpg.common.util.TripleMap;
 import me.carina.rpg.common.world.AbstractGameInstance;
 
 public class AssetGroup {
+    boolean finished = false;
     AbstractGameInstance game;
     Assets assets;
     FileHandle rootFile;
@@ -43,11 +46,16 @@ public class AssetGroup {
     public void queueFiles(){
         getFiles().forEach(f -> {
             Class<?> cls = extMap.findKey(f.extension(),false);
-            manager.load(f.path(), cls);
             pathMap.put(getShortenedPath(f),cls,f);
         });
+        getFiles().forEach(f -> {
+            Class<?> cls = extMap.findKey(f.extension(),false);
+            manager.load(f.path(), cls);
+        });
+        finished = false;
     }
     public void progressLoad(){
+        finished = false;
         if (!manager.isFinished()) {
             manager.update(16);
         }
@@ -57,19 +65,24 @@ public class AssetGroup {
                 getFiles().forEach(f -> {
                     if (Texture.class.equals(extMap.findKey(f.extension(),false))){
                         Texture t = manager.get(f.path());
-                        Pixmap p = t.getTextureData().consumePixmap();
-                        pixmapPacker.pack(f.path(),p);
+                        TextureData data = t.getTextureData();
+                        if (!data.isPrepared()) data.prepare();
+                        Pixmap p = data.consumePixmap();
+                        pixmapPacker.pack(getShortenedPath(f),p);
                     }
                 });
                 pixmapPacker.updateTextureAtlas(assets.atlas, Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
             }
+            finished = true;
         }
 
     }
     public boolean contains(String path, Class<?> type){
         return manager.contains(pathMap.get(path,type).path(),type);
     }
-    public boolean finished(){return manager.isFinished();}
+    public boolean finished(){
+        return finished;
+    }
     public <T> T get(String path, Class<T> type){
         return get(path,type,null);
     }

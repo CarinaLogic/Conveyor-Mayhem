@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 
 public abstract class BaseWorld extends Actor {
+    AbstractGameInstance game;
     World world;
     Array<Body> bodies = new Array<>();
     float accumulatedTime = 0f;
@@ -37,6 +38,7 @@ public abstract class BaseWorld extends Actor {
         fixtureDef.restitution = component.restitution;
         body.createFixture(fixtureDef);
         body.setUserData(component);
+        if (this.game != null) component.game = this.game;
         polygonShape.dispose();
     }
 
@@ -50,5 +52,9 @@ public abstract class BaseWorld extends Actor {
             world.step(step, 6, 2);
             accumulatedTime -= step;
         }
+    }
+
+    public void setGame(AbstractGameInstance game) {
+        this.game = game;
     }
 }

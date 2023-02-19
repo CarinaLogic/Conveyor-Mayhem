@@ -3,6 +3,7 @@ package me.carina.rpg.common.file;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
@@ -17,8 +18,12 @@ public class Assets {
     public Assets(AbstractGameInstance game, AssetFilterProvider filter){
         assetFilter = filter;
         this.game = game;
+        json.setIgnoreUnknownFields(true);
     }
     public <T> T get(String path, Class<T> type, T defaultValue){
+        if (TextureRegion.class.equals(type)){
+            return type.cast(atlas.findRegion(path));
+        }
         for (AssetGroup group : assetGroups) {
             T t = group.get(path,type);
             if (t != null) return t;

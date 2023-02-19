@@ -19,6 +19,6 @@ public class WorldScreen extends BaseScreen{
     public void show() {
         worldStage = addStage(new GUIStage());
         worldStage.addActor(client.getWorld());
-        client.getWorld().addComponent(client.getAssets().get("block.testBlock", Block.class),0,0);
+        client.getWorld().addComponent(client.getAssets().get("block/testBlock", Block.class),0,0);
     }
 }

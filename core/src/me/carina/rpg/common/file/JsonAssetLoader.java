@@ -32,11 +32,11 @@ public class JsonAssetLoader extends AsynchronousAssetLoader<JsonValue, AssetLoa
         JsonValue value = new JsonReader().parse(file.readString());
         String parentName = value.getString("parent",null);
         if (parentName != null){
-            JsonValue parent = game.getAssets().get(parentName,null);
+            JsonValue parent = game.getAssets().get(parentName, JsonValue.class);
             for (JsonValue entry : value){
-                parent.addChild(entry);
-                this.asset = parent;
+                if (!entry.name().equals("parent")) parent.addChild(entry);
             }
+            this.asset = parent;
         }
         else {this.asset = value;}
     }
@@ -51,16 +51,14 @@ public class JsonAssetLoader extends AsynchronousAssetLoader<JsonValue, AssetLoa
     @SuppressWarnings("rawtypes")
     @Override
     public Array<AssetDescriptor> getDependencies(String fileName, FileHandle file, AssetLoaderParameters<JsonValue> parameter) {
+        Array<AssetDescriptor> array = new Array<>();
         JsonValue value = new JsonReader().parse(file.readString());
         String parentName = value.getString("parent",null);
         if (parentName != null){
-            JsonValue t = Assets.json.readValue(null, value);
             if (!game.getAssets().isLoadedBefore(parentName, JsonValue.class,group)){
-                return new Array<>(){{
-                    add(new AssetDescriptor<>(group.getHandle(parentName, JsonValue.class), JsonValue.class));
-                }};
+                array.add(new AssetDescriptor<>(group.getHandle(parentName, JsonValue.class), JsonValue.class));
             }
         }
-        return null;
+        return array;
     }
 }

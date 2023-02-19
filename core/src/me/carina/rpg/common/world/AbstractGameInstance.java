@@ -8,7 +8,7 @@ import me.carina.rpg.common.file.AssetFilterProvider;
 import me.carina.rpg.common.file.Assets;
 import me.carina.rpg.packets.Packet;
 
-public abstract class AbstractGameInstance extends Game implements PacketHandler, AssetFilterProvider {
+public abstract class AbstractGameInstance implements PacketHandler, AssetFilterProvider, ApplicationListener {
     BaseWorld world;
     Logger logger;
     Assets assets;
@@ -17,6 +17,7 @@ public abstract class AbstractGameInstance extends Game implements PacketHandler
         this.world = world;
         this.assets = new Assets(this,this);
         this.logger = new Logger(loggerTag);
+        world.setGame(this);
     }
 
     @Override

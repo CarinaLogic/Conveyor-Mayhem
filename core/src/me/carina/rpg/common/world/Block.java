@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 
 public class Block extends WorldComponent{
     public static Block fromId(String id, AbstractGameInstance game){
-        return WorldComponent.fromId("block."+id, Block.class, game);
+        return WorldComponent.fromId("block/"+id, Block.class, game);
     }
 
 }

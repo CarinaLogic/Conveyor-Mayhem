@@ -5,6 +5,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Box2D;
+import com.badlogic.gdx.utils.Logger;
 import me.carina.rpg.client.Client;
 import me.carina.rpg.client.ExternalClient;
 import me.carina.rpg.client.InternalClient;
@@ -31,6 +32,8 @@ public class GameInstance extends ApplicationAdapter{
 		server = new InternalServer((InternalClient) client);
 		client.create();
 		server.create();
+		client.getLogger().setLevel(Logger.DEBUG);
+		server.getLogger().setLevel(Logger.DEBUG);
 		//((AbstractExternalServer) server).open(18273);
 		//((ExternalClient) client).connect("localhost",18273);
 	}
