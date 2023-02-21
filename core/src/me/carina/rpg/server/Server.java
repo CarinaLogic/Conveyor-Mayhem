@@ -5,6 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import me.carina.rpg.common.file.AssetFilterProvider;
 import me.carina.rpg.common.file.AssetGroup;
+import me.carina.rpg.common.world.BaseWorld;
 import me.carina.rpg.common.world.ServerWorld;
 import me.carina.rpg.common.world.AbstractGameInstance;
 import me.carina.rpg.packets.C2SPacket;
@@ -15,7 +16,8 @@ import me.carina.rpg.server.tasks.LoadingTask;
 public abstract class Server extends AbstractGameInstance {
     AbstractTask task;
     public Server() {
-        super(new ServerWorld(),"Server");
+        super("Server");
+        setWorld(new ServerWorld(this));
     }
 
     @Override

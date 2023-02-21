@@ -12,12 +12,9 @@ public abstract class AbstractGameInstance implements PacketHandler, AssetFilter
     BaseWorld world;
     Logger logger;
     Assets assets;
-    Json json = new Json();
-    public AbstractGameInstance(BaseWorld world, String loggerTag) {
-        this.world = world;
+    public AbstractGameInstance(String loggerTag) {
         this.assets = new Assets(this,this);
         this.logger = new Logger(loggerTag);
-        world.setGame(this);
     }
 
     @Override
@@ -37,5 +34,9 @@ public abstract class AbstractGameInstance implements PacketHandler, AssetFilter
 
     public BaseWorld getWorld(){
         return world;
+    }
+
+    public void setWorld(BaseWorld world) {
+        this.world = world;
     }
 }

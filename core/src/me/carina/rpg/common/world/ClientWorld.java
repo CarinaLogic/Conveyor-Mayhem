@@ -1,28 +1,45 @@
 package me.carina.rpg.common.world;
 
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import me.carina.rpg.client.Client;
-import me.carina.rpg.common.world.BaseWorld;
+import me.carina.rpg.server.Server;
 
 public class ClientWorld extends BaseWorld{
     Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
+    WorldActor worldActor;
 
-    @Override
-    public void draw(Batch batch, float parentAlpha){
-        bodies.forEach(body -> {
-            Object o = body.getUserData();
-            if (o instanceof WorldComponent component){
-                Vector2 pos = body.getPosition().add(-component.width/2,-component.height/2);
-                batch.draw(component.getTexture(),pos.x,pos.y,component.width,component.height);
-            }
-        });
-        //debugRenderer.render(world, getStage().getCamera().combined);
+    public ClientWorld(Client game){
+        super(game);
+        worldActor = new WorldActor(this);
     }
 
+    @Override
+    public Body addComponent(WorldComponentDef component, float x, float y) {
+        Body body = super.addComponent(component, x, y);
+        worldActor.addActor(new WorldComponentActor(body,component.width,component.height,getGame()));
+        return body;
+    }
+
+    @Override
+    public void removeComponent(Body body) {
+        super.removeComponent(body);
+    }
+
+    public WorldActor getWorldActor() {
+        return worldActor;
+    }
+
+    @Override
+    public void update(float step){
+        world.getBodies(bodies);
+        world.step(step,6,2);
+    }
+
+
+
+    @Override
+    public Client getGame() {
+        return (Client) super.getGame();
+    }
 }

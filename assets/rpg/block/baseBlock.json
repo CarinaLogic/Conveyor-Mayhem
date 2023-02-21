@@ -1,5 +1,5 @@
 {
-  "class": "me.carina.rpg.common.world.Block",
+  "class": "me.carina.rpg.common.world.BlockDef",
   "width": 1,
   "height": 1,
   "density": 1,

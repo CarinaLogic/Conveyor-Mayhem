@@ -2,17 +2,11 @@ package me.carina.rpg;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.utils.Logger;
 import me.carina.rpg.client.Client;
-import me.carina.rpg.client.ExternalClient;
 import me.carina.rpg.client.InternalClient;
-import me.carina.rpg.client.scenes.WorldScreen;
-import me.carina.rpg.common.world.Block;
-import me.carina.rpg.packets.C2SMessagePacket;
-import me.carina.rpg.packets.S2CMessagePacket;
 import me.carina.rpg.server.AbstractExternalServer;
 import me.carina.rpg.server.InternalServer;
 import me.carina.rpg.server.Server;

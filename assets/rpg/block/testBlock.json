@@ -1,4 +1,3 @@
 {
-  "parent": "block/baseBlock",
-  "id": "block/testBlock"
+  "parent": "block/baseBlock"
 }
