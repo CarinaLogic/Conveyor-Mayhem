@@ -21,7 +21,7 @@ public abstract class Client extends AbstractGameInstance{
     Screen screen;
     public Client() {
         super("Client");
-        setWorld(new ClientWorld(this));
+        setWorld(new ClientWorld());
     }
 
     @Override
@@ -86,5 +86,10 @@ public abstract class Client extends AbstractGameInstance{
     @Override
     public ClientWorld getWorld() {
         return (ClientWorld) super.getWorld();
+    }
+
+    @Override
+    public BaseWorld newWorld() {
+        return new ClientWorld();
     }
 }

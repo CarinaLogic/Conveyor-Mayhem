@@ -6,11 +6,10 @@ import me.carina.rpg.client.Client;
 import me.carina.rpg.server.Server;
 
 public class ClientWorld extends BaseWorld{
-    Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
     WorldActor worldActor;
 
-    public ClientWorld(Client game){
-        super(game);
+    public ClientWorld(){
+        super();
         worldActor = new WorldActor(this);
     }
 

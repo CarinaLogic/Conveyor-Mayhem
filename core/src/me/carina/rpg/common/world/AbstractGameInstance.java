@@ -15,6 +15,7 @@ public abstract class AbstractGameInstance implements PacketHandler, AssetFilter
     public AbstractGameInstance(String loggerTag) {
         this.assets = new Assets(this,this);
         this.logger = new Logger(loggerTag);
+        this.world = newWorld();
     }
 
     @Override
@@ -38,5 +39,8 @@ public abstract class AbstractGameInstance implements PacketHandler, AssetFilter
 
     public void setWorld(BaseWorld world) {
         this.world = world;
+        world.setGame(this);
     }
+
+    public abstract BaseWorld newWorld();
 }

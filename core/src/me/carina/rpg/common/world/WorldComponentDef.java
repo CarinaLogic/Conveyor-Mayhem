@@ -13,19 +13,13 @@ public abstract class WorldComponentDef {
     CollisionType collisionType;
     BodyDef.BodyType bodyType;
     public WorldComponentDef(){} //for json init
-    public static <T extends WorldComponentDef> T fromId(String id, Class<T> type, AbstractGameInstance game){
-        Object o = game.assets.get(id, type);
+    public static WorldComponentDef fromId(String id, AbstractGameInstance game){
+        WorldComponentDef o = game.assets.get(id, WorldComponentDef.class);
         if (o == null){
             game.logger.error("Could not find "+id);
             return null;
         }
-        if (type.isInstance(o)){
-            T t = type.cast(o);
-            t.data.id = id;
-            return t;
-        }
-        game.logger.error("Json deserialization from "+id+" yielded type "+o.getClass().getSimpleName()+
-                ", which does not fit the desired type "+type.getSimpleName());
-        return null;
+        o.data.id = id;
+        return o;
     }
 }

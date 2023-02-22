@@ -5,8 +5,8 @@ import me.carina.rpg.common.world.BaseWorld;
 import me.carina.rpg.server.Server;
 
 public class ServerWorld extends BaseWorld {
-    public ServerWorld(Server game) {
-        super(game);
+    public ServerWorld() {
+        super();
     }
 
     @Override

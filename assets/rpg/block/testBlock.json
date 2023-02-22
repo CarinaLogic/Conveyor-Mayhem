@@ -1,3 +1,6 @@
 {
-  "parent": "block/baseBlock"
+  "parent": "block/baseBlock",
+  "data": {
+    "id": "block/testBlock"
+  }
 }

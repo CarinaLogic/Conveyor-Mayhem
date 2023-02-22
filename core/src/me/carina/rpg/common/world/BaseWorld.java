@@ -3,13 +3,15 @@ package me.carina.rpg.common.world;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 
-public abstract class BaseWorld {
+public abstract class BaseWorld{
     AbstractGameInstance game;
     World world;
     Array<Body> bodies = new Array<>();
-    public BaseWorld(AbstractGameInstance game) {
-        this.game = game;
+    public BaseWorld() {
         world = new World(new Vector2(0, -10), true);
         world.setContactFilter((fixtureA, fixtureB) -> {
                     Object dataA = fixtureA.getBody().getUserData();
@@ -56,5 +58,13 @@ public abstract class BaseWorld {
 
     public AbstractGameInstance getGame() {
         return game;
+    }
+
+    public void refreshBodies(){
+        world.getBodies(bodies);
+    }
+
+    public World getBox2dWorld() {
+        return world;
     }
 }

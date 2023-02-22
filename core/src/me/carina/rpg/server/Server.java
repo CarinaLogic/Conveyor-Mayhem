@@ -17,7 +17,7 @@ public abstract class Server extends AbstractGameInstance {
     AbstractTask task;
     public Server() {
         super("Server");
-        setWorld(new ServerWorld(this));
+        setWorld(new ServerWorld());
     }
 
     @Override
@@ -66,5 +66,10 @@ public abstract class Server extends AbstractGameInstance {
 
     public AbstractTask getTask() {
         return task;
+    }
+
+    @Override
+    public BaseWorld newWorld() {
+        return new ServerWorld();
     }
 }

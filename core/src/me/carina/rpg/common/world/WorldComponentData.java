@@ -1,6 +1,6 @@
 package me.carina.rpg.common.world;
 
 public class WorldComponentData {
-    transient String id;
+    String id;
     public WorldComponentData(){} //for json loading
 }
