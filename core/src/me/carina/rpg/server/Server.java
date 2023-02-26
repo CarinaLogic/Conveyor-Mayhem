@@ -3,18 +3,15 @@ package me.carina.rpg.server;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
-import me.carina.rpg.common.file.AssetFilterProvider;
-import me.carina.rpg.common.file.AssetGroup;
+import com.badlogic.gdx.utils.Array;
 import me.carina.rpg.common.world.BaseWorld;
 import me.carina.rpg.common.world.ServerWorld;
 import me.carina.rpg.common.world.AbstractGameInstance;
-import me.carina.rpg.packets.C2SPacket;
-import me.carina.rpg.packets.Packet;
 import me.carina.rpg.server.tasks.AbstractTask;
 import me.carina.rpg.server.tasks.LoadingTask;
 
 public abstract class Server extends AbstractGameInstance {
-    AbstractTask task;
+    Array<AbstractTask> tasks = new Array<>();
     public Server() {
         super("Server");
         setWorld(new ServerWorld());
@@ -22,12 +19,14 @@ public abstract class Server extends AbstractGameInstance {
 
     @Override
     public void create() {
-        task = new LoadingTask(this,Gdx.files.internal("rpg"));
+        addTask(new LoadingTask(this,Gdx.files.internal("rpg")));
     }
 
     @Override
     public void render() {
-        if (task != null) task.run(Gdx.graphics.getDeltaTime());
+        for (AbstractTask task : tasks) {
+            task.tick(Gdx.graphics.getDeltaTime());
+        }
     }
 
     @Override
@@ -49,6 +48,12 @@ public abstract class Server extends AbstractGameInstance {
     public void dispose() {
         //NOOP
     }
+    public void addTask(AbstractTask task){
+        tasks.add(task);
+    }
+    public void removeTask(AbstractTask task){
+        tasks.removeValue(task,true);
+    }
 
     @Override
     public boolean shouldLoad(FileHandle handle, Class<?> loadClass) {
@@ -60,13 +65,9 @@ public abstract class Server extends AbstractGameInstance {
         return false;
     }
 
-    public void setTask(AbstractTask task){
-        this.task = task;
-    }
-
-    public AbstractTask getTask() {
-        return task;
-    }
+    public abstract void open();
+    public abstract void close();
+    public abstract boolean isOpen();
 
     @Override
     public BaseWorld newWorld() {
