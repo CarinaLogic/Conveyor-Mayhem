@@ -1,12 +1,14 @@
 package me.carina.rpg.common.unit;
 
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.ObjectMap;
 
 public class UnitSpriteEntryDef {
     //One definition per one (potentially shared) palette
     String name;
     PaletteDef palette;
+    ConnectionPaletteDef connection;
     Array<UnitSpriteTypeEntryDef> sprites;
     public UnitSpriteEntryDef(){} //for json loading
     public static class UnitSpriteTypeEntryDef{
@@ -26,5 +28,11 @@ public class UnitSpriteEntryDef {
         int originX;
         int originY;
         public PaletteDef(){}//for json loading
+    }
+    public static class ConnectionPaletteDef{
+        int originX;
+        int originY;
+        int size;
+        public ConnectionPaletteDef(){} //for json loading
     }
 }
