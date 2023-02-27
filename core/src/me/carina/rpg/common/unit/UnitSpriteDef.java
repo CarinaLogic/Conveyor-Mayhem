@@ -6,6 +6,9 @@ import com.badlogic.gdx.utils.ObjectMap;
 import java.util.Map;
 
 public class UnitSpriteDef {
+    String name;
     Array<UnitSpriteEntryDef> entries;
     public UnitSpriteDef(){} // for json loading
+
+
 }
