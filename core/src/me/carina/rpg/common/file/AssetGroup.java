@@ -46,11 +46,11 @@ public class AssetGroup {
     public void queueFiles(){
         getFiles().forEach(f -> {
             Class<?> cls = extMap.findKey(f.extension(),false);
-            pathMap.put(getShortenedPath(f),cls,f);
+            if (cls != null) pathMap.put(getShortenedPath(f),cls,f);
         });
         getFiles().forEach(f -> {
             Class<?> cls = extMap.findKey(f.extension(),false);
-            manager.load(f.path(), cls);
+            if (cls != null) manager.load(f.path(), cls);
         });
         finished = false;
     }

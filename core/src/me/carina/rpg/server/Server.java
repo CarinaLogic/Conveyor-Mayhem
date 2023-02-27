@@ -65,8 +65,8 @@ public abstract class Server extends AbstractGameInstance {
         return false;
     }
 
-    public abstract void open();
-    public abstract void close();
+    public abstract void open(int port);
+    public abstract void close(String reason);
     public abstract boolean isOpen();
 
     @Override

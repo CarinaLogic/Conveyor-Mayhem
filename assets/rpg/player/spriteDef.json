@@ -1,0 +1,54 @@
+{
+  "entries": [
+    {
+      "name": "basic_skin",
+      "palette": {
+        "name": "basic_skin_palette",
+        "colors": 3,
+        "entrySize": 8
+      },
+      "sprites": [
+        {
+          "type": "head",
+          "width": 16,
+          "height": 16,
+          "originX": 0,
+          "originY": 0,
+          "offsetX": 0,
+          "offsetY": 0,
+          "spriteCount": 1
+        },
+        {
+          "type": "left_hand",
+          "width": 11,
+          "height": 9,
+          "originX": 0,
+          "originY": 0,
+          "offsetX": 3,
+          "offsetY": 5,
+          "spriteCount": 1
+        }
+      ]
+    },
+    {
+      "name": "",
+      "palette": {
+        "name": "",
+        "colors": 0,
+        "entrySize": 0
+      },
+      "sprites": [
+        {
+          "type": "head",
+          "width": 0,
+          "height": 0,
+          "originX": 0,
+          "originY": 0,
+          "offsetX": 0,
+          "offsetY": 0,
+          "spriteCount": 0
+        }
+      ]
+    }
+  ]
+}
