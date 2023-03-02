@@ -1,0 +1,35 @@
+{
+  "type": "head",
+  "palettes": [
+    "basic_skin"
+  ],
+  "width": 16,
+  "height": 16,
+  "loopingStep": 0,
+  "connectionPos": {
+    "x": 8,
+    "y": 14
+  },
+  "connections": [
+    {
+      "type": "hair",
+      "drawUnder": false,
+      "positions": [
+        {
+          "x": 8,
+          "y": 8
+        }
+      ]
+    },
+    {
+      "type": "eyes",
+      "drawUnder": false,
+      "positions": [
+        {
+          "x": 7,
+          "y": 10
+        }
+      ]
+    }
+  ]
+}

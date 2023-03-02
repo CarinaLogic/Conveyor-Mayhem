@@ -1,0 +1,13 @@
+{
+  "type": "eyes",
+  "palettes": [
+    "basic_eyes_palette"
+  ],
+  "width": 8,
+  "height": 4,
+  "rotationLoop": 0,
+  "connectionPos": {
+    "x": 4,
+    "y": 2
+  }
+}

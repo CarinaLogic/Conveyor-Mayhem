@@ -1,0 +1,45 @@
+{
+  "type": "body",
+  "palettes": [
+    "basic_cloth"
+  ],
+  "width": 8,
+  "height": 8,
+  "loopingStep": 0,
+  "connectionPos": {
+    "x": 3,
+    "y": 8
+  },
+  "connections": [
+    {
+      "type": "head",
+      "drawUnder": false,
+      "positions": [
+        {
+          "x": 4,
+          "y": 2
+        }
+      ]
+    },
+    {
+      "type": "leftArm",
+      "drawUnder": true,
+      "positions": [
+        {
+          "x": 2,
+          "y": 2
+        }
+      ]
+    },
+    {
+      "type": "rightArm",
+      "drawUnder": false,
+      "positions": [
+        {
+          "x": 6,
+          "y": 2
+        }
+      ]
+    }
+  ]
+}

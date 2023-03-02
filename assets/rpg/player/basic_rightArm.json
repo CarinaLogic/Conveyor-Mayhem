@@ -1,0 +1,38 @@
+{
+  "type": "rightArm",
+  "palettes": [
+    "basic_skin",
+    "basic_cloth"
+  ],
+  "width": 16,
+  "height": 16,
+  "rotationLoop": 90,
+  "connectionPos": {
+    "x": 8,
+    "y": 8
+  },
+  "connections": [
+    {
+      "type": "weapon",
+      "drawUnder": false,
+      "positions": [
+        {
+          "x": 7,
+          "y": 14
+        },
+        {
+          "x": 26,
+          "y": 13
+        },
+        {
+          "x": 45,
+          "y": 13
+        },
+        {
+          "x": 61,
+          "y": 11
+        }
+      ]
+    }
+  ]
+}

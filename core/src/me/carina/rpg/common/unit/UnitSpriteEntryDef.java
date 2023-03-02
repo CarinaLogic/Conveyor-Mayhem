@@ -4,22 +4,18 @@ import com.badlogic.gdx.utils.Array;
 
 public class UnitSpriteEntryDef {
     UnitSpriteType type;
-    String palette;
-    int size;
-    int defaultIndex;
-    Array<Connection> centralConnections;
-    Array<Connections> additionalConnections;
-    public UnitSpriteEntryDef(){} //for json loading
-    public static class Coords {
-        int x;
-        int y;
-    }
-    public static class Connections{
+    Array<String> palettes;
+    int width;
+    int height;
+    int rotationLoop; //0 if no loop
+    Coords connectionPos;
+    Array<ConnectionDef> connections;
+    public static class ConnectionDef{
         UnitSpriteType type;
-        Array<Coords> coords;
+        boolean drawUnder;
+        Array<Coords> positions;
     }
-    public static class Connection{
-        UnitSpriteType type;
+    public static class Coords{
         int x;
         int y;
     }

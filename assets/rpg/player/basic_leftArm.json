@@ -1,0 +1,14 @@
+{
+  "type": "leftArm",
+  "palettes": [
+    "basic_skin",
+    "basic_cloth"
+  ],
+  "width": 8,
+  "height": 8,
+  "rotationLoop": 90,
+  "connectionPos": {
+    "x": 6,
+    "y": 1
+  }
+}

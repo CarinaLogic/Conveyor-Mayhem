@@ -1,0 +1,13 @@
+{
+  "type": "hair",
+  "palettes": [
+    "basic_hair_palette"
+  ],
+  "width": 16,
+  "height": 16,
+  "rotationLoop": 0,
+  "connectionPos": {
+    "x": 8,
+    "y": 8
+  }
+}
