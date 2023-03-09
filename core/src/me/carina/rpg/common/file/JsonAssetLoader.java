@@ -3,16 +3,12 @@ package me.carina.rpg.common.file;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.AssetLoader;
 import com.badlogic.gdx.assets.loaders.AsynchronousAssetLoader;
-import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
-import com.github.czyzby.websocket.serialization.impl.JsonSerializer;
-import me.carina.rpg.common.world.AbstractGameInstance;
+import me.carina.rpg.common.AbstractGameInstance;
 
 public class JsonAssetLoader extends AsynchronousAssetLoader<JsonValue, AssetLoaderParameters<JsonValue>> {
     JsonValue asset;

@@ -4,9 +4,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import me.carina.rpg.client.Client;
-import me.carina.rpg.common.world.AbstractGameInstance;
-
-import java.util.EventListener;
 
 public class LoadingScreen extends BaseScreen{
 

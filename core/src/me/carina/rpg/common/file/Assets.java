@@ -1,13 +1,12 @@
 package me.carina.rpg.common.file;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
-import me.carina.rpg.common.world.AbstractGameInstance;
+import me.carina.rpg.common.AbstractGameInstance;
 
 public class Assets {
     static Json json = new Json();

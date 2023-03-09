@@ -11,13 +11,12 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.ObjectMap;
 import me.carina.rpg.common.util.ArrayMap;
 import me.carina.rpg.common.util.TripleMap;
-import me.carina.rpg.common.world.AbstractGameInstance;
+import me.carina.rpg.common.AbstractGameInstance;
 
 public class AssetGroup {
     boolean finished = false;

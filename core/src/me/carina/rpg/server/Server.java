@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
-import me.carina.rpg.common.world.AbstractGameInstance;
+import me.carina.rpg.common.AbstractGameInstance;
 import me.carina.rpg.server.tasks.AbstractTask;
 import me.carina.rpg.server.tasks.LoadingTask;
 

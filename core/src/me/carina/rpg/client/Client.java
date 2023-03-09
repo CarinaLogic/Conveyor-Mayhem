@@ -1,15 +1,10 @@
 package me.carina.rpg.client;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
-import me.carina.rpg.client.scenes.BaseScreen;
 import me.carina.rpg.client.scenes.LoadingScreen;
-import me.carina.rpg.common.file.AssetFilterProvider;
-import me.carina.rpg.common.world.AbstractGameInstance;
-import me.carina.rpg.packets.Packet;
-import me.carina.rpg.packets.S2CPacket;
+import me.carina.rpg.common.AbstractGameInstance;
 
 /**
  * Abstract implementation of a client.

@@ -1,7 +1,7 @@
 package me.carina.rpg.packets;
 
 import me.carina.rpg.client.Client;
-import me.carina.rpg.common.world.AbstractGameInstance;
+import me.carina.rpg.common.AbstractGameInstance;
 
 public abstract class S2CPacket implements Packet{
     public S2CPacket(){}

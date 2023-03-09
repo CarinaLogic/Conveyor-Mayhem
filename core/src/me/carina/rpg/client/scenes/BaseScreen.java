@@ -7,11 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import me.carina.rpg.client.Client;
-import me.carina.rpg.common.world.AbstractGameInstance;
 
 public abstract class BaseScreen implements Screen {
     InputMultiplexer multiplexer = new InputMultiplexer();

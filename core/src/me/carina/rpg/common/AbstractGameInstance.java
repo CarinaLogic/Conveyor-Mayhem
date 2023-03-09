@@ -1,8 +1,6 @@
-package me.carina.rpg.common.world;
+package me.carina.rpg.common;
 
 import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Logger;
 import me.carina.rpg.common.file.AssetFilterProvider;
 import me.carina.rpg.common.file.Assets;
