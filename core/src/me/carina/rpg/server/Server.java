@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
-import me.carina.rpg.common.world.BaseWorld;
-import me.carina.rpg.common.world.ServerWorld;
 import me.carina.rpg.common.world.AbstractGameInstance;
 import me.carina.rpg.server.tasks.AbstractTask;
 import me.carina.rpg.server.tasks.LoadingTask;
@@ -14,7 +12,6 @@ public abstract class Server extends AbstractGameInstance {
     Array<AbstractTask> tasks = new Array<>();
     public Server() {
         super("Server");
-        setWorld(new ServerWorld());
     }
 
     @Override
@@ -69,8 +66,4 @@ public abstract class Server extends AbstractGameInstance {
     public abstract void close(String reason);
     public abstract boolean isOpen();
 
-    @Override
-    public BaseWorld newWorld() {
-        return new ServerWorld();
-    }
 }
