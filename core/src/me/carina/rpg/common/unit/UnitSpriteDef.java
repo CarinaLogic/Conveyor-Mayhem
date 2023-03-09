@@ -6,9 +6,10 @@ import com.badlogic.gdx.utils.ObjectMap;
 import java.util.Map;
 
 public class UnitSpriteDef {
-    String name;
-    Array<UnitSpriteEntryDef> entries;
-    public UnitSpriteDef(){} // for json loading
+    ObjectMap<UnitSpriteType,TypeDef> definitions = new ObjectMap<>();
 
-
+    public static class TypeDef{
+        int color;
+        String id;
+    }
 }

@@ -1,8 +1,8 @@
 {
   "type": "rightArm",
   "palettes": [
-    "basic_skin",
-    "basic_cloth"
+    "basic_skin_palette",
+    "basic_cloth_palette"
   ],
   "width": 16,
   "height": 16,
