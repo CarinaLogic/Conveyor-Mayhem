@@ -5,5 +5,5 @@ package me.carina.rpg.common.map;
 //2. The Actor object, which holds rendering info, and renders itself
 //3. The definition object, which is provided by assets in the form of json, which is used to construct parent
 public abstract class AbstractFeature {
-    public abstract <T extends AbstractFeature> AbstractFeatureActor<T> toActor();
+    public abstract <T extends AbstractFeature> AbstractFeatureProvider<T> toActor();
 }
