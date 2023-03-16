@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import me.carina.rpg.common.AbstractGameInstance;
+import me.carina.rpg.common.GameObject;
 
 public class Assets {
     static Json json = new Json();
@@ -22,25 +23,29 @@ public class Assets {
         json.setIgnoreUnknownFields(true);
     }
     public <T> T get(String path, Class<T> type, T defaultValue){
+        T value = defaultValue;
         if (TextureRegion.class.isAssignableFrom(type)){
             TextureRegion region = atlas.findRegion(path);
-            if (region != null) return type.cast(region);
+            if (region != null) value = type.cast(region);
         }
         if (Drawable.class.isAssignableFrom(type)){
             TextureRegion region = get(path, TextureRegion.class);
-            if (region != null) return type.cast(new TextureRegionDrawable(region));
+            if (region != null) value = type.cast(new TextureRegionDrawable(region));
         }
         for (AssetGroup group : assetGroups) {
             T t = group.get(path,type);
-            if (t != null) return t;
+            if (t != null) value = t;
         }
         for (AssetGroup group : assetGroups) {
-            JsonValue value = group.get(path, JsonValue.class);
-            if (value != null){
-                return json.readValue(type,value);
+            JsonValue jsonValue = group.get(path, JsonValue.class);
+            if (jsonValue != null){
+                value = json.readValue(type,jsonValue);
             }
         }
-        return defaultValue;
+        if (value instanceof GameObject gameObject){
+            gameObject.setGame(game);
+        }
+        return value;
     }
     public <T> T get(String path, Class<T> type){
         return get(path, type, null);
