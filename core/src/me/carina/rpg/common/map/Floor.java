@@ -13,4 +13,8 @@ public class Floor extends AbstractFeature{
         this.passable = passable;
     }
 
+    @Override
+    public FloorActor newActor() {
+        return new FloorActor(this);
+    }
 }

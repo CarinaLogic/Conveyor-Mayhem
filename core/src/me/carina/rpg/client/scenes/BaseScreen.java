@@ -21,19 +21,23 @@ public abstract class BaseScreen implements Screen {
     public abstract void show();
 
 
-    public Stage addStage(Stage stage){
+    public void addStage(GameStage stage){
+        stage.setGame(game);
+        stage.init();
         multiplexer.addProcessor(stage);
-        return stage;
     }
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(Color.BLACK);
         for (InputProcessor processor : multiplexer.getProcessors()) {
             if (processor instanceof Stage stage) stage.act();
         }
+        ScreenUtils.clear(Color.BLACK);
         for (InputProcessor processor : multiplexer.getProcessors()) {
-            if (processor instanceof Stage stage) stage.draw();
+            if (processor instanceof Stage stage) {
+                stage.getViewport().apply();
+                stage.draw();
+            }
         }
     }
 

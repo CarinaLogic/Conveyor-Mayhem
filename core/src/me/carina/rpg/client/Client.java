@@ -3,6 +3,7 @@ package me.carina.rpg.client;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
+import me.carina.rpg.client.scenes.BattleScreen;
 import me.carina.rpg.client.scenes.LoadingScreen;
 import me.carina.rpg.common.AbstractGameInstance;
 
@@ -17,7 +18,9 @@ public abstract class Client extends AbstractGameInstance{
 
     @Override
     public void create() {
-        setScreen(new LoadingScreen(this,Gdx.files.internal("rpg")));
+        LoadingScreen loadingScreen = new LoadingScreen(this,Gdx.files.internal("rpg"));
+        setScreen(loadingScreen);
+        loadingScreen.setNextScreen(new BattleScreen(this));
     }
 
     @Override
@@ -52,6 +55,9 @@ public abstract class Client extends AbstractGameInstance{
         if (oldScreen != null) {
             getLogger().debug("Current screen changed from "+oldScreen.getClass().getSimpleName()
                     +" to "+screen.getClass().getSimpleName());
+        }
+        else {
+            getLogger().debug("Current screen changed from null to "+screen.getClass().getSimpleName());
         }
         if (this.screen != null) {
             this.screen.show();
