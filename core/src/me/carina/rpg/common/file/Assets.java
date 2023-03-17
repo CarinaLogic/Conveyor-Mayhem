@@ -28,18 +28,24 @@ public class Assets {
             TextureRegion region = atlas.findRegion(path);
             if (region != null) value = type.cast(region);
         }
-        if (Drawable.class.isAssignableFrom(type)){
+        else if (Drawable.class.isAssignableFrom(type)){
             TextureRegion region = get(path, TextureRegion.class);
             if (region != null) value = type.cast(new TextureRegionDrawable(region));
         }
-        for (AssetGroup group : assetGroups) {
-            T t = group.get(path,type);
-            if (t != null) value = t;
-        }
-        for (AssetGroup group : assetGroups) {
-            JsonValue jsonValue = group.get(path, JsonValue.class);
-            if (jsonValue != null){
-                value = json.readValue(type,jsonValue);
+        else {
+            boolean updated = false;
+            for (AssetGroup group : assetGroups) {
+                T t = group.get(path, type);
+                if (t != null) value = t;
+                updated = true;
+            }
+            if (!updated) {
+                for (AssetGroup group : assetGroups) {
+                    JsonValue jsonValue = group.get(path, JsonValue.class);
+                    if (jsonValue != null) {
+                        value = json.readValue(type, jsonValue);
+                    }
+                }
             }
         }
         if (value instanceof GameObject gameObject){
