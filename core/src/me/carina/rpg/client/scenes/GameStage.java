@@ -29,7 +29,9 @@ public abstract class GameStage extends Stage implements GameObject {
 
     @Override
     public void setGame(AbstractGameInstance game) {
-        if (game instanceof Client client) this.game = client;
+        if (game instanceof Client){
+            this.game = (Client) game;
+        }
         else game.getLogger().error("Non-client instance tried to bind to Stage, ignoring...");
     }
 }

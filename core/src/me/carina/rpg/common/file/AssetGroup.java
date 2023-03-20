@@ -25,12 +25,12 @@ public class AssetGroup {
     Assets assets;
     FileHandle rootFile;
     AssetManager manager;
-    static final ObjectMap<Files.FileType,FileHandleResolver> resolvers = new ObjectMap<>(){{
+    static final ObjectMap<Files.FileType,FileHandleResolver> resolvers = new ObjectMap<Files.FileType, FileHandleResolver>(){{
         put(Files.FileType.Internal, new InternalFileHandleResolver());
         put(Files.FileType.External, new ExternalFileHandleResolver());
         put(Files.FileType.Local, new LocalFileHandleResolver());
     }};
-    static final ArrayMap<Class<?>,String> extMap = new ArrayMap<>(){{
+    static final ArrayMap<Class<?>,String> extMap = new ArrayMap<Class<?>, String>(){{
         put(JsonValue.class, "json");
         put(Texture.class, "png", "bmp", "jpg");
         //put other things you need to load

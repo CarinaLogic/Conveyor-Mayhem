@@ -30,11 +30,15 @@ public abstract class BaseScreen implements Screen {
     @Override
     public void render(float delta) {
         for (InputProcessor processor : multiplexer.getProcessors()) {
-            if (processor instanceof Stage stage) stage.act();
+            if (processor instanceof Stage){
+                Stage stage = (Stage) processor;
+                stage.act();
+            }
         }
         ScreenUtils.clear(Color.BLACK);
         for (InputProcessor processor : multiplexer.getProcessors()) {
-            if (processor instanceof Stage stage) {
+            if (processor instanceof Stage) {
+                Stage stage = (Stage) processor;
                 stage.getViewport().apply();
                 stage.draw();
             }
@@ -44,7 +48,8 @@ public abstract class BaseScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         for (InputProcessor processor : multiplexer.getProcessors()) {
-            if (processor instanceof Stage stage){
+            if (processor instanceof Stage){
+                Stage stage = (Stage) processor;
                 stage.getViewport().update(width,height);
                 stage.getCamera().update();
             }

@@ -16,7 +16,7 @@ public abstract class AbstractGameInstance implements PacketHandler, AssetFilter
 
     @Override
     public void recieve(Object object) {
-        if (object instanceof Packet packet) packet.onRecieve(this);
+        if (object instanceof Packet) ((Packet)object).onRecieve(this);
         else logger.error("Received non-packet object ("+object.getClass().getSimpleName()+"), ignoring");
     }
 

@@ -9,7 +9,10 @@ public abstract class C2SPacket implements Packet{
 
     @Override
     public void onRecieve(AbstractGameInstance instance) {
-        if (instance instanceof Server server) onRecieve(server);
+        if (instance instanceof Server){
+            Server server = (Server) instance;
+            onRecieve(server);
+        }
     }
 
     @Override

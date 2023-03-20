@@ -47,7 +47,13 @@ public class TripleMap<K1,K2,V> implements Iterable<TripleMap.Entry<K1,K2,V>>{
         };
     }
 
-    public record Key<K1,K2>(K1 key1, K2 key2){
+    public static class Key<K1,K2>{
+        K1 key1;
+        K2 key2;
+        public Key(K1 key1, K2 key2){
+            this.key1 = key1;
+            this.key2 = key2;
+        }
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
@@ -61,5 +67,14 @@ public class TripleMap<K1,K2,V> implements Iterable<TripleMap.Entry<K1,K2,V>>{
             return Objects.hash(key1, key2);
         }
     }
-    public record Entry<K1,K2,V>(K1 key1, K2 key2, V value){}
+    public static class Entry<K1,K2,V>{
+        K1 key1;
+        K2 key2;
+        V value;
+        public Entry(K1 key1, K2 key2, V value){
+            this.key1 = key1;
+            this.key2 = key2;
+            this.value = value;
+        }
+    }
 }

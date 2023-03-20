@@ -60,6 +60,13 @@ public class ArrayMap<K,V> implements Iterable<ArrayMap.Entry<K,V>> {
         };
     }
 
-    public record Entry<K,V>(K key, V value){}
+    public static class Entry<K,V>{
+        K key;
+        V value;
+        public Entry(K key, V value){
+            this.key = key;
+            this.value = value;
+        }
+    }
 
 }

@@ -9,7 +9,10 @@ public abstract class S2CPacket implements Packet{
 
     @Override
     public void onRecieve(AbstractGameInstance instance) {
-        if (instance instanceof Client client) onRecieve(client);
+        if (instance instanceof Client){
+            Client client = (Client) instance;
+            onRecieve(client);
+        }
     }
 
     @Override

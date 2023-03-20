@@ -22,15 +22,16 @@ public class Assets {
         this.game = game;
         json.setIgnoreUnknownFields(true);
     }
+    @SuppressWarnings("unchecked")
     public <T> T get(String path, Class<T> type, T defaultValue){
         T value = defaultValue;
-        if (TextureRegion.class.isAssignableFrom(type)){
+        if (TextureRegion.class.equals(type)){
             TextureRegion region = atlas.findRegion(path);
-            if (region != null) value = type.cast(region);
+            if (region != null) value = (T) region;
         }
-        else if (Drawable.class.isAssignableFrom(type)){
+        else if (Drawable.class.equals(type)){
             TextureRegion region = get(path, TextureRegion.class);
-            if (region != null) value = type.cast(new TextureRegionDrawable(region));
+            if (region != null) value = (T) new TextureRegionDrawable(region);
         }
         else {
             boolean updated = false;
@@ -48,8 +49,8 @@ public class Assets {
                 }
             }
         }
-        if (value instanceof GameObject gameObject){
-            gameObject.setGame(game);
+        if (value instanceof GameObject){
+            ((GameObject)value).setGame(game);
         }
         return value;
     }
