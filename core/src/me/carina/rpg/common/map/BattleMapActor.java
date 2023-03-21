@@ -1,6 +1,10 @@
 package me.carina.rpg.common.map;
 
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.kotcrab.vis.ui.widget.Draggable;
 import me.carina.rpg.client.misc.Movable;
 
@@ -14,6 +18,7 @@ public class BattleMapActor extends Group{
             }
         }
         setSize(map.getWidth(), getHeight());
+        setTouchable(Touchable.childrenOnly);
         addListener(new Movable());
     }
 }

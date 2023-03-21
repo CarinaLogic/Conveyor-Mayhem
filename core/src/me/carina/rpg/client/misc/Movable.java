@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -12,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 
-public class Movable extends ActorGestureListener {
+public class Movable extends ActorGestureListener{
     Vector2 prevInitPointer1 = new Vector2();
     Vector2 prevInitPointer2 = new Vector2();
     Vector2 prevPointer1 = new Vector2();
@@ -22,8 +23,22 @@ public class Movable extends ActorGestureListener {
     }
 
     @Override
-    public void tap(InputEvent event, float x, float y, int count, int button) {
-        super.tap(event, x, y, count, button);
+    public boolean handle(Event e) {
+        if (e instanceof InputEvent) {
+            InputEvent inputEvent = (InputEvent) e;
+            if (inputEvent.getType() == InputEvent.Type.scrolled){
+                float amount = inputEvent.getScrollAmountY();
+                Actor actor = inputEvent.getListenerActor();
+                if (amount > 0 && actor.getScaleX() > 0.1 && actor.getScaleY() > 0.1) {
+                    actor.setScale(actor.getScaleX()*0.875f, actor.getScaleY()*0.875f);
+                }
+                if (amount < 0 && actor.getScaleX() < 10 && actor.getScaleY() < 10){
+                    actor.setScale(actor.getScaleX()/0.875f,actor.getScaleY()/0.875f);
+                }
+                return true;
+            }
+        }
+        return super.handle(e);
     }
 
     @Override

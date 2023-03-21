@@ -35,6 +35,7 @@ public class BattleMapStage extends GameStage {
         battleMapActor = new BattleMapActor(new BattleMap(game));
         battleMapActor.setTouchable(Touchable.enabled);
         addActor(battleMapActor);
+        setScrollFocus(battleMapActor);
         setDebugAll(true);
     }
 }
