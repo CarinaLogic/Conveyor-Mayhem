@@ -29,12 +29,19 @@ public class Movable extends ActorGestureListener{
             if (inputEvent.getType() == InputEvent.Type.scrolled){
                 float amount = inputEvent.getScrollAmountY();
                 Actor actor = inputEvent.getListenerActor();
+                Vector2 input = new Vector2(Gdx.input.getX(),Gdx.input.getY());
+                Vector2 v = actor.getStage().screenToStageCoordinates(input.cpy());
+                v.sub(actor.localToStageCoordinates(Vector2.Zero.cpy()));
+                float scale = 1;
                 if (amount > 0 && actor.getScaleX() > 0.1 && actor.getScaleY() > 0.1) {
-                    actor.setScale(actor.getScaleX()*0.875f, actor.getScaleY()*0.875f);
+                    scale = 0.875f;
                 }
                 if (amount < 0 && actor.getScaleX() < 10 && actor.getScaleY() < 10){
-                    actor.setScale(actor.getScaleX()/0.875f,actor.getScaleY()/0.875f);
+                    scale = 1/0.875f;
                 }
+                actor.setScale(actor.getScaleX()*scale, actor.getScaleY()*scale);
+                v.scl(1-scale);
+                actor.moveBy(v.x, v.y);
                 return true;
             }
         }
