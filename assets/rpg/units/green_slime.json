@@ -1,0 +1,52 @@
+{
+  "id": "units/green_slime",
+  "top": {
+    "attack": {
+      "value": 0,
+      "elements": [
+      ]
+    },
+    "defence": {
+      "value": 0,
+      "elements": [
+      ]
+    }
+  },
+  "bottom": {
+    "attack": {
+      "value": 0,
+      "elements": [
+      ]
+    },
+    "defence": {
+      "value": 0,
+      "elements": [
+      ]
+    }
+  },
+  "left": {
+    "attack": {
+      "value": 0,
+      "elements": [
+      ]
+    },
+    "defence": {
+      "value": 0,
+      "elements": [
+      ]
+    }
+  },
+  "right": {
+    "attack": {
+      "value": 0,
+      "elements": [
+      ]
+    },
+    "defence": {
+      "value": 0,
+      "elements": [
+      ]
+    }
+  },
+  "hp": 0
+}

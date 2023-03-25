@@ -8,10 +8,18 @@ public class Tile extends AbstractFeature{
     int y;
     Element element;
     Floor floor;
+    AbstractBattleActor battleActor;
 
-    public Tile(AbstractGameInstance game, Floor floor) {
+    public Tile(AbstractGameInstance game) {
         super(game);
+    }
+
+    public void setFloor(Floor floor) {
         this.floor = floor;
+    }
+
+    public void setBattleActor(AbstractBattleActor battleActor) {
+        this.battleActor = battleActor;
     }
 
     @Override

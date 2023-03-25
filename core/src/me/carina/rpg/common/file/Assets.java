@@ -37,8 +37,10 @@ public class Assets {
             boolean updated = false;
             for (AssetGroup group : assetGroups) {
                 T t = group.get(path, type);
-                if (t != null) value = t;
-                updated = true;
+                if (t != null) {
+                    value = t;
+                    updated = true;
+                }
             }
             if (!updated) {
                 for (AssetGroup group : assetGroups) {

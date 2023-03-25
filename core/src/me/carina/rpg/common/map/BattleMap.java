@@ -12,7 +12,10 @@ public class BattleMap extends AbstractFeature{
         resize(10,10);
         for (int x = 0; x < 10; x++) {
             for (int y = 0; y < 10; y++) {
-                setTile(new Tile(game,new Floor(game,"tiles/plains",true)),x,y);
+                Tile tile = new Tile(game);
+                tile.setFloor(game.getAssets().get("floors/plains", FloorDef.class).toFeature(game));
+                tile.setBattleActor(game.getAssets().get("units/green_slime", BattleUnitDef.class).toFeature(game));
+                setTile(tile,x,y);
             }
         }
     }
