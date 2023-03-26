@@ -17,7 +17,7 @@ public class BattleMapActor extends Group{
                 addActor(tile.newActor());
             }
         }
-        setSize(map.getWidth(), getHeight());
+        setSize(map.getWidth(), map.getHeight());
         setTouchable(Touchable.childrenOnly);
         addListener(new Movable());
     }

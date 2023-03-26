@@ -13,8 +13,8 @@ public class BattleScreen extends BaseScreen{
     public void show() {
         battleMapStage = new BattleMapStage();
         addStage(battleMapStage);
-        actorStage = new BattleMapActorStage();
-        addStage(actorStage);
-        battleMapStage.setCanvas(actorStage.canvas);
+//        actorStage = new BattleMapActorStage();
+//        addStage(actorStage);
+//        battleMapStage.setCanvas(actorStage.canvas);
     }
 }
