@@ -22,9 +22,9 @@ public abstract class AbstractBattleActorActor extends Actor {
         super.act(delta);
         if (getStage() instanceof BattleMapStage) {
             Group parent = getParent();
-            Vector2 v = Vector2.Zero.cpy();
+            Vector2 v = new Vector2(parent.getWidth()*0.125f,parent.getHeight()*0.125f);
             parent.localToScreenCoordinates(v);
-            Vector2 v1 = new Vector2(parent.getWidth(),0);
+            Vector2 v1 = new Vector2(parent.getWidth()*0.875f,parent.getHeight()*0.125f);
             parent.localToScreenCoordinates(v1);
             BattleMapStage stage = (BattleMapStage) getStage();
             if (stage.getCanvas() != null) stage.getCanvas().addPicture(icon, v.x, v.y, v1.x- v.x, v1.x-v.x);

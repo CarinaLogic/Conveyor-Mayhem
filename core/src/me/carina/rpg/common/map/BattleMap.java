@@ -14,7 +14,7 @@ public class BattleMap extends AbstractFeature{
             for (int y = 0; y < 10; y++) {
                 Tile tile = new Tile(game);
                 tile.setFloor(game.getAssets().get("floors/plains", FloorDef.class).toFeature(game));
-                tile.setBattleActor(game.getAssets().get("units/green_slime", BattleUnitDef.class).toFeature(game));
+                tile.setBattleActor(game.getAssets().get("units/test", BattleUnitDef.class).toFeature(game));
                 setTile(tile,x,y);
             }
         }

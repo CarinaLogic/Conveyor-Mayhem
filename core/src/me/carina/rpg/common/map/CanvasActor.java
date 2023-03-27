@@ -20,7 +20,7 @@ public class CanvasActor extends Actor {
         for (Picture picture : pictures) {
             Vector2 v = new Vector2(picture.x,picture.y);
             screenToLocalCoordinates(v);
-            Vector2 v1 = new Vector2(picture.x+picture.width, picture.y+picture.height);
+            Vector2 v1 = new Vector2(picture.x+picture.width, picture.y-picture.height);
             screenToLocalCoordinates(v1);
             picture.drawable.draw(batch,v.x, v.y, v1.x-v.x, v1.y-v.y);
         }
