@@ -30,4 +30,7 @@ public abstract class AbstractBattleActorActor extends Actor {
             if (stage.getCanvas() != null) stage.getCanvas().addPicture(icon, v.x, v.y, v1.x- v.x, v1.x-v.x);
         }
     }
+    public void drawAtk(Batch batch){
+
+    }
 }

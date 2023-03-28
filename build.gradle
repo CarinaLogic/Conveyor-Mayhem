@@ -112,7 +112,6 @@ project(":html") {
         api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion:sources"
         api "com.badlogicgames.gdx-controllers:gdx-controllers-gwt:$gdxControllersVersion"
         api "com.badlogicgames.gdx-controllers:gdx-controllers-gwt:$gdxControllersVersion:sources"
-        api "com.kotcrab.vis:vis-ui:$visuiVersion:sources"
         implementation "com.github.MrStahlfelge.gdx-websockets:core:$wsVersion:sources"
         implementation "com.github.MrStahlfelge.gdx-websockets:html:$wsVersion"
         implementation "com.github.MrStahlfelge.gdx-websockets:html:$wsVersion:sources"
@@ -126,7 +125,6 @@ project(":core") {
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
-        api "com.kotcrab.vis:vis-ui:$visuiVersion"
         implementation "com.github.MrStahlfelge.gdx-websockets:core:$wsVersion"
     }
 }
