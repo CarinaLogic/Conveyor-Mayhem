@@ -4,7 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import me.carina.rpg.common.AbstractGameInstance;
 import me.carina.rpg.common.util.TripleMap;
 
-public class BattleMap extends AbstractFeature{
+public class BattleMap extends AbstractCompoundFeature{
     Tile[][] tiles;
 
     public BattleMap(AbstractGameInstance game) {
@@ -13,12 +13,13 @@ public class BattleMap extends AbstractFeature{
         for (int x = 0; x < 10; x++) {
             for (int y = 0; y < 10; y++) {
                 Tile tile = new Tile(game);
-                tile.setFloor(game.getAssets().get("floors/plains", FloorDef.class).toFeature(game));
-                tile.setBattleActor(game.getAssets().get("units/test", BattleUnitDef.class).toFeature(game));
+                tile.setFloor(new Floor(game,"plains"));
+                tile.setBattleActor(new BattleUnit(game,"test"));
                 setTile(tile,x,y);
             }
         }
     }
+
 
     public void resize(int width, int height){
         Tile[][] newTiles = new Tile[width][height];
