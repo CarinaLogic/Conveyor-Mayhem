@@ -109,9 +109,18 @@ public class AssetGroup {
         return addChildren(rootFile,files);
     }
     protected Array<FileHandle> addChildren(FileHandle fileHandle, Array<FileHandle> array){
-        for (FileHandle childHandle : fileHandle.list()) {
+        FileHandle[] fileHandles = fileHandle.list();
+        Array<String> exclude = new Array<>();
+        for (FileHandle childHandle : fileHandles){
+            if (childHandle.nameWithoutExtension().equals("exclude")){
+                String s = childHandle.readString();
+                exclude.addAll(s.split("\\n"));
+            }
+        }
+        for (FileHandle childHandle : fileHandles) {
             if (childHandle.isDirectory()) addChildren(childHandle,array);
-            else if (assets.assetFilter.shouldLoad(childHandle,extMap.findKey(childHandle.extension(), false))) array.add(childHandle);
+            else if (assets.assetFilter.shouldLoad(childHandle,extMap.findKey(childHandle.extension(), false))
+            && !exclude.contains(childHandle.name(),false)) array.add(childHandle);
         }
         return array;
     }
