@@ -2,17 +2,17 @@ package me.carina.rpg.common.map;
 
 public class ActionEffect extends AbstractAction{
 
-    public ActionEffect(AbstractBattleActor<?> actor) {
+    public ActionEffect(BattleActor actor) {
         super(actor);
     }
 
     @Override
-    public boolean canActivate(AbstractBattleActor<?> targetActor, int targetX, int targetY) {
+    public boolean canActivate(BattleActor targetActor, int targetX, int targetY) {
         return false;
     }
 
     @Override
-    public void activate(AbstractBattleActor<?> targetActor, int targetX, int targetY) {
+    public void activate(BattleActor targetActor, int targetX, int targetY) {
 
     }
 }

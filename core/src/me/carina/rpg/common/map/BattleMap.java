@@ -2,9 +2,8 @@ package me.carina.rpg.common.map;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import me.carina.rpg.common.AbstractGameInstance;
-import me.carina.rpg.common.util.TripleMap;
 
-public class BattleMap extends AbstractCompoundFeature{
+public class BattleMap extends CompoundFeature {
     Tile[][] tiles;
 
     public BattleMap(AbstractGameInstance game) {

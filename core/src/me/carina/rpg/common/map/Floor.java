@@ -1,9 +1,8 @@
 package me.carina.rpg.common.map;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import me.carina.rpg.common.AbstractGameInstance;
 
-public class Floor extends AbstractFeature<Floor.Def>{
+public class Floor extends Feature{
     String id;
     boolean passable;
 
@@ -13,13 +12,6 @@ public class Floor extends AbstractFeature<Floor.Def>{
 
     public Floor(AbstractGameInstance game, Def def) {
         super(game, def);
-    }
-
-
-    @Override
-    public void init(Def def) {
-        id = def.id;
-        passable = def.passable;
     }
 
     @Override
@@ -37,8 +29,18 @@ public class Floor extends AbstractFeature<Floor.Def>{
         return "floors";
     }
 
-    public static class Def extends AbstractFeature.Def{
+
+    public static class Def extends Feature.Def{
         String id;
         boolean passable;
+
+        @Override
+        public void init(Feature feature) {
+            if (feature instanceof Floor) {
+                Floor that = (Floor) feature;
+                that.id = id;
+                that.passable = passable;
+            }
+        }
     }
 }

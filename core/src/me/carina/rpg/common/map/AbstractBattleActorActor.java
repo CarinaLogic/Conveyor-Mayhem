@@ -4,15 +4,14 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import me.carina.rpg.client.scenes.BattleMapStage;
 
 //TODO i want it to be rendered on GUI batch :((
 public abstract class AbstractBattleActorActor extends Actor {
     Drawable icon;
-    AbstractBattleActor battleActor;
-    public AbstractBattleActorActor(AbstractBattleActor battleActor){
+    BattleActor battleActor;
+    public AbstractBattleActorActor(BattleActor battleActor){
         this.battleActor = battleActor;
         icon = battleActor.getGame().getAssets().get(battleActor.id, Drawable.class);
     }

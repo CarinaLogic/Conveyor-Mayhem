@@ -1,12 +1,10 @@
 package me.carina.rpg.common.map;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ObjectMap;
 import me.carina.rpg.common.AbstractGameInstance;
 
 //named battle actor to distinguish from scene2d Actor
-public abstract class AbstractBattleActor<T extends AbstractFeature.Def> extends AbstractFeature<T>{
+public abstract class BattleActor extends Feature {
     String id;
     DirectionalParam top;
     DirectionalParam bottom;
@@ -19,12 +17,12 @@ public abstract class AbstractBattleActor<T extends AbstractFeature.Def> extends
     int y;
     Array<AbstractAction> actions = new Array<>();
 
-    public AbstractBattleActor(AbstractGameInstance game, String id) {
-        super(game, id);
+    public BattleActor(AbstractGameInstance game, Def def) {
+        super(game, def);
     }
 
-    public AbstractBattleActor(AbstractGameInstance game, T def) {
-        super(game, def);
+    public BattleActor(AbstractGameInstance game, String id) {
+        super(game, id);
     }
 
 

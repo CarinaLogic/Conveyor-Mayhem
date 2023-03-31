@@ -10,19 +10,18 @@ import me.carina.rpg.common.GameObject;
 //2. The Actor object, which holds rendering info, and renders itself
 //3. The definition object, which is provided by assets in the form of json, which is used to construct parent
 //   optional, should be simple
-public abstract class AbstractFeature<T extends AbstractFeature.Def> implements GameObject {
+public abstract class Feature implements GameObject{
     transient AbstractGameInstance game;
-    public AbstractFeature(AbstractGameInstance game, String id){
+    public Feature(AbstractGameInstance game, Def def){
+        this.game = game;
+        def.init(this);
+    }
+    public Feature(AbstractGameInstance game, String id){
         this.game = game;
         String path = getTypePrefix() + "/" + id;
-        T def = game.getAssets().get(path,getDefClass());
-        init(def);
+        Def def = game.getAssets().get(path,getDefClass());
+        def.init(this);
     }
-    public AbstractFeature(AbstractGameInstance game, T def){
-        this.game = game;
-        init(def);
-    }
-    public abstract void init(T def);
     public abstract Actor newActor();
     public AbstractGameInstance getGame(){
         return game;
@@ -31,7 +30,9 @@ public abstract class AbstractFeature<T extends AbstractFeature.Def> implements 
     public void setGame(AbstractGameInstance game) {
         this.game = game;
     }
-    public abstract Class<T> getDefClass();
     public abstract String getTypePrefix();
-    public static abstract class Def{}
+    public abstract Class<? extends Def> getDefClass();
+    public static abstract class Def{
+        public abstract void init(Feature feature);
+    }
 }

@@ -1,14 +1,13 @@
 package me.carina.rpg.common.map;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import me.carina.rpg.common.AbstractGameInstance;
 
-public class Tile extends AbstractCompoundFeature{
+public class Tile extends CompoundFeature {
     int x;
     int y;
     Element element;
     Floor floor;
-    AbstractBattleActor<?> battleActor;
+    BattleActor battleActor;
 
     public Tile(AbstractGameInstance game) {
         super(game);
@@ -19,7 +18,7 @@ public class Tile extends AbstractCompoundFeature{
         this.floor = floor;
     }
 
-    public void setBattleActor(AbstractBattleActor<?> battleActor) {
+    public void setBattleActor(BattleActor battleActor) {
         this.battleActor = battleActor;
     }
 
