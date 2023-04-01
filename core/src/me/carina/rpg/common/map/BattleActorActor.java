@@ -1,19 +1,32 @@
 package me.carina.rpg.common.map;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import me.carina.rpg.client.scenes.BattleMapStage;
+import me.carina.rpg.client.ui.UILabel;
 
 //TODO i want it to be rendered on GUI batch :((
-public abstract class AbstractBattleActorActor extends Actor {
+public abstract class BattleActorActor extends Group {
     Drawable icon;
     BattleActor battleActor;
-    public AbstractBattleActorActor(BattleActor battleActor){
+    UILabel topLabel;
+    UILabel bottomLabel;
+    UILabel leftLabel;
+    UILabel rightLabel;
+    public BattleActorActor(BattleActor battleActor){
         this.battleActor = battleActor;
         icon = battleActor.getGame().getAssets().get(battleActor.id, Drawable.class);
+        setSize(1,1);
+        topLabel = new UILabel(battleActor.game).pos(0.5f,0.85f).fontHeight(0.3f).center();
+        bottomLabel = new UILabel(battleActor.game).pos(0.5f,0.15f).fontHeight(0.3f).center();
+        leftLabel = new UILabel(battleActor.game).pos(0.85f,0.5f).fontHeight(0.3f).center();
+        rightLabel = new UILabel(battleActor.game).pos(0.15f,0.5f).fontHeight(0.3f).center();
+        addActor(topLabel);
+        addActor(bottomLabel);
+        addActor(leftLabel);
+        addActor(rightLabel);
     }
 
     @Override
@@ -28,8 +41,9 @@ public abstract class AbstractBattleActorActor extends Actor {
             BattleMapStage stage = (BattleMapStage) getStage();
             if (stage.getCanvas() != null) stage.getCanvas().addPicture(icon, v.x, v.y, v1.x- v.x, v1.x-v.x);
         }
-    }
-    public void drawAtk(Batch batch){
-
+        topLabel.text(battleActor.top.attack.value);
+        bottomLabel.text(battleActor.bottom.attack.value);
+        leftLabel.text(battleActor.left.attack.value);
+        rightLabel.text(battleActor.right.attack.value);
     }
 }

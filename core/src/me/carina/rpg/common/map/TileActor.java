@@ -13,7 +13,7 @@ public class TileActor extends Group {
             addActor(floorActor);
         }
         if (tile.battleActor != null) {
-            AbstractBattleActorActor battleActor = tile.battleActor.newActor();
+            BattleActorActor battleActor = tile.battleActor.newActor();
             addActor(battleActor);
         }
         setSize(1,1);

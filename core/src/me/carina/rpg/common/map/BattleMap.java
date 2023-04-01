@@ -13,7 +13,7 @@ public class BattleMap extends CompoundFeature {
             for (int y = 0; y < 10; y++) {
                 Tile tile = new Tile(game);
                 tile.setFloor(new Floor(game,"plains"));
-                tile.setBattleActor(new BattleUnit(game,"test"));
+                tile.setBattleActor(new BattleUnit(game,"green_slime"));
                 setTile(tile,x,y);
             }
         }

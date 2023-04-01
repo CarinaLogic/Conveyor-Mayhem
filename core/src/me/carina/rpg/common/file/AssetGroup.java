@@ -10,6 +10,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Array;
@@ -33,6 +34,7 @@ public class AssetGroup {
     static final ArrayMap<Class<?>,String> extMap = new ArrayMap<Class<?>, String>(){{
         put(JsonValue.class, "json");
         put(Texture.class, "png", "bmp", "jpg");
+        put(BitmapFont.class, "fnt");
         //put other things you need to load
     }};
     TripleMap<String,Class<?>,FileHandle> pathMap = new TripleMap<>();

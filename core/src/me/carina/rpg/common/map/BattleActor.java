@@ -27,7 +27,7 @@ public abstract class BattleActor extends Feature {
 
 
     @Override
-    public abstract AbstractBattleActorActor newActor();
+    public abstract BattleActorActor newActor();
 
     public static class DirectionalParam{
         ElementalParam attack;
