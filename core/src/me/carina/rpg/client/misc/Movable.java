@@ -54,7 +54,6 @@ public class Movable extends ActorGestureListener{
         Vector2 v = actor.localToStageCoordinates(new Vector2(deltaX,deltaY));
         v.sub(actor.localToStageCoordinates(Vector2.Zero.cpy()));
         actor.addAction(Actions.moveBy(v.x,v.y));
-        // FIXME: 3/25/23 
     }
 
     @Override
