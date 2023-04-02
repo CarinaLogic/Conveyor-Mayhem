@@ -10,9 +10,6 @@ import me.carina.rpg.common.GameObject;
 public abstract class GameStage extends Stage implements GameObject {
     Client game;
 
-    public GameStage(){
-        super();
-    }
     public GameStage(Viewport viewport){
         super(viewport);
     }

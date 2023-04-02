@@ -7,7 +7,7 @@ import me.carina.rpg.client.Client;
 
 public class LoadingScreen extends BaseScreen{
 
-    GUIStage stage;
+    LoadingStage stage;
     FileHandle root;
     Screen nextScreen = null;
     boolean queued = false;
@@ -20,7 +20,7 @@ public class LoadingScreen extends BaseScreen{
 
     @Override
     public void show() {
-        stage = new GUIStage();
+        stage = new LoadingStage();
         addStage(stage);
         stage.table.addAction(new Action() {
             @Override

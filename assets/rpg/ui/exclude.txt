@@ -1,2 +1,3 @@
 LanaPixel.png
 readme.txt
+loading.png
