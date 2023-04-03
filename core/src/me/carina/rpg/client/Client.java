@@ -18,7 +18,7 @@ public abstract class Client extends AbstractGameInstance{
 
     @Override
     public void create() {
-        LoadingScreen loadingScreen = new LoadingScreen(this,Gdx.files.internal("rpg"));
+        LoadingScreen loadingScreen = new LoadingScreen(this,Gdx.files.internal("core"));
         setScreen(loadingScreen);
         loadingScreen.setNextScreen(new BattleScreen(this));
     }
