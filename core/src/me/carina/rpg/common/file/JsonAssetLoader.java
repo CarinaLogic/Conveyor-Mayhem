@@ -13,8 +13,8 @@ import me.carina.rpg.common.AbstractGameInstance;
 public class JsonAssetLoader extends AsynchronousAssetLoader<JsonValue, AssetLoaderParameters<JsonValue>> {
     JsonValue asset;
     AbstractGameInstance game;
-    AssetGroup group;
-    public JsonAssetLoader(AssetGroup group, AbstractGameInstance game){
+    AssetPack group;
+    public JsonAssetLoader(AssetPack group, AbstractGameInstance game){
         super(group.getResolver());
         this.game = game;
         this.group = group;
