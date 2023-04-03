@@ -17,7 +17,7 @@ public abstract class BattleActorActor extends Group {
     UILabel rightLabel;
     public BattleActorActor(BattleActor battleActor){
         this.battleActor = battleActor;
-        icon = battleActor.getGame().getAssets().get(battleActor.id, Drawable.class);
+        icon = battleActor.getGame().getAssets().get(battleActor.getPath(), Drawable.class);
         setSize(1,1);
         topLabel = new UILabel(battleActor.game).pos(0.5f,0.85f).fontHeight(0.3f).center();
         bottomLabel = new UILabel(battleActor.game).pos(0.5f,0.15f).fontHeight(0.3f).center();

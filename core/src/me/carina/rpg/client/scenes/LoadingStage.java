@@ -19,7 +19,7 @@ public class LoadingStage extends GameStage{
     public void init() {
         table = new Table();
         addActor(table);
-        image = new Image(new Texture(Gdx.files.internal("rpg/ui/loading.png")));
+        image = new Image(new Texture(Gdx.files.internal("core/ui/loading.png")));
         table.add(image).size(3,2).center();
         table.setFillParent(true);
     }

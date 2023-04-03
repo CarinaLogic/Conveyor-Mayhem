@@ -1,15 +1,17 @@
 package me.carina.rpg.common.map;
 
 import me.carina.rpg.common.AbstractGameInstance;
+import me.carina.rpg.common.file.AssetGroup;
+import me.carina.rpg.common.file.Identifier;
 
 public class BattleUnit extends BattleActor {
 
 
-    public BattleUnit(AbstractGameInstance game, Def def) {
+    public BattleUnit(AbstractGameInstance game, Feature.Def def) {
         super(game, def);
     }
 
-    public BattleUnit(AbstractGameInstance game, String id) {
+    public BattleUnit(AbstractGameInstance game, Identifier id) {
         super(game, id);
     }
 
@@ -24,11 +26,10 @@ public class BattleUnit extends BattleActor {
     }
 
     @Override
-    public String getTypePrefix() {
-        return "units";
+    public AssetGroup getAssetGroup() {
+        return AssetGroup.units;
     }
     public static class Def extends Feature.Def{
-        String id;
         BattleActor.DirectionalParam top;
         BattleActor.DirectionalParam bottom;
         BattleActor.DirectionalParam left;
@@ -39,7 +40,6 @@ public class BattleUnit extends BattleActor {
         public void init(Feature feature) {
             if (feature instanceof BattleUnit) {
                 BattleUnit that = (BattleUnit) feature;
-                that.id = id;
                 that.top = top;
                 that.bottom = bottom;
                 that.left = left;

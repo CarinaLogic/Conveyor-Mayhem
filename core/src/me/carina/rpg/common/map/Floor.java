@@ -1,18 +1,20 @@
 package me.carina.rpg.common.map;
 
 import me.carina.rpg.common.AbstractGameInstance;
+import me.carina.rpg.common.file.AssetGroup;
+import me.carina.rpg.common.file.Identifier;
 
 public class Floor extends Feature{
-    String id;
     boolean passable;
 
-    public Floor(AbstractGameInstance game, String id) {
+    public Floor(AbstractGameInstance game, Feature.Def def) {
+        super(game, def);
+    }
+
+    public Floor(AbstractGameInstance game, Identifier id) {
         super(game, id);
     }
 
-    public Floor(AbstractGameInstance game, Def def) {
-        super(game, def);
-    }
 
     @Override
     public FloorActor newActor() {
@@ -25,20 +27,18 @@ public class Floor extends Feature{
     }
 
     @Override
-    public String getTypePrefix() {
-        return "floors";
+    public AssetGroup getAssetGroup() {
+        return AssetGroup.floors;
     }
 
 
     public static class Def extends Feature.Def{
-        String id;
         boolean passable;
 
         @Override
         public void init(Feature feature) {
             if (feature instanceof Floor) {
                 Floor that = (Floor) feature;
-                that.id = id;
                 that.passable = passable;
             }
         }

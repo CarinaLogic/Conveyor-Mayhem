@@ -5,10 +5,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import me.carina.rpg.common.AbstractGameInstance;
+import me.carina.rpg.common.file.AssetGroup;
+import me.carina.rpg.common.file.Path;
 
 public class UILabel extends Label {
     public UILabel(AbstractGameInstance game){
-        super("",new LabelStyle(game.getAssets().get("ui/font", BitmapFont.class), Color.WHITE));
+        super("",new LabelStyle(game.getAssets().get(new Path("core", AssetGroup.ui, "font"), BitmapFont.class), Color.WHITE));
         getBitmapFontCache().setUseIntegerPositions(false);
     }
     public UILabel text(String text){

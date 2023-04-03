@@ -10,6 +10,6 @@ public class FloorActor extends Image {
     Floor floor;
     public FloorActor(Floor floor){
         this.floor = floor;
-        setDrawable(floor.getGame().getAssets().get(floor.id, Drawable.class));
+        setDrawable(floor.getGame().getAssets().get(floor.getPath(), Drawable.class));
     }
 }

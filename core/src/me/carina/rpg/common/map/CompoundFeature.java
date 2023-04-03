@@ -1,6 +1,7 @@
 package me.carina.rpg.common.map;
 
 import me.carina.rpg.common.AbstractGameInstance;
+import me.carina.rpg.common.file.AssetGroup;
 
 public abstract class CompoundFeature extends Feature {
     static final Def def = new Def();
@@ -9,7 +10,7 @@ public abstract class CompoundFeature extends Feature {
     }
 
     @Override
-    public String getTypePrefix() {
+    public AssetGroup getAssetGroup() {
         return null;
     }
 
