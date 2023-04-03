@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import me.carina.rpg.common.AbstractGameInstance;
 import me.carina.rpg.common.GameObject;
+import me.carina.rpg.common.Identifiable;
 
 public class Assets {
     static Json json = new Json();
@@ -22,17 +23,12 @@ public class Assets {
         this.game = game;
         json.setIgnoreUnknownFields(true);
     }
-    public <T> T get(Path path, Class<T> type, T defaultValue){
-        return get(path.toString(),type,defaultValue);
-    }
-    public <T> T get(Path path, Class<T> type){
-        return get(path.toString(),type,null);
-    }
+
     @SuppressWarnings("unchecked")
-    public <T> T get(String path, Class<T> type, T defaultValue){
+    public <T> T get(Path path, Class<T> type, T defaultValue){
         T value = defaultValue;
         if (TextureRegion.class.equals(type)){
-            TextureRegion region = atlas.findRegion(path);
+            TextureRegion region = atlas.findRegion(path.toString());
             if (region != null) value = (T) region;
         }
         else if (Drawable.class.equals(type)){
@@ -60,18 +56,21 @@ public class Assets {
         if (value instanceof GameObject){
             ((GameObject)value).setGame(game);
         }
+        if (value instanceof Identifiable){
+            ((Identifiable)value).setId(path.toIdentifier());
+        }
         return value;
     }
-    public <T> T get(String path, Class<T> type){
+    public <T> T get(Path path, Class<T> type){
         return get(path, type, null);
     }
-    public AssetPack getGroup(String path, Class<?> type){
+    public AssetPack getGroup(Path path, Class<?> type){
         for (AssetPack group : assetGroups) {
             if (group.contains(path, type)) return group;
         }
         return null;
     }
-    public boolean isLoadedBefore(String path, Class<?> type, AssetPack group){
+    public boolean isLoadedBefore(Path path, Class<?> type, AssetPack group){
         for (AssetPack assetPack : assetGroups) {
             if (assetPack.equals(group)) return false;
             if (group.contains(path, type)) return true;

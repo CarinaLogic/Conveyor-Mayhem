@@ -36,7 +36,7 @@ public class AssetPack {
         put(BitmapFont.class, "fnt");
         //put other things you need to load
     }};
-    TripleMap<String,Class<?>,FileHandle> pathMap = new TripleMap<>();
+    TripleMap<Path,Class<?>,FileHandle> pathMap = new TripleMap<>();
     public AssetPack(AbstractGameInstance game, FileHandle rootFile, Assets assets){
         this.rootFile = rootFile;
         this.manager = new AssetManager(resolvers.get(rootFile.type()));
@@ -69,7 +69,7 @@ public class AssetPack {
                         TextureData data = t.getTextureData();
                         if (!data.isPrepared()) data.prepare();
                         Pixmap p = data.consumePixmap();
-                        pixmapPacker.pack(getShortenedPath(f),p);
+                        pixmapPacker.pack(getShortenedPath(f).toString(),p);
                     }
                 });
                 pixmapPacker.updateTextureAtlas(assets.atlas, Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
@@ -78,29 +78,29 @@ public class AssetPack {
         }
 
     }
-    public boolean contains(String path, Class<?> type){
+    public boolean contains(Path path, Class<?> type){
         return manager.contains(pathMap.get(path,type).path(),type);
     }
     public boolean finished(){
         return finished;
     }
-    public <T> T get(String path, Class<T> type){
+    public <T> T get(Path path, Class<T> type){
         return get(path,type,null);
     }
-    public <T> T get(String path, Class<T> type, T defaultValue){
+    public <T> T get(Path path, Class<T> type, T defaultValue){
         FileHandle f = pathMap.get(path,type);
         if (f != null && type == null) return manager.get(f.path());
         else if (f != null) return manager.get(f.path(),type);
         return defaultValue;
     }
-    public String getShortenedPath(FileHandle handle){
+    public Path getShortenedPath(FileHandle handle){
         String[] paths = handle.pathWithoutExtension().replace(rootFile.path()+"/","").split("/");
-        return paths[0] + "/" + paths[paths.length-1];
+        return new Path(rootFile.name(),AssetGroup.valueOf(paths[0]),paths[paths.length-1]);
     }
     public FileHandleResolver getResolver(){
         return manager.getFileHandleResolver();
     }
-    public FileHandle getHandle(String path, Class<?> type){
+    public FileHandle getHandle(Path path, Class<?> type){
         return pathMap.get(path, type);
     }
     //already filtered by assetFilter
