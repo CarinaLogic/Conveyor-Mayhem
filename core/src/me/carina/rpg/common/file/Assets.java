@@ -28,7 +28,17 @@ public class Assets {
 
     public <T> T get(Path path, Class<T> type, T defaultValue){
         T value = defaultValue;
-        if (ClassReflection.isAssignableFrom(TextureRegion.class, type)){
+        if (ClassReflection.isAssignableFrom(Defined.class, type)){
+            try {
+                Defined v = (Defined) ClassReflection.newInstance(type);
+                Definition def = get(path,v.getDefClass());
+                def.init(v);
+                value = type.cast(v);
+            } catch (ReflectionException e) {
+                game.getLogger().error("Could not initialize " + type.getSimpleName());
+            }
+        }
+        else if (ClassReflection.isAssignableFrom(TextureRegion.class, type)){
             TextureRegion region = atlas.findRegion(path.toString());
             if (region != null) value = type.cast(region);
         }
