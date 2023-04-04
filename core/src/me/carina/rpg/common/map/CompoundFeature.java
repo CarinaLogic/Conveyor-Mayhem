@@ -6,7 +6,7 @@ import me.carina.rpg.common.file.AssetGroup;
 public abstract class CompoundFeature extends Feature {
     static final Def def = new Def();
     public CompoundFeature(AbstractGameInstance game) {
-        super(game, def);
+        setGame(game);
     }
 
     @Override
@@ -22,7 +22,7 @@ public abstract class CompoundFeature extends Feature {
     public static class Def extends Feature.Def {
 
         @Override
-        public void init(Feature that) {
+        public void initFeature(Feature that) {
             //NOOP
         }
     }

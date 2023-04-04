@@ -11,13 +11,6 @@ public class Faction extends Feature{
     Color accentColorBright;
     Color accentColorDark;
 
-    public Faction(AbstractGameInstance game, Def def) {
-        super(game, def);
-    }
-
-    public Faction(AbstractGameInstance game, Identifier id) {
-        super(game, id);
-    }
 
 
     @Override
@@ -39,7 +32,7 @@ public class Faction extends Feature{
         Color accentColorBright;
         Color accentColorDark;
         @Override
-        public void init(Feature feature) {
+        public void initFeature(Feature feature) {
             if (feature instanceof Faction) {
                 Faction that = (Faction) feature;
 

@@ -7,14 +7,6 @@ import me.carina.rpg.common.file.Identifier;
 public class Floor extends Feature{
     boolean passable;
 
-    public Floor(AbstractGameInstance game, Feature.Def def) {
-        super(game, def);
-    }
-
-    public Floor(AbstractGameInstance game, Identifier id) {
-        super(game, id);
-    }
-
 
     @Override
     public FloorActor newActor() {
@@ -36,7 +28,7 @@ public class Floor extends Feature{
         boolean passable;
 
         @Override
-        public void init(Feature feature) {
+        public void initFeature(Feature feature) {
             if (feature instanceof Floor) {
                 Floor that = (Floor) feature;
                 that.passable = passable;

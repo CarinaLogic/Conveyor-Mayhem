@@ -17,14 +17,6 @@ public abstract class BattleActor extends Feature {
     int y;
     Array<AbstractAction> actions = new Array<>();
 
-    public BattleActor(AbstractGameInstance game, Def def) {
-        super(game, def);
-    }
-
-    public BattleActor(AbstractGameInstance game, Identifier id) {
-        super(game, id);
-    }
-
 
     @Override
     public abstract BattleActorActor newActor();

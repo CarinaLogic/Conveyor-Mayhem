@@ -7,13 +7,6 @@ import me.carina.rpg.common.file.Identifier;
 public class BattleUnit extends BattleActor {
 
 
-    public BattleUnit(AbstractGameInstance game, Feature.Def def) {
-        super(game, def);
-    }
-
-    public BattleUnit(AbstractGameInstance game, Identifier id) {
-        super(game, id);
-    }
 
     @Override
     public BattleUnitActor newActor() {
@@ -37,7 +30,7 @@ public class BattleUnit extends BattleActor {
         int hp;
 
         @Override
-        public void init(Feature feature) {
+        public void initFeature(Feature feature) {
             if (feature instanceof BattleUnit) {
                 BattleUnit that = (BattleUnit) feature;
                 that.top = top;

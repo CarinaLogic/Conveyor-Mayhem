@@ -2,7 +2,9 @@ package me.carina.rpg.common.map;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import me.carina.rpg.common.AbstractGameInstance;
+import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.file.Identifier;
+import me.carina.rpg.common.file.Path;
 
 public class BattleMap extends CompoundFeature {
     Tile[][] tiles;
@@ -13,8 +15,8 @@ public class BattleMap extends CompoundFeature {
         for (int x = 0; x < 10; x++) {
             for (int y = 0; y < 10; y++) {
                 Tile tile = new Tile(game);
-                tile.setFloor(new Floor(game,new Identifier("core","plains")));
-                tile.setBattleActor(new BattleUnit(game,new Identifier("core","green_slime")));
+                tile.setFloor(game.getAssets().get(new Path("core", AssetGroup.floors,"plains"), Floor.class));
+                tile.setBattleActor(game.getAssets().get(new Path("core",AssetGroup.units,"green_slime"),BattleUnit.class));
                 setTile(tile,x,y);
             }
         }
