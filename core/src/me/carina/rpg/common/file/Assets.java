@@ -8,9 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
-import me.carina.rpg.common.AbstractGameInstance;
-import me.carina.rpg.common.GameObject;
-import me.carina.rpg.common.Identifiable;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.badlogic.gdx.utils.reflect.ReflectionException;
+import me.carina.rpg.common.*;
+
+import java.lang.reflect.InvocationTargetException;
 
 public class Assets {
     static Json json = new Json();
@@ -24,16 +26,15 @@ public class Assets {
         json.setIgnoreUnknownFields(true);
     }
 
-    @SuppressWarnings("unchecked")
     public <T> T get(Path path, Class<T> type, T defaultValue){
         T value = defaultValue;
-        if (TextureRegion.class.equals(type)){
+        if (ClassReflection.isAssignableFrom(TextureRegion.class, type)){
             TextureRegion region = atlas.findRegion(path.toString());
-            if (region != null) value = (T) region;
+            if (region != null) value = type.cast(region);
         }
-        else if (Drawable.class.equals(type)){
+        else if (ClassReflection.isAssignableFrom(Drawable.class, type)){
             TextureRegion region = get(path, TextureRegion.class);
-            if (region != null) value = (T) new TextureRegionDrawable(region);
+            if (region != null) value = type.cast(new TextureRegionDrawable(region));
         }
         else {
             boolean updated = false;
