@@ -31,8 +31,6 @@ public class Assets {
         if (ClassReflection.isAssignableFrom(Defined.class, type)){
             try {
                 Defined v = (Defined) ClassReflection.newInstance(type);
-                Definition def = get(path,v.getDefClass());
-                def.init(v);
                 value = type.cast(v);
             } catch (ReflectionException e) {
                 game.getLogger().error("Could not initialize " + type.getSimpleName());
@@ -69,6 +67,10 @@ public class Assets {
         }
         if (value instanceof Identifiable){
             ((Identifiable)value).setId(path.toIdentifier());
+        }
+        if (value instanceof Defined){
+            Definition def = get(path,((Defined)value).getDefClass());
+            def.init(((Defined) value));
         }
         return value;
     }
