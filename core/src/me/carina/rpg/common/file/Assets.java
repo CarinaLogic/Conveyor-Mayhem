@@ -25,6 +25,19 @@ public class Assets {
         this.game = game;
         json.setIgnoreUnknownFields(true);
     }
+    public <T extends AssetGrouped> T get(String nameSpace, String id, Class<T> type){
+        return get(new Identifier(nameSpace, id),type,null);
+    }
+    public <T extends AssetGrouped> T get(Identifier id, Class<T> type, T defaultValue){
+        try {
+            //Very memory unfriendly workaround
+            T t = ClassReflection.newInstance(type);
+            return get(id.toPath(t.getAssetGroup()), type, defaultValue);
+        } catch (ReflectionException e) {
+            game.getLogger().error("Could not initialize " + type.getSimpleName());
+            return null;
+        }
+    }
 
     public <T> T get(Path path, Class<T> type, T defaultValue){
         T value = defaultValue;

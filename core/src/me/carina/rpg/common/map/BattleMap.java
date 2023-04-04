@@ -15,8 +15,8 @@ public class BattleMap extends CompoundFeature {
         for (int x = 0; x < 10; x++) {
             for (int y = 0; y < 10; y++) {
                 Tile tile = new Tile(game);
-                tile.setFloor(game.getAssets().get(new Path("core", AssetGroup.floors,"plains"), Floor.class));
-                tile.setBattleActor(game.getAssets().get(new Path("core",AssetGroup.units,"green_slime"),BattleUnit.class));
+                tile.setFloor(game.getAssets().get("core","plains", Floor.class));
+                tile.setBattleActor(game.getAssets().get("core","green_slime",BattleUnit.class));
                 setTile(tile,x,y);
             }
         }

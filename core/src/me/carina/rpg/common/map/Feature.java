@@ -12,7 +12,7 @@ import me.carina.rpg.common.file.Path;
 //2. The Actor object, which holds rendering info, and renders itself
 //3. The definition object, which is provided by assets in the form of json, which is used to construct parent
 //   optional, should be simple
-public abstract class Feature implements GameObject, Identifiable, Defined {
+public abstract class Feature implements GameObject, Identifiable, Defined, AssetGrouped {
     transient AbstractGameInstance game;
     Identifier id;
     public abstract Actor newActor();
