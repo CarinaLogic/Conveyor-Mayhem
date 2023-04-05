@@ -38,24 +38,24 @@ public class Assets {
             return null;
         }
     }
-
+    @SuppressWarnings("unchecked")
     public <T> T get(Path path, Class<T> type, T defaultValue){
         T value = defaultValue;
         if (ClassReflection.isAssignableFrom(Defined.class, type)){
             try {
                 Defined v = (Defined) ClassReflection.newInstance(type);
-                value = type.cast(v);
+                value = (T) v;
             } catch (ReflectionException e) {
                 game.getLogger().error("Could not initialize " + type.getSimpleName());
             }
         }
         else if (ClassReflection.isAssignableFrom(TextureRegion.class, type)){
             TextureRegion region = atlas.findRegion(path.toString());
-            if (region != null) value = type.cast(region);
+            if (region != null) value = (T) region;
         }
         else if (ClassReflection.isAssignableFrom(Drawable.class, type)){
             TextureRegion region = get(path, TextureRegion.class);
-            if (region != null) value = type.cast(new TextureRegionDrawable(region));
+            if (region != null) value = (T) new TextureRegionDrawable(region);
         }
         else {
             boolean updated = false;
