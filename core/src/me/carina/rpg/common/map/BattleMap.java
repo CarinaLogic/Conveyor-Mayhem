@@ -9,6 +9,8 @@ import me.carina.rpg.common.file.Path;
 public class BattleMap extends CompoundFeature {
     Tile[][] tiles;
 
+    public BattleMap(){}//for json
+
     public BattleMap(AbstractGameInstance game) {
         super(game);
         resize(10,10);

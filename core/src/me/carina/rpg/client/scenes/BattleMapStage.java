@@ -18,10 +18,13 @@ public class BattleMapStage extends GameStage {
         getCamera().far = 100;
         getCamera().position.set(5,3,5);
         getCamera().lookAt(5,5,0);
-        battleMapActor = new BattleMapActor(new BattleMap(game));
+        setDebugAll(true);
+    }
+
+    public void setBattleMap(BattleMap battleMap) {
+        this.battleMapActor = new BattleMapActor(battleMap);
         addActor(battleMapActor);
         setScrollFocus(battleMapActor);
-        setDebugAll(true);
     }
 
     public CanvasActor getCanvas() {

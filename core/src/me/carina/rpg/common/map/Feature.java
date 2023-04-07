@@ -15,13 +15,15 @@ import me.carina.rpg.common.file.Path;
 public abstract class Feature implements GameObject, Identifiable, Defined, AssetGrouped {
     transient AbstractGameInstance game;
     Identifier id;
+    public Feature(){} //for json
     public abstract Actor newActor();
     public AbstractGameInstance getGame(){
         return game;
     }
     @Override
-    public void setGame(AbstractGameInstance game) {
+    public Feature setGame(AbstractGameInstance game) {
         this.game = game;
+        return this;
     }
     public abstract AssetGroup getAssetGroup();
 

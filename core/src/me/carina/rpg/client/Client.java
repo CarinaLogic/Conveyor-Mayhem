@@ -57,7 +57,7 @@ public abstract class Client extends AbstractGameInstance{
                     +" to "+screen.getClass().getSimpleName());
         }
         else {
-            getLogger().debug("Current screen changed from null to "+screen.getClass().getSimpleName());
+            getLogger().debug("Current screen changed to "+screen.getClass().getSimpleName());
         }
         if (this.screen != null) {
             this.screen.show();
