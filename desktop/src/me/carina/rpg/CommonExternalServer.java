@@ -1,13 +1,10 @@
 package me.carina.rpg;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
-import com.github.czyzby.websocket.data.WebSocketException;
 import com.github.czyzby.websocket.serialization.Serializer;
 import com.github.czyzby.websocket.serialization.impl.JsonSerializer;
 import me.carina.rpg.server.AbstractExternalServer;
 import me.carina.rpg.server.Connection;
-import me.carina.rpg.server.InternalConnection;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
@@ -87,8 +84,8 @@ public class CommonExternalServer extends AbstractExternalServer {
     }
 
     @Override
-    public Array<InternalConnection> getClients() {
-        return null;
+    public Array<CommonExternalConnection> getClients() {
+        return connections;
     }
 
     @Override

@@ -75,7 +75,7 @@ public abstract class Server extends AbstractGameInstance {
             sendAll(object);
         }
     }
-    public abstract Array<InternalConnection> getClients();
+    public abstract Array<? extends Connection> getClients();
     public abstract void send(Object object, Connection connection);
     public abstract void sendAll(Object object);
 

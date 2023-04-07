@@ -85,8 +85,8 @@ public class CommonExternalServer extends AbstractExternalServer {
     }
 
     @Override
-    public Array<InternalConnection> getClients() {
-        return null;
+    public Array<CommonExternalConnection> getClients() {
+        return connections;
     }
 
     @Override
