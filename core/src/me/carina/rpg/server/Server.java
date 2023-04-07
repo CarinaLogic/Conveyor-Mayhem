@@ -5,6 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 import me.carina.rpg.common.AbstractGameInstance;
+import me.carina.rpg.packets.S2CTargetPacket;
 import me.carina.rpg.server.tasks.AbstractTask;
 import me.carina.rpg.server.tasks.LoadingTask;
 
@@ -61,6 +62,22 @@ public abstract class Server extends AbstractGameInstance {
     public boolean shouldPack() {
         return false;
     }
+
+    @Override
+    public void send(Object object) {
+        if (object instanceof S2CTargetPacket) {
+            S2CTargetPacket targetPacket = (S2CTargetPacket) object;
+            for (Connection target : targetPacket.getTargets()) {
+                send(object,target);
+            }
+        }
+        else {
+            sendAll(object);
+        }
+    }
+    public abstract Array<InternalConnection> getClients();
+    public abstract void send(Object object, Connection connection);
+    public abstract void sendAll(Object object);
 
     public abstract void open(int port);
     public abstract void close(String reason);

@@ -41,6 +41,10 @@ public abstract class AbstractTask {
         }
         if (run() && (!requireNextTask || !nextTasks.isEmpty())) terminate();
     }
+
+    /**
+     * @return true if task should be terminated, false otherwise
+     */
     public abstract boolean run();
 
     public void setServer(Server server){

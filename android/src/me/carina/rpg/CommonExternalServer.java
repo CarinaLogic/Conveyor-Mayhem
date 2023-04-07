@@ -1,35 +1,44 @@
 package me.carina.rpg;
 
-import com.badlogic.gdx.Gdx;
-import com.github.czyzby.websocket.data.WebSocketException;
+import com.badlogic.gdx.utils.Array;
 import com.github.czyzby.websocket.serialization.Serializer;
 import com.github.czyzby.websocket.serialization.impl.JsonSerializer;
-import me.carina.rpg.packets.C2SPacket;
-import me.carina.rpg.packets.S2CPacket;
 import me.carina.rpg.server.AbstractExternalServer;
+import me.carina.rpg.server.Connection;
+import me.carina.rpg.server.InternalConnection;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
 import java.net.InetSocketAddress;
+import java.util.Collections;
 
 /**
  * Represents a server which is hosted externally.
  */
 public class CommonExternalServer extends AbstractExternalServer {
-    public WebSocketServer server;
+    WebSocketServer server;
     Serializer serializer = new JsonSerializer();
+    Array<CommonExternalConnection> connections = new Array<>();
     boolean isOpen = false;
     public void open(int port){
         server = new WebSocketServer(new InetSocketAddress(port)) {
             @Override
             public void onOpen(WebSocket conn, ClientHandshake handshake) {
-                Gdx.app.debug("Server", "Client connected "+conn.getProtocol().toString());
+                getLogger().info("Client handshake received "+conn.getProtocol());
+                connections.add(new CommonExternalConnection(conn));
             }
 
             @Override
             public void onClose(WebSocket conn, int code, String reason, boolean remote) {
-
+                for (CommonExternalConnection connection : connections) {
+                    if (connection.webSocket.equals(conn)){
+                        connections.removeValue(connection,false);
+                        getLogger().info("Client disconnected "+connection.toString());
+                        return;
+                    }
+                }
+                getLogger().error("Received disconnect message from unknown connection "+conn.getProtocol().toString());
             }
 
             @Override
@@ -76,8 +85,20 @@ public class CommonExternalServer extends AbstractExternalServer {
     }
 
     @Override
-    public void send(Object object) {
-        if (server == null) throw new WebSocketException();
+    public Array<InternalConnection> getClients() {
+        return null;
+    }
+
+    @Override
+    public void send(Object object, Connection connection) {
+        if (connection instanceof CommonExternalConnection) {
+            CommonExternalConnection conn = (CommonExternalConnection) connection;
+            server.broadcast(serializer.serializeAsString(object), Collections.singleton(conn.webSocket));
+        }
+    }
+
+    @Override
+    public void sendAll(Object object) {
         server.broadcast(serializer.serializeAsString(object));
     }
 }

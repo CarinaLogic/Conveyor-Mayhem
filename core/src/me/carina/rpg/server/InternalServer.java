@@ -1,16 +1,31 @@
 package me.carina.rpg.server;
 
+import com.badlogic.gdx.utils.Array;
 import me.carina.rpg.client.InternalClient;
-import me.carina.rpg.packets.S2CPacket;
 
 public class InternalServer extends Server {
-    InternalClient client;
+    Array<InternalConnection> connections = new Array<>();
     public InternalServer(InternalClient client){
-        this.client = client;
+        connections.add(new InternalConnection(client));
     }
     @Override
-    public void send(Object object) {
-        client.recieve(object);
+    public Array<InternalConnection> getClients() {
+        return connections;
+    }
+
+    @Override
+    public void send(Object object, Connection connection) {
+        if (connection instanceof InternalConnection) {
+            InternalConnection internalConnection = (InternalConnection) connection;
+            internalConnection.client.recieve(object);
+        }
+    }
+
+    @Override
+    public void sendAll(Object object) {
+        for (InternalConnection connection : connections) {
+            connection.client.recieve(object);
+        }
     }
 
     @Override
