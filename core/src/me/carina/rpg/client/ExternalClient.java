@@ -8,16 +8,16 @@ import com.github.czyzby.websocket.data.WebSocketException;
 import com.github.czyzby.websocket.serialization.impl.JsonSerializer;
 import me.carina.rpg.packets.C2SPacket;
 import me.carina.rpg.packets.S2CPacket;
+import me.carina.rpg.packets.connection.C2SExternalConnection;
+import me.carina.rpg.packets.connection.Connection;
 
 public class ExternalClient extends Client {
-    WebSocket socket;
-    WebSocketListener listener;
-    public void connect(String host, int port){
-        socket = WebSockets.newSocket(WebSockets.toWebSocketUrl(host, port));
+    public Connection connect(String host, int port){
+        WebSocket socket = WebSockets.newSocket(WebSockets.toWebSocketUrl(host, port));
         socket.setSendGracefully(true);
         socket.setSerializer(new JsonSerializer());
         socket.setSerializeAsString(true);
-        listener = new WebSocketListener() {
+        WebSocketListener listener = new WebSocketListener() {
             @Override
             public boolean onOpen(WebSocket webSocket) {
                 Gdx.app.debug("Client","Connected");
@@ -31,13 +31,13 @@ public class ExternalClient extends Client {
 
             @Override
             public boolean onMessage(WebSocket webSocket, String packet) {
-                recieve(webSocket.getSerializer().deserialize(packet));
+                recieve(webSocket.getSerializer().deserialize(packet), getConnection(webSocket));
                 return true;
             }
 
             @Override
             public boolean onMessage(WebSocket webSocket, byte[] packet) {
-                recieve(webSocket.getSerializer().deserialize(packet));
+                recieve(webSocket.getSerializer().deserialize(packet), getConnection(webSocket));
                 return true;
             }
 
@@ -52,20 +52,6 @@ public class ExternalClient extends Client {
         };
         socket.addListener(listener);
         socket.connect();
-    }
-
-    public void disconnect(String reason){
-        if (socket == null) return;
-        socket.close(reason);
-    }
-
-    @Override
-    public void send(Object object) {
-        if (socket == null) throw new WebSocketException();
-        socket.send(object);
-    }
-
-    public boolean isConnected(){
-        return socket.isOpen();
+        return new C2SExternalConnection(this, socket);
     }
 }

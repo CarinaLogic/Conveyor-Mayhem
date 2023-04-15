@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
-public class GUIStage extends GameStage {
+public abstract class GUIStage extends GameStage {
     Table table;
     public GUIStage(){
         super(new ExtendViewport(16,16));
@@ -16,7 +16,10 @@ public class GUIStage extends GameStage {
         table = new Table();
         addActor(table);
         table.setFillParent(true);
+        init(table);
     }
+
+    public abstract void init(Table table);
 
     public <T extends Actor> Cell<T> add(T actor){
         return table.add(actor);

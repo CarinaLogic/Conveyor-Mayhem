@@ -5,7 +5,10 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Logger;
 import me.carina.rpg.client.Client;
+import me.carina.rpg.client.ExternalClient;
 import me.carina.rpg.client.InternalClient;
+import me.carina.rpg.packets.connection.C2SInternalConnection;
+import me.carina.rpg.packets.connection.S2CInternalConnection;
 import me.carina.rpg.server.AbstractExternalServer;
 import me.carina.rpg.server.InternalServer;
 import me.carina.rpg.server.Server;
@@ -20,14 +23,14 @@ public class GameInstance extends ApplicationAdapter{
 	@Override
 	public void create () {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
-		client = new InternalClient();
-		server = new InternalServer((InternalClient) client);
+		client = new ExternalClient();
+		server = externalServer;
 		client.getLogger().setLevel(Logger.DEBUG);
 		server.getLogger().setLevel(Logger.DEBUG);
 		client.create();
 		server.create();
-		//((AbstractExternalServer) server).open(18273);
-		//((ExternalClient) client).connect("localhost",18273);
+		server.open(18273);
+		client.addConnection(((ExternalClient) client).connect("localhost",18273));
 	}
 
 	@Override
