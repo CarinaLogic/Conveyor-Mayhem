@@ -1,24 +1,23 @@
-package me.carina.rpg.common.map;
+package me.carina.rpg.common.world.map;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import me.carina.rpg.common.AbstractGameInstance;
-import me.carina.rpg.common.file.AssetGroup;
-import me.carina.rpg.common.file.Identifier;
-import me.carina.rpg.common.file.Path;
+import me.carina.rpg.common.world.CompoundFeature;
+import me.carina.rpg.common.world.unit.BattleUnit;
 
-public class BattleMap extends CompoundFeature {
+public class WorldMap extends CompoundFeature {
     Tile[][] tiles;
 
-    public BattleMap(){}//for json
+    public WorldMap(){}//for json
 
-    public BattleMap(AbstractGameInstance game) {
+    public WorldMap(AbstractGameInstance game) {
         super(game);
         resize(10,10);
         for (int x = 0; x < 10; x++) {
             for (int y = 0; y < 10; y++) {
                 Tile tile = new Tile(game);
                 tile.setFloor(game.getAssets().get("core","plains", Floor.class));
-                tile.setBattleActor(game.getAssets().get("core","green_slime",BattleUnit.class));
+                tile.setBattleActor(game.getAssets().get("core","green_slime", BattleUnit.class));
                 setTile(tile,x,y);
             }
         }
@@ -51,7 +50,7 @@ public class BattleMap extends CompoundFeature {
         if (0 <= tile.x && tile.x < getWidth() && 0 <= tile.y && tile.y < getHeight()){
             tiles[tile.x][tile.y] = tile;
         }
-        else game.getLogger().error("Tile location ("+tile.x+", "+tile.y+") is invalid");
+        else getGame().getLogger().error("Tile location ("+tile.x+", "+tile.y+") is invalid");
     }
     public void setTile(Tile tile, int x, int y){
         tile.x = x;
@@ -59,7 +58,7 @@ public class BattleMap extends CompoundFeature {
         if (0 <= tile.x && tile.x < getWidth() && 0 <= tile.y && tile.y < getHeight()){
             tiles[tile.x][tile.y] = tile;
         }
-        else game.getLogger().error("Tile location ("+tile.x+", "+tile.y+") is invalid");
+        else getGame().getLogger().error("Tile location ("+tile.x+", "+tile.y+") is invalid");
     }
     public int getWidth(){
         if (tiles == null) return 0;
@@ -72,6 +71,6 @@ public class BattleMap extends CompoundFeature {
 
     @Override
     public Actor newActor() {
-        return new BattleMapActor(this);
+        return new WorldMapActor(this);
     }
 }

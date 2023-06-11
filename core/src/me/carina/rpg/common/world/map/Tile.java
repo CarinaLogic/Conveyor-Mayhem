@@ -1,6 +1,8 @@
-package me.carina.rpg.common.map;
+package me.carina.rpg.common.world.map;
 
 import me.carina.rpg.common.AbstractGameInstance;
+import me.carina.rpg.common.world.CompoundFeature;
+import me.carina.rpg.common.world.unit.BattleActor;
 
 public class Tile extends CompoundFeature {
     int x;

@@ -1,7 +1,8 @@
-package me.carina.rpg.common.map;
+package me.carina.rpg.common.world.map;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
+import me.carina.rpg.common.world.unit.BattleActorActor;
 
 public class TileActor extends Group {
     Tile tile;

@@ -1,10 +1,9 @@
-package me.carina.rpg.common.map;
+package me.carina.rpg.common.world.map;
 
-import me.carina.rpg.common.AbstractGameInstance;
+import me.carina.rpg.common.world.Feature;
 import me.carina.rpg.common.file.AssetGroup;
-import me.carina.rpg.common.file.Identifier;
 
-public class Floor extends Feature{
+public class Floor extends Feature {
     boolean passable;
 
 

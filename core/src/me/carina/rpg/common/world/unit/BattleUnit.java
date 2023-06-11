@@ -1,8 +1,7 @@
-package me.carina.rpg.common.map;
+package me.carina.rpg.common.world.unit;
 
-import me.carina.rpg.common.AbstractGameInstance;
+import me.carina.rpg.common.world.Feature;
 import me.carina.rpg.common.file.AssetGroup;
-import me.carina.rpg.common.file.Identifier;
 
 public class BattleUnit extends BattleActor {
 

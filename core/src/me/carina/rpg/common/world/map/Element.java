@@ -1,4 +1,4 @@
-package me.carina.rpg.common.map;
+package me.carina.rpg.common.world.map;
 
 public enum Element {
     ;

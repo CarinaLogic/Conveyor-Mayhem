@@ -1,11 +1,7 @@
 package me.carina.rpg.client.scenes;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import me.carina.rpg.client.Client;
-import me.carina.rpg.common.file.AssetGroup;
-import me.carina.rpg.common.file.Path;
-import me.carina.rpg.common.map.BattleMap;
+import me.carina.rpg.common.world.map.WorldMap;
 
 public class BattleScreen extends BaseScreen{
     BattleMapStage battleMapStage;
@@ -25,7 +21,7 @@ public class BattleScreen extends BaseScreen{
         addStage(guiStage);
         battleMapStage.setCanvas(actorStage.canvas);
     }
-    public void setBattleMap(BattleMap battleMap){
-        battleMapStage.setBattleMap(battleMap);
+    public void setBattleMap(WorldMap worldMap){
+        battleMapStage.setBattleMap(worldMap);
     }
 }

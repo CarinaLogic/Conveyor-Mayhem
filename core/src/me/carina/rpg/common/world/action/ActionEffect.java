@@ -1,6 +1,8 @@
-package me.carina.rpg.common.map;
+package me.carina.rpg.common.world.action;
 
-public class ActionEffect extends AbstractAction{
+import me.carina.rpg.common.world.unit.BattleActor;
+
+public class ActionEffect extends AbstractAction {
 
     public ActionEffect(BattleActor actor) {
         super(actor);

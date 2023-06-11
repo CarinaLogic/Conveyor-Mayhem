@@ -1,4 +1,4 @@
-package me.carina.rpg.common.map;
+package me.carina.rpg.common.world;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import me.carina.rpg.common.*;

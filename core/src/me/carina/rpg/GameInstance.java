@@ -23,14 +23,18 @@ public class GameInstance extends ApplicationAdapter{
 	@Override
 	public void create () {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
-		client = new ExternalClient();
-		server = externalServer;
+		client = new InternalClient();
+		server = new InternalServer();
+//		client = new ExternalClient();
+//		server = externalServer;
 		client.getLogger().setLevel(Logger.DEBUG);
 		server.getLogger().setLevel(Logger.DEBUG);
 		client.create();
 		server.create();
-		server.open(18273);
-		client.addConnection(((ExternalClient) client).connect("localhost",18273));
+		client.addConnection(new C2SInternalConnection((InternalClient) client, (InternalServer) server));
+		server.addConnection(new S2CInternalConnection((InternalServer) server, (InternalClient) client));
+//		server.open(18273);
+//		client.addConnection(((ExternalClient) client).connect("localhost",18273));
 	}
 
 	@Override

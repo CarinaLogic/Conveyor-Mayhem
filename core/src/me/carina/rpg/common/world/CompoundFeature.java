@@ -1,4 +1,4 @@
-package me.carina.rpg.common.map;
+package me.carina.rpg.common.world;
 
 import me.carina.rpg.common.AbstractGameInstance;
 import me.carina.rpg.common.file.AssetGroup;

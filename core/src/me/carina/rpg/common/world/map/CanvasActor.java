@@ -1,4 +1,4 @@
-package me.carina.rpg.common.map;
+package me.carina.rpg.common.world.map;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;

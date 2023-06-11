@@ -1,4 +1,6 @@
-package me.carina.rpg.common.map;
+package me.carina.rpg.common.world.action;
+
+import me.carina.rpg.common.world.unit.BattleActor;
 
 public abstract class AbstractAction {
     BattleActor actor;

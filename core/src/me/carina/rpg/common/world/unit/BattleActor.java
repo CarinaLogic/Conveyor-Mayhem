@@ -1,8 +1,9 @@
-package me.carina.rpg.common.map;
+package me.carina.rpg.common.world.unit;
 
 import com.badlogic.gdx.utils.Array;
-import me.carina.rpg.common.AbstractGameInstance;
-import me.carina.rpg.common.file.Identifier;
+import me.carina.rpg.common.world.Feature;
+import me.carina.rpg.common.world.action.AbstractAction;
+import me.carina.rpg.common.world.map.Element;
 
 //named battle actor to distinguish from scene2d Actor
 public abstract class BattleActor extends Feature {
