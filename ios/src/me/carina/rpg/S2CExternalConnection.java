@@ -1,5 +1,6 @@
 package me.carina.rpg;
 
+import me.carina.rpg.packets.Packet;
 import me.carina.rpg.packets.connection.S2CConnection;
 import me.carina.rpg.server.Server;
 import org.java_websocket.WebSocket;
@@ -12,7 +13,7 @@ public class S2CExternalConnection extends S2CConnection {
     }
 
     @Override
-    public void send(Object object) {
+    public void send(Packet object) {
         webSocket.send(((ExternalServer)getServer()).getSerializer().serializeAsString(object));
     }
 

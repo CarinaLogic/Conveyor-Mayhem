@@ -1,7 +1,7 @@
 package me.carina.rpg.client.scenes;
 
 import me.carina.rpg.client.Client;
-import me.carina.rpg.common.world.map.WorldMap;
+import me.carina.rpg.common.battle.BattleMap;
 
 public class BattleScreen extends BaseScreen{
     BattleMapStage battleMapStage;
@@ -21,7 +21,7 @@ public class BattleScreen extends BaseScreen{
         addStage(guiStage);
         battleMapStage.setCanvas(actorStage.canvas);
     }
-    public void setBattleMap(WorldMap worldMap){
-        battleMapStage.setBattleMap(worldMap);
+    public void setBattleMap(BattleMap battleMap){
+        battleMapStage.setBattleMap(battleMap);
     }
 }

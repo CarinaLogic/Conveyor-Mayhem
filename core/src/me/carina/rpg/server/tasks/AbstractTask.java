@@ -8,25 +8,23 @@ public abstract class AbstractTask {
     Array<AbstractTask> nextTasks = new Array<>();
     boolean requireNextTask = false;
     boolean timed = false;
+    boolean prioritized = false;
     float accumulatedTime;
     float step = 1/60f;
     public AbstractTask(Server server){
         this.server = server;
         accumulatedTime = 0;
     }
-    public AbstractTask(Server server, boolean timed, AbstractTask... nextTasks){
-        this.server = server;
-        accumulatedTime = 0;
-        this.timed = timed;
-        addNextTasks(nextTasks);
+    public void timed(){
+        timed = true;
     }
-    public AbstractTask(Server server, boolean timed, boolean requireNextTask){
-        this.server = server;
-        accumulatedTime = 0;
-        this.timed = timed;
-        this.requireNextTask = requireNextTask;
+    public void requireNextTask(){
+        requireNextTask = true;
     }
-    public void addNextTasks(AbstractTask... tasks){
+    public void prioritize(){
+        prioritized = true;
+    }
+    public void nextTasks(AbstractTask... tasks){
         nextTasks.addAll(tasks);
     }
     public void tick(float delta){
@@ -59,5 +57,9 @@ public abstract class AbstractTask {
 
     public Server getServer() {
         return server;
+    }
+
+    public boolean isPrioritized() {
+        return prioritized;
     }
 }

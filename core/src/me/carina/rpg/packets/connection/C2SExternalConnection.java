@@ -1,8 +1,8 @@
 package me.carina.rpg.packets.connection;
 
 import com.github.czyzby.websocket.WebSocket;
-import me.carina.rpg.client.Client;
 import me.carina.rpg.client.ExternalClient;
+import me.carina.rpg.packets.Packet;
 
 public class C2SExternalConnection extends C2SConnection{
     WebSocket webSocket;
@@ -12,7 +12,7 @@ public class C2SExternalConnection extends C2SConnection{
     }
 
     @Override
-    public void send(Object object) {
+    public void send(Packet object) {
         webSocket.send(object);
     }
 

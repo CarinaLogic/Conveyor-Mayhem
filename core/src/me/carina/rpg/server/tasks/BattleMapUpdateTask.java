@@ -4,7 +4,7 @@ import me.carina.rpg.server.Server;
 
 public class BattleMapUpdateTask extends AbstractTask{
     public BattleMapUpdateTask(Server server) {
-        super(server, true, false);
+        super(server);
     }
 
     @Override

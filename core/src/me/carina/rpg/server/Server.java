@@ -3,10 +3,12 @@ package me.carina.rpg.server;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.Array;
 import me.carina.rpg.common.AbstractGameInstance;
+import me.carina.rpg.common.util.Array;
 import me.carina.rpg.packets.C2SPacket;
+import me.carina.rpg.packets.connection.Connection;
 import me.carina.rpg.server.tasks.AbstractTask;
+import me.carina.rpg.server.tasks.ClientConnectTask;
 import me.carina.rpg.server.tasks.LoadingTask;
 
 public abstract class Server extends AbstractGameInstance {
@@ -17,13 +19,22 @@ public abstract class Server extends AbstractGameInstance {
 
     @Override
     public void create() {
-        addTask(new LoadingTask(this,Gdx.files.internal("rpg")));
+        addTask(new LoadingTask(this,Gdx.files.internal("core")));
     }
 
     @Override
     public void render() {
+        boolean p = false;
         for (AbstractTask task : tasks) {
-            task.tick(Gdx.graphics.getDeltaTime());
+            if (task.isPrioritized()){
+                task.tick(Gdx.graphics.getDeltaTime());
+                p = true;
+            }
+        }
+        if (!p) {
+            for (AbstractTask task : tasks) {
+                task.tick(Gdx.graphics.getDeltaTime());
+            }
         }
     }
 
@@ -51,6 +62,12 @@ public abstract class Server extends AbstractGameInstance {
     }
     public void removeTask(AbstractTask task){
         tasks.removeValue(task,true);
+    }
+
+    @Override
+    public void addConnection(Connection connection) {
+        super.addConnection(connection);
+        addTask(new ClientConnectTask(this,connection));
     }
 
     @Override

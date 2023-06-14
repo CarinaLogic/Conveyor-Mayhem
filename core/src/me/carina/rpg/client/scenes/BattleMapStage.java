@@ -1,12 +1,12 @@
 package me.carina.rpg.client.scenes;
 
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import me.carina.rpg.common.world.map.WorldMap;
-import me.carina.rpg.common.world.map.WorldMapActor;
+import me.carina.rpg.common.battle.BattleMap;
+import me.carina.rpg.common.battle.BattleMapDisplay;
 import me.carina.rpg.common.world.map.CanvasActor;
 
 public class BattleMapStage extends GameStage {
-    WorldMapActor worldMapActor;
+    BattleMapDisplay battleMapDisplay;
     CanvasActor canvas;
     public BattleMapStage(){
         super(new PerspectiveViewport(10,10,new PerspectiveCamera(70,10,10)));
@@ -21,10 +21,10 @@ public class BattleMapStage extends GameStage {
         setDebugAll(true);
     }
 
-    public void setBattleMap(WorldMap worldMap) {
-        this.worldMapActor = new WorldMapActor(worldMap);
-        addActor(worldMapActor);
-        setScrollFocus(worldMapActor);
+    public void setBattleMap(BattleMap battleMap) {
+        this.battleMapDisplay = battleMap.newDisplay();
+        addActor(battleMapDisplay);
+        setScrollFocus(battleMapDisplay);
     }
 
     public CanvasActor getCanvas() {

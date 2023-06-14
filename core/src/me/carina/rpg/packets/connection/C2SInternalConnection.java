@@ -1,9 +1,8 @@
 package me.carina.rpg.packets.connection;
 
-import me.carina.rpg.client.Client;
 import me.carina.rpg.client.InternalClient;
+import me.carina.rpg.packets.Packet;
 import me.carina.rpg.server.InternalServer;
-import me.carina.rpg.server.Server;
 
 public class C2SInternalConnection extends C2SConnection{
     InternalServer server;
@@ -13,7 +12,7 @@ public class C2SInternalConnection extends C2SConnection{
     }
 
     @Override
-    public void send(Object object) {
+    public void send(Packet object) {
         server.recieve(object, server.getConnection(client));
     }
 

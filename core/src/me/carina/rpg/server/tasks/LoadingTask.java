@@ -8,7 +8,8 @@ public class LoadingTask extends AbstractTask{
     boolean queued = false;
     boolean loaded = false;
     public LoadingTask(Server server, FileHandle root) {
-        super(server,false,true);
+        super(server);
+        prioritize();
         this.root = root;
     }
 

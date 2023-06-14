@@ -11,7 +11,11 @@ public class Tile extends CompoundFeature {
     int y;
     Floor floor;
     Unit unit;
-
+    public Tile(AbstractGameInstance game, int x, int y){
+        setGame(game);
+        this.x = x;
+        this.y = y;
+    }
     public void setFloor(Floor floor) {
         this.floor = floor;
     }
