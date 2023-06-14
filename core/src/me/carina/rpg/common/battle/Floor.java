@@ -1,15 +1,13 @@
-package me.carina.rpg.common.world.map;
+package me.carina.rpg.common.battle;
 
-import me.carina.rpg.common.world.Feature;
+import me.carina.rpg.common.Display;
+import me.carina.rpg.common.Feature;
 import me.carina.rpg.common.file.AssetGroup;
 
 public class Floor extends Feature {
-    boolean passable;
-
-
     @Override
-    public FloorActor newActor() {
-        return new FloorActor(this);
+    public FloorDisplay newDisplay() {
+        return new FloorDisplay(this);
     }
 
     @Override
@@ -24,14 +22,9 @@ public class Floor extends Feature {
 
 
     public static class Def extends Feature.Def{
-        boolean passable;
-
         @Override
         public void initFeature(Feature feature) {
-            if (feature instanceof Floor) {
-                Floor that = (Floor) feature;
-                that.passable = passable;
-            }
+            //NOOP
         }
     }
 }

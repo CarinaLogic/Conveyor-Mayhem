@@ -1,5 +1,6 @@
 package me.carina.rpg.common.util;
 
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.Predicate;
 
@@ -9,6 +10,9 @@ import java.util.function.Function;
 //Custom array implementation which extends libgdx array (may change) with extra functionality
 //I know it is VERY inefficient implementation, will fix it once situation is stable
 public class Array<T> extends com.badlogic.gdx.utils.Array<T> {
+    public Array(){super();}
+    @SafeVarargs
+    public Array(T... items){super(items);}
     public Array<T> match(Predicate<T> predicate){
         Array<T> array = new Array<>();
         for (T item : this.select(predicate)) {
@@ -36,5 +40,13 @@ public class Array<T> extends com.badlogic.gdx.utils.Array<T> {
             map.put(item, func.apply(item));
         }
         return map;
+    }
+
+    public void remove(T value){
+        this.removeValue(value,false);
+        if (value instanceof Disposable) {
+            Disposable d = (Disposable) value;
+            d.dispose();
+        }
     }
 }

@@ -1,24 +1,22 @@
-package me.carina.rpg.common.world.map;
+package me.carina.rpg.common.battle;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import me.carina.rpg.common.AbstractGameInstance;
-import me.carina.rpg.common.world.CompoundFeature;
-import me.carina.rpg.common.world.unit.BattleUnit;
+import me.carina.rpg.common.CompoundFeature;
+import me.carina.rpg.common.Display;
+import me.carina.rpg.common.unit.Unit;
+import me.carina.rpg.common.util.Array;
 
-public class WorldMap extends CompoundFeature {
+public class BattleMap extends CompoundFeature {
     Tile[][] tiles;
+    Array<Unit> units = new Array<>();
+    public BattleMap(){}//for json
 
-    public WorldMap(){}//for json
-
-    public WorldMap(AbstractGameInstance game) {
+    public BattleMap(AbstractGameInstance game) {
         super(game);
         resize(10,10);
         for (int x = 0; x < 10; x++) {
             for (int y = 0; y < 10; y++) {
-                Tile tile = new Tile(game);
-                tile.setFloor(game.getAssets().get("core","plains", Floor.class));
-                tile.setBattleActor(game.getAssets().get("core","green_slime", BattleUnit.class));
-                setTile(tile,x,y);
+                setTile(game.getAssets().get("core","plains", Tile.class),x,y);
             }
         }
     }
@@ -70,7 +68,7 @@ public class WorldMap extends CompoundFeature {
     }
 
     @Override
-    public Actor newActor() {
-        return new WorldMapActor(this);
+    public Display newDisplay() {
+        return new BattleMapDisplay(this);
     }
 }

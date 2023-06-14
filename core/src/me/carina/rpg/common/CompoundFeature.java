@@ -1,6 +1,5 @@
-package me.carina.rpg.common.world;
+package me.carina.rpg.common;
 
-import me.carina.rpg.common.AbstractGameInstance;
 import me.carina.rpg.common.file.AssetGroup;
 
 public abstract class CompoundFeature extends Feature {

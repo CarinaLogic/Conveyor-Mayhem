@@ -1,7 +1,8 @@
-package me.carina.rpg.common.world;
+package me.carina.rpg.common;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import me.carina.rpg.common.*;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.Disposable;
+import me.carina.rpg.client.Client;
 import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.file.Identifier;
 import me.carina.rpg.common.file.Path;
@@ -12,11 +13,18 @@ import me.carina.rpg.common.file.Path;
 //2. The Actor object, which holds rendering info, and renders itself
 //3. The definition object, which is provided by assets in the form of json, which is used to construct parent
 //   optional, should be simple
-public abstract class Feature implements GameObject, Identifiable, Defined, AssetGrouped {
+public abstract class Feature implements GameObject, Identifiable, Defined, AssetGrouped, Disposable {
     transient AbstractGameInstance game;
+    transient Display display;
     Identifier id;
     public Feature(){} //for json
-    public abstract Actor newActor();
+    public abstract Display newDisplay();
+    public void bindDisplay(){
+        this.display = newDisplay();
+    }
+    public void destroyDisplay(){
+        if (this.display != null) this.display.addAction(Actions.removeActor());
+    }
     public AbstractGameInstance getGame(){
         return game;
     }
@@ -25,6 +33,14 @@ public abstract class Feature implements GameObject, Identifiable, Defined, Asse
         this.game = game;
         return this;
     }
+
+    @Override
+    public void dispose() {
+        if (game instanceof Client) {
+            destroyDisplay();
+        }
+    }
+
     public abstract AssetGroup getAssetGroup();
 
     @Override

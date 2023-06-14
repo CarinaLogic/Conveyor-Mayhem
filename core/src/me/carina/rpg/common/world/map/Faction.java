@@ -1,8 +1,8 @@
 package me.carina.rpg.common.world.map;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import me.carina.rpg.common.world.Feature;
+import me.carina.rpg.common.Display;
+import me.carina.rpg.common.Feature;
 import me.carina.rpg.common.file.AssetGroup;
 
 public class Faction extends Feature {
@@ -13,8 +13,8 @@ public class Faction extends Feature {
 
 
     @Override
-    public Actor newActor() {
-        return new FactionActor(this);
+    public FactionDisplay newDisplay() {
+        return new FactionDisplay(this);
     }
 
     @Override
