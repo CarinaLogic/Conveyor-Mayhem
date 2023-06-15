@@ -4,7 +4,8 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
 import com.github.czyzby.websocket.GwtWebSockets;
-import me.carina.rpg.GameInstance;
+import me.carina.rpg.Game;
+import me.carina.rpg.server.AbstractExternalServer;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -19,6 +20,7 @@ public class HtmlLauncher extends GwtApplication {
         @Override
         public ApplicationListener createApplicationListener () {
                 GwtWebSockets.initiate();
-                return new GameInstance(new NullExternalServer());
+                return new Game(new HtmlPlatform());
         }
+
 }

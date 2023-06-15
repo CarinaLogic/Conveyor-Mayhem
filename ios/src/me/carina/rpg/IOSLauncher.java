@@ -1,19 +1,19 @@
 package me.carina.rpg;
 
 import com.github.czyzby.websocket.CommonWebSockets;
+import me.carina.rpg.server.AbstractExternalServer;
 import org.robovm.apple.foundation.NSAutoreleasePool;
 import org.robovm.apple.uikit.UIApplication;
 
 import com.badlogic.gdx.backends.iosrobovm.IOSApplication;
 import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration;
-import me.carina.rpg.GameInstance;
 
-public class IOSLauncher extends IOSApplication.Delegate {
+public class IOSLauncher extends IOSApplication.Delegate{
     @Override
     protected IOSApplication createApplication() {
         CommonWebSockets.initiate();
         IOSApplicationConfiguration config = new IOSApplicationConfiguration();
-        return new IOSApplication(new GameInstance(new CommonExternalServer()), config);
+        return new IOSApplication(new Game(new IOSPlatform()), config);
     }
 
     public static void main(String[] argv) {

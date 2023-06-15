@@ -5,23 +5,25 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Logger;
 import me.carina.rpg.client.Client;
-import me.carina.rpg.client.ExternalClient;
 import me.carina.rpg.client.InternalClient;
+import me.carina.rpg.common.AbstractGameInstance;
 import me.carina.rpg.packets.connection.C2SInternalConnection;
 import me.carina.rpg.packets.connection.S2CInternalConnection;
 import me.carina.rpg.server.AbstractExternalServer;
 import me.carina.rpg.server.InternalServer;
 import me.carina.rpg.server.Server;
 
-public class GameInstance extends ApplicationAdapter{
+public class Game extends ApplicationAdapter{
 	Client client;
 	Server server;
-	AbstractExternalServer externalServer;
-	public GameInstance(AbstractExternalServer server){
-		this.externalServer = server;
+	Platform platform;
+	AbstractGameInstance gameInstance;
+	public Game(Platform platform){
+		this.platform = platform;
 	}
 	@Override
 	public void create () {
+		//Due to threading not supported on GWT, dirty solution
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		client = new InternalClient();
 		server = new InternalServer();
@@ -29,9 +31,14 @@ public class GameInstance extends ApplicationAdapter{
 //		server = externalServer;
 		client.getLogger().setLevel(Logger.DEBUG);
 		server.getLogger().setLevel(Logger.DEBUG);
+		//getInstance() should NEVER be called until now
+		gameInstance = client;
 		client.create();
+		gameInstance = server;
 		server.create();
+		gameInstance = client;
 		client.addConnection(new C2SInternalConnection((InternalClient) client, (InternalServer) server));
+		gameInstance = server;
 		server.addConnection(new S2CInternalConnection((InternalServer) server, (InternalClient) client));
 //		server.open(18273);
 //		client.addConnection(((ExternalClient) client).connect("localhost",18273));
@@ -39,7 +46,9 @@ public class GameInstance extends ApplicationAdapter{
 
 	@Override
 	public void render() {
+		gameInstance = client;
 		server.render();
+		gameInstance = server;
 		client.render();
 	}
 
@@ -64,5 +73,8 @@ public class GameInstance extends ApplicationAdapter{
 	public void dispose() {
 		client.dispose();
 		server.dispose();
+	}
+	public AbstractGameInstance getInstance(){
+		return gameInstance;
 	}
 }
