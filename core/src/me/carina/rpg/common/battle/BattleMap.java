@@ -1,18 +1,16 @@
 package me.carina.rpg.common.battle;
 
+import me.carina.rpg.Game;
 import me.carina.rpg.common.AbstractGameInstance;
 import me.carina.rpg.common.CompoundFeature;
 
 public class BattleMap extends CompoundFeature {
     Tile[][] tiles;
-    public BattleMap(){}//for json
-
-    public BattleMap(AbstractGameInstance game) {
-        super(game);
+    public BattleMap() {
         resize(10,10);
         for (int x = 0; x < 10; x++) {
             for (int y = 0; y < 10; y++) {
-                Tile tile = getGame().getAssets().get("core","plains", Tile.class);
+                Tile tile = Game.getInstance().getAssets().get("core","plains", Tile.class);
                 setTile(tile,x,y);
             }
         }
@@ -47,7 +45,7 @@ public class BattleMap extends CompoundFeature {
         if (0 <= tile.x && tile.x < getWidth() && 0 <= tile.y && tile.y < getHeight()){
             tiles[tile.x][tile.y] = tile;
         }
-        else getGame().getLogger().error("Tile location ("+tile.x+", "+tile.y+") is invalid");
+        else Game.getInstance().getLogger().error("Tile location ("+tile.x+", "+tile.y+") is invalid");
     }
     public int getWidth(){
         if (tiles == null) return 0;

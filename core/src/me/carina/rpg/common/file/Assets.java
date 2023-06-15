@@ -75,9 +75,6 @@ public class Assets {
                 }
             }
         }
-        if (value instanceof GameObject){
-            ((GameObject)value).setGame(game);
-        }
         if (value instanceof Identifiable){
             ((Identifiable)value).setId(path.toIdentifier());
         }

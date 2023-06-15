@@ -22,7 +22,6 @@ public abstract class BaseScreen implements Screen {
 
 
     public void addStage(GameStage stage){
-        stage.setGame(game);
         stage.init();
         multiplexer.addProcessor(stage);
     }

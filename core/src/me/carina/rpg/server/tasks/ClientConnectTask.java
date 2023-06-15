@@ -15,7 +15,7 @@ public class ClientConnectTask extends AbstractTask{
 
     @Override
     public boolean run() {
-        connection.send(new S2CBattleMapInitPacket(new BattleMap(server)));
+        connection.send(new S2CBattleMapInitPacket(new BattleMap()));
         return true;
     }
 }

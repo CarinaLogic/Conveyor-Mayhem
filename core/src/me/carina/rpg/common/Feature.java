@@ -14,8 +14,7 @@ import me.carina.rpg.common.file.Path;
 //2. The Actor object, which holds rendering info, and renders itself
 //3. The definition object, which is provided by assets in the form of json, which is used to construct parent
 //   optional, should be simple
-public abstract class Feature implements GameObject, Identifiable, Defined, AssetGrouped, Disposable {
-    transient AbstractGameInstance game;
+public abstract class Feature implements Identifiable, Defined, AssetGrouped, Disposable {
     transient Display display;
     Identifier id;
     public Feature(){} //for json
@@ -29,20 +28,10 @@ public abstract class Feature implements GameObject, Identifiable, Defined, Asse
     public void destroyDisplay(){
         if (this.display != null) this.display.addAction(Actions.removeActor());
     }
-    public AbstractGameInstance getGame(){
-        return game;
-    }
-    @Override
-    public Feature setGame(AbstractGameInstance game) {
-        this.game = game;
-        return this;
-    }
 
     @Override
     public void dispose() {
-        if (game instanceof Client) {
-            destroyDisplay();
-        }
+        destroyDisplay();
     }
 
     public abstract AssetGroup getAssetGroup();

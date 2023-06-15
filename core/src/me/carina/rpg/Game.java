@@ -14,12 +14,14 @@ import me.carina.rpg.server.InternalServer;
 import me.carina.rpg.server.Server;
 
 public class Game extends ApplicationAdapter{
+	static Game game;
 	Client client;
 	Server server;
 	Platform platform;
 	AbstractGameInstance gameInstance;
 	public Game(Platform platform){
 		this.platform = platform;
+		Game.game = this;
 	}
 	@Override
 	public void create () {
@@ -74,7 +76,8 @@ public class Game extends ApplicationAdapter{
 		client.dispose();
 		server.dispose();
 	}
-	public AbstractGameInstance getInstance(){
-		return gameInstance;
+	public static AbstractGameInstance getInstance(){
+		return game.gameInstance;
 	}
+
 }

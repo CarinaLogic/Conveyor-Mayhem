@@ -5,9 +5,6 @@ import me.carina.rpg.common.file.AssetGroup;
 public abstract class CompoundFeature extends Feature {
     static final Def def = new Def();
     public CompoundFeature(){} //for json
-    public CompoundFeature(AbstractGameInstance game) {
-        setGame(game);
-    }
 
     @Override
     public AssetGroup getAssetGroup() {
