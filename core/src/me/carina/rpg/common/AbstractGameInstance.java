@@ -3,6 +3,8 @@ package me.carina.rpg.common;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
+import com.github.czyzby.websocket.serialization.Serializer;
+import com.github.czyzby.websocket.serialization.impl.JsonSerializer;
 import me.carina.rpg.common.file.AssetFilterProvider;
 import me.carina.rpg.common.file.Assets;
 import me.carina.rpg.packets.Packet;
@@ -13,6 +15,7 @@ public abstract class AbstractGameInstance implements PacketHandler, AssetFilter
     Logger logger;
     Assets assets;
     Array<Connection> connections;
+    Serializer serializer = new JsonSerializer();
     public AbstractGameInstance(String loggerTag) {
         this.assets = new Assets(this,this);
         this.logger = new Logger(loggerTag);
@@ -55,4 +58,7 @@ public abstract class AbstractGameInstance implements PacketHandler, AssetFilter
         return logger;
     }
 
+    public Serializer getSerializer() {
+        return serializer;
+    }
 }

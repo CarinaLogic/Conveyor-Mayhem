@@ -7,6 +7,7 @@ import me.carina.rpg.packets.connection.C2SConnection;
 
 public class S2CBattleMapInitPacket extends S2CPacket{
     BattleMap map;
+    public S2CBattleMapInitPacket(){} //for json
     public S2CBattleMapInitPacket(BattleMap map){
         this.map = map;
     }

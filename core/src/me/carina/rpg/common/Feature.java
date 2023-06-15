@@ -1,5 +1,6 @@
 package me.carina.rpg.common;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Disposable;
 import me.carina.rpg.client.Client;
@@ -18,10 +19,13 @@ public abstract class Feature implements GameObject, Identifiable, Defined, Asse
     transient Display display;
     Identifier id;
     public Feature(){} //for json
+
+    /**
+     * Binds new display to this object, discarding the old one
+     * @return The display object
+     */
     public abstract Display newDisplay();
-    public void bindDisplay(){
-        this.display = newDisplay();
-    }
+
     public void destroyDisplay(){
         if (this.display != null) this.display.addAction(Actions.removeActor());
     }
@@ -56,6 +60,11 @@ public abstract class Feature implements GameObject, Identifiable, Defined, Asse
     public Path getPath(){
         return getId().toPath(getAssetGroup());
     }
+
+    public void setDisplay(Display display) {
+        this.display = display;
+    }
+
     public static abstract class Def implements Identifiable, Definition {
         Identifier id;
         public abstract void initFeature(Feature feature);

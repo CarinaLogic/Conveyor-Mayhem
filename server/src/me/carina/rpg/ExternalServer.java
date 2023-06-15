@@ -1,7 +1,5 @@
 package me.carina.rpg;
 
-import com.github.czyzby.websocket.serialization.Serializer;
-import com.github.czyzby.websocket.serialization.impl.JsonSerializer;
 import me.carina.rpg.server.AbstractExternalServer;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
@@ -14,7 +12,6 @@ import java.net.InetSocketAddress;
  */
 public class ExternalServer extends AbstractExternalServer {
     WebSocketServer server;
-    Serializer serializer = new JsonSerializer();
     boolean isOpen = false;
     public void open(int port){
         server = new WebSocketServer(new InetSocketAddress(port)) {
@@ -32,7 +29,7 @@ public class ExternalServer extends AbstractExternalServer {
 
             @Override
             public void onMessage(WebSocket conn, String message) {
-                recieve(serializer.deserialize(message), getConnection(conn));
+                recieve(getSerializer().deserialize(message), getConnection(conn));
             }
 
             @Override
@@ -71,11 +68,6 @@ public class ExternalServer extends AbstractExternalServer {
     @Override
     public boolean isOpen() {
         return isOpen;
-    }
-
-
-    public Serializer getSerializer() {
-        return serializer;
     }
 
 }

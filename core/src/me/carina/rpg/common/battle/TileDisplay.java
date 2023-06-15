@@ -1,25 +1,21 @@
 package me.carina.rpg.common.battle;
 
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import me.carina.rpg.common.Display;
-import me.carina.rpg.common.unit.Unit;
-import me.carina.rpg.common.unit.UnitDisplay;
 
-public class TileDisplay extends Group implements Display {
+public class TileDisplay extends Image implements Display {
     Tile tile;
     public TileDisplay(Tile tile){
         this.tile = tile;
-        if (tile.floor != null){
-            FloorDisplay f = tile.floor.newDisplay();
-            f.setSize(1,1);
-            addActor(f);
-        }
-        if (tile.unit != null) {
-            UnitDisplay u = tile.unit.newDisplay();
-            addActor(u);
-        }
+        setDrawable(tile.getGame().getAssets().get(tile.getPath(), Drawable.class));
         setSize(1,1);
-        setPosition(tile.x,tile.y, Align.bottomLeft);
+        setPosition(tile.x,tile.y);
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
     }
 }

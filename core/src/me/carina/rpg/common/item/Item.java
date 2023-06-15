@@ -13,7 +13,9 @@ public class Item extends Feature {
 
     @Override
     public Display newDisplay() {
-        return new ItemDisplay(this);
+        ItemDisplay d = new ItemDisplay(this);
+        setDisplay(d);
+        return d;
     }
 
     @Override

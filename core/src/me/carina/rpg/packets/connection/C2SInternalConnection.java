@@ -13,7 +13,8 @@ public class C2SInternalConnection extends C2SConnection{
 
     @Override
     public void send(Packet object) {
-        server.recieve(object, server.getConnection(client));
+        //Serialize and deserialize to remove transient fields, making it act as the same as external connections
+        server.recieve(server.getSerializer().deserialize(server.getSerializer().serialize(object)), server.getConnection(client));
     }
 
     @Override

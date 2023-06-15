@@ -1,32 +1,38 @@
 package me.carina.rpg.common.battle;
 
 import me.carina.rpg.common.AbstractGameInstance;
-import me.carina.rpg.common.CompoundFeature;
-import me.carina.rpg.common.Display;
-import me.carina.rpg.common.unit.Unit;
-import me.carina.rpg.common.world.map.Element;
+import me.carina.rpg.common.Feature;
+import me.carina.rpg.common.file.AssetGroup;
 
-public class Tile extends CompoundFeature {
+public class Tile extends Feature {
     int x;
     int y;
-    Floor floor;
-    Unit unit;
-    public Tile(AbstractGameInstance game, int x, int y){
-        setGame(game);
+    public void setPos(int x, int y){
         this.x = x;
         this.y = y;
     }
-    public void setFloor(Floor floor) {
-        this.floor = floor;
-    }
-
-    public void setUnit(Unit unit) {
-        this.unit = unit;
-    }
-
-
     @Override
     public TileDisplay newDisplay() {
-        return new TileDisplay(this);
+        TileDisplay d = new TileDisplay(this);
+        setDisplay(d);
+        return d;
+    }
+
+    @Override
+    public Class<Def> getDefClass() {
+        return Def.class;
+    }
+
+    @Override
+    public AssetGroup getAssetGroup() {
+        return AssetGroup.tiles;
+    }
+
+
+    public static class Def extends Feature.Def{
+        @Override
+        public void initFeature(Feature feature) {
+            //NOOP
+        }
     }
 }

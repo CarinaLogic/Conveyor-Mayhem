@@ -5,6 +5,7 @@ import java.util.Objects;
 public class Identifier {
     String nameSpace;
     String id;
+    public Identifier(){} //for json
     public Identifier(String nameSpace, String id){
         this.nameSpace = nameSpace;
         this.id = id;

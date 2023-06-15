@@ -14,7 +14,7 @@ public class S2CExternalConnection extends S2CConnection {
 
     @Override
     public void send(Packet object) {
-        webSocket.send(((ExternalServer)getServer()).getSerializer().serializeAsString(object));
+        webSocket.send(getServer().getSerializer().serialize(object));
     }
 
     @Override

@@ -15,8 +15,12 @@ public class Unit extends Feature {
 
     @Override
     public UnitDisplay newDisplay() {
-        return new UnitDisplay(this);
+        UnitDisplay d = new UnitDisplay(this);
+        setDisplay(d);
+        return d;
     }
+
+
 
     @Override
     public AssetGroup getAssetGroup() {

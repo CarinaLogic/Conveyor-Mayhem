@@ -2,9 +2,6 @@ package me.carina.rpg.common.battle;
 
 import me.carina.rpg.common.AbstractGameInstance;
 import me.carina.rpg.common.CompoundFeature;
-import me.carina.rpg.common.Display;
-import me.carina.rpg.common.unit.Unit;
-import me.carina.rpg.common.util.Array;
 
 public class BattleMap extends CompoundFeature {
     Tile[][] tiles;
@@ -15,10 +12,8 @@ public class BattleMap extends CompoundFeature {
         resize(10,10);
         for (int x = 0; x < 10; x++) {
             for (int y = 0; y < 10; y++) {
-                Tile tile = new Tile(game,x,y);
-                tile.setFloor(getGame().getAssets().get("core","plains",Floor.class));
-                setTile(tile);
-
+                Tile tile = getGame().getAssets().get("core","plains", Tile.class);
+                setTile(tile,x,y);
             }
         }
     }
@@ -46,12 +41,6 @@ public class BattleMap extends CompoundFeature {
         }
         tiles = newTiles;
     }
-    public void setTile(Tile tile){
-        if (0 <= tile.x && tile.x < getWidth() && 0 <= tile.y && tile.y < getHeight()){
-            tiles[tile.x][tile.y] = tile;
-        }
-        else getGame().getLogger().error("Tile location ("+tile.x+", "+tile.y+") is invalid");
-    }
     public void setTile(Tile tile, int x, int y){
         tile.x = x;
         tile.y = y;
@@ -71,6 +60,8 @@ public class BattleMap extends CompoundFeature {
 
     @Override
     public BattleMapDisplay newDisplay() {
-        return new BattleMapDisplay(this);
+        BattleMapDisplay d = new BattleMapDisplay(this);
+        setDisplay(d);
+        return d;
     }
 }
