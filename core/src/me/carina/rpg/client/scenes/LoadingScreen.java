@@ -3,18 +3,17 @@ package me.carina.rpg.client.scenes;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Action;
+import me.carina.rpg.Game;
 import me.carina.rpg.client.Client;
 
 public class LoadingScreen extends BaseScreen{
-
     LoadingStage stage;
     FileHandle root;
-    Screen nextScreen = null;
     boolean queued = false;
     boolean loaded = false;
 
-    public LoadingScreen(Client game, FileHandle root) {
-        super(game);
+    public LoadingScreen(FileHandle root) {
+        super();
         this.root = root;
     }
 
@@ -26,16 +25,15 @@ public class LoadingScreen extends BaseScreen{
             @Override
             public boolean act(float delta) {
                 if (!queued) {
-                    game.getAssets().queue(root);
+                    Game.getInstance().getAssets().queue(root);
                     queued = true;
                     return false;
                 }
-                if (!loaded && game.getAssets().load()) {
+                if (!loaded && Game.getInstance().getAssets().load()) {
                     loaded = true;
                     return false;
                 }
-                if (loaded && nextScreen != null){
-                    game.setScreen(nextScreen);
+                if (loaded){
                     return true;
                 }
                 return false;
@@ -43,7 +41,8 @@ public class LoadingScreen extends BaseScreen{
         });
     }
 
-    public void setNextScreen(Screen nextScreen) {
-        this.nextScreen = nextScreen;
+    @Override
+    public boolean canChangeScreen() {
+        return loaded;
     }
 }

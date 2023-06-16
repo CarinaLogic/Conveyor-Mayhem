@@ -7,9 +7,6 @@ public class BattleScreen extends BaseScreen{
     BattleMapStage battleMapStage;
     BattleMapActorStage actorStage;
     BattleMapGUIStage guiStage;
-    public BattleScreen(Client game) {
-        super(game);
-    }
 
     @Override
     public void show() {
@@ -21,6 +18,12 @@ public class BattleScreen extends BaseScreen{
         addStage(guiStage);
         battleMapStage.setCanvas(actorStage.canvas);
     }
+
+    @Override
+    public boolean canChangeScreen() {
+        return true;
+    }
+
     public void setBattleMap(BattleMap battleMap){
         battleMapStage.setBattleMap(battleMap);
     }

@@ -23,7 +23,7 @@ public abstract class Server extends AbstractGameInstance {
     }
 
     @Override
-    public void render() {
+    public void tick() {
         boolean p = false;
         for (AbstractTask task : tasks) {
             if (task.isPrioritized()){

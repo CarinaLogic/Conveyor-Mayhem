@@ -3,6 +3,7 @@ package me.carina.rpg.common;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
+import com.badlogic.gdx.utils.Queue;
 import com.github.czyzby.websocket.serialization.Serializer;
 import com.github.czyzby.websocket.serialization.impl.JsonSerializer;
 import me.carina.rpg.common.file.AssetFilterProvider;
@@ -16,6 +17,7 @@ public abstract class AbstractGameInstance implements PacketHandler, AssetFilter
     Assets assets;
     Array<Connection> connections;
     Serializer serializer = new JsonSerializer();
+    Queue<DirectedPacket> packetQueue = new Queue<>();
     public AbstractGameInstance(String loggerTag) {
         this.assets = new Assets(this,this);
         this.logger = new Logger(loggerTag);
@@ -26,7 +28,7 @@ public abstract class AbstractGameInstance implements PacketHandler, AssetFilter
     public void recieve(Object object, Connection connection) {
         if (object instanceof Packet) {
             Packet packet = (Packet) object;
-            packet.onRecieve(this, connection);
+            packetQueue.addLast(new DirectedPacket(connection,packet));
         }
         else logger.error("Received non-packet object ("+object.getClass().getSimpleName()+"), ignoring");
     }
@@ -41,6 +43,17 @@ public abstract class AbstractGameInstance implements PacketHandler, AssetFilter
         }
         return null;
     }
+
+    @Override
+    public void render() {
+        for (DirectedPacket packet : packetQueue) {
+            packet.packet.onRecieve(this, packet.connection);
+            packetQueue.removeFirst();
+        }
+        tick();
+    }
+
+    public abstract void tick();
 
     public void addConnection(Connection connection){
         connections.add(connection);
@@ -60,5 +73,14 @@ public abstract class AbstractGameInstance implements PacketHandler, AssetFilter
 
     public Serializer getSerializer() {
         return serializer;
+    }
+
+    public static class DirectedPacket{
+        Connection connection;
+        Packet packet;
+        public DirectedPacket(Connection connection, Packet packet){
+            this.connection = connection;
+            this.packet = packet;
+        }
     }
 }

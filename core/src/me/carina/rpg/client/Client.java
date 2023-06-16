@@ -1,9 +1,9 @@
 package me.carina.rpg.client;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
-import me.carina.rpg.client.scenes.BattleScreen;
+import com.badlogic.gdx.utils.Queue;
+import me.carina.rpg.client.scenes.BaseScreen;
 import me.carina.rpg.client.scenes.LoadingScreen;
 import me.carina.rpg.common.AbstractGameInstance;
 
@@ -11,61 +11,54 @@ import me.carina.rpg.common.AbstractGameInstance;
  * Abstract implementation of a client.
  */
 public abstract class Client extends AbstractGameInstance{
-    Screen screen;
+    Queue<BaseScreen> screenQueue = new Queue<>();
+    Queue<BaseScreen> pendingScreenQueue = new Queue<>();
     public Client() {
         super("Client");
     }
 
     @Override
     public void create() {
-        LoadingScreen loadingScreen = new LoadingScreen(this,Gdx.files.internal("core"));
-        setScreen(loadingScreen);
+        LoadingScreen loadingScreen = new LoadingScreen(Gdx.files.internal("core"));
+        queueScreen(loadingScreen);
     }
 
     @Override
-    public void render() {
-        if (screen != null) screen.render(Gdx.graphics.getDeltaTime());
+    public void tick() {
+        if (!pendingScreenQueue.isEmpty() && (screenQueue.isEmpty() || screenQueue.last().canChangeScreen())){
+            screenQueue.addLast(pendingScreenQueue.first());
+            pendingScreenQueue.removeFirst();
+        }
+        if (!screenQueue.isEmpty()) screenQueue.last().render(Gdx.graphics.getDeltaTime());
     }
 
     @Override
     public void resize(int width, int height) {
-        if (screen != null) screen.resize(width,height);
+        screenQueue.forEach(s -> s.resize(width, height));
     }
 
     @Override
     public void pause() {
-        if (screen != null) screen.pause();
+        screenQueue.forEach(BaseScreen::pause);
     }
 
     @Override
     public void resume() {
-        if (screen != null) screen.resume();
+        screenQueue.forEach(BaseScreen::resume);
     }
 
     @Override
     public void dispose() {
-        if (screen != null) screen.dispose();
+        screenQueue.forEach(BaseScreen::dispose);
     }
 
-    public void setScreen(Screen screen) {
-        Screen oldScreen = this.screen;
-        if (this.screen != null) this.screen.hide();
-        this.screen = screen;
-        if (oldScreen != null) {
-            getLogger().debug("Current screen changed from "+oldScreen.getClass().getSimpleName()
-                    +" to "+screen.getClass().getSimpleName());
-        }
-        else {
-            getLogger().debug("Current screen changed to "+screen.getClass().getSimpleName());
-        }
-        if (this.screen != null) {
-            this.screen.show();
-            this.screen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        }
+    public void queueScreen(BaseScreen screen) {
+        screen.show();
+        pendingScreenQueue.addLast(screen);
     }
 
-    public Screen getScreen() {
-        return screen;
+    public BaseScreen getScreen() {
+        return screenQueue.last();
     }
 
     @Override

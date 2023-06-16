@@ -13,8 +13,8 @@ public class S2CBattleMapInitPacket extends S2CPacket{
     }
     @Override
     public void onRecieve(Client client, C2SConnection connection) {
-        BattleScreen battleScreen = new BattleScreen(client);
-        client.setScreen(battleScreen);
+        BattleScreen battleScreen = new BattleScreen();
+        client.queueScreen(battleScreen);
         battleScreen.setBattleMap(map);
     }
 }

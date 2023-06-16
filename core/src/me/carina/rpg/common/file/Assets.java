@@ -80,7 +80,7 @@ public class Assets {
         }
         if (value instanceof Defined){
             Definition def = get(path,((Defined)value).getDefClass());
-            def.init(((Defined) value));
+            if (def != null) def.init(((Defined) value));
         }
         return value;
     }

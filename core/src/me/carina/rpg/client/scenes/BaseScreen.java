@@ -11,10 +11,8 @@ import me.carina.rpg.client.Client;
 
 public abstract class BaseScreen implements Screen {
     InputMultiplexer multiplexer = new InputMultiplexer();
-    Client game;
 
-    public BaseScreen(Client game){
-        this.game = game;
+    public BaseScreen(){
         Gdx.input.setInputProcessor(multiplexer);
     }
 
@@ -74,4 +72,6 @@ public abstract class BaseScreen implements Screen {
     public void dispose() {
 
     }
+
+    public abstract boolean canChangeScreen();
 }

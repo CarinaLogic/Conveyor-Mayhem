@@ -29,8 +29,6 @@ public class PerspectiveViewport extends ExtendViewport {
         tmp.set(worldCoords,0);
         super.project(tmp);
         return worldCoords.set(tmp.x,tmp.y);
-        //71 120
-        //509 558
     }
 
     @Override
