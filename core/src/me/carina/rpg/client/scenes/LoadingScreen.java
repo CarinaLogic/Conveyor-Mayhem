@@ -18,7 +18,7 @@ public class LoadingScreen extends BaseScreen{
     }
 
     @Override
-    public void show() {
+    public void init() {
         stage = new LoadingStage();
         addStage(stage);
         stage.table.addAction(new Action() {

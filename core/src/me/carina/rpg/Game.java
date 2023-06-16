@@ -48,9 +48,9 @@ public class Game extends ApplicationAdapter{
 
 	@Override
 	public void render() {
-		gameInstance = client;
-		server.render();
 		gameInstance = server;
+		server.render();
+		gameInstance = client;
 		client.render();
 	}
 

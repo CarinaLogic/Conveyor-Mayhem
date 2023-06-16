@@ -15,6 +15,6 @@ public class S2CBattleMapInitPacket extends S2CPacket{
     public void onRecieve(Client client, C2SConnection connection) {
         BattleScreen battleScreen = new BattleScreen();
         client.queueScreen(battleScreen);
-        battleScreen.setBattleMap(map);
+        battleScreen.queueInit((s, c) -> ((BattleScreen) s).setBattleMap(map));
     }
 }

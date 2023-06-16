@@ -9,7 +9,7 @@ public class BattleScreen extends BaseScreen{
     BattleMapGUIStage guiStage;
 
     @Override
-    public void show() {
+    public void init() {
         battleMapStage = new BattleMapStage();
         addStage(battleMapStage);
         actorStage = new BattleMapActorStage();

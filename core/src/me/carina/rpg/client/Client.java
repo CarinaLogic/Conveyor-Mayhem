@@ -26,6 +26,8 @@ public abstract class Client extends AbstractGameInstance{
     @Override
     public void tick() {
         if (!pendingScreenQueue.isEmpty() && (screenQueue.isEmpty() || screenQueue.last().canChangeScreen())){
+            if (!screenQueue.isEmpty()) screenQueue.last().hide();
+            pendingScreenQueue.first().show();
             screenQueue.addLast(pendingScreenQueue.first());
             pendingScreenQueue.removeFirst();
         }
@@ -53,7 +55,6 @@ public abstract class Client extends AbstractGameInstance{
     }
 
     public void queueScreen(BaseScreen screen) {
-        screen.show();
         pendingScreenQueue.addLast(screen);
     }
 

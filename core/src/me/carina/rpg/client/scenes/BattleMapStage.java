@@ -27,6 +27,11 @@ public class BattleMapStage extends GameStage {
         setScrollFocus(battleMapDisplay);
     }
 
+    @Override
+    public void draw() {
+        super.draw();
+    }
+
     public CanvasActor getCanvas() {
         return canvas;
     }
