@@ -1,9 +1,13 @@
 package me.carina.rpg.common.util;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.reflect.ArrayReflection;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Vector;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * 2D array implementation using 1D array because gwt doesn't support 2D array serialization
@@ -12,9 +16,11 @@ import java.util.Iterator;
 public class Array2D<T> implements Iterable<Array2D.Array2DEntry<T>>{
     T[] values;
     int width;
+    public Array2D(){} //for json
     public Array2D(int width, int height){
-        //noinspection unchecked
-        this.values = (T[]) new Object[width*height];
+        //this.values = (T[]) new Object[width*height];
+        //above does not work on gwt
+        this.values = new Array<T>().setSize(width*height);
         this.width = width;
     }
     public T get(int x, int y){
@@ -30,14 +36,32 @@ public class Array2D<T> implements Iterable<Array2D.Array2DEntry<T>>{
         set((int) Math.floor(v.x), (int) Math.floor(v.y),obj);
     }
     public void fill(T obj){
-        Arrays.fill(values, obj);
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < values.length / width; y++) {
+                set(x,y,obj);
+            }
+        }
+    }
+    public void fill(Function<Vector2,T> func){
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < values.length / width; y++) {
+                set(x,y,func.apply(new Vector2(x,y)));
+            }
+        }
+    }
+    public void clear(){
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < values.length / width; y++) {
+                set(x,y,null);
+            }
+        }
     }
     public Array2D<T> resize(int width, int height){
         return resize(0,height - this.values.length / this.width,0, width - this.width);
     }
     public Array2D<T> resize(int top, int bottom, int left, int right){
         Array2D<T> newArray = new Array2D<>(this.width+top+bottom,this.values.length/this.width+left+right);
-        newArray.fill(null);
+        newArray.clear();
         for (int x = 0; x < this.width; x++) {
             for (int y = 0; y < this.values.length / this.width; y++) {
                 int tx = x + left;
@@ -49,6 +73,9 @@ public class Array2D<T> implements Iterable<Array2D.Array2DEntry<T>>{
         }
         return newArray;
     }
+
+    public int getWidth(){return width;}
+    public int getHeight(){return values.length/width;}
 
     @Override
     public Iterator<Array2DEntry<T>> iterator() {
