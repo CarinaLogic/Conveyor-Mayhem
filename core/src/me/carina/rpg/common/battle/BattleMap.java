@@ -1,5 +1,6 @@
 package me.carina.rpg.common.battle;
 
+import com.badlogic.gdx.utils.Null;
 import me.carina.rpg.Game;
 import me.carina.rpg.common.AbstractGameInstance;
 import me.carina.rpg.common.CompoundFeature;

@@ -7,6 +7,7 @@ import me.carina.rpg.common.file.AssetGroup;
 public class Tile extends Feature {
     int x;
     int y;
+    public Tile(){} //for json
     public void setPos(int x, int y){
         this.x = x;
         this.y = y;

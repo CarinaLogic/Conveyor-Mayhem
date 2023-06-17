@@ -1,5 +1,6 @@
 package me.carina.rpg.packets.connection;
 
+import me.carina.rpg.Game;
 import me.carina.rpg.client.InternalClient;
 import me.carina.rpg.packets.Packet;
 import me.carina.rpg.server.InternalServer;
@@ -13,7 +14,8 @@ public class S2CInternalConnection extends S2CConnection{
 
     @Override
     public void send(Packet object) {
-        client.recieve(client.getSerializer().deserialize(client.getSerializer().serialize(object)), client.getConnection(server));
+        Game.getInstance().getLogger().debug(object.toString());
+        client.recieve(client.getSerializer().deserialize(client.getSerializer().serializeAsString(object)), client.getConnection(server));
     }
 
     @Override

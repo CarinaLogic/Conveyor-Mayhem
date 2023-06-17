@@ -6,8 +6,8 @@
 	<inherits name='com.badlogic.gdx.controllers.controllers-gwt' />
 	<inherits name='com.github.czyzby.websocket.GdxWebSocket' />
 	<inherits name='com.github.czyzby.websocket.GdxWebSocketGwt' />
-
-	<inherits name='GameInstance' />
+	<!--	-->
+	<inherits name='Game' />
 	<entry-point class='me.carina.rpg.client.HtmlLauncher' />
 	<extend-configuration-property name="gdx.reflect.include" value="me.carina.rpg"/>
 	<set-configuration-property name='xsiframe.failIfScriptTag' value='FALSE'/>
