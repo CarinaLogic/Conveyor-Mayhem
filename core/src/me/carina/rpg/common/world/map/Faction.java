@@ -19,7 +19,7 @@ public class Faction extends Feature {
 
     @Override
     public AssetGroup getAssetGroup() {
-        return AssetGroup.factions;
+        return AssetGroup.teams;
     }
 
     @Override
