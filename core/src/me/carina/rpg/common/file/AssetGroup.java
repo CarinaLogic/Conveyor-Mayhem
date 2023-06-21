@@ -1,5 +1,5 @@
 package me.carina.rpg.common.file;
 
 public enum AssetGroup {
-    factions, floors, ui, units, items, tiles
+    teams, floors, ui, units, items, tiles, skills
 }

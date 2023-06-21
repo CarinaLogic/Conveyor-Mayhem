@@ -1,9 +1,10 @@
-package me.carina.rpg.client.scenes;
+package me.carina.rpg.client.battle;
 
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import me.carina.rpg.client.scenes.GameStage;
 import me.carina.rpg.common.world.map.CanvasActor;
 
-public class BattleMapActorStage extends GameStage{
+public class BattleMapActorStage extends GameStage {
     CanvasActor canvas;
     public BattleMapActorStage(){
         super(new ScreenViewport());

@@ -1,6 +1,8 @@
-package me.carina.rpg.client.scenes;
+package me.carina.rpg.client.battle;
 
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import me.carina.rpg.client.scenes.GameStage;
+import me.carina.rpg.client.scenes.PerspectiveViewport;
 import me.carina.rpg.common.battle.BattleMap;
 import me.carina.rpg.common.battle.BattleMapDisplay;
 import me.carina.rpg.common.world.map.CanvasActor;

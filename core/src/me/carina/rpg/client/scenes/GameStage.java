@@ -13,7 +13,5 @@ public abstract class GameStage extends Stage{
     public GameStage(Viewport viewport, Batch batch){
         super(viewport, batch);
     }
-    //The game instance is already set
     public abstract void init();
-
 }

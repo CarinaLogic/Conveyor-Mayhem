@@ -1,7 +1,7 @@
 package me.carina.rpg.packets;
 
 import me.carina.rpg.client.Client;
-import me.carina.rpg.client.scenes.BattleScreen;
+import me.carina.rpg.client.battle.BattleScreen;
 import me.carina.rpg.common.battle.BattleMap;
 import me.carina.rpg.packets.connection.C2SConnection;
 

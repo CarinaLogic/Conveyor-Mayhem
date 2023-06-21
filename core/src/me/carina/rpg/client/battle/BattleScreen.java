@@ -1,9 +1,9 @@
-package me.carina.rpg.client.scenes;
+package me.carina.rpg.client.battle;
 
-import me.carina.rpg.client.Client;
+import me.carina.rpg.client.scenes.BaseScreen;
 import me.carina.rpg.common.battle.BattleMap;
 
-public class BattleScreen extends BaseScreen{
+public class BattleScreen extends BaseScreen {
     BattleMapStage battleMapStage;
     BattleMapActorStage actorStage;
     BattleMapGUIStage guiStage;
