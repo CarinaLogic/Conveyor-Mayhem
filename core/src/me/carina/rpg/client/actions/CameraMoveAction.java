@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import me.carina.rpg.client.misc.CameraUtil;
 
 /**
- * Moves camera while maintaining its rotation
+ * Moves camera while maintaining its rotation and z position
  */
 public class CameraMoveAction extends AbstractCameraControlAction{
     Vector2 targetVec;

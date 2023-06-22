@@ -8,15 +8,20 @@ public class CameraTargetAction extends ParallelAction {
     Camera camera;
     CameraMoveAction moveAction;
     CameraRotateAction rotateAction;
-    public CameraTargetAction(Camera camera, Vector2 targetPos, float targetRotation) {
+    CameraZoomAction zoomAction;
+    public CameraTargetAction(Camera camera, Vector2 targetPos, float targetRotation, float targetZoom, float duration) {
         this.camera = camera;
 //        moveAction = new CameraMoveAction(camera);
 //        moveAction.setTargetPos(targetPos);
-//        moveAction.setDuration(2f);
+//        moveAction.setDuration(duration);
 //        addAction(moveAction);
-        rotateAction = new CameraRotateAction(camera);
-        rotateAction.setTargetRotation(targetRotation);
-        rotateAction.setDuration(2f);
-        addAction(rotateAction);
+//        rotateAction = new CameraRotateAction(camera);
+//        rotateAction.setTargetRotation(targetRotation);
+//        rotateAction.setDuration(duration);
+//        addAction(rotateAction);
+        zoomAction = new CameraZoomAction(camera);
+        zoomAction.setTargetZoom(targetZoom);
+        zoomAction.setDuration(duration);
+        addAction(zoomAction);
     }
 }

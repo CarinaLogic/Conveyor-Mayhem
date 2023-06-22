@@ -6,7 +6,7 @@ import me.carina.rpg.client.misc.CameraUtil;
 import java.util.Optional;
 
 /**
- * Rotates camera while maintaining focus
+ * Moves and rotates camera while maintaining focus and z position
  */
 public class CameraRotateAction extends AbstractCameraControlAction{
     float targetRotation;
@@ -29,8 +29,4 @@ public class CameraRotateAction extends AbstractCameraControlAction{
         CameraUtil.rotate(camera,(targetRotation-beginRotation)*percent+beginRotation);
     }
 
-    @Override
-    protected void end() {
-        super.end();
-    }
 }
