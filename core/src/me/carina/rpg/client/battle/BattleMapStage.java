@@ -2,6 +2,7 @@ package me.carina.rpg.client.battle;
 
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import me.carina.rpg.client.actions.CameraMoveAction;
 import me.carina.rpg.client.actions.CameraTargetAction;
 import me.carina.rpg.client.scenes.GameStage;
@@ -31,7 +32,7 @@ public class BattleMapStage extends GameStage {
         addActor(battleMapDisplay);
         setScrollFocus(battleMapDisplay);
         battleMapDisplay.addAction(new CameraTargetAction(
-                getCamera(), Vector2.Zero.cpy(), 1,2,2));
+                getCamera(), new Vector3(0.5f,1.5f,0.5f), 1,2,2));
     }
 
     @Override

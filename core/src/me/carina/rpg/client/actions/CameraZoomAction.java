@@ -9,9 +9,12 @@ import me.carina.rpg.client.misc.CameraUtil;
 public class CameraZoomAction extends AbstractCameraControlAction{
     float targetZoom;
     float beginZoom;
+    float z = 0;
     public CameraZoomAction(Camera camera) {
         super(camera);
     }
+
+    public void setZ(float z){this.z = z;}
 
     public void setTargetZoom(float zoom){
         this.targetZoom = zoom;
@@ -19,11 +22,11 @@ public class CameraZoomAction extends AbstractCameraControlAction{
 
     @Override
     protected void begin() {
-        this.beginZoom = CameraUtil.getZoom(camera);
+        this.beginZoom = CameraUtil.getZoom(camera,z);
     }
 
     @Override
     protected void update(float percent) {
-        CameraUtil.zoom(camera,(targetZoom-beginZoom)*percent+beginZoom);
+        CameraUtil.zoom(camera,(targetZoom-beginZoom)*percent+beginZoom,z);
     }
 }

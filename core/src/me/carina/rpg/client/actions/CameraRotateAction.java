@@ -11,8 +11,13 @@ import java.util.Optional;
 public class CameraRotateAction extends AbstractCameraControlAction{
     float targetRotation;
     float beginRotation;
+    float z = 0;
     public CameraRotateAction(Camera camera) {
         super(camera);
+    }
+
+    public void setZ(float z){
+        this.z = z;
     }
 
     @Override
@@ -26,7 +31,7 @@ public class CameraRotateAction extends AbstractCameraControlAction{
 
     @Override
     protected void update(float percent) {
-        CameraUtil.rotate(camera,(targetRotation-beginRotation)*percent+beginRotation);
+        CameraUtil.rotate(camera,(targetRotation-beginRotation)*percent+beginRotation,z);
     }
 
 }
