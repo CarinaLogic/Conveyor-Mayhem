@@ -31,8 +31,7 @@ public class BattleMapStage extends GameStage {
         this.battleMapDisplay = battleMap.newDisplay();
         addActor(battleMapDisplay);
         setScrollFocus(battleMapDisplay);
-        battleMapDisplay.addAction(new CameraTargetAction(
-                getCamera(), new Vector3(0.5f,1.5f,0.5f), 1,2,2));
+        battleMapDisplay.addAction(new CameraTargetAction(getCamera(), new Vector3(5,5,0), 1,0.5f,2));
     }
 
     @Override

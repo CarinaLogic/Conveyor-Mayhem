@@ -20,6 +20,12 @@ public class Array<T> extends com.badlogic.gdx.utils.Array<T> {
         }
         return array;
     }
+    public T firstMatch(Predicate<T> predicate){
+        for (T item : this) {
+            if (predicate.evaluate(item)) return item;
+        }
+        return null;
+    }
     public int count(Predicate<T> predicate){
         int c = 0;
         for (T item : this) {
