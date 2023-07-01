@@ -20,7 +20,9 @@ public class CommandParser {
             for (Class<? extends Command> cmdClass : currentCmd.nextCmdClass) {
                 Class<? extends Command> prevCommandClass = currentCmd.getClass();
                 try {
-                    cmdClass.cast(currentCmd).init(Arrays.copyOfRange(args,index,args.length));
+                    if (ClassReflection.isInstance(cmdClass,currentCmd)) {
+                        cmdClass.cast(currentCmd).init(Arrays.copyOfRange(args, index, args.length));
+                    }
                     success = true;
                     break;
                 } catch (Exception e){

@@ -2,10 +2,22 @@ package me.carina.rpg.common.command;
 
 import me.carina.rpg.common.util.Array;
 
-public abstract class Command {
+public class Command {
     Array<Class<? extends Command>> nextCmdClass = new Array<>();
-    public abstract void next();
-    public abstract int getConsumption();
-    public abstract void init(String... args);
-    public abstract void run();
+    public Command(){
+        next();
+    }
+
+    public void next(){
+        nextCmdClass.add(SayCommand.class);
+    }
+    public int getConsumption(){
+        return -1;
+    }
+    public void init(String... args){
+
+    }
+    public void run(){
+
+    }
 }
