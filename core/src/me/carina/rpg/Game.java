@@ -42,7 +42,7 @@ public class Game extends ApplicationAdapter{
 		client.addConnection(new C2SInternalConnection((InternalClient) client, (InternalServer) server));
 		gameInstance = server;
 		server.addConnection(new S2CInternalConnection((InternalServer) server, (InternalClient) client));
-		client.getCommandParser().run("say hello");
+		client.getCommandParser().run("say hello","store $test lorem","get $test");
 //		server.open(18273);
 //		client.addConnection(((ExternalClient) client).connect("localhost",18273));
 	}

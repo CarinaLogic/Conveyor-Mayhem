@@ -2,31 +2,19 @@ package me.carina.rpg.common.command;
 
 import me.carina.rpg.Game;
 
-import java.util.Arrays;
-import java.util.StringJoiner;
-
-public class SayCommand extends Command{
-    String msg;
+public class SayCommand implements Command{
     @Override
-    public void next() {
-
+    public String getPrefix() {
+        return "say";
     }
 
     @Override
-    public int getConsumption() {
-        return 1;
-    }
-
-    @Override
-    public void init(String... args) {
-        for (int i = 1; i < args.length; i++) {
-            msg += (args[i] + " ");
+    public void run(CommandParser parser,String... args) {
+        StringBuilder msg = new StringBuilder();
+        for (String arg : args) {
+            msg.append(arg);
+            msg.append(" ");
         }
-        msg = msg.trim();
-    }
-
-    @Override
-    public void run() {
-        Game.getInstance().getLogger().info(msg);
+        Game.getInstance().getLogger().info(msg.toString().trim());
     }
 }
