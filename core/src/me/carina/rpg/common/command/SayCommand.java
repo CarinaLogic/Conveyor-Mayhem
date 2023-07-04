@@ -9,12 +9,18 @@ public class SayCommand implements Command{
     }
 
     @Override
-    public void run(CommandParser parser,String... args) {
+    public boolean init(CommandParser parser, String... args) {
+        return true;
+    }
+
+    @Override
+    public boolean run(CommandParser parser,String... args) {
         StringBuilder msg = new StringBuilder();
         for (String arg : args) {
             msg.append(arg);
             msg.append(" ");
         }
         Game.getInstance().getLogger().info(msg.toString().trim());
+        return true;
     }
 }

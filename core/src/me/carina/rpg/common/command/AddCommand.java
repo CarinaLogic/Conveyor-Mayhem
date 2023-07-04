@@ -1,9 +1,9 @@
 package me.carina.rpg.common.command;
 
-public class StoreCommand implements Command{
+public class AddCommand implements Command{
     @Override
     public String getPrefix() {
-        return "store";
+        return "add";
     }
 
     @Override
@@ -13,7 +13,12 @@ public class StoreCommand implements Command{
 
     @Override
     public boolean run(CommandParser parser, String... args) {
-        parser.setValue(args[0], args[1]);
+        if (args.length < 2) throw new IllegalArgumentException();
+        int s = 0;
+        for (int i = 1; i < args.length; i++) {
+            s += parser.getInt(args[i]);
+        }
+        parser.setValue(args[0], s);
         return true;
     }
 }

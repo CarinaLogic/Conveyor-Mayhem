@@ -7,13 +7,12 @@ import com.badlogic.gdx.utils.Queue;
 import com.github.czyzby.websocket.serialization.Serializer;
 import com.github.czyzby.websocket.serialization.impl.JsonSerializer;
 import me.carina.rpg.common.command.CommandParser;
-import me.carina.rpg.common.command.GetCommand;
+import me.carina.rpg.common.command.PrintCommand;
 import me.carina.rpg.common.command.SayCommand;
 import me.carina.rpg.common.command.StoreCommand;
 import me.carina.rpg.common.file.AssetFilterProvider;
 import me.carina.rpg.common.file.Assets;
 import me.carina.rpg.packets.Packet;
-import me.carina.rpg.packets.connection.C2SConnection;
 import me.carina.rpg.packets.connection.Connection;
 
 public abstract class AbstractGameInstance implements PacketHandler, AssetFilterProvider, ApplicationListener {
@@ -22,7 +21,7 @@ public abstract class AbstractGameInstance implements PacketHandler, AssetFilter
     Array<Connection> connections;
     Serializer serializer = new JsonSerializer();
     Queue<DirectedPacket> packetQueue = new Queue<>();
-    CommandParser commandParser = new CommandParser(SayCommand.class, GetCommand.class, StoreCommand.class);
+    CommandParser commandParser = new CommandParser(SayCommand.class, PrintCommand.class, StoreCommand.class);
     public AbstractGameInstance(String loggerTag) {
         this.assets = new Assets(this,this);
         this.logger = new Logger(loggerTag);

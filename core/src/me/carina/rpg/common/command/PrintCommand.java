@@ -1,9 +1,11 @@
 package me.carina.rpg.common.command;
 
-public class StoreCommand implements Command{
+import me.carina.rpg.Game;
+
+public class PrintCommand implements Command{
     @Override
     public String getPrefix() {
-        return "store";
+        return "print";
     }
 
     @Override
@@ -13,7 +15,7 @@ public class StoreCommand implements Command{
 
     @Override
     public boolean run(CommandParser parser, String... args) {
-        parser.setValue(args[0], args[1]);
+        Game.getInstance().getLogger().info(parser.getValue(args[0]).toString());
         return true;
     }
 }

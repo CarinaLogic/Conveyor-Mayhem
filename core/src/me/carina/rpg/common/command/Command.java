@@ -5,5 +5,6 @@ package me.carina.rpg.common.command;
  */
 public interface Command {
     String getPrefix();
-    void run(CommandParser parser,String... args);
+    boolean init(CommandParser parser, String... args);
+    boolean run(CommandParser parser,String... args);
 }
