@@ -45,6 +45,7 @@ public class CommandParser {
                 reset();
                 if (!commandQueue.isEmpty()){
                     currentCommands.addAll(commandQueue.first().split("\\n"));
+                    commandQueue.removeFirst();
                 }
             }
             else if ((cursor < 0 || cursor >= currentCommands.size) && isInit){
@@ -55,6 +56,7 @@ public class CommandParser {
                 reset();
                 if (!commandQueue.isEmpty()){
                     currentCommands.addAll(commandQueue.first().split("\\n"));
+                    commandQueue.removeFirst();
                 }
                 return;
             }
@@ -96,23 +98,18 @@ public class CommandParser {
         return command;
     }
     public void setValue(String tag, Object value){
-        if (tag == null || value == null) throw new IllegalArgumentException();
+        if (tag == null || value == null) throw new CommandException();
+        if (!tag.startsWith("$")) throw new CommandException();
         values.put(tag, value);
     }
-    public Object getValue(String tag){
-        if (!tag.startsWith("$")) throw new IllegalArgumentException();
-        return values.get(tag);
+    public Object getValue(String arg){
+        if (arg.startsWith("$")) return values.get(arg);
+        return parseString(arg);
     }
-    public int getInt(String arg){
-        if (arg.startsWith("$")) return (int) getValue(arg);
-        return Integer.getInteger(arg);
-    }
-    public String getLiteral(String target, String arg){
-        if (!target.equals(arg)) throw new IllegalArgumentException();
-        return target;
-    }
-    public String getString(String arg) {
-        if (arg.startsWith("$")) return (String) getValue(arg);
-        return arg;
+    public Object parseString(String value){
+        try {
+            return Float.parseFloat(value);
+        } catch (Exception ignored){}
+        return value;
     }
 }
