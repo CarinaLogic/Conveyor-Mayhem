@@ -15,6 +15,7 @@ public class CommandParser {
     Map<String,Class<? extends Command>> commandClass = new Map<>();
     Queue<String> commandQueue = new Queue<>();
     Array<String> currentCommands = new Array<>();
+    Command currentCommand;
     int cursor = 0;
     boolean isInit = true;
     @SafeVarargs
@@ -62,11 +63,16 @@ public class CommandParser {
             }
             String cmd = currentCommands.get(cursor);
             String[] args = cmd.split(" ");
+            if (currentCommand == null) {
+                currentCommand = getCommand(cmd);
+            }
             if (isInit){
-                getCommand(cmd).init(this,Arrays.copyOfRange(args,1,args.length));
+                if (currentCommand.init(this,Arrays.copyOfRange(args,1,args.length))) currentCommand = null;
+                else return;
             }
             else {
-                getCommand(cmd).run(this,Arrays.copyOfRange(args,1,args.length));
+                if (currentCommand.run(this,Arrays.copyOfRange(args,1,args.length))) currentCommand = null;
+                else return;
             }
             cursor++;
         }

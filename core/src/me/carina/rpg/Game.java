@@ -49,6 +49,7 @@ public class Game extends ApplicationAdapter{
 				"jump end",
 				"print hello",
 				"add $i $i 1",
+				"wait 1",
 				"jump lo",
 				"label end"
 		);
