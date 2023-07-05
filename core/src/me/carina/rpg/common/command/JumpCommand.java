@@ -1,18 +1,19 @@
 package me.carina.rpg.common.command;
 
-public class FocusCommand implements Command{
+public class JumpCommand implements Command{
     @Override
     public String getPrefix() {
-        return "focus";
+        return "jump";
     }
 
     @Override
     public boolean init(CommandParser parser, String... args) {
-        return false;
+        return true;
     }
 
     @Override
     public boolean run(CommandParser parser, String... args) {
-        return false;
+        parser.cursor = parser.labels.get(args[0]);
+        return true;
     }
 }

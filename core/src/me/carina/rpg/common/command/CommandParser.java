@@ -66,7 +66,7 @@ public class CommandParser {
             else {
                 getCommand(cmd).run(this,Arrays.copyOfRange(args,1,args.length));
             }
-
+            cursor++;
         }
     }
     public void reset(){
