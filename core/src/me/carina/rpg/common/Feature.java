@@ -10,7 +10,6 @@ import me.carina.rpg.common.file.Path;
 
 //Basic design around actual feature objects
 //1. The parent object, which holds all the info processed by sever
-//   should be able to convert to json, aside from game (which is initialized upon loading)
 //2. The Actor object, which holds rendering info, and renders itself
 //3. The definition object, which is provided by assets in the form of json, which is used to construct parent
 //   optional, should be simple
@@ -27,6 +26,10 @@ public abstract class Feature implements Identifiable, Defined, AssetGrouped, Di
 
     public void destroyDisplay(){
         if (this.display != null) this.display.addAction(Actions.removeActor());
+    }
+
+    public Display getDisplay() {
+        return display;
     }
 
     @Override
@@ -53,6 +56,8 @@ public abstract class Feature implements Identifiable, Defined, AssetGrouped, Di
     public void setDisplay(Display display) {
         this.display = display;
     }
+
+    public boolean hasDisplay(){return this.display != null;}
 
     public static abstract class Def implements Identifiable, Definition {
         Identifier id;
