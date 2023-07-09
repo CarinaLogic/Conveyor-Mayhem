@@ -18,6 +18,26 @@ public class Faction extends Feature {
     }
 
     @Override
+    public float getDisplayX() {
+        return 0;
+    }
+
+    @Override
+    public float getDisplayY() {
+        return 0;
+    }
+
+    @Override
+    public float getDisplayWidth() {
+        return 0;
+    }
+
+    @Override
+    public float getDisplayHeight() {
+        return 0;
+    }
+
+    @Override
     public AssetGroup getAssetGroup() {
         return AssetGroup.teams;
     }

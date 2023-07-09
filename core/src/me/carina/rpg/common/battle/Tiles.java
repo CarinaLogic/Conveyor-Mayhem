@@ -2,16 +2,27 @@ package me.carina.rpg.common.battle;
 
 import me.carina.rpg.Game;
 import me.carina.rpg.common.util.Array2D;
+import me.carina.rpg.common.util.FeatureArray2D;
 
-public class Tiles extends Array2D<Tile> {
+public class Tiles {
+    FeatureArray2D<Tile> tiles;
     public Tiles(){
         //debug purposes
-        super(10,10);
-        fill(v -> Game.getInstance().getAssets().get("core","plains", Tile.class));
+        tiles = new FeatureArray2D<>(10,10,
+                tile -> {if (tile.hasDisplay()) tile.getDisplay().addActor(tile.newDisplay());},
+                tile -> {if (tile.hasDisplay()) tile.getDisplay().removeActor(tile.newDisplay());}
+        );
+        tiles.fill(v -> Game.getInstance().getAssets().get("core","plains", Tile.class));
     }
-    @Override
-    public void set(int x, int y, Tile obj) {
-        super.set(x, y, obj);
-        obj.setPos(x, y);
+
+    public int getWidth() {
+        return tiles.getWidth();
+    }
+    public int getHeight(){
+        return tiles.getHeight();
+    }
+
+    public FeatureArray2D<Tile> getTiles() {
+        return tiles;
     }
 }

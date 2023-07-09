@@ -20,6 +20,26 @@ public class Tile extends Feature {
     }
 
     @Override
+    public float getDisplayX() {
+        return x;
+    }
+
+    @Override
+    public float getDisplayY() {
+        return y;
+    }
+
+    @Override
+    public float getDisplayWidth() {
+        return 1;
+    }
+
+    @Override
+    public float getDisplayHeight() {
+        return 1;
+    }
+
+    @Override
     public Class<Def> getDefClass() {
         return Def.class;
     }

@@ -32,6 +32,14 @@ public abstract class Feature implements Identifiable, Defined, AssetGrouped, Di
         return display;
     }
 
+    public void remove(){
+        this.display.remove();
+    }
+    public abstract float getDisplayX();
+    public abstract float getDisplayY();
+
+    public abstract float getDisplayWidth();
+    public abstract float getDisplayHeight();
     @Override
     public void dispose() {
         destroyDisplay();

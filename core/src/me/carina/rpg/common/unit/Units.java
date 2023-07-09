@@ -7,7 +7,8 @@ import me.carina.rpg.common.util.FeatureArray;
 import java.util.Optional;
 
 public class Units {
-    BattleMap map;
+    transient BattleMap map;
+    public Units(){} //for json
     FeatureArray<Unit> units = new FeatureArray<>(
             unit -> {if (map.hasDisplay()) map.getDisplay().addActor(unit.newDisplay());},
             unit -> {if (map.hasDisplay()) map.getDisplay().removeActor(unit.newDisplay());}

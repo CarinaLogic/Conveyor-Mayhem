@@ -31,4 +31,24 @@ public class BattleMap extends CompoundFeature {
     public BattleMapDisplay getDisplay() {
         return (BattleMapDisplay) super.getDisplay();
     }
+
+    @Override
+    public float getDisplayX() {
+        return 0;
+    }
+
+    @Override
+    public float getDisplayY() {
+        return 0;
+    }
+
+    @Override
+    public float getDisplayWidth() {
+        return getWidth();
+    }
+
+    @Override
+    public float getDisplayHeight() {
+        return getHeight();
+    }
 }
