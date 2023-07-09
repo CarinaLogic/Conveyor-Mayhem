@@ -12,7 +12,7 @@ public class BattleMap extends CompoundFeature {
     Tiles tiles;
     Units units;
     public BattleMap() {
-        tiles = new Tiles();
+        tiles = new Tiles(this);
         units = new Units(this);
     }
 

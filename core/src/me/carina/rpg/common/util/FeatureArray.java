@@ -8,16 +8,15 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class FeatureArray<T extends Feature> extends Array<T>{
-    Consumer<T> addFunction;
-    Consumer<T> removeFunction;
-    public FeatureArray(Consumer<T> addFunction, Consumer<T> removeFunction){
-        this.addFunction = addFunction;
-        this.removeFunction = removeFunction;
+    Feature parent;
+    public FeatureArray(){} //for json
+    public FeatureArray(Feature parent){
+        this.parent = parent;
     }
     @Override
     public void add(T value) {
         super.add(value);
-        addFunction.accept(value);
+        if (parent.hasDisplay()) parent.getDisplay().addActor(value.newDisplay());
     }
 
     @SafeVarargs
@@ -25,19 +24,20 @@ public class FeatureArray<T extends Feature> extends Array<T>{
     public final void addAll(T... array) {
         super.addAll(array);
         for (T a : array) {
-            addFunction.accept(a);
+            if (parent.hasDisplay()) parent.getDisplay().addActor(a.newDisplay());
         }
     }
 
     @Override
     public void remove(T value) {
         super.remove(value);
-        removeFunction.accept(value);
+        if (value.hasDisplay()) value.remove();
     }
 
     @Override
     public T removeIndex(int index) {
-        removeFunction.accept(get(index));
+        Feature f = get(index);
+        f.remove();
         return super.removeIndex(index);
     }
 }
