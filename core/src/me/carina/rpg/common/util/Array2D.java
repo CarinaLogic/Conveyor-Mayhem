@@ -73,6 +73,48 @@ public class Array2D<T> implements Iterable<Array2D.Array2DEntry<T>>{
         }
         return newArray;
     }
+    public int getX(T obj){
+        if (obj == null) return -1;
+        for (Array2DEntry<T> entry : this) {
+            if (obj.equals(entry.value)) return entry.x;
+        }
+        return -1;
+    }
+    public int getY(T obj){
+        if (obj == null) return -1;
+        for (Array2DEntry<T> entry : this) {
+            if (obj.equals(entry.value)) return entry.y;
+        }
+        return -1;
+    }
+    public Vector2 getPos(T obj){
+        if (obj == null) return null;
+        for (Array2DEntry<T> entry : this) {
+            if (obj.equals(entry.value)) return new Vector2(entry.x,entry.y);
+        }
+        return null;
+    }
+    public int getIdenticalX(T obj){
+        if (obj == null) return -1;
+        for (Array2DEntry<T> entry : this) {
+            if (obj == entry.value) return entry.x;
+        }
+        return -1;
+    }
+    public int getIdenticalY(T obj){
+        if (obj == null) return -1;
+        for (Array2DEntry<T> entry : this) {
+            if (obj == entry.value) return entry.y;
+        }
+        return -1;
+    }
+    public Vector2 gtIdenticalPos(T obj){
+        if (obj == null) return null;
+        for (Array2DEntry<T> entry : this) {
+            if (obj == entry.value) return new Vector2(entry.x,entry.y);
+        }
+        return null;
+    }
 
     public int getWidth(){return width;}
     public int getHeight(){return values.length/width;}

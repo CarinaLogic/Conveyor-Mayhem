@@ -1,17 +1,14 @@
 package me.carina.rpg.common.battle;
 
+import me.carina.rpg.Game;
+import me.carina.rpg.client.Client;
+import me.carina.rpg.client.battle.BattleScreen;
 import me.carina.rpg.common.AbstractGameInstance;
 import me.carina.rpg.common.Feature;
 import me.carina.rpg.common.file.AssetGroup;
 
 public class Tile extends Feature {
-    int x;
-    int y;
     public Tile(){} //for json
-    public void setPos(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
     @Override
     public TileDisplay newDisplay() {
         TileDisplay d = new TileDisplay(this);
@@ -21,12 +18,12 @@ public class Tile extends Feature {
 
     @Override
     public float getDisplayX() {
-        return x;
+        return ((BattleScreen) ((Client) Game.getInstance()).getScreen()).getBattleMap().tiles.getTiles().getIdenticalX(this);
     }
 
     @Override
     public float getDisplayY() {
-        return y;
+        return ((BattleScreen) ((Client) Game.getInstance()).getScreen()).getBattleMap().tiles.getTiles().getIdenticalY(this);
     }
 
     @Override
