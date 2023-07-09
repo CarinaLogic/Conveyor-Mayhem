@@ -63,6 +63,11 @@ public abstract class Client extends AbstractGameInstance{
     }
 
     @Override
+    public boolean isClient() {
+        return true;
+    }
+
+    @Override
     public boolean shouldPack() {
         return true;
     }

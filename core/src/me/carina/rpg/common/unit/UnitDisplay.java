@@ -14,4 +14,9 @@ public class UnitDisplay extends Display {
     public Feature getFeature() {
         return unit;
     }
+
+    @Override
+    public boolean fillChildren() {
+        return true;
+    }
 }

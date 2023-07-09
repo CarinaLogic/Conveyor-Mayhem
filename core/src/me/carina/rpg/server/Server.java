@@ -39,6 +39,11 @@ public abstract class Server extends AbstractGameInstance {
     }
 
     @Override
+    public boolean isClient() {
+        return false;
+    }
+
+    @Override
     public void resize(int width, int height) {
         //NOOP
     }

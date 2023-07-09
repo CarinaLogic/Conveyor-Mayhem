@@ -12,8 +12,8 @@ public class BattleMap extends CompoundFeature {
     Tiles tiles;
     Units units;
     public BattleMap() {
-        tiles = new Tiles(this);
-        units = new Units(this);
+        tiles = new Tiles();
+        units = new Units();
     }
 
     public int getWidth(){return tiles.getWidth();}

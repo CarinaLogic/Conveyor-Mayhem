@@ -27,6 +27,10 @@ public class BattleMapStage extends GameStage {
         setDebugAll(true);
     }
 
+    public BattleMap getBattleMap(){
+        return ((BattleMap) battleMapDisplay.getFeature());
+    }
+
     public void setBattleMap(BattleMap battleMap) {
         this.battleMapDisplay = battleMap.newDisplay();
         addActor(battleMapDisplay);

@@ -83,6 +83,8 @@ public abstract class AbstractGameInstance implements PacketHandler, AssetFilter
         return commandParser;
     }
 
+    public abstract boolean isClient();
+
     public static class DirectedPacket{
         Connection connection;
         Packet packet;

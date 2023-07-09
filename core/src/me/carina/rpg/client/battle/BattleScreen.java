@@ -24,6 +24,10 @@ public class BattleScreen extends BaseScreen {
         return true;
     }
 
+    public BattleMap getBattleMap(){
+        return battleMapStage.getBattleMap();
+    }
+
     public void setBattleMap(BattleMap battleMap){
         battleMapStage.setBattleMap(battleMap);
     }

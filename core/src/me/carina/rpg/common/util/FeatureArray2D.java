@@ -2,16 +2,15 @@ package me.carina.rpg.common.util;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Predicate;
+import me.carina.rpg.Game;
 import me.carina.rpg.common.Feature;
 
 import java.util.function.Consumer;
 
-public class FeatureArray2D<T extends Feature> extends Array2D<T>{
-    Feature parent;
+public abstract class FeatureArray2D<T extends Feature> extends Array2D<T>{
     public FeatureArray2D(){} //for json
-    public FeatureArray2D(Feature parent, int width, int height){
+    public FeatureArray2D(int width, int height){
         super(width, height);
-        this.parent = parent;
     }
     @Override
     public void set(int x, int y, T obj) {
@@ -20,6 +19,7 @@ public class FeatureArray2D<T extends Feature> extends Array2D<T>{
             return;
         }
         super.set(x, y, obj);
-        if (parent.hasDisplay()) parent.getDisplay().addActor(obj.newDisplay());
+        if (Game.getInstance().isClient()) getParent().getDisplay().addActor(obj.newDisplay());
     }
+    public abstract Feature getParent();
 }

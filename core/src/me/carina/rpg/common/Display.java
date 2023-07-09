@@ -3,7 +3,6 @@ package me.carina.rpg.common;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 
 public abstract class Display extends Group {
     @Override
@@ -19,13 +18,20 @@ public abstract class Display extends Group {
         float h = super.getHeight();
         super.setSize(width,height);
         for (Actor child : getChildren()) {
-            float cw = child.getWidth();
-            float ch = child.getHeight();
-            child.setSize(cw*width/w, ch*height/h);
+            if (fillChildren()){
+                child.setSize(width, height);
+            }
+            else{
+                float cw = child.getWidth();
+                float ch = child.getHeight();
+                child.setSize(cw*width/w, ch*height/h);
+            }
         }
     }
 
     public abstract Feature getFeature();
+
+    public abstract boolean fillChildren();
 
     @Override
     public void setPosition(float x, float y, int alignment) {

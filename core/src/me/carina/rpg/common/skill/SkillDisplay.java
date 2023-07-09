@@ -18,4 +18,9 @@ public class SkillDisplay extends Display {
     public Feature getFeature() {
         return skill;
     }
+
+    @Override
+    public boolean fillChildren() {
+        return false;
+    }
 }

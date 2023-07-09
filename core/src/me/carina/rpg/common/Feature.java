@@ -65,8 +65,6 @@ public abstract class Feature implements Identifiable, Defined, AssetGrouped, Di
         this.display = display;
     }
 
-    public boolean hasDisplay(){return this.display != null;}
-
     public static abstract class Def implements Identifiable, Definition {
         Identifier id;
         public abstract void initFeature(Feature feature);

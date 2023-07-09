@@ -24,4 +24,9 @@ public class BattleMapDisplay extends Display {
     public Feature getFeature() {
         return map;
     }
+
+    @Override
+    public boolean fillChildren() {
+        return false;
+    }
 }

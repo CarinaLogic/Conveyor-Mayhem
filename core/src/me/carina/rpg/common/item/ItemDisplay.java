@@ -14,4 +14,9 @@ public class ItemDisplay extends Display {
     public Feature getFeature() {
         return item;
     }
+
+    @Override
+    public boolean fillChildren() {
+        return false;
+    }
 }

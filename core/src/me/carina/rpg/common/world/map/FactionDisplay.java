@@ -14,4 +14,9 @@ public class FactionDisplay extends Display {
     public Feature getFeature() {
         return faction;
     }
+
+    @Override
+    public boolean fillChildren() {
+        return false;
+    }
 }

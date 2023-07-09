@@ -18,4 +18,9 @@ public class TileDisplay extends Display {
     public Feature getFeature() {
         return tile;
     }
+
+    @Override
+    public boolean fillChildren() {
+        return true;
+    }
 }
