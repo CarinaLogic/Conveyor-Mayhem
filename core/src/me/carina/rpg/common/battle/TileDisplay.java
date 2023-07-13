@@ -9,9 +9,10 @@ import me.carina.rpg.common.Feature;
 
 public class TileDisplay extends Display {
     Tile tile;
+    Image image;
     public TileDisplay(Tile tile){
         this.tile = tile;
-        addActor(new Image(Game.getInstance().getAssets().get(tile.getPath(), Drawable.class)));
+        image = new Image();
     }
 
     @Override

@@ -11,6 +11,14 @@ public class Identifier {
         this.id = id;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getNameSpace() {
+        return nameSpace;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
