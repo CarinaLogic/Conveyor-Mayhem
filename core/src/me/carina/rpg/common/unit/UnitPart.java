@@ -1,7 +1,9 @@
 package me.carina.rpg.common.unit;
 
-import me.carina.rpg.common.CompoundFeature;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import me.carina.rpg.common.Definition;
 import me.carina.rpg.common.Display;
+import me.carina.rpg.common.DrawableFeature;
 import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.file.Identifier;
 import me.carina.rpg.common.file.Path;
@@ -14,7 +16,7 @@ import me.carina.rpg.common.file.Path;
 //Textures are array multiple 32x32 images, with a color palette attached to the right
 //Images are indexed from top left to right, then go down one & start over from left
 //Color palette starts from top left of leftover space, going down
-public class UnitPart extends CompoundFeature {
+public class UnitPart extends DrawableFeature {
     BodyType bodyType;
     //Identifier id; //already defined in Feature
     BodyProperty property;
@@ -51,5 +53,15 @@ public class UnitPart extends CompoundFeature {
     @Override
     public float getDisplayHeight() {
         return 1;
+    }
+
+    @Override
+    public Class<? extends Definition> getDefClass() {
+        return null;
+    }
+
+    @Override
+    public Drawable getDrawable() {
+        return null;
     }
 }

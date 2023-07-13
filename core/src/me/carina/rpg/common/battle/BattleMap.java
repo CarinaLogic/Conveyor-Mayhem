@@ -3,12 +3,14 @@ package me.carina.rpg.common.battle;
 import com.badlogic.gdx.utils.Null;
 import me.carina.rpg.Game;
 import me.carina.rpg.common.AbstractGameInstance;
-import me.carina.rpg.common.CompoundFeature;
+import me.carina.rpg.common.Definition;
 import me.carina.rpg.common.Display;
+import me.carina.rpg.common.Feature;
+import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.unit.Units;
 import me.carina.rpg.common.util.Array2D;
 
-public class BattleMap extends CompoundFeature {
+public class BattleMap extends Feature {
     Tiles tiles;
     Units units;
     public BattleMap() {
@@ -50,5 +52,15 @@ public class BattleMap extends CompoundFeature {
     @Override
     public float getDisplayHeight() {
         return getHeight();
+    }
+
+    @Override
+    public AssetGroup getAssetGroup() {
+        return null;
+    }
+
+    @Override
+    public Class<? extends Definition> getDefClass() {
+        return null;
     }
 }

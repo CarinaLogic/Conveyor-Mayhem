@@ -1,13 +1,15 @@
 package me.carina.rpg.common.battle;
 
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import me.carina.rpg.Game;
 import me.carina.rpg.client.Client;
 import me.carina.rpg.client.battle.BattleScreen;
 import me.carina.rpg.common.AbstractGameInstance;
+import me.carina.rpg.common.DrawableFeature;
 import me.carina.rpg.common.Feature;
 import me.carina.rpg.common.file.AssetGroup;
 
-public class Tile extends Feature {
+public class Tile extends DrawableFeature {
     public Tile(){} //for json
     @Override
     public TileDisplay newDisplay() {
@@ -44,6 +46,11 @@ public class Tile extends Feature {
     @Override
     public AssetGroup getAssetGroup() {
         return AssetGroup.tiles;
+    }
+
+    @Override
+    public Drawable getDrawable() {
+        return Game.getInstance().getAssets().get(getPath(), Drawable.class);
     }
 
 
