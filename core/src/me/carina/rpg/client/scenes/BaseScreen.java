@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.Queue;
 import com.badlogic.gdx.utils.ScreenUtils;
 import me.carina.rpg.Game;
@@ -28,6 +29,9 @@ public abstract class BaseScreen implements Screen {
         init();
         delayedInitFunctions.forEach(func -> func.accept(this, (Client) Game.getInstance()));
         delayedInitFunctions.clear();
+        if (Game.getInstance().getLogger().getLevel() == Logger.DEBUG && !(this instanceof LoadingScreen)){
+            addStage(new DebugStage());
+        }
     }
 
     public void queueInit(BiConsumer<BaseScreen,Client> func){

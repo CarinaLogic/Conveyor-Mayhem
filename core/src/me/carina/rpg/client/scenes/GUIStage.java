@@ -17,6 +17,7 @@ public abstract class GUIStage extends GameStage {
         addActor(table);
         table.setFillParent(true);
         init(table);
+        setDebugAll(true);
     }
 
     public abstract void init(Table table);

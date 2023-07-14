@@ -8,6 +8,14 @@ public abstract class TimedRepeatingAction extends Action {
     public TimedRepeatingAction() {
         accumulatedTime = 0;
     }
+    public TimedRepeatingAction(float step){
+        this();
+        this.step = step;
+    }
+
+    public void setStep(float step) {
+        this.step = step;
+    }
 
     @Override
     public boolean act(float delta) {
