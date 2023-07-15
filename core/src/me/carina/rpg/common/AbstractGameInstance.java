@@ -49,6 +49,7 @@ public abstract class AbstractGameInstance implements PacketHandler, AssetFilter
 
     @Override
     public void render() {
+        assets.tick();
         for (DirectedPacket packet : packetQueue) {
             packet.packet.onRecieve(this, packet.connection);
             packetQueue.removeFirst();

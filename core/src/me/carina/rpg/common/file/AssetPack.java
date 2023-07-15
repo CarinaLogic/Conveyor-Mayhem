@@ -62,17 +62,15 @@ public class AssetPack {
         }
         else {
             if (assets.assetFilter.shouldPack()) {
-                PixmapPacker pixmapPacker = new PixmapPacker(1024,1024, Pixmap.Format.RGBA8888,2, true);
                 getFiles().forEach(f -> {
                     if (Texture.class.equals(extMap.findKey(f.extension(),false))){
                         Texture t = manager.get(f.path());
                         TextureData data = t.getTextureData();
                         if (!data.isPrepared()) data.prepare();
                         Pixmap p = data.consumePixmap();
-                        pixmapPacker.pack(getShortenedPath(f).toString(),p);
+                        assets.packer.pack(getShortenedPath(f).toString(),p);
                     }
                 });
-                pixmapPacker.updateTextureAtlas(assets.atlas, Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
             }
             finished = true;
         }

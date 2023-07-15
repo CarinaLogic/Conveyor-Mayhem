@@ -12,6 +12,10 @@ public class Path {
         this.id = id;
     }
 
+    public static Path reg(AssetGroup group, String id){
+        return new Path("reg",group,id);
+    }
+
     public Identifier toIdentifier(){
         return new Identifier(nameSpace,id);
     }

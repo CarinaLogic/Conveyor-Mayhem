@@ -1,6 +1,10 @@
 package me.carina.rpg.common.file;
 
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
+import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -11,6 +15,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import me.carina.rpg.common.*;
+import me.carina.rpg.common.util.Map;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -20,6 +25,8 @@ public class Assets {
     Array<AssetPack> assetGroups = new Array<>();
     AssetFilterProvider assetFilter;
     TextureAtlas atlas = new TextureAtlas();
+    Map<String, Drawable> drawableCache = new Map<>();
+    PixmapPacker packer = new PixmapPacker(1024,1024, Pixmap.Format.RGBA8888,2, true);
     public Assets(AbstractGameInstance game, AssetFilterProvider filter){
         assetFilter = filter;
         this.game = game;
@@ -49,13 +56,15 @@ public class Assets {
                 game.getLogger().error("Could not initialize " + type.getSimpleName());
             }
         }
-        else if (ClassReflection.isAssignableFrom(TextureRegion.class, type)){
-            TextureRegion region = atlas.findRegion(path.toString());
-            if (region != null) value = (T) region;
-        }
         else if (ClassReflection.isAssignableFrom(Drawable.class, type)){
-            TextureRegion region = get(path, TextureRegion.class);
-            if (region != null) value = (T) new TextureRegionDrawable(region);
+            if (drawableCache.containsKey(path.toString())) value = (T) drawableCache.get(path.toString());
+            else{
+                TextureRegion region = atlas.findRegion(path.toString());
+                if (region != null){
+                    value = (T) new TextureRegionDrawable(region);
+                    drawableCache.put(path.toString(), (Drawable) value);
+                }
+            }
         }
         else {
             boolean updated = false;
@@ -119,6 +128,12 @@ public class Assets {
             }
         }
         return true;
+    }
+    public void tick(){
+        packer.updateTextureAtlas(atlas, Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest, false);
+    }
+    public void registerTexture(Path path, Pixmap pixmap){
+        packer.pack(path.toString(),pixmap);
     }
 
 }
