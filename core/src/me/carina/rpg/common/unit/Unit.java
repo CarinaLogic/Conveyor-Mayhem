@@ -8,6 +8,7 @@ import me.carina.rpg.common.item.Equipments;
 
 public class Unit extends Feature {
     Equipments equipments = new Equipments();
+    UnitParts unitParts = new UnitParts();
     @Override
     public Class<? extends Definition> getDefClass() {
         return Def.class;
