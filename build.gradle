@@ -31,6 +31,7 @@ allprojects {
         gdxControllersVersion = '2.2.1'
         wsVersion = '1.9.10.3'
         visuiVersion = '1.5.1'
+        jacksonVersion = '2.15.2'
     }
 
     repositories {
@@ -133,5 +134,8 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
         implementation "com.github.MrStahlfelge.gdx-websockets:core:$wsVersion"
+        implementation "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+        implementation "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
+        implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
     }
 }
