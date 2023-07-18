@@ -7,7 +7,6 @@
 	<inherits name='com.github.czyzby.websocket.GdxWebSocket' />
 	<inherits name='com.github.czyzby.websocket.GdxWebSocketGwt' />
 	<inherits name="com.google.gwt.i18n.I18N"/>
-	<inherits name="com.github.nmorel.gwtjackson.GwtJackson" />
 	<!--	-->
 	<inherits name='Game' />
 	<entry-point class='me.carina.rpg.client.HtmlLauncher' />

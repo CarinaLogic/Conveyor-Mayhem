@@ -14,15 +14,13 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
-import com.github.nmorel.gwtjackson.client.JsonDeserializerParameters;
-import com.github.nmorel.gwtjackson.client.JsonSerializationContext;
-import com.github.nmorel.gwtjackson.client.JsonSerializer;
 import me.carina.rpg.common.*;
 import me.carina.rpg.common.util.Map;
 
 import java.lang.reflect.InvocationTargetException;
 
 public class Assets {
+    static Json json = new Json();
     AbstractGameInstance game;
     Array<AssetPack> assetGroups = new Array<>();
     AssetFilterProvider assetFilter;
@@ -32,6 +30,7 @@ public class Assets {
     public Assets(AbstractGameInstance game, AssetFilterProvider filter){
         assetFilter = filter;
         this.game = game;
+        json.setIgnoreUnknownFields(true);
     }
     public <T extends AssetGrouped> T get(String nameSpace, String id, Class<T> type){
         return get(new Identifier(nameSpace, id),type,null);
@@ -78,12 +77,10 @@ public class Assets {
             }
             if (!updated) {
                 for (AssetPack group : assetGroups) {
-                    try {
-                        String s = group.get(path, String.class);
-                        if (s != null) {
-//                            value = mapper.readValue(s, type);
-                        }
-                    } catch (Exception ignored){}
+                    JsonValue jsonValue = group.get(path, JsonValue.class);
+                    if (jsonValue != null) {
+                        value = json.readValue(type, jsonValue);
+                    }
                 }
             }
         }
