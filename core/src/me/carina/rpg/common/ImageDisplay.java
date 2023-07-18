@@ -1,19 +1,31 @@
 package me.carina.rpg.common;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TransformDrawable;
-import me.carina.rpg.Game;
-import me.carina.rpg.common.file.Path;
 
 public abstract class ImageDisplay extends Display{
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        setSize(getFeature().getDisplayWidth(),getFeature().getDisplayHeight());
-        setPosition(getFeature().getDisplayX(),getFeature().getDisplayY());
-        Drawable drawable = getFeature().getDrawable();
+        if (getParent() != null && getParent() instanceof Display){
+            Display p = ((Display) getParent());
+            if (p.context != null) {
+                this.context = p.context.clone();
+                this.context.add(this.getFeature());
+            }
+            else {
+                this.context = new Context();
+                this.context.add(this.getFeature());
+            }
+        }
+        else {
+            this.context = new Context();
+            this.context.add(this.getFeature());
+        }
+        setSize(getDisplayWidth(),getDisplayHeight());
+        setPosition(getDisplayX(),getDisplayY());
+        Drawable drawable = getDrawable();
         if (drawable instanceof TransformDrawable) {
             TransformDrawable transformDrawable = (TransformDrawable) drawable;
             transformDrawable.draw(batch,getX(),getY(),getOriginX(),getOriginY(),getWidth(),getHeight(),
@@ -23,7 +35,5 @@ public abstract class ImageDisplay extends Display{
         drawable.draw(batch, getX(),getY(),getWidth(),getHeight());
     }
 
-    @Override
-    public abstract DrawableFeature getFeature();
-
+    public abstract Drawable getDrawable();
 }

@@ -11,6 +11,26 @@ public class UnitDisplay extends Display {
     }
 
     @Override
+    public float getDisplayX() {
+        return 0;
+    }
+
+    @Override
+    public float getDisplayY() {
+        return 0;
+    }
+
+    @Override
+    public float getDisplayWidth() {
+        return 0;
+    }
+
+    @Override
+    public float getDisplayHeight() {
+        return 0;
+    }
+
+    @Override
     public Feature getFeature() {
         return unit;
     }

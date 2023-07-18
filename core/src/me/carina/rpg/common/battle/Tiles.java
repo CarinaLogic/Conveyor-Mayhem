@@ -14,6 +14,12 @@ public class Tiles {
         tiles = new TileArray(10,10);
         tiles.fill(v -> Game.getInstance().getAssets().get("core","plains", Tile.class));
     }
+    public int getX(Tile tile){
+        return tiles.getIdenticalX(tile);
+    }
+    public int getY(Tile tile){
+        return tiles.getIdenticalY(tile);
+    }
 
     public int getWidth() {
         return tiles.getWidth();

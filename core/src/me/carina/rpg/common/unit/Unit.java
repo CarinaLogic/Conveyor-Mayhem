@@ -1,5 +1,6 @@
 package me.carina.rpg.common.unit;
 
+import me.carina.rpg.common.Context;
 import me.carina.rpg.common.Definition;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.file.AssetGroup;
@@ -22,29 +23,13 @@ public class Unit extends Feature {
     }
 
     @Override
-    public float getDisplayX() {
-        return 0;
-    }
-
-    @Override
-    public float getDisplayY() {
-        return 0;
-    }
-
-    @Override
-    public float getDisplayWidth() {
-        return 0;
-    }
-
-    @Override
-    public float getDisplayHeight() {
-        return 0;
-    }
-
-
-    @Override
     public AssetGroup getAssetGroup() {
         return AssetGroup.units;
+    }
+
+    @Override
+    public void tickInner(Context context) {
+
     }
 
     public static class Def extends Feature.Def{

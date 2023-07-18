@@ -1,6 +1,7 @@
 package me.carina.rpg.common.world.map;
 
 import com.badlogic.gdx.graphics.Color;
+import me.carina.rpg.common.Context;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.Feature;
 import me.carina.rpg.common.file.AssetGroup;
@@ -18,28 +19,13 @@ public class Faction extends Feature {
     }
 
     @Override
-    public float getDisplayX() {
-        return 0;
-    }
-
-    @Override
-    public float getDisplayY() {
-        return 0;
-    }
-
-    @Override
-    public float getDisplayWidth() {
-        return 0;
-    }
-
-    @Override
-    public float getDisplayHeight() {
-        return 0;
-    }
-
-    @Override
     public AssetGroup getAssetGroup() {
         return AssetGroup.teams;
+    }
+
+    @Override
+    public void tickInner(Context context) {
+
     }
 
     @Override

@@ -8,6 +8,27 @@ public class UnitPartDisplay extends Display {
     public UnitPartDisplay(UnitPart unitPart){
         this.unitPart = unitPart;
     }
+
+    @Override
+    public float getDisplayX() {
+        return 0;
+    }
+
+    @Override
+    public float getDisplayY() {
+        return 0;
+    }
+
+    @Override
+    public float getDisplayWidth() {
+        return 0;
+    }
+
+    @Override
+    public float getDisplayHeight() {
+        return 0;
+    }
+
     @Override
     public Feature getFeature() {
         return unitPart;

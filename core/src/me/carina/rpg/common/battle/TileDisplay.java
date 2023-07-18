@@ -15,6 +15,26 @@ public class TileDisplay extends ImageDisplay {
     }
 
     @Override
+    public float getDisplayX() {
+        return getContext().get(BattleMap.class).tiles.getX(tile);
+    }
+
+    @Override
+    public float getDisplayY() {
+        return getContext().get(BattleMap.class).tiles.getY(tile);
+    }
+
+    @Override
+    public float getDisplayWidth() {
+        return 1;
+    }
+
+    @Override
+    public float getDisplayHeight() {
+        return 1;
+    }
+
+    @Override
     public Tile getFeature() {
         return tile;
     }
@@ -22,5 +42,10 @@ public class TileDisplay extends ImageDisplay {
     @Override
     public boolean fillChildren() {
         return true;
+    }
+
+    @Override
+    public Drawable getDrawable() {
+        return Game.getInstance().getAssets().get(tile.getPath(), Drawable.class);
     }
 }

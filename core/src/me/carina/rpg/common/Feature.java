@@ -1,9 +1,7 @@
 package me.carina.rpg.common;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Disposable;
-import me.carina.rpg.client.Client;
 import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.file.Identifier;
 import me.carina.rpg.common.file.Path;
@@ -17,7 +15,6 @@ public abstract class Feature implements Identifiable, Defined, AssetGrouped, Di
     transient Display display;
     Identifier id;
     public Feature(){} //for json
-
     /**
      * Binds new display to this object, discarding the old one
      * @return The display object
@@ -35,11 +32,6 @@ public abstract class Feature implements Identifiable, Defined, AssetGrouped, Di
     public void remove(){
         this.display.remove();
     }
-    public abstract float getDisplayX();
-    public abstract float getDisplayY();
-
-    public abstract float getDisplayWidth();
-    public abstract float getDisplayHeight();
     @Override
     public void dispose() {
         destroyDisplay();
@@ -88,4 +80,10 @@ public abstract class Feature implements Identifiable, Defined, AssetGrouped, Di
             this.id = id;
         }
     }
+    public void tick(Context context){
+        context.add(this);
+        tickInner(context);
+    }
+    //Context already has this object's context, do stuff and call tick(context.clone()) on all child
+    public abstract void tickInner(Context context);
 }
