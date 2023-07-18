@@ -3,7 +3,7 @@ package me.carina.rpg.common;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import me.carina.rpg.common.util.Array;
 
-public class Context implements Cloneable{
+public class Context {
     Array<Object> contexts = new Array<>();
     @SuppressWarnings("unchecked")
     public <T> T get(Class<T> type){
@@ -13,12 +13,9 @@ public class Context implements Cloneable{
         contexts.add(o);
     }
 
-    @Override
-    public Context clone(){
-        try {
-            return (Context) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
+    public Context copy(){
+        Context context = new Context();
+        context.contexts = this.contexts.copy();
+        return context;
     }
 }

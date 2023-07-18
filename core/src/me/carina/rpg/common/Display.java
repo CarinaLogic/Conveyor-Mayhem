@@ -11,7 +11,7 @@ public abstract class Display extends Group {
         if (getParent() != null && getParent() instanceof Display){
             Display p = ((Display) getParent());
             if (p.context != null) {
-                this.context = p.context.clone();
+                this.context = p.context.copy();
                 this.context.add(this.getFeature());
             }
             else {

@@ -55,4 +55,10 @@ public class Array<T> extends com.badlogic.gdx.utils.Array<T> {
             d.dispose();
         }
     }
+
+    public Array<T> copy(){
+        Array<T> newArray = new Array<>();
+        newArray.addAll(this);
+        return newArray;
+    }
 }
