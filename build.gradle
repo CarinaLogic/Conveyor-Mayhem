@@ -13,8 +13,6 @@ buildscript {
         classpath 'org.gretty:gretty:3.0.7'
         classpath 'com.android.tools.build:gradle:7.4.1'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.16'
-        
-
     }
 }
 
@@ -31,6 +29,7 @@ allprojects {
         gdxControllersVersion = '2.2.1'
         wsVersion = '1.9.10.3'
         visuiVersion = '1.5.1'
+        jacksonVersion = '2.15.2'
     }
 
     repositories {
@@ -122,6 +121,7 @@ project(":html") {
         implementation "com.github.MrStahlfelge.gdx-websockets:core:$wsVersion:sources"
         implementation "com.github.MrStahlfelge.gdx-websockets:html:$wsVersion"
         implementation "com.github.MrStahlfelge.gdx-websockets:html:$wsVersion:sources"
+        implementation 'com.github.nmorel.gwtjackson:gwt-jackson:0.15.4:sources'
     }
 }
 
@@ -133,5 +133,6 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
         implementation "com.github.MrStahlfelge.gdx-websockets:core:$wsVersion"
+        api 'com.github.nmorel.gwtjackson:gwt-jackson:0.15.4'
     }
 }

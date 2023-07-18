@@ -31,7 +31,7 @@ public class AssetPack {
         put(Files.FileType.Local, new LocalFileHandleResolver());
     }};
     static final ArrayMap<Class<?>,String> extMap = new ArrayMap<Class<?>, String>(){{
-        put(JsonValue.class, "json");
+        put(String.class, "json","txt");
         put(Texture.class, "png", "bmp", "jpg");
         put(BitmapFont.class, "fnt");
         //put other things you need to load
@@ -42,7 +42,7 @@ public class AssetPack {
         this.manager = new AssetManager(resolvers.get(rootFile.type()));
         this.assets = assets;
         this.game = game;
-        this.manager.setLoader(JsonValue.class,new JsonAssetLoader(this,game));
+        this.manager.setLoader(String.class, new StringLoader(resolvers.get(rootFile.type())));
     }
     public void queueFiles(){
         getFiles().forEach(f -> {
