@@ -28,7 +28,7 @@ public class Unit extends Feature {
     }
 
     @Override
-    public void tickInner(Context context) {
+    public void tick(Context context) {
 
     }
 

@@ -1,11 +1,8 @@
 package me.carina.rpg.common.battle;
 
-import com.badlogic.gdx.utils.Null;
-import me.carina.rpg.Game;
 import me.carina.rpg.common.*;
 import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.unit.Units;
-import me.carina.rpg.common.util.Array2D;
 
 public class BattleMap extends Feature {
     @AutoDisplay
@@ -39,9 +36,8 @@ public class BattleMap extends Feature {
     }
 
     @Override
-    public void tickInner(Context context) {
-        tiles.tick(context);
-        units.tick(context);
+    public void tick(Context context) {
+
     }
 
     @Override

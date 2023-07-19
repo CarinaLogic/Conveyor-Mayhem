@@ -29,7 +29,7 @@ public class Tile extends Feature {
     }
 
     @Override
-    public void tickInner(Context context) {
+    public void tick(Context context) {
         //NOOP
     }
 

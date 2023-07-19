@@ -27,7 +27,7 @@ public class Tiles extends Feature{
     }
 
     @Override
-    public void tickInner(Context context) {
+    public void tick(Context context) {
         if (tiles.get(0,0) == null){
             tiles.fill(this, v -> Game.getInstance().getAssets().get("core","plains", Tile.class));
         }

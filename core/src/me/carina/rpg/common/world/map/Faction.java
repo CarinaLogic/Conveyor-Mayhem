@@ -24,7 +24,7 @@ public class Faction extends Feature {
     }
 
     @Override
-    public void tickInner(Context context) {
+    public void tick(Context context) {
 
     }
 
