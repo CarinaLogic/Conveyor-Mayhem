@@ -16,12 +16,14 @@ import java.util.function.Supplier;
 public class Array2D<T> implements Iterable<Array2D.Array2DEntry<T>>{
     T[] values;
     int width;
+    int height;
     public Array2D(){} //for json
     public Array2D(int width, int height){
         //this.values = (T[]) new Object[width*height];
         //above does not work on gwt
         this.values = new Array<T>().setSize(width*height);
         this.width = width;
+        this.height = height;
     }
     public T get(int x, int y){
         return values[x+y*width];

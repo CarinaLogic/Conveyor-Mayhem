@@ -8,8 +8,10 @@ import me.carina.rpg.common.unit.Units;
 import me.carina.rpg.common.util.Array2D;
 
 public class BattleMap extends Feature {
-    Tiles tiles;
-    Units units;
+    @AutoDisplay
+    public Tiles tiles;
+    @AutoDisplay
+    public Units units;
     public BattleMap() {
         tiles = new Tiles();
         units = new Units();
@@ -38,7 +40,8 @@ public class BattleMap extends Feature {
 
     @Override
     public void tickInner(Context context) {
-
+        tiles.tick(context);
+        units.tick(context);
     }
 
     @Override

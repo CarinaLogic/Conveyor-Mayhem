@@ -12,10 +12,6 @@ public class BattleMapDisplay extends Display {
     BattleMap map;
     public BattleMapDisplay(BattleMap map){
         this.map = map;
-        for (Array2D.Array2DEntry<Tile> tiles : map.tiles.getTiles()) {
-            addActor(tiles.value.newDisplay());
-        }
-        setSize(map.getWidth(), map.getHeight());
         setTouchable(Touchable.childrenOnly);
         addListener(new Movable());
     }
@@ -48,5 +44,10 @@ public class BattleMapDisplay extends Display {
     @Override
     public boolean fillChildren() {
         return false;
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
     }
 }

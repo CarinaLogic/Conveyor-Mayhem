@@ -3,6 +3,7 @@ package me.carina.rpg;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Collections;
 import com.badlogic.gdx.utils.Logger;
 import me.carina.rpg.client.Client;
 import me.carina.rpg.client.InternalClient;
@@ -22,6 +23,7 @@ public class Game extends ApplicationAdapter{
 	public Game(Platform platform){
 		this.platform = platform;
 		Game.game = this;
+		Collections.allocateIterators = true;
 	}
 	@Override
 	public void create () {
@@ -89,6 +91,12 @@ public class Game extends ApplicationAdapter{
 	}
 	public static AbstractGameInstance getInstance(){
 		return game.gameInstance;
+	}
+	public static Client getClient(){
+		return (Client) game.gameInstance;
+	}
+	public static Server getServer(){
+		return (Server) game.gameInstance;
 	}
 
 }

@@ -8,25 +8,34 @@ import me.carina.rpg.common.Feature;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public abstract class FeatureArray<T extends Feature> extends Array<T>{
-    //Extend this class and override gtParent() as needed
-    //Do not use inline declaration (lambdas) as it will break json serialization
-    //Do not use non-static child classes, it will also break serialization
-    //Please find a way to grab the feature you need from static context
+public class FeatureArray<T extends Feature> extends Array<T>{
+
     public FeatureArray(){} //for json
+
+    public void add(Feature parent, T value) {
+        super.add(value);
+        if (Game.getInstance().isClient()) parent.getDisplay().addActor(value.newDisplay());
+    }
+
+    //Do not use
     @Override
     public void add(T value) {
-        super.add(value);
-        if (Game.getInstance().isClient()) getParent().getDisplay().addActor(value.newDisplay());
+        throw new RuntimeException();
     }
 
     @SafeVarargs
-    @Override
-    public final void addAll(T... array) {
+    public final void addAll(Feature parent, T... array) {
         super.addAll(array);
         for (T a : array) {
-            if (Game.getInstance().isClient()) getParent().getDisplay().addActor(a.newDisplay());
+            if (Game.getInstance().isClient()) parent.getDisplay().addActor(a.newDisplay());
         }
+    }
+
+    //Do not use
+    @SafeVarargs
+    @Override
+    public final void addAll(T... array) {
+        throw new RuntimeException();
     }
 
     @Override
@@ -41,5 +50,4 @@ public abstract class FeatureArray<T extends Feature> extends Array<T>{
         f.remove();
         return super.removeIndex(index);
     }
-    public abstract Feature getParent();
 }

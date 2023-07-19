@@ -11,6 +11,7 @@ import java.util.function.Function;
 //I know it is VERY inefficient implementation, will fix it once situation is stable
 public class Array<T> extends com.badlogic.gdx.utils.Array<T> {
     public Array(){super();}
+
     @SafeVarargs
     public Array(T... items){super(items);}
     public Array<T> match(Predicate<T> predicate){

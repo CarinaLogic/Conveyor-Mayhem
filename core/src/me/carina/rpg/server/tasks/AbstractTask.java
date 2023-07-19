@@ -1,20 +1,17 @@
 package me.carina.rpg.server.tasks;
 
 import com.badlogic.gdx.utils.Array;
+import me.carina.rpg.Game;
 import me.carina.rpg.server.Server;
 
 public abstract class AbstractTask {
-    Server server;
     Array<AbstractTask> nextTasks = new Array<>();
     boolean requireNextTask = false;
     boolean timed = false;
     boolean prioritized = false;
-    float accumulatedTime;
+    float accumulatedTime = -1;
     float step = 1/60f;
-    public AbstractTask(Server server){
-        this.server = server;
-        accumulatedTime = 0;
-    }
+    public AbstractTask(){}
     public void timed(){
         timed = true;
     }
@@ -28,6 +25,7 @@ public abstract class AbstractTask {
         nextTasks.addAll(tasks);
     }
     public void tick(float delta){
+        if (accumulatedTime == -1) accumulatedTime = 0;
         if (timed){
             float frameTime = Math.min(delta, 0.25f);
             accumulatedTime += frameTime;
@@ -45,18 +43,11 @@ public abstract class AbstractTask {
      */
     public abstract boolean run();
 
-    public void setServer(Server server){
-        this.server = server;
-    }
     public void terminate(){
-        server.removeTask(this);
+        Game.getServer().removeTask(this);
         for (AbstractTask nextTask : nextTasks) {
-            server.addTask(nextTask);
+            Game.getServer().addTask(nextTask);
         }
-    }
-
-    public Server getServer() {
-        return server;
     }
 
     public boolean isPrioritized() {

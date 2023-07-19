@@ -3,11 +3,14 @@ package me.carina.rpg.server;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
 import me.carina.rpg.common.AbstractGameInstance;
+import me.carina.rpg.common.battle.BattleMap;
 import me.carina.rpg.common.util.Array;
 import me.carina.rpg.packets.C2SPacket;
 import me.carina.rpg.packets.connection.Connection;
 import me.carina.rpg.server.tasks.AbstractTask;
+import me.carina.rpg.server.tasks.BattleMapUpdateTask;
 import me.carina.rpg.server.tasks.ClientConnectTask;
 import me.carina.rpg.server.tasks.LoadingTask;
 
@@ -19,7 +22,13 @@ public abstract class Server extends AbstractGameInstance {
 
     @Override
     public void create() {
-        addTask(new LoadingTask(this,Gdx.files.internal("core")));
+        addTask(new LoadingTask(Gdx.files.internal("core")));
+        addTask(new BattleMapUpdateTask(new BattleMap()));
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends AbstractTask> T getTask (Class<T> cls){
+        return (T)tasks.firstMatch(t -> ClassReflection.isInstance(cls,t));
     }
 
     @Override
@@ -72,7 +81,7 @@ public abstract class Server extends AbstractGameInstance {
     @Override
     public void addConnection(Connection connection) {
         super.addConnection(connection);
-        addTask(new ClientConnectTask(this,connection));
+        addTask(new ClientConnectTask(connection));
     }
 
     @Override
