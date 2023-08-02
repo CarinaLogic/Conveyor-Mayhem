@@ -3,6 +3,7 @@ package me.carina.rpg.common;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.Field;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
@@ -15,6 +16,13 @@ public abstract class Display extends Group {
     transient boolean populated = false;
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        addContext();
+        if (!populated) populateChild();
+        setSize(getDisplayWidth(), getDisplayHeight());
+        setPosition(getDisplayX(), getDisplayY(), getAlignment());
+        super.draw(batch, parentAlpha);
+    }
+    public void addContext(){
         if (getParent() != null && getParent() instanceof Display){
             Display p = ((Display) getParent());
             if (p.context != null) {
@@ -30,10 +38,6 @@ public abstract class Display extends Group {
             this.context = new Context();
             this.context.add(this.getFeature());
         }
-        if (!populated) populateChild();
-        setSize(getDisplayWidth(), getDisplayHeight());
-        setPosition(getDisplayX(), getDisplayY());
-        super.draw(batch, parentAlpha);
     }
     public void populateChild(){
         Field[] fields = ClassReflection.getDeclaredFields(getFeature().getClass());
@@ -100,6 +104,8 @@ public abstract class Display extends Group {
     public abstract float getDisplayWidth();
     public abstract float getDisplayHeight();
     public abstract Feature getFeature();
+
+    public abstract int getAlignment();
 
     public abstract boolean fillChildren();
 

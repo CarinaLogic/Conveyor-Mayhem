@@ -8,23 +8,10 @@ public abstract class ImageDisplay extends Display{
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        if (getParent() != null && getParent() instanceof Display){
-            Display p = ((Display) getParent());
-            if (p.context != null) {
-                this.context = p.context.copy();
-                this.context.add(this.getFeature());
-            }
-            else {
-                this.context = new Context();
-                this.context.add(this.getFeature());
-            }
-        }
-        else {
-            this.context = new Context();
-            this.context.add(this.getFeature());
-        }
+        addContext();
+        if (!populated) populateChild();
         setSize(getDisplayWidth(),getDisplayHeight());
-        setPosition(getDisplayX(),getDisplayY());
+        setPosition(getDisplayX(),getDisplayY(),getAlignment());
         Drawable drawable = getDrawable();
         if (drawable instanceof TransformDrawable) {
             TransformDrawable transformDrawable = (TransformDrawable) drawable;

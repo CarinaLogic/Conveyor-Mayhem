@@ -1,14 +1,12 @@
 package me.carina.rpg.common.unit;
 
-import me.carina.rpg.common.Context;
-import me.carina.rpg.common.Definition;
-import me.carina.rpg.common.Display;
+import me.carina.rpg.common.*;
 import me.carina.rpg.common.file.AssetGroup;
-import me.carina.rpg.common.Feature;
 import me.carina.rpg.common.item.Equipments;
 
 public class Unit extends Feature {
     Equipments equipments = new Equipments();
+    @AutoDisplay
     UnitParts unitParts = new UnitParts();
     @Override
     public Class<? extends Definition> getDefClass() {

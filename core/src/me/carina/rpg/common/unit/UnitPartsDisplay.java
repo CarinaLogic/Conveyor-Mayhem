@@ -1,15 +1,13 @@
 package me.carina.rpg.common.unit;
 
-import com.badlogic.gdx.scenes.scene2d.Group;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.Feature;
 
-public class UnitDisplay extends Display {
-    Unit unit;
-    public UnitDisplay(Unit unit){
-        this.unit = unit;
+public class UnitPartsDisplay extends Display {
+    UnitParts unitParts;
+    public UnitPartsDisplay(UnitParts unitParts){
+        this.unitParts = unitParts;
     }
-
     @Override
     public float getDisplayX() {
         return 0;
@@ -32,7 +30,7 @@ public class UnitDisplay extends Display {
 
     @Override
     public Feature getFeature() {
-        return unit;
+        return unitParts;
     }
 
     @Override

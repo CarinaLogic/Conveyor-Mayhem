@@ -21,12 +21,12 @@ public class UnitPartDisplay extends Display {
 
     @Override
     public float getDisplayWidth() {
-        return 0;
+        return 1;
     }
 
     @Override
     public float getDisplayHeight() {
-        return 0;
+        return 1;
     }
 
     @Override
