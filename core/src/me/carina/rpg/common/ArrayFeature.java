@@ -44,6 +44,10 @@ public abstract class ArrayFeature<T extends Feature> extends Feature implements
     @Override
     public abstract ArrayDisplay<T> newDisplay();
 
+    public Array<T> getArray() {
+        return array;
+    }
+
     @Override
     public Iterator<T> iterator() {
         return new com.badlogic.gdx.utils.Array.ArrayIterator<>(array);

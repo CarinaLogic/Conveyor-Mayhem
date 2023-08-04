@@ -17,11 +17,16 @@ public class Array2D<T> implements Iterable<Array2D.Array2DEntry<T>>{
     T[] values;
     int width;
     int height;
-    public Array2D(){} //for json
+    public Array2D(){
+        //Make a 1x1 array so that values doesn't stay null thus preventing exception upon values.length call
+        this(1,1);
+    } //for json
     public Array2D(int width, int height){
         //this.values = (T[]) new Object[width*height];
         //above does not work on gwt
-        this.values = new Array<T>().setSize(width*height);
+        Array<T> tempArray = new Array<>();
+        tempArray.setSize(width*height);
+        this.values = tempArray.shrink();
         this.width = width;
         this.height = height;
     }

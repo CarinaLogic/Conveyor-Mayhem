@@ -1,41 +1,22 @@
 package me.carina.rpg.common.battle;
 
+import me.carina.rpg.common.Array2DDisplay;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.Feature;
 
-public class TilesDisplay extends Display {
+public class TilesDisplay extends Array2DDisplay<Tile> {
     Tiles tiles;
     public TilesDisplay(Tiles tiles){
         this.tiles = tiles;
     }
 
     @Override
-    public void tick() {
+    public void tickMore() {
 
     }
 
     @Override
-    public float getDisplayX() {
-        return 0;
-    }
-
-    @Override
-    public float getDisplayY() {
-        return 0;
-    }
-
-    @Override
-    public float getDisplayWidth() {
-        return getContext().get(BattleMap.class).getWidth();
-    }
-
-    @Override
-    public float getDisplayHeight() {
-        return getContext().get(BattleMap.class).getHeight();
-    }
-
-    @Override
-    public Feature getFeature() {
+    public Tiles getFeature() {
         return tiles;
     }
 

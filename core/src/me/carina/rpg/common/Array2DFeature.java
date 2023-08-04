@@ -60,6 +60,10 @@ public abstract class Array2DFeature<T extends Feature> extends Feature implemen
     @Override
     public abstract Array2DDisplay<T> newDisplay();
 
+    public Array2D<T> getArray() {
+        return array;
+    }
+
     @Override
     public Iterator<Array2D.Array2DEntry<T>> iterator() {
         return new Array2D.Array2DIterator<>(array);
