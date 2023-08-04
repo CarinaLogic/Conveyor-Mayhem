@@ -21,12 +21,12 @@ public class TileDisplay extends ImageDisplay {
 
     @Override
     public float getDisplayX() {
-        return getContext().get(BattleMap.class).tiles.getX(tile);
+        return getContext().get(Tiles.class).getIdenticalX(tile);
     }
 
     @Override
     public float getDisplayY() {
-        return getContext().get(BattleMap.class).tiles.getY(tile);
+        return getContext().get(Tiles.class).getIdenticalY(tile);
     }
 
     @Override

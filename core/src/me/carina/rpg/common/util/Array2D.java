@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.reflect.ArrayReflection;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Vector;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -67,18 +68,22 @@ public class Array2D<T> implements Iterable<Array2D.Array2DEntry<T>>{
         return resize(0,height - this.values.length / this.width,0, width - this.width);
     }
     public Array2D<T> resize(int top, int bottom, int left, int right){
-        Array2D<T> newArray = new Array2D<>(this.width+top+bottom,this.values.length/this.width+left+right);
-        newArray.clear();
-        for (int x = 0; x < this.width; x++) {
-            for (int y = 0; y < this.values.length / this.width; y++) {
+        Array2D<T> oldArray = this.copy();
+        this.width = oldArray.width+top+bottom;
+        this.height = oldArray.values.length/oldArray.width+left+right;
+        Array<T> tempArray = new Array<>();
+        tempArray.setSize(width*height);
+        this.values = tempArray.shrink();
+        for (int x = 0; x < oldArray.width; x++) {
+            for (int y = 0; y < oldArray.values.length / oldArray.width; y++) {
                 int tx = x + left;
                 int ty = y + top;
-                if (0 <= tx && tx < this.width + right && 0 <= ty && ty < this.values.length/this.width+bottom){
-                    newArray.set(tx,ty,get(x,y));
+                if (0 <= tx && tx < oldArray.width + right && 0 <= ty && ty < oldArray.values.length/oldArray.width+bottom){
+                    this.set(tx,ty,get(x,y));
                 }
             }
         }
-        return newArray;
+        return this;
     }
     public int getX(T obj){
         if (obj == null) return -1;
@@ -125,6 +130,29 @@ public class Array2D<T> implements Iterable<Array2D.Array2DEntry<T>>{
 
     public int getWidth(){return width;}
     public int getHeight(){return values.length/width;}
+
+    public Array2D<T> copy(){
+        Array2D<T> array = new Array2D<>();
+        array.values = Arrays.copyOf(values,values.length);
+        array.width = width;
+        array.height = height;
+        return array;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Array2D<?> array2D = (Array2D<?>) o;
+        return width == array2D.width && height == array2D.height && Arrays.equals(values, array2D.values);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(width, height);
+        result = 31 * result + Arrays.hashCode(values);
+        return result;
+    }
 
     @Override
     public Iterator<Array2DEntry<T>> iterator() {

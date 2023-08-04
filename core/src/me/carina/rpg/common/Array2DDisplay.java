@@ -23,7 +23,7 @@ public abstract class Array2DDisplay<T extends Feature> extends Display {
             }
         }
         for (int i = 0; i < checkList.length; i++) {
-            if (checkList[i]){
+            if (!checkList[i]){
                 //there's no array entry for this child, remove it
                 removeActor(children.get(i));
             }
