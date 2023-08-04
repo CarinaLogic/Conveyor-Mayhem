@@ -49,11 +49,26 @@ public class Array<T> extends com.badlogic.gdx.utils.Array<T> {
         return map;
     }
 
-    public void remove(T value){
-        this.removeValue(value,false);
-        if (value instanceof Disposable) {
-            Disposable d = (Disposable) value;
-            d.dispose();
+
+    @SuppressWarnings("unchecked")
+    public void remove(T... values){
+        for (T value : values) {
+            this.removeValue(value,false);
+            if (value instanceof Disposable) {
+                Disposable d = (Disposable) value;
+                d.dispose();
+            }
+        }
+    }
+
+    @SafeVarargs
+    public final void removeIdentity(T... values){
+        for (T value : values) {
+            this.removeValue(value,true);
+            if (value instanceof Disposable) {
+                Disposable d = (Disposable) value;
+                d.dispose();
+            }
         }
     }
 

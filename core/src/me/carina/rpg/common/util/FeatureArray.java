@@ -38,10 +38,13 @@ public class FeatureArray<T extends Feature> extends Array<T>{
         throw new RuntimeException();
     }
 
+    @SafeVarargs
     @Override
-    public void remove(T value) {
-        super.remove(value);
-        if (Game.getInstance().isClient()) value.remove();
+    public final void remove(T... values) {
+        super.remove(values);
+        for (T value : values) {
+            if (Game.getInstance().isClient()) value.remove();
+        }
     }
 
     @Override

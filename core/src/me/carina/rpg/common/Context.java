@@ -18,4 +18,13 @@ public class Context {
         context.contexts = this.contexts.copy();
         return context;
     }
+
+    public <T> T getLatest(Class<T> type){
+        Object o = contexts.get(contexts.size - 1);
+        if (ClassReflection.isInstance(type,o)){
+            //noinspection unchecked
+            return (T) o;
+        }
+        return null;
+    }
 }
