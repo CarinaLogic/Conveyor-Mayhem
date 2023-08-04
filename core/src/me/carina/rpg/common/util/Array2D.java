@@ -110,7 +110,7 @@ public class Array2D<T> implements Iterable<Array2D.Array2DEntry<T>>{
         }
         return -1;
     }
-    public Vector2 gtIdenticalPos(T obj){
+    public Vector2 getIdenticalPos(T obj){
         if (obj == null) return null;
         for (Array2DEntry<T> entry : this) {
             if (obj == entry.value) return new Vector2(entry.x,entry.y);
