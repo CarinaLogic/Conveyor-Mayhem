@@ -9,7 +9,6 @@ import java.util.Iterator;
 //Wrapper for array
 public abstract class ArrayFeature<T extends Feature> extends Feature implements Iterable<T>{
     //Add things as needed
-    @AutoDisplay
     Array<T> array = new Array<>();
 
     @SafeVarargs
