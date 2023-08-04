@@ -15,6 +15,11 @@ public class TileDisplay extends ImageDisplay {
     }
 
     @Override
+    public void tick() {
+
+    }
+
+    @Override
     public float getDisplayX() {
         return getContext().get(BattleMap.class).tiles.getX(tile);
     }

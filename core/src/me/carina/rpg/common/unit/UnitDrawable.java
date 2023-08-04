@@ -5,6 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TransformDrawable;
 import me.carina.rpg.common.util.StackedDrawable;
 
 public class UnitDrawable extends StackedDrawable {
+
+
     public UnitDrawable(TransformDrawable... drawables) {
         super(drawables);
     }

@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Array;
 
 public class StackedDrawable extends BaseDrawable implements TransformDrawable {
     Array<TransformDrawable> drawables = new Array<>();
+    public StackedDrawable(){}
     public StackedDrawable(TransformDrawable... drawables){
         this.drawables.addAll(drawables);
     }

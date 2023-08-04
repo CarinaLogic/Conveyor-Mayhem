@@ -50,4 +50,9 @@ public class BattleMapDisplay extends Display {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
     }
+
+    @Override
+    public void tick() {
+
+    }
 }

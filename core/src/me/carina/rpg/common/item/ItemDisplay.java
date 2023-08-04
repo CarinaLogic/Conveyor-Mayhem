@@ -11,6 +11,11 @@ public class ItemDisplay extends Display {
     }
 
     @Override
+    public void tick() {
+
+    }
+
+    @Override
     public float getDisplayX() {
         return 0;
     }

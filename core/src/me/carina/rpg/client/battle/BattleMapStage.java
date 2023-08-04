@@ -13,7 +13,6 @@ import me.carina.rpg.common.world.map.CanvasActor;
 
 public class BattleMapStage extends GameStage {
     BattleMapDisplay battleMapDisplay;
-    CanvasActor canvas;
     public BattleMapStage(){
         super(new PerspectiveViewport(10,10,new PerspectiveCamera(70,10,10)));
     }
@@ -43,11 +42,4 @@ public class BattleMapStage extends GameStage {
         super.draw();
     }
 
-    public CanvasActor getCanvas() {
-        return canvas;
-    }
-
-    public void setCanvas(CanvasActor canvas) {
-        this.canvas = canvas;
-    }
 }

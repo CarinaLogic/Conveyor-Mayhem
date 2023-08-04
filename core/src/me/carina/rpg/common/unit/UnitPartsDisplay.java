@@ -8,6 +8,12 @@ public class UnitPartsDisplay extends Display {
     public UnitPartsDisplay(UnitParts unitParts){
         this.unitParts = unitParts;
     }
+
+    @Override
+    public void tick() {
+
+    }
+
     @Override
     public float getDisplayX() {
         return 0;

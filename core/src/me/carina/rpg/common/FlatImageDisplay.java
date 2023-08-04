@@ -1,30 +1,24 @@
 package me.carina.rpg.common;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TransformDrawable;
+import me.carina.rpg.Game;
 
-public abstract class ImageDisplay extends Display{
-
+public abstract class FlatImageDisplay extends ImageDisplay{
     @Override
     public void draw(Batch batch, float parentAlpha) {
         addContext();
         if (!populated) populateChild();
-        Color color = getColor();
-        batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
         setSize(getDisplayWidth(),getDisplayHeight());
         setPosition(getDisplayX(),getDisplayY(),getAlignment());
         Drawable drawable = getDrawable();
         if (drawable instanceof TransformDrawable) {
             TransformDrawable transformDrawable = (TransformDrawable) drawable;
-            transformDrawable.draw(batch,getX(),getY(),getOriginX(),getOriginY(),getWidth(),getHeight(),
-                    getScaleX(),getScaleY(),getRotation());
+            Game.getClient().getScreen().getCanvas().draw(transformDrawable,getX(),getY(),getOriginX(),getOriginY(),getWidth(),getHeight(),
+                    getScaleX(),getScaleY(),getRotation(),getColor(),parentAlpha);
             return;
         }
-        drawable.draw(batch, getX(),getY(),getWidth(),getHeight());
+        Game.getClient().getScreen().getCanvas().draw(drawable, getX(),getY(),getWidth(),getHeight(),getColor(),parentAlpha);
     }
-
-    public abstract Drawable getDrawable();
 }

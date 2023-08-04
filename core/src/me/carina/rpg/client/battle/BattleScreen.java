@@ -1,22 +1,22 @@
 package me.carina.rpg.client.battle;
 
 import me.carina.rpg.client.scenes.BaseScreen;
+import me.carina.rpg.client.scenes.CanvasStage;
 import me.carina.rpg.common.battle.BattleMap;
 
 public class BattleScreen extends BaseScreen {
     BattleMapStage battleMapStage;
-    BattleMapActorStage actorStage;
+    CanvasStage actorStage;
     BattleMapGUIStage guiStage;
 
     @Override
     public void init() {
         battleMapStage = new BattleMapStage();
         addStage(battleMapStage);
-        actorStage = new BattleMapActorStage();
+        actorStage = new CanvasStage();
         addStage(actorStage);
         guiStage = new BattleMapGUIStage();
         addStage(guiStage);
-        battleMapStage.setCanvas(actorStage.canvas);
     }
 
     @Override

@@ -18,10 +18,12 @@ public abstract class Display extends Group {
     public void draw(Batch batch, float parentAlpha) {
         addContext();
         if (!populated) populateChild();
+        tick();
         setSize(getDisplayWidth(), getDisplayHeight());
         setPosition(getDisplayX(), getDisplayY(), getAlignment());
         super.draw(batch, parentAlpha);
     }
+    public abstract void tick();
     public void addContext(){
         if (getParent() != null && getParent() instanceof Display){
             Display p = ((Display) getParent());
@@ -105,7 +107,9 @@ public abstract class Display extends Group {
     public abstract float getDisplayHeight();
     public abstract Feature getFeature();
 
-    public abstract int getAlignment();
+    public int getAlignment() {
+        return Align.bottomLeft;
+    }
 
     public abstract boolean fillChildren();
 

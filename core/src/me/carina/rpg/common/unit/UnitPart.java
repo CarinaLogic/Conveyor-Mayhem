@@ -1,12 +1,10 @@
 package me.carina.rpg.common.unit;
 
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import me.carina.rpg.common.Context;
 import me.carina.rpg.common.Definition;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.Feature;
 import me.carina.rpg.common.file.AssetGroup;
-import me.carina.rpg.common.file.Identifier;
 import me.carina.rpg.common.file.Path;
 
 //Display properties have 4 layers
@@ -23,7 +21,7 @@ public class UnitPart extends Feature {
     BodyProperty property;
     int colorIndex;
     public Path getPath(){
-        return new Path(getId().getNameSpace(), getAssetGroup(), bodyType+"/"+getId().getId());
+        return new Path(getId().getNameSpace(), getAssetGroup(), bodyType+"/"+getId().getIdString());
     }
 
     @Override

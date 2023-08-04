@@ -8,6 +8,12 @@ public class TilesDisplay extends Display {
     public TilesDisplay(Tiles tiles){
         this.tiles = tiles;
     }
+
+    @Override
+    public void tick() {
+
+    }
+
     @Override
     public float getDisplayX() {
         return 0;

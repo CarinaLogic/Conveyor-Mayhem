@@ -8,6 +8,12 @@ public class UnitsDisplay extends Display {
     public UnitsDisplay(Units units){
         this.units = units;
     }
+
+    @Override
+    public void tick() {
+
+    }
+
     @Override
     public float getDisplayX() {
         return 0;

@@ -15,6 +15,11 @@ public class SkillDisplay extends Display {
     }
 
     @Override
+    public void tick() {
+
+    }
+
+    @Override
     public float getDisplayX() {
         return 0;
     }

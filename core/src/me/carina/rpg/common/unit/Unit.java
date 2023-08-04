@@ -5,6 +5,8 @@ import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.item.Equipments;
 
 public class Unit extends Feature {
+    int x;
+    int y;
     Equipments equipments = new Equipments();
     @AutoDisplay
     UnitParts unitParts = new UnitParts();
