@@ -1,24 +1,12 @@
 package me.carina.rpg.common.unit;
 
-import me.carina.rpg.Game;
-import me.carina.rpg.client.Client;
-import me.carina.rpg.client.battle.BattleScreen;
 import me.carina.rpg.common.*;
-import me.carina.rpg.common.battle.BattleMap;
 import me.carina.rpg.common.file.AssetGroup;
-import me.carina.rpg.common.util.Array;
-import me.carina.rpg.common.util.FeatureArray;
 
-import java.util.Optional;
-
-public class Units extends Feature{
-    @AutoDisplay
-    public FeatureArray<Unit> units = new FeatureArray<>();
-
-    public Units(){} //for json
+public class Units extends ArrayFeature<Unit>{
 
     @Override
-    public Display newDisplay() {
+    public ArrayDisplay<Unit> newDisplay() {
         return new UnitsDisplay(this);
     }
 
@@ -29,18 +17,6 @@ public class Units extends Feature{
 
     @Override
     public void tick(Context context) {
-
-    }
-
-    public FeatureArray<Unit> getUnits() {
-        return units;
-    }
-
-    public void addUnit(BattleMap map, Unit... units){
-        this.units.addAll(map,units);
-
-    }
-    public void removeUnit(){
 
     }
 

@@ -1,41 +1,23 @@
 package me.carina.rpg.common.unit;
 
+import me.carina.rpg.common.ArrayDisplay;
+import me.carina.rpg.common.ArrayFeature;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.Feature;
 
-public class UnitsDisplay extends Display {
+public class UnitsDisplay extends ArrayDisplay<Unit> {
     Units units;
-    public UnitsDisplay(Units units){
+    public UnitsDisplay(Units units) {
         this.units = units;
     }
 
     @Override
-    public void tick() {
+    public void tickMore() {
 
     }
 
     @Override
-    public float getDisplayX() {
-        return 0;
-    }
-
-    @Override
-    public float getDisplayY() {
-        return 0;
-    }
-
-    @Override
-    public float getDisplayWidth() {
-        return 0;
-    }
-
-    @Override
-    public float getDisplayHeight() {
-        return 0;
-    }
-
-    @Override
-    public Feature getFeature() {
+    public ArrayFeature<Unit> getFeature() {
         return units;
     }
 

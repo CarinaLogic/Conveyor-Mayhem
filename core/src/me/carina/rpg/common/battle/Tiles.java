@@ -1,12 +1,8 @@
 package me.carina.rpg.common.battle;
 
 import me.carina.rpg.Game;
-import me.carina.rpg.client.Client;
-import me.carina.rpg.client.battle.BattleScreen;
 import me.carina.rpg.common.*;
 import me.carina.rpg.common.file.AssetGroup;
-import me.carina.rpg.common.util.Array2D;
-import me.carina.rpg.common.util.FeatureArray2D;
 
 public class Tiles extends Array2DFeature<Tile>{
 

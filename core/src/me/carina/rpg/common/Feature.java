@@ -8,9 +8,6 @@ import com.badlogic.gdx.utils.reflect.ReflectionException;
 import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.file.Identifier;
 import me.carina.rpg.common.file.Path;
-import me.carina.rpg.common.util.Array2D;
-import me.carina.rpg.common.util.FeatureArray;
-import me.carina.rpg.common.util.FeatureArray2D;
 
 //Basic design around actual feature objects
 //1. The parent object, which holds all the info processed by sever
@@ -98,25 +95,6 @@ public abstract class Feature implements Identifiable, Defined, AssetGrouped, Di
                         Feature feature = (Feature) o;
                         if (feature.getDisplay() == null){
                             feature.contextAndTick(context.copy());
-                        }
-                    }
-                    else if (ClassReflection.isInstance(FeatureArray.class,o)){
-                        FeatureArray<?> array = (FeatureArray<?>) o;
-                        for (Feature feature : array) {
-                            if (feature.getDisplay() == null){
-                                feature.contextAndTick(context.copy());
-                            }
-                        }
-                    }
-                    else if (ClassReflection.isInstance(FeatureArray2D.class,o)){
-                        FeatureArray2D<?> array2D = (FeatureArray2D<?>) o;
-                        for (Array2D.Array2DEntry<?> array2DEntry : array2D) {
-                            if (ClassReflection.isInstance(Feature.class,array2DEntry.value)){
-                                Feature feature = (Feature) array2DEntry.value;
-                                if (feature.getDisplay() == null) {
-                                    feature.contextAndTick(context.copy());
-                                }
-                            }
                         }
                     }
                 } catch (ReflectionException e) {

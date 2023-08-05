@@ -2,8 +2,6 @@ package me.carina.rpg.common;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.SnapshotArray;
-import me.carina.rpg.common.util.Array;
-import me.carina.rpg.common.util.FeatureArray;
 
 import java.util.Arrays;
 

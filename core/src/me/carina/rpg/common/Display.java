@@ -7,9 +7,6 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.Field;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
-import me.carina.rpg.common.util.Array2D;
-import me.carina.rpg.common.util.FeatureArray;
-import me.carina.rpg.common.util.FeatureArray2D;
 
 public abstract class Display extends Group {
     transient Context context;
@@ -47,29 +44,10 @@ public abstract class Display extends Group {
             if (field.getDeclaredAnnotation(AutoDisplay.class) != null){
                 try {
                     Object o = field.get(getFeature());
-                    if (ClassReflection.isInstance(Feature.class,o)){
+                    if (ClassReflection.isInstance(Feature.class,o)) {
                         Feature feature = (Feature) o;
-                        if (feature.getDisplay() == null){
+                        if (feature.getDisplay() == null) {
                             addActor(feature.newDisplay());
-                        }
-                    }
-                    else if (ClassReflection.isInstance(FeatureArray.class,o)){
-                        FeatureArray<?> array = (FeatureArray<?>) o;
-                        for (Feature feature : array) {
-                            if (feature.getDisplay() == null){
-                                addActor(feature.newDisplay());
-                            }
-                        }
-                    }
-                    else if (ClassReflection.isInstance(FeatureArray2D.class,o)){
-                        FeatureArray2D<?> array2D = (FeatureArray2D<?>) o;
-                        for (Array2D.Array2DEntry<?> array2DEntry : array2D) {
-                            if (ClassReflection.isInstance(Feature.class,array2DEntry.value)){
-                                Feature feature = (Feature) array2DEntry.value;
-                                if (feature.getDisplay() == null) {
-                                    addActor(feature.newDisplay());
-                                }
-                            }
                         }
                     }
                 } catch (ReflectionException e) {
