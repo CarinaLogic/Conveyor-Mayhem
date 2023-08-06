@@ -13,7 +13,7 @@ public class Item extends Feature {
     }
 
     @Override
-    public Display newDisplay() {
+    protected Display newDisplay() {
         ItemDisplay d = new ItemDisplay(this);
         setDisplay(d);
         return d;

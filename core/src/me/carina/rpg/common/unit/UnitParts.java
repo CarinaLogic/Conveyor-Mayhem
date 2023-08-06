@@ -2,11 +2,24 @@ package me.carina.rpg.common.unit;
 
 import me.carina.rpg.common.*;
 import me.carina.rpg.common.file.AssetGroup;
+import me.carina.rpg.common.file.Identifier;
 
 public class UnitParts extends ArrayFeature<UnitPart>{
+    public UnitParts(){
+        add(new UnitPart(BodyType.base, new Identifier("core","basic"), BodyProperty.wait, 0));
+        add(new UnitPart(BodyType.eyes, new Identifier("core","basic"), BodyProperty.wait, 0));
+        add(new UnitPart(BodyType.body, new Identifier("core","basic"), BodyProperty.wait, 0));
+        add(new UnitPart(BodyType.head, new Identifier("core","basic"), BodyProperty.wait, 0));
+        add(new UnitPart(BodyType.legs, new Identifier("core","basic"), BodyProperty.wait, 0));
+        add(new UnitPart(BodyType.hair, new Identifier("core","basic"), BodyProperty.wait, 0));
+    }
+
+    public UnitPart getPart(BodyType type){
+        return getArray().firstMatch(p -> p.bodyType.equals(type));
+    }
 
     @Override
-    public ArrayDisplay<UnitPart> newDisplay() {
+    protected UnitPartsDisplay newDisplay() {
         return new UnitPartsDisplay(this);
     }
 

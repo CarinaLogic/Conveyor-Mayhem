@@ -5,8 +5,12 @@ import me.carina.rpg.common.file.AssetGroup;
 
 public class Units extends ArrayFeature<Unit>{
 
+    public Units(){
+        add(new Unit());
+    }
+
     @Override
-    public ArrayDisplay<Unit> newDisplay() {
+    protected ArrayDisplay<Unit> newDisplay() {
         return new UnitsDisplay(this);
     }
 

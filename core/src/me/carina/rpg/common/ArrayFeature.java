@@ -1,7 +1,6 @@
 package me.carina.rpg.common;
 
 import com.badlogic.gdx.utils.Predicate;
-import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.util.Array;
 
 import java.util.Iterator;
@@ -42,7 +41,7 @@ public abstract class ArrayFeature<T extends Feature> extends Feature implements
     }
 
     @Override
-    public abstract ArrayDisplay<T> newDisplay();
+    protected abstract ArrayDisplay<T> newDisplay();
 
     public Array<T> getArray() {
         return array;

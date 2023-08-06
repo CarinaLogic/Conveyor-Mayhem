@@ -5,6 +5,8 @@ import me.carina.rpg.common.ArrayFeature;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.Feature;
 
+import java.util.Comparator;
+
 public class UnitPartsDisplay extends ArrayDisplay<UnitPart> {
     UnitParts unitParts;
     public UnitPartsDisplay(UnitParts unitParts){
@@ -12,8 +14,12 @@ public class UnitPartsDisplay extends ArrayDisplay<UnitPart> {
     }
 
     @Override
-    public void tickMore() {
-
+    public void tick() {
+        unitParts.getArray().sort(Comparator.comparingInt(p -> p.bodyType.ordinal()));
+        super.tick();
+        for (int i = 0; i < unitParts.size(); i++) {
+            if (unitParts.getDisplay() != null) unitParts.get(i).getDisplay().setZIndex(i);
+        }
     }
 
     @Override

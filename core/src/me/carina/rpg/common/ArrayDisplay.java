@@ -19,7 +19,7 @@ public abstract class ArrayDisplay<T extends Feature> extends Display{
             }
             else {
                 //there's no children corresponds to the feature array, add it to display
-                addActor(feature.newDisplay());
+                addActor(feature.generateDisplay());
             }
         }
         for (int i = 0; i < checkList.length; i++) {
@@ -28,10 +28,7 @@ public abstract class ArrayDisplay<T extends Feature> extends Display{
                 removeActor(children.get(i));
             }
         }
-        tickMore();
     }
-
-    public abstract void tickMore();
 
     @Override
     public float getDisplayX() {

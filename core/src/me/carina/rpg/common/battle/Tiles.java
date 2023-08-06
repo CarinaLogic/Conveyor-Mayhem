@@ -9,7 +9,7 @@ public class Tiles extends Array2DFeature<Tile>{
     public Tiles(){}
 
     @Override
-    public TilesDisplay newDisplay() {
+    protected TilesDisplay newDisplay() {
         return new TilesDisplay(this);
     }
 

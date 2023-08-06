@@ -12,11 +12,6 @@ public class UnitsDisplay extends ArrayDisplay<Unit> {
     }
 
     @Override
-    public void tickMore() {
-
-    }
-
-    @Override
     public ArrayFeature<Unit> getFeature() {
         return units;
     }

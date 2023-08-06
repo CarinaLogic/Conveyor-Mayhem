@@ -1,7 +1,6 @@
 package me.carina.rpg.common;
 
 import com.badlogic.gdx.math.Vector2;
-import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.util.Array2D;
 
 import java.util.Iterator;
@@ -58,7 +57,7 @@ public abstract class Array2DFeature<T extends Feature> extends Feature implemen
     public int getWidth(){return array.getWidth();}
     public int getHeight(){return array.getHeight();}
     @Override
-    public abstract Array2DDisplay<T> newDisplay();
+    protected abstract Array2DDisplay<T> newDisplay();
 
     public Array2D<T> getArray() {
         return array;

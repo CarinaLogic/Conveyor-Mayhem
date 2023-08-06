@@ -18,11 +18,13 @@ public abstract class Feature implements Identifiable, Defined, AssetGrouped, Di
     transient Display display;
     Identifier id;
     public Feature(){} //for json
-    /**
-     * Binds new display to this object, discarding the old one
-     * @return The display object
-     */
-    public abstract Display newDisplay();
+    protected abstract Display newDisplay();
+
+    public Display generateDisplay(){
+        Display d = newDisplay();
+        this.display = d;
+        return d;
+    }
 
     public void destroyDisplay(){
         if (this.display != null) this.display.addAction(Actions.removeActor());

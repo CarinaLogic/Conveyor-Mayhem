@@ -10,9 +10,11 @@ public abstract class FlatImageDisplay extends ImageDisplay{
     public void draw(Batch batch, float parentAlpha) {
         addContext();
         if (!populated) populateChild();
+        tick();
         setSize(getDisplayWidth(),getDisplayHeight());
         setPosition(getDisplayX(),getDisplayY(),getAlignment());
         Drawable drawable = getDrawable();
+        if (drawable == null) return;
         if (drawable instanceof TransformDrawable) {
             TransformDrawable transformDrawable = (TransformDrawable) drawable;
             Game.getClient().getScreen().getCanvas().draw(transformDrawable,getX(),getY(),getOriginX(),getOriginY(),getWidth(),getHeight(),

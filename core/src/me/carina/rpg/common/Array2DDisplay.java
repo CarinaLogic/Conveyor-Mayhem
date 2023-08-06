@@ -19,7 +19,7 @@ public abstract class Array2DDisplay<T extends Feature> extends Display {
             }
             else {
                 //there's no children corresponds to the feature array, add it to display
-                addActor(entry.value.newDisplay());
+                addActor(entry.value.generateDisplay());
             }
         }
         for (int i = 0; i < checkList.length; i++) {

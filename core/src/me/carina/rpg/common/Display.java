@@ -47,7 +47,7 @@ public abstract class Display extends Group {
                     if (ClassReflection.isInstance(Feature.class,o)) {
                         Feature feature = (Feature) o;
                         if (feature.getDisplay() == null) {
-                            addActor(feature.newDisplay());
+                            addActor(feature.generateDisplay());
                         }
                     }
                 } catch (ReflectionException e) {

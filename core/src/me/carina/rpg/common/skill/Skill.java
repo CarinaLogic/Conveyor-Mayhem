@@ -5,7 +5,6 @@ import me.carina.rpg.common.Definition;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.Feature;
 import me.carina.rpg.common.file.AssetGroup;
-import me.carina.rpg.common.util.Array;
 
 public class Skill extends Feature {
     public Skill(){} //for json
@@ -16,7 +15,7 @@ public class Skill extends Feature {
     }
 
     @Override
-    public Display newDisplay() {
+    protected Display newDisplay() {
         return new SkillDisplay(this);
     }
 
