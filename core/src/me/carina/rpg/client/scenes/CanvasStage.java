@@ -46,9 +46,9 @@ public class CanvasStage extends GameStage {
         Batch batch = getBatch();
         batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
         batch.setProjectionMatrix(camera.combined);
-        Vector2 pos = new Vector2(x,y+height);
+        Vector2 pos = new Vector2(x,y);
         screenToStageCoordinates(pos);
-        Vector2 tar = new Vector2(x+width,y);
+        Vector2 tar = new Vector2(x+width,y-height);
         screenToStageCoordinates(tar);
         Vector2 ori = new Vector2(originX,originY);
         screenToStageCoordinates(ori);
