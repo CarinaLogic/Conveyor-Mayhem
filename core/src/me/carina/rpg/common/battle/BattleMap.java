@@ -6,9 +6,9 @@ import me.carina.rpg.common.unit.Units;
 
 public class BattleMap extends Feature {
     @AutoDisplay
-    public Units units;
-    @AutoDisplay
     public Tiles tiles;
+    @AutoDisplay
+    public Units units;
     public BattleMap() {
         tiles = new Tiles();
         units = new Units();

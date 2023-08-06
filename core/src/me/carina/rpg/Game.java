@@ -44,17 +44,6 @@ public class Game extends ApplicationAdapter{
 		client.addConnection(new C2SInternalConnection((InternalClient) client, (InternalServer) server));
 		gameInstance = server;
 		server.addConnection(new S2CInternalConnection((InternalServer) server, (InternalClient) client));
-		client.getCommandParser().run("say hello",
-				"set $i 0",
-				"label lo",
-				"ifeq $i 10",
-				"jump end",
-				"print hello",
-				"add $i $i 1",
-				"wait 1",
-				"jump lo",
-				"label end"
-		);
 //		server.open(18273);
 //		client.addConnection(((ExternalClient) client).connect("localhost",18273));
 	}
