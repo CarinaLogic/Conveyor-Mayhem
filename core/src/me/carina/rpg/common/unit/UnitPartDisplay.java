@@ -11,6 +11,8 @@ import me.carina.rpg.Game;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.Feature;
 import me.carina.rpg.common.FlatImageDisplay;
+import me.carina.rpg.common.file.AssetGroup;
+import me.carina.rpg.common.file.Path;
 import me.carina.rpg.common.util.Palette;
 
 public class UnitPartDisplay extends FlatImageDisplay {
@@ -58,6 +60,7 @@ public class UnitPartDisplay extends FlatImageDisplay {
             pixmap.dispose();
             //textureMap.dispose();
         }
+        Game.getClient().getScreen().getCanvas().draw(Game.getInstance().getAssets().get(new Path("core", AssetGroup.units,"test"), Drawable.class), 0,0,200,200,getColor(),1);
     }
 
     public Palette getPalette() {
@@ -76,12 +79,12 @@ public class UnitPartDisplay extends FlatImageDisplay {
 
     @Override
     public float getDisplayWidth() {
-        return 1;
+        return 100;
     }
 
     @Override
     public float getDisplayHeight() {
-        return 1;
+        return 100;
     }
 
     @Override
