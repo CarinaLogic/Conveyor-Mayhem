@@ -60,7 +60,6 @@ public class UnitPartDisplay extends FlatImageDisplay {
             pixmap.dispose();
             //textureMap.dispose();
         }
-        Game.getClient().getScreen().getCanvas().draw(Game.getInstance().getAssets().get(new Path("core", AssetGroup.units,"test"), Drawable.class), 0,0,200,200,getColor(),1);
     }
 
     public Palette getPalette() {
@@ -79,12 +78,12 @@ public class UnitPartDisplay extends FlatImageDisplay {
 
     @Override
     public float getDisplayWidth() {
-        return 100;
+        return 1;
     }
 
     @Override
     public float getDisplayHeight() {
-        return 100;
+        return 1;
     }
 
     @Override
