@@ -48,8 +48,8 @@ public class UnitPartDisplay extends FlatImageDisplay {
                 basePalette.recolor(pixmap);
             }
             if (paletteWidth != 0){
-                Pixmap paletteMap = new Pixmap(paletteWidth,spriteHeight, Pixmap.Format.RGBA8888);
-                paletteMap.drawPixmap(pixmap,0,0,paletteSrcX,0,paletteWidth,spriteHeight);
+                Pixmap paletteMap = new Pixmap(paletteWidth,region.getRegionHeight(), Pixmap.Format.RGBA8888);
+                paletteMap.drawPixmap(pixmap,0,0,paletteSrcX,0,paletteWidth,region.getRegionHeight());
                 palette = new Palette(paletteMap, unitPart.colorIndex);
                 palette.recolor(pixmap);
                 paletteMap.dispose();
