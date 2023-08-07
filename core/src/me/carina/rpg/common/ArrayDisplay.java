@@ -1,5 +1,6 @@
 package me.carina.rpg.common;
 
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.SnapshotArray;
 
@@ -28,6 +29,11 @@ public abstract class ArrayDisplay<T extends Feature> extends Display{
                 removeActor(children.get(i));
             }
         }
+    }
+
+    @Override
+    protected void drawDebugBounds(ShapeRenderer shapes) {
+        //NOOP
     }
 
     @Override

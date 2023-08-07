@@ -1,5 +1,6 @@
 package me.carina.rpg.common;
 
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.SnapshotArray;
 import me.carina.rpg.common.util.Array2D;
@@ -29,6 +30,11 @@ public abstract class Array2DDisplay<T extends Feature> extends Display {
             }
         }
         tickMore();
+    }
+
+    @Override
+    protected void drawDebugBounds(ShapeRenderer shapes) {
+        //NOOP
     }
 
     public abstract void tickMore();

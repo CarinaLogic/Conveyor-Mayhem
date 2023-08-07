@@ -8,7 +8,7 @@ public class UnitParts extends ArrayFeature<UnitPart>{
     public UnitParts(){
         add(new UnitPart(BodyType.base, new Identifier("core","basic"), BodyProperty.wait, 0));
         add(new UnitPart(BodyType.eyes, new Identifier("core","basic"), BodyProperty.wait, 0));
-        add(new UnitPart(BodyType.body, new Identifier("core","basic"), BodyProperty.wait, 0));
+        add(new UnitPart(BodyType.body, new Identifier("core","basic"), BodyProperty.wait, 2));
         add(new UnitPart(BodyType.head, new Identifier("core","basic"), BodyProperty.wait, 0));
         add(new UnitPart(BodyType.legs, new Identifier("core","basic"), BodyProperty.wait, 0));
         add(new UnitPart(BodyType.hair, new Identifier("core","basic"), BodyProperty.wait, 0));
