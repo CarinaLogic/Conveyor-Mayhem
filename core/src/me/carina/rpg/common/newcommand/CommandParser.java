@@ -107,7 +107,11 @@ public class CommandParser {
             }
             argEnd++;
         }
-        return parseArgArray(args);
+        try {
+            return parseArgArray(args);
+        } catch (CommandException e){
+            throw new CommandException(command,argEnd,e.type);
+        }
     }
 
     public Object parseArgArray(Array<Object> args){
