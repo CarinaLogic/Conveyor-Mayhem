@@ -23,6 +23,6 @@ public class CommandException extends RuntimeException{
     }
 
     public enum ExceptionType{
-        bracket_no_match, quotation_no_match, command_not_found, zero_division
+        bracket_no_match, quotation_no_match, command_not_found, zero_division, type_mismatch
     }
 }

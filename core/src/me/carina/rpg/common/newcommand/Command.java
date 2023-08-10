@@ -9,4 +9,12 @@ public abstract class Command {
     public void setParser(CommandParser parser) {
         this.parser = parser;
     }
+
+    public CommandParser getParser() {
+        return parser;
+    }
+
+    public Script getScript(){
+        return getParser().getScript();
+    }
 }

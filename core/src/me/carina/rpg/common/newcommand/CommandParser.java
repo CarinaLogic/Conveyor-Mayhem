@@ -1,7 +1,5 @@
 package me.carina.rpg.common.newcommand;
 
-import com.badlogic.gdx.utils.ObjectMap;
-import com.badlogic.gdx.utils.Queue;
 import com.badlogic.gdx.utils.reflect.Annotation;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.Method;
@@ -34,7 +32,7 @@ public class CommandParser {
     }
 
     public Object parseCommand(String command){
-        //Surrounded by () = Object that the command returns
+        //Surrounded by () = InlineCommand
         //Quoted string = String
         //Starts with $ = CommandData that is registered on its name
         //Number = Double
@@ -60,7 +58,7 @@ public class CommandParser {
                         throw new CommandException(command,argEnd, CommandException.ExceptionType.bracket_no_match);
                     }
                     if (command.charAt(i) == ')' && bracket == 0){
-                        args.add(parseCommand(command.substring(argEnd+1,i)));
+                        args.add(new InlineCommand(command.substring(argEnd+1,i),this));
                         break;
                     }
                     //bracket != 0
@@ -155,7 +153,17 @@ public class CommandParser {
                                     //Object comparison
                                     Object data = arg;
                                     boolean given = false;
-                                    if (arg instanceof CommandData){
+                                    if (arg instanceof InlineCommand){
+                                        //if method wants InlineCommand, just give it unmodified
+                                        if (ClassReflection.isAssignableFrom(paramTypes[methodArgIndex], InlineCommand.class)){
+                                            passedArgs[methodArgIndex] = data;
+                                            methodArgIndex++;
+                                            given = true;
+                                        }
+                                        //else, parse the inline command and use it as data
+                                        else data = parseCommand(((InlineCommand) arg).command);
+                                    }
+                                    else if (arg instanceof CommandData){
                                         //if method wants CommandData, just give it unmodified
                                         if (ClassReflection.isAssignableFrom(paramTypes[methodArgIndex], CommandData.class)){
                                             passedArgs[methodArgIndex] = data;
