@@ -26,14 +26,6 @@ public class MathCommand extends Command{
         if (b == 0) throw new CommandException(CommandException.ExceptionType.zero_division);
         return a / b;
     }
-    @CommandFunction(altNames = {"$_="})
-    public boolean eq(Double a, Double b){
-        return Objects.equals(a, b);
-    }
-    @CommandFunction(altNames = {"$_!="})
-    public boolean ne(Double a, Double b){
-        return !Objects.equals(a,b);
-    }
     @CommandFunction(altNames = {"$_<"})
     public boolean lt(Double a, Double b){
         return a < b;

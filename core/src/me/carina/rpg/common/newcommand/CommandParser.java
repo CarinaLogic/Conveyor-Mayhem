@@ -37,6 +37,7 @@ public class CommandParser {
         //Starts with $ = CommandData that is registered on its name
         //Starts with @ = CommandLabel
         //Number = Double
+        //true/false = boolean
         //Anything else = Argument
         //if @ is at the beginning, treat it as a label and ignore
         if (command.startsWith("@")) return null;
@@ -109,13 +110,17 @@ public class CommandParser {
             argEnd++;
         }
         try {
-            return parseArgArray(args);
+            return parseArgArray(args,false);
         } catch (CommandException e){
-            throw new CommandException(command,argEnd,e.type);
+            try{
+                return parseArgArray(args,true);
+            } catch (CommandException e1) {
+                throw new CommandException(command, argEnd, e1.type);
+            }
         }
     }
 
-    public Object parseArgArray(Array<Object> args){
+    public Object parseArgArray(Array<Object> args, boolean greedy){
         //Nested hell
         for (Command command : commands) {
             if (command.enabled()) {
@@ -156,33 +161,38 @@ public class CommandParser {
                                     //Object comparison
                                     Object data = arg;
                                     boolean given = false;
-                                    if (arg instanceof InlineCommand){
-                                        //if method wants InlineCommand, just give it unmodified
-                                        if (ClassReflection.isAssignableFrom(paramTypes[methodArgIndex], InlineCommand.class)){
-                                            passedArgs[methodArgIndex] = data;
-                                            methodArgIndex++;
-                                            given = true;
-                                        }
-                                        //else, parse the inline command and use it as data
-                                        else data = parseCommand(((InlineCommand) arg).command);
+                                    if (data == null && ClassReflection.isAssignableFrom(paramTypes[methodArgIndex], Object.class)){
+                                        passedArgs[methodArgIndex] = null;
+                                        methodArgIndex++;
+                                        given = true;
                                     }
-                                    else if (arg instanceof Argument){
-                                        //if method wants String, give it as a string
-                                        if (ClassReflection.isAssignableFrom(paramTypes[methodArgIndex], InlineCommand.class)){
-                                            passedArgs[methodArgIndex] = data;
-                                            methodArgIndex++;
-                                            given = true;
+                                    if (greedy) {
+                                        if (arg instanceof InlineCommand) {
+                                            //if method wants InlineCommand, just give it unmodified
+                                            if (ClassReflection.isAssignableFrom(paramTypes[methodArgIndex], InlineCommand.class)) {
+                                                passedArgs[methodArgIndex] = data;
+                                                methodArgIndex++;
+                                                given = true;
+                                            }
+                                            //else, parse the inline command and use it as data
+                                            else data = parseCommand(((InlineCommand) arg).command);
+                                        } else if (arg instanceof Argument) {
+                                            //if method wants String, give it as a string
+                                            if (ClassReflection.isAssignableFrom(paramTypes[methodArgIndex], InlineCommand.class)) {
+                                                passedArgs[methodArgIndex] = data;
+                                                methodArgIndex++;
+                                                given = true;
+                                            }
+                                        } else if (arg instanceof CommandData) {
+                                            //if method wants CommandData, just give it unmodified
+                                            if (ClassReflection.isAssignableFrom(paramTypes[methodArgIndex], CommandData.class)) {
+                                                passedArgs[methodArgIndex] = data;
+                                                methodArgIndex++;
+                                                given = true;
+                                            }
+                                            //else, extract the value to data
+                                            else data = ((CommandData<?>) arg).getValue();
                                         }
-                                    }
-                                    else if (arg instanceof CommandData){
-                                        //if method wants CommandData, just give it unmodified
-                                        if (ClassReflection.isAssignableFrom(paramTypes[methodArgIndex], CommandData.class)){
-                                            passedArgs[methodArgIndex] = data;
-                                            methodArgIndex++;
-                                            given = true;
-                                        }
-                                        //else, extract the value to data
-                                        else data = ((CommandData<?>) arg).getValue();
                                     }
                                     if (!given && ClassReflection.isInstance(paramTypes[methodArgIndex],data)){
                                         passedArgs[methodArgIndex] = data;
@@ -213,6 +223,9 @@ public class CommandParser {
     }
 
     public Object parseArg(String arg){
+        if (arg.equals("null")) return null;
+        if (arg.equals("true")) return true;
+        if (arg.equals("false")) return false;
         if (arg.startsWith("$")){
             String regName = arg.substring(1);
             return new CommandData<>(this,regName,data.get(regName));
