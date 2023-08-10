@@ -35,4 +35,8 @@ public class BranchCommand extends Command{
             getScript().queueJump(getScript().getLabelIndex(label)-1, getScript().cursor);
         }
     }
+    @CommandFunction(altNames = {"j"})
+    public void jump(CommandLabel label){
+        getScript().jumpToLabel(label);
+    }
 }

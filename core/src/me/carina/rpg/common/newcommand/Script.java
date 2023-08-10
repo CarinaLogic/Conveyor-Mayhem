@@ -49,7 +49,7 @@ public class Script {
     }
 
     public void jumpToLabel(CommandLabel label){
-        int i = cursor + 1;
+        int i = 0;
         while (true){
             if (getCommandLength() >= i) throw new CommandException(CommandException.ExceptionType.label_not_found);
             if (label.matches(getCommandAt(i))) break;
@@ -58,7 +58,7 @@ public class Script {
         cursor = i;
     }
     public int getLabelIndex(CommandLabel label){
-        int i = cursor + 1;
+        int i = 0;
         while (true){
             if (getCommandLength() >= i) throw new CommandException(CommandException.ExceptionType.label_not_found);
             if (label.matches(getCommandAt(i))) break;
