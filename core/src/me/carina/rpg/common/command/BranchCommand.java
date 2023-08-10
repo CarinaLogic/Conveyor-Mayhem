@@ -1,6 +1,4 @@
-package me.carina.rpg.common.newcommand;
-
-import com.badlogic.gdx.utils.Null;
+package me.carina.rpg.common.command;
 
 public class BranchCommand extends Command{
 
@@ -16,7 +14,7 @@ public class BranchCommand extends Command{
     }
     @CommandFunction
     public void while_$(boolean condition, CommandLabel label){
-        if (condition) getScript().queueJump(getScript().getLabelIndex(label)-1, getScript().cursor);
+        if (condition) getScript().queueJump(getScript().getLabelIndex(label), getScript().cursor);
         else getScript().jumpToLabel(label);
     }
     //Assuming all functions does not set delay, otherwise timing issue occurs
@@ -32,7 +30,7 @@ public class BranchCommand extends Command{
             getScript().jumpToLabel(label);
         }
         else {
-            getScript().queueJump(getScript().getLabelIndex(label)-1, getScript().cursor);
+            getScript().queueJump(getScript().getLabelIndex(label), getScript().cursor);
         }
     }
     @CommandFunction(altNames = {"j"})

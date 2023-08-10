@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Logger;
 import me.carina.rpg.client.Client;
 import me.carina.rpg.client.InternalClient;
 import me.carina.rpg.common.AbstractGameInstance;
+import me.carina.rpg.common.command.Script;
 import me.carina.rpg.packets.connection.C2SInternalConnection;
 import me.carina.rpg.packets.connection.S2CInternalConnection;
 import me.carina.rpg.server.AbstractExternalServer;
@@ -46,6 +47,13 @@ public class Game extends ApplicationAdapter{
 		server.addConnection(new S2CInternalConnection((InternalServer) server, (InternalClient) client));
 //		server.open(18273);
 //		client.addConnection(((ExternalClient) client).connect("localhost",18273));
+		server.getCommandParser().queueScript(new Script(
+				"for ($i = 0) ($i < 10) ($i += 1) @fin",
+				"print $i",
+				"wait 1",
+				"@fin",
+				"print finished"
+		));
 	}
 
 	@Override

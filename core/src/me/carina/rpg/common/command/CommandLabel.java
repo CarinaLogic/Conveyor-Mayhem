@@ -1,4 +1,4 @@
-package me.carina.rpg.common.newcommand;
+package me.carina.rpg.common.command;
 
 public class CommandLabel {
     String labelName;

@@ -1,8 +1,7 @@
-package me.carina.rpg.common.newcommand;
+package me.carina.rpg.common.command;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.IntIntMap;
-import com.badlogic.gdx.utils.Queue;
 
 public class Script {
     String[] commands;

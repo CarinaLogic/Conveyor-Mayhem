@@ -1,121 +1,265 @@
 package me.carina.rpg.common.command;
 
-import com.badlogic.gdx.utils.Queue;
+import com.badlogic.gdx.utils.reflect.Annotation;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.badlogic.gdx.utils.reflect.Method;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
-import me.carina.rpg.Game;
 import me.carina.rpg.common.util.Array;
 import me.carina.rpg.common.util.Map;
 
-import java.util.Arrays;
-
 public class CommandParser {
-    Map<String,Object> values = new Map<>();
-    Map<String,Integer> labels = new Map<>();
-    Map<String,Class<? extends Command>> commandClass = new Map<>();
-    Queue<String> commandQueue = new Queue<>();
-    Array<String> currentCommands = new Array<>();
-    Command currentCommand;
+    Map<String,Object> data = new Map<>();
+    Array<Command> commands = new Array<>();
+    Array<Script> scripts = new Array<>();
     int cursor = 0;
-    boolean isInit = true;
-    @SafeVarargs
-    public CommandParser(Class<? extends Command>... cls){
-        for (Class<? extends Command> cl : cls) {
-            try {
-                Command c = ClassReflection.newInstance(cl);
-                commandClass.put(c.getPrefix(),cl);
-            } catch (ReflectionException e) {
-                Game.getInstance().getLogger().error("Could not register command ("+ClassReflection.getSimpleName(cl)+")");
+    public CommandParser(){
+        commands.add(new BooleanCommand());
+        commands.add(new BranchCommand());
+        commands.add(new DataCommand());
+        commands.add(new IOCommand());
+        commands.add(new MathCommand());
+    }
+    public void tick(){
+        while (cursor < scripts.size) {
+            if (scripts.get(cursor).tick(this)) {
+                scripts.removeIndex(cursor);
+            } else {
+                cursor++;
             }
         }
-    }
-    public void run(String... commands){
-        if (commands.length == 0) return;
-        StringBuilder c = new StringBuilder();
-        for (String command : commands) {
-            if (command.endsWith("\n")) command = command.replaceFirst("\\n$","");
-            c.append(command.trim());
-            c.append("\n");
-        }
-        commandQueue.addLast(c.toString());
-    }
-    public void tick() throws CommandException {
-        if (currentCommands.isEmpty() && commandQueue.isEmpty()) return;
-        while (true){
-            if (currentCommands.isEmpty() && !commandQueue.isEmpty()){
-                reset();
-                if (!commandQueue.isEmpty()){
-                    currentCommands.addAll(commandQueue.first().split("\\n"));
-                    commandQueue.removeFirst();
-                }
-            }
-            else if ((cursor < 0 || cursor >= currentCommands.size) && isInit){
-                isInit = false;
-                cursor = 0;
-            }
-            else if (cursor < 0 || cursor >= currentCommands.size){
-                reset();
-                if (!commandQueue.isEmpty()){
-                    currentCommands.addAll(commandQueue.first().split("\\n"));
-                    commandQueue.removeFirst();
-                }
-                return;
-            }
-            String cmd = currentCommands.get(cursor);
-            String[] args = cmd.split(" ");
-            if (currentCommand == null) {
-                currentCommand = getCommand(cmd);
-            }
-            if (isInit){
-                if (currentCommand.init(this,Arrays.copyOfRange(args,1,args.length))) currentCommand = null;
-                else return;
-            }
-            else {
-                if (currentCommand.run(this,Arrays.copyOfRange(args,1,args.length))) currentCommand = null;
-                else return;
-            }
-            cursor++;
-        }
-    }
-    public void reset(){
-        currentCommands.clear();
-        labels.clear();
         cursor = 0;
-        isInit = true;
     }
-    public Command getCommand(String cmd) throws CommandException {
-        String[] args = cmd.split(" ");
-        if (args.length == 0){
-            Game.getInstance().getLogger().error("Command too short ("+cmd+")");
-            throw new CommandException();
+
+    public Script getScript(){
+        return scripts.get(cursor);
+    }
+
+    public void queueScript(Script script){
+        scripts.add(script);
+    }
+
+    public Object parseCommand(String command){
+        //Surrounded by () = InlineCommand
+        //Quoted string = String
+        //Starts with $ = CommandData that is registered on its name
+        //Starts with @ = CommandLabel
+        //Number = Double
+        //true/false = boolean
+        //Anything else = Argument
+        //if @ is at the beginning, treat it as a label and ignore
+        if (command.startsWith("@")) return null;
+        Array<Object> args = new Array<>();
+        int argBegin = 0;
+        int argEnd = 0;
+        while (true){
+            if (argEnd >= command.length()){
+                if (argBegin == argEnd) break;
+                args.add(parseArg(command.substring(argBegin,argEnd)));
+                break;
+            }
+            if (command.charAt(argEnd) == ' '){
+                args.add(parseArg(command.substring(argBegin,argEnd)));
+                argBegin = argEnd + 1;
+            }
+            if (command.charAt(argEnd) == '('){
+                int i = argEnd + 1;
+                int bracket = 0;
+                while (true){
+                    if (i >= command.length()){
+                        throw new CommandException(command,argEnd, CommandException.ExceptionType.bracket_no_match);
+                    }
+                    if (command.charAt(i) == ')' && bracket == 0){
+                        args.add(new InlineCommand(command.substring(argEnd+1,i),this));
+                        break;
+                    }
+                    //bracket != 0
+                    if (command.charAt(i) == ')'){
+                        bracket--;
+                    }
+                    if (command.charAt(i) == '('){
+                        bracket++;
+                    }
+                    i++;
+                }
+                argBegin = i + 2;
+                argEnd = i + 1;
+            }
+            if (command.charAt(argEnd) == '"'){
+                int i = argEnd;
+                while (true){
+                    if (i >= command.length()){
+                        throw new CommandException(command,argEnd, CommandException.ExceptionType.quotation_no_match);
+                    }
+                    if (command.charAt(i) == '"'){
+                        args.add(command.substring(argEnd+1,i));
+                        break;
+                    }
+                    i++;
+                }
+                argBegin = i + 2;
+                argEnd = i + 1;
+            }
+            if (command.charAt(argEnd) == '\''){
+                int i = argEnd;
+                while (true){
+                    if (i >= command.length()){
+                        throw new CommandException(command,argEnd, CommandException.ExceptionType.quotation_no_match);
+                    }
+                    if (command.charAt(i) == '\''){
+                        args.add(command.substring(argEnd+1,i));
+                        break;
+                    }
+                    i++;
+                }
+                argBegin = i + 2;
+                argEnd = i + 1;
+            }
+            argEnd++;
         }
-        Class<? extends Command> c = commandClass.get(args[0]);
-        if (c == null){
-            Game.getInstance().getLogger().error("Could not find command "+args[0]);
-            throw new CommandException();
-        }
-        Command command;
         try {
-            command = ClassReflection.newInstance(c);
-        } catch (ReflectionException e) {
-            Game.getInstance().getLogger().error("Could not init command ("+ClassReflection.getSimpleName(c)+")");
-            throw new CommandException();
+            return parseArgArray(args,false);
+        } catch (CommandException e){
+            try{
+                return parseArgArray(args,true);
+            } catch (CommandException e1) {
+                throw new CommandException(command, argEnd, e1.type);
+            }
         }
-        return command;
     }
-    public void setValue(String tag, Object value){
-        if (tag == null || value == null) throw new CommandException();
-        if (!tag.startsWith("$")) throw new CommandException();
-        values.put(tag, value);
+
+    public Object parseArgArray(Array<Object> args, boolean greedy){
+        //Nested hell
+        for (Command command : commands) {
+            if (command.enabled()) {
+                for (Method method : ClassReflection.getDeclaredMethods(command.getClass())) {
+                    Annotation annotation = method.getDeclaredAnnotation(CommandFunction.class);
+                    if (annotation != null) {
+                        Array<String> names = new Array<>(method.getName());
+                        names.addAll(annotation.getAnnotation(CommandFunction.class).altNames());
+                        @SuppressWarnings("rawtypes")
+                        Class[] paramTypes = method.getParameterTypes();
+                        for (String name : names) {
+                            String[] dclArgs = name.split("_");
+                            int keys = 0;
+                            for (String dclArg : dclArgs) {
+                                if (!dclArg.equals("$")) keys++;
+                            }
+                            if (args.size != keys + paramTypes.length) break;
+                            boolean success = true;
+                            Object[] passedArgs = new Object[paramTypes.length];
+                            int methodArgIndex = 0;
+                            for (int i = 0; i < args.size; i++) {
+                                Object arg = args.get(i);
+                                if (i < dclArgs.length && !dclArgs[i].equals("$")){
+                                    //Argument comparison
+                                    if (arg instanceof Argument){
+                                        //Don't have to pass arg to method
+                                        if (!((Argument) arg).getName().equals(dclArgs[i])){
+                                            success = false;
+                                            break;
+                                        }
+                                    }
+                                    else {
+                                        success = false;
+                                        break;
+                                    }
+                                }
+                                else {
+                                    //Object comparison
+                                    Object data = arg;
+                                    boolean given = false;
+                                    if (data == null && ClassReflection.isAssignableFrom(paramTypes[methodArgIndex], Object.class)){
+                                        passedArgs[methodArgIndex] = null;
+                                        methodArgIndex++;
+                                        given = true;
+                                    }
+                                    if (greedy) {
+                                        if (arg instanceof InlineCommand) {
+                                            //if method wants InlineCommand, just give it unmodified
+                                            if (ClassReflection.isAssignableFrom(paramTypes[methodArgIndex], InlineCommand.class)) {
+                                                passedArgs[methodArgIndex] = data;
+                                                methodArgIndex++;
+                                                given = true;
+                                            }
+                                            //else, parse the inline command and use it as data
+                                            else data = parseCommand(((InlineCommand) arg).command);
+                                        } else if (arg instanceof Argument) {
+                                            //if method wants String, give it as a string
+                                            if (ClassReflection.isAssignableFrom(paramTypes[methodArgIndex], InlineCommand.class)) {
+                                                passedArgs[methodArgIndex] = data;
+                                                methodArgIndex++;
+                                                given = true;
+                                            }
+                                        } else if (arg instanceof CommandData) {
+                                            //if method wants CommandData, just give it unmodified
+                                            if (ClassReflection.isAssignableFrom(paramTypes[methodArgIndex], CommandData.class)) {
+                                                passedArgs[methodArgIndex] = data;
+                                                methodArgIndex++;
+                                                given = true;
+                                            }
+                                            //else, extract the value to data
+                                            else data = ((CommandData) arg).getValue();
+                                        }
+                                    }
+                                    if (!given && ClassReflection.isInstance(paramTypes[methodArgIndex],data)){
+                                        passedArgs[methodArgIndex] = data;
+                                        methodArgIndex++;
+                                    }
+                                    else if (!given){
+                                        success = false;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (success){
+                                try {
+                                    command.setParser(this);
+                                    if (method.getReturnType().equals(Void.TYPE)){
+                                        method.invoke(command,passedArgs);
+                                        return null;
+                                    }
+                                    return method.invoke(command,passedArgs);
+                                } catch (ReflectionException ignored) {}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        throw new CommandException(CommandException.ExceptionType.command_not_found);
     }
-    public Object getValue(String arg){
-        if (arg.startsWith("$")) return values.get(arg);
-        return parseString(arg);
-    }
-    public Object parseString(String value){
+
+    public Object parseArg(String arg){
+        if (arg.equals("null")) return null;
+        if (arg.equals("true")) return true;
+        if (arg.equals("false")) return false;
+        if (arg.startsWith("$")){
+            String regName = arg.substring(1);
+            return new CommandData(this,regName,data.get(regName));
+        }
+        if (arg.startsWith("@")){
+            String labelName = arg.substring(1);
+            return new CommandLabel(labelName);
+        }
         try {
-            return Float.parseFloat(value);
+            return Double.parseDouble(arg);
         } catch (Exception ignored){}
-        return value;
+        return new Argument(arg);
+
+    }
+
+    public <T> void setData(String name, T value){
+        data.put(name,value);
+    }
+
+    public static class Argument{
+        final String name;
+        public Argument(String name){
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
     }
 }

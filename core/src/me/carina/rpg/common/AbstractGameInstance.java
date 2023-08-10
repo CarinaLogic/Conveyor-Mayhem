@@ -18,9 +18,7 @@ public abstract class AbstractGameInstance implements PacketHandler, AssetFilter
     Array<Connection> connections;
     Serializer serializer = new JsonSerializer();
     Queue<DirectedPacket> packetQueue = new Queue<>();
-    CommandParser commandParser = new CommandParser(AddCommand.class, DivCommand.class, FocusCommand.class,
-            GetCommand.class, IfEqCommand.class, JumpCommand.class, LabelCommand.class, MulCommand.class,
-            PrintCommand.class, SayCommand.class, SetCommand.class, SubCommand.class, WaitCommand.class);
+    CommandParser commandParser = new CommandParser();
     public AbstractGameInstance(String loggerTag) {
         this.assets = new Assets(this,this);
         this.logger = new Logger(loggerTag);

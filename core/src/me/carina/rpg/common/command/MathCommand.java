@@ -1,8 +1,4 @@
-package me.carina.rpg.common.newcommand;
-
-import com.badlogic.gdx.math.MathUtils;
-
-import java.util.Objects;
+package me.carina.rpg.common.command;
 
 public class MathCommand extends Command{
     @Override

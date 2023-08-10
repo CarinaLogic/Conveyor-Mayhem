@@ -1,4 +1,4 @@
-package me.carina.rpg.common.newcommand;
+package me.carina.rpg.common.command;
 
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 
