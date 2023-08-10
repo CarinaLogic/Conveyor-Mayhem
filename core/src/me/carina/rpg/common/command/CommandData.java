@@ -1,5 +1,7 @@
 package me.carina.rpg.common.command;
 
+import com.badlogic.gdx.utils.reflect.ClassReflection;
+
 public class CommandData {
     CommandParser parser;
     String name;
@@ -12,6 +14,12 @@ public class CommandData {
     public Object getValue(){
         return value;
     }
+    public <T> T getValue(Class<T> cls){
+        if (ClassReflection.isInstance(cls,value)){
+            return cls.cast(value);
+        }
+        else throw new CommandException(CommandException.ExceptionType.type_mismatch);
+    }
     public String getName(){
         return name;
     }
@@ -19,5 +27,11 @@ public class CommandData {
     public void setValue(Object value) {
         this.value = value;
         parser.setData(getName(),getValue());
+    }
+
+    @Override
+    public String toString() {
+        if (value == null) return "null";
+        return value.toString();
     }
 }

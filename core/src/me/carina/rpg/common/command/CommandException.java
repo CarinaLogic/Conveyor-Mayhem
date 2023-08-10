@@ -18,6 +18,7 @@ public class CommandException extends RuntimeException{
     @Override
     public String getMessage() {
         if (cmd == null) return "Command exception of "+ type.toString();
+        if (index >= cmd.length()) return "Command exception of "+ type.toString() + " upon parsing \"" + cmd + "\"";
         return "Command exception of "+ type.toString() + " upon parsing \"" + cmd + "\" at index " + index + " \""
                 + cmd.charAt(index) + "\"";
     }

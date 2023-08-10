@@ -22,6 +22,31 @@ public class MathCommand extends Command{
         if (b == 0) throw new CommandException(CommandException.ExceptionType.zero_division);
         return a / b;
     }
+    @CommandFunction(altNames = {"$_+="})
+    public Double addBy(CommandData data, Double v){
+        double d = data.getValue(Double.class)+v;
+        data.setValue(d);
+        return d;
+    }
+    @CommandFunction(altNames = {"$_-="})
+    public Double subBy(CommandData data, Double v){
+        double d = data.getValue(Double.class)-v;
+        data.setValue(d);
+        return d;
+    }
+    @CommandFunction(altNames = {"$_*="})
+    public Double mulBy(CommandData data, Double v){
+        double d = data.getValue(Double.class)*v;
+        data.setValue(d);
+        return d;
+    }
+    @CommandFunction(altNames = {"$_/="})
+    public Double divBy(CommandData data, Double v){
+        if (v == 0) throw new CommandException(CommandException.ExceptionType.zero_division);
+        double d = data.getValue(Double.class)/v;
+        data.setValue(d);
+        return d;
+    }
     @CommandFunction(altNames = {"$_<"})
     public boolean lt(Double a, Double b){
         return a < b;
