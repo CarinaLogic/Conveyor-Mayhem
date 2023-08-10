@@ -38,6 +38,8 @@ public class CommandParser {
         //Starts with @ = CommandLabel
         //Number = Double
         //Anything else = Argument
+        //if @ is at the beginning, treat it as a label and ignore
+        if (command.startsWith("@")) return null;
         Array<Object> args = new Array<>();
         int argBegin = 0;
         int argEnd = 0;
@@ -195,6 +197,10 @@ public class CommandParser {
                             if (success){
                                 try {
                                     command.setParser(this);
+                                    if (method.getReturnType().equals(Void.TYPE)){
+                                        method.invoke(command,passedArgs);
+                                        return null;
+                                    }
                                     return method.invoke(command,passedArgs);
                                 } catch (ReflectionException ignored) {}
                             }

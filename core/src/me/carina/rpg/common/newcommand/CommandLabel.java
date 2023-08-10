@@ -9,4 +9,9 @@ public class CommandLabel {
     public String getLabelName() {
         return labelName;
     }
+
+    public boolean matches(String command){
+        if (!command.startsWith("@")) return false;
+        return command.substring(1).equals(labelName);
+    }
 }
