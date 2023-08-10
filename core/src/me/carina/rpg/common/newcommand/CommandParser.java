@@ -35,6 +35,7 @@ public class CommandParser {
         //Surrounded by () = InlineCommand
         //Quoted string = String
         //Starts with $ = CommandData that is registered on its name
+        //Starts with @ = CommandLabel
         //Number = Double
         //Anything else = Argument
         Array<Object> args = new Array<>();
@@ -163,6 +164,14 @@ public class CommandParser {
                                         //else, parse the inline command and use it as data
                                         else data = parseCommand(((InlineCommand) arg).command);
                                     }
+                                    else if (arg instanceof Argument){
+                                        //if method wants String, give it as a string
+                                        if (ClassReflection.isAssignableFrom(paramTypes[methodArgIndex], InlineCommand.class)){
+                                            passedArgs[methodArgIndex] = data;
+                                            methodArgIndex++;
+                                            given = true;
+                                        }
+                                    }
                                     else if (arg instanceof CommandData){
                                         //if method wants CommandData, just give it unmodified
                                         if (ClassReflection.isAssignableFrom(paramTypes[methodArgIndex], CommandData.class)){
@@ -201,6 +210,10 @@ public class CommandParser {
         if (arg.startsWith("$")){
             String regName = arg.substring(1);
             return new CommandData<>(this,regName,data.get(regName));
+        }
+        if (arg.startsWith("@")){
+            String labelName = arg.substring(1);
+            return new CommandLabel(labelName);
         }
         try {
             return Double.parseDouble(arg);

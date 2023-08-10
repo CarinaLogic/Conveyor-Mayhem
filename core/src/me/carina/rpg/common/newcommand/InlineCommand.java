@@ -12,10 +12,6 @@ public class InlineCommand {
         this.parser = parser;
     }
 
-    public void parseLazy(){
-        parser.getScript().queueCommand(command);
-    }
-    //Lazy evaluation not allowed
     public void parse(){
         parser.parseCommand(command);
     }

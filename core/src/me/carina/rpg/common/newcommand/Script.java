@@ -6,8 +6,8 @@ import com.badlogic.gdx.utils.Queue;
 public class Script {
     String[] commands;
     int cursor = 0;
+    int indent = 0;
     float waitTime = 0;
-    Queue<String> commandQueue = new Queue<>();
     public Script(String... commands){
         this.commands = commands;
     }
@@ -19,16 +19,9 @@ public class Script {
         }
         while (true){
             if (waitTime > 0) return false;
-            if (!commandQueue.isEmpty()) parser.parseCommand(commandQueue.first());
-            else {
-                if (cursor >= commands.length) return true;
-                parser.parseCommand(commands[cursor]);
-                cursor++;
-            }
+            if (cursor >= commands.length) return true;
+            parser.parseCommand(commands[cursor]);
+            cursor++;
         }
-    }
-
-    public void queueCommand(String command){
-        commandQueue.addLast(command);
     }
 }
