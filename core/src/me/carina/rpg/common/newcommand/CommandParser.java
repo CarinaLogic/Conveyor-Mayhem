@@ -12,6 +12,13 @@ public class CommandParser {
     Array<Command> commands = new Array<>();
     Array<Script> scripts = new Array<>();
     int cursor = 0;
+    public CommandParser(){
+        commands.add(new BooleanCommand());
+        commands.add(new BranchCommand());
+        commands.add(new DataCommand());
+        commands.add(new IOCommand());
+        commands.add(new MathCommand());
+    }
     public void tick(){
         while (cursor < scripts.size) {
             if (scripts.get(cursor).tick(this)) {
@@ -191,7 +198,7 @@ public class CommandParser {
                                                 given = true;
                                             }
                                             //else, extract the value to data
-                                            else data = ((CommandData<?>) arg).getValue();
+                                            else data = ((CommandData) arg).getValue();
                                         }
                                     }
                                     if (!given && ClassReflection.isInstance(paramTypes[methodArgIndex],data)){
@@ -228,7 +235,7 @@ public class CommandParser {
         if (arg.equals("false")) return false;
         if (arg.startsWith("$")){
             String regName = arg.substring(1);
-            return new CommandData<>(this,regName,data.get(regName));
+            return new CommandData(this,regName,data.get(regName));
         }
         if (arg.startsWith("@")){
             String labelName = arg.substring(1);
