@@ -16,7 +16,8 @@ public class CommandData {
     }
     public <T> T getValue(Class<T> cls){
         if (ClassReflection.isInstance(cls,value)){
-            return cls.cast(value);
+            //noinspection unchecked
+            return (T) value;
         }
         else throw new CommandException(CommandException.ExceptionType.type_mismatch);
     }

@@ -18,7 +18,8 @@ public class InlineCommand {
     public <T> T parse(Class<T> cls){
         Object o = parser.parseCommand(command);
         if (ClassReflection.isInstance(cls,o)){
-            return cls.cast(o);
+            //noinspection unchecked
+            return (T) o;
         }
         throw new CommandException(CommandException.ExceptionType.type_mismatch);
     }
