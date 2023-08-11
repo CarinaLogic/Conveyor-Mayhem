@@ -91,6 +91,10 @@ public abstract class Display extends Group {
 
     public abstract boolean fillChildren();
 
+    public boolean isPopulated() {
+        return populated;
+    }
+
     @Override
     public void setPosition(float x, float y, int alignment) {
         super.setPosition(x, y, alignment);

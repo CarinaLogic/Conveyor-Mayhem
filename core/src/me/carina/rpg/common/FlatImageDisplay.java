@@ -34,6 +34,14 @@ public abstract class FlatImageDisplay extends ImageDisplay{
         float sh = sw * getDisplayHeight() / getDisplayWidth();
         float sx = l.x;
         float sy = l.y - sh * alignY / getDisplayHeight();
+        if (flipX){
+            sx += sw;
+            sw = -sw;
+        }
+        if (flipY){
+            sy += sh;
+            sh = -sh;
+        }
         setRotation(originalRot);
         Drawable drawable = getDrawable();
         if (drawable == null) return;

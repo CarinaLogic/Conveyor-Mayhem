@@ -3,6 +3,7 @@ package me.carina.rpg.client;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Queue;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
 import me.carina.rpg.client.scenes.BaseScreen;
 import me.carina.rpg.client.scenes.LoadingScreen;
 import me.carina.rpg.common.AbstractGameInstance;
@@ -16,7 +17,6 @@ public abstract class Client extends AbstractGameInstance{
     public Client() {
         super("Client");
     }
-
     @Override
     public void create() {
         LoadingScreen loadingScreen = new LoadingScreen(Gdx.files.internal("core"));
@@ -60,6 +60,15 @@ public abstract class Client extends AbstractGameInstance{
 
     public BaseScreen getScreen() {
         return screenQueue.last();
+    }
+
+    public <T extends BaseScreen> T getScreen(Class<T> type){
+        BaseScreen screen = getScreen();
+        if (ClassReflection.isInstance(type,screen)){
+            //noinspection unchecked
+            return (T) screen;
+        }
+        return null;
     }
 
     @Override

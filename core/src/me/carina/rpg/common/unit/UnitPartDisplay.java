@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import me.carina.rpg.Game;
@@ -60,6 +61,7 @@ public class UnitPartDisplay extends FlatImageDisplay {
             pixmap.dispose();
             //textureMap.dispose();
         }
+        setFlipX(shouldFlip());
     }
 
     public Palette getPalette() {
@@ -103,4 +105,12 @@ public class UnitPartDisplay extends FlatImageDisplay {
         if (index > spriteWidth * spriteHeight) return null;
         return new TextureRegionDrawable(regions[index / spriteWidth][index % spriteWidth]);
     }
+
+    public boolean shouldFlip(){
+        Vector3 camDir = getStage().getCamera().direction.cpy();
+        float camRot = (float) Math.atan2(camDir.y,camDir.x);
+        float delta = camRot - getContext().get(Unit.class).getDisplay(UnitDisplay.class).getFacing();
+        return (delta+2*Math.PI) % (2*Math.PI) < Math.PI;
+    }
+
 }

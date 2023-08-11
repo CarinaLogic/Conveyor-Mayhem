@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TransformDrawable;
 
 public abstract class ImageDisplay extends Display{
+    boolean flipX = false;
+    boolean flipY = false;
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -19,13 +21,33 @@ public abstract class ImageDisplay extends Display{
         setPosition(getDisplayX(),getDisplayY(),getAlignment());
         Drawable drawable = getDrawable();
         if (drawable == null) return;
+        float x = getX();
+        float y = getY();
+        float w = getWidth();
+        float h = getHeight();
+        if (flipX){
+            x += w;
+            w = -w;
+        }
+        if (flipY){
+            y += h;
+            h = -h;
+        }
         if (drawable instanceof TransformDrawable) {
             TransformDrawable transformDrawable = (TransformDrawable) drawable;
-            transformDrawable.draw(batch,getX(),getY(),getOriginX(),getOriginY(),getWidth(),getHeight(),
+            transformDrawable.draw(batch,x,y,getOriginX(),getOriginY(),w,h,
                     getScaleX(),getScaleY(),getRotation());
             return;
         }
-        drawable.draw(batch, getX(),getY(),getWidth(),getHeight());
+        drawable.draw(batch, x,y,w,h);
+    }
+
+    public void setFlipX(boolean flipX) {
+        this.flipX = flipX;
+    }
+
+    public void setFlipY(boolean flipY) {
+        this.flipY = flipY;
     }
 
     public abstract Drawable getDrawable();

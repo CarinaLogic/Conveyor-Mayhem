@@ -34,6 +34,14 @@ public abstract class Feature implements Identifiable, Defined, AssetGrouped, Di
         return display;
     }
 
+    public <T extends Display> T getDisplay(Class<T> type){
+        if (ClassReflection.isInstance(type,display)){
+            //noinspection unchecked
+            return (T) display;
+        }
+        return null;
+    }
+
     public void remove(){
         this.display.remove();
     }

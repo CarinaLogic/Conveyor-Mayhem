@@ -10,8 +10,17 @@ import me.carina.rpg.common.FlatImageDisplay;
 
 public class UnitDisplay extends Display {
     Unit unit;
+    float facing = 0;
     public UnitDisplay(Unit unit){
         this.unit = unit;
+    }
+
+    public void lookAt(float x, float y){
+        facing = (float) Math.atan2(y- unit.y,x- unit.x);
+    }
+
+    public void lookAt(Unit target){
+        facing = (float) Math.atan2(target.y- unit.y,target.x- unit.x);
     }
 
     @Override
@@ -45,7 +54,7 @@ public class UnitDisplay extends Display {
     }
 
     @Override
-    public Feature getFeature() {
+    public Unit getFeature() {
         return unit;
     }
 
@@ -57,5 +66,9 @@ public class UnitDisplay extends Display {
     @Override
     public int getAlignment() {
         return Align.bottom;
+    }
+
+    public float getFacing() {
+        return facing;
     }
 }
