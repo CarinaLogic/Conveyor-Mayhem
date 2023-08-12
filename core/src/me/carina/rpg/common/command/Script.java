@@ -6,10 +6,10 @@ import com.badlogic.gdx.utils.IntIntMap;
 public class Script {
     String[] commands;
     int cursor = 0;
-    int indent = 0;
     float waitTime = 0;
-    boolean jumped = false;
     IntIntMap jumpMap = new IntIntMap();
+    //Recorded at destination
+    IntIntMap jumpCounter = new IntIntMap();
     public Script(String... commands){
         this.commands = commands;
     }
@@ -21,17 +21,27 @@ public class Script {
         }
         while (true){
             if (waitTime > 0) return false;
-            if (cursor >= commands.length) return true;
+            if (cursor >= commands.length){
+                reset();
+                return true;
+            }
             if (jumpMap.containsKey(cursor)){
                 int j = jumpMap.get(cursor,0);
                 jumpMap.remove(cursor,0);
                 cursor = j;
-                jumped = true;
+                jumpCounter.put(j,jumpCounter.get(j,0)+1);
             }
             parser.parseCommand(commands[cursor]);
             cursor++;
-            jumped = false;
         }
+    }
+    public void reset(){
+        this.cursor = 0;
+        this.jumpCounter.clear();
+        this.jumpMap.clear();
+    }
+    public int getJumpCount(){
+        return jumpCounter.get(cursor,0);
     }
     public String getCommandAt(int index){
         return commands[index];
@@ -42,11 +52,6 @@ public class Script {
     public void queueJump(int source, int dest){
         jumpMap.put(source, dest);
     }
-
-    public boolean isJumped() {
-        return jumped;
-    }
-
     public void jumpToLabel(CommandLabel label){
         int i = 0;
         while (true){

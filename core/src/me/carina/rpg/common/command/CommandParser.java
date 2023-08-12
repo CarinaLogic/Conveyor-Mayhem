@@ -13,6 +13,7 @@ public class CommandParser {
     Array<Script> scripts = new Array<>();
     int cursor = 0;
     public CommandParser(){
+        commands.add(new ArrayCommand());
         commands.add(new BooleanCommand());
         commands.add(new BranchCommand());
         commands.add(new DataCommand());
@@ -43,7 +44,7 @@ public class CommandParser {
         //Quoted string = String
         //Starts with $ = CommandData that is registered on its name
         //Starts with @ = CommandLabel
-        //Number = Double
+        //Number = double
         //true/false = boolean
         //Anything else = Argument
         //if @ is at the beginning, treat it as a label and ignore
@@ -61,7 +62,7 @@ public class CommandParser {
                 args.add(parseArg(command.substring(argBegin,argEnd)));
                 argBegin = argEnd + 1;
             }
-            if (command.charAt(argEnd) == '('){
+            else if (command.charAt(argEnd) == '('){
                 int i = argEnd + 1;
                 int bracket = 0;
                 while (true){
@@ -84,7 +85,7 @@ public class CommandParser {
                 argBegin = i + 2;
                 argEnd = i + 1;
             }
-            if (command.charAt(argEnd) == '"'){
+            else if (command.charAt(argEnd) == '"'){
                 int i = argEnd;
                 while (true){
                     if (i >= command.length()){
@@ -99,7 +100,7 @@ public class CommandParser {
                 argBegin = i + 2;
                 argEnd = i + 1;
             }
-            if (command.charAt(argEnd) == '\''){
+            else if (command.charAt(argEnd) == '\''){
                 int i = argEnd;
                 while (true){
                     if (i >= command.length()){
@@ -116,18 +117,14 @@ public class CommandParser {
             }
             argEnd++;
         }
-        try {
-            return parseArgArray(args,false);
+        try{
+            return parseArgArray(args);
         } catch (CommandException e){
-            try{
-                return parseArgArray(args,true);
-            } catch (CommandException e1) {
-                throw new CommandException(command, argEnd, e1.type);
-            }
+            throw new CommandException(command,argEnd,e.type);
         }
     }
 
-    public Object parseArgArray(Array<Object> args, boolean greedy){
+    public Object parseArgArray(Array<Object> args){
         //Nested hell
         for (Command command : commands) {
             if (command.enabled()) {
@@ -148,35 +145,32 @@ public class CommandParser {
                             boolean success = true;
                             Object[] passedArgs = new Object[paramTypes.length];
                             int methodArgIndex = 0;
-                            for (int i = 0; i < args.size; i++) {
-                                Object arg = args.get(i);
-                                if (i < dclArgs.length && !dclArgs[i].equals("$")){
-                                    //Argument comparison
-                                    if (arg instanceof Argument){
-                                        //Don't have to pass arg to method
-                                        if (!((Argument) arg).getName().equals(dclArgs[i])){
+                                for (int i = 0; i < args.size; i++) {
+                                    Object arg = args.get(i);
+                                    if (i < dclArgs.length && !dclArgs[i].equals("$")) {
+                                        //Argument comparison
+                                        if (arg instanceof Argument) {
+                                            //Don't have to pass arg to method
+                                            if (!((Argument) arg).getName().equals(dclArgs[i])) {
+                                                success = false;
+                                                break;
+                                            }
+                                        } else {
                                             success = false;
                                             break;
                                         }
-                                    }
-                                    else {
-                                        success = false;
-                                        break;
-                                    }
-                                }
-                                else {
-                                    //Object comparison
-                                    Object data = arg;
-                                    boolean given = false;
-                                    if (data == null && ClassReflection.isAssignableFrom(paramTypes[methodArgIndex], Object.class)){
-                                        passedArgs[methodArgIndex] = null;
-                                        methodArgIndex++;
-                                        given = true;
-                                    }
-                                    if (greedy) {
+                                    } else {
+                                        //Object comparison
+                                        Object data = arg;
+                                        boolean given = false;
+                                        if (data == null && ClassReflection.isAssignableFrom(paramTypes[methodArgIndex], Object.class)) {
+                                            passedArgs[methodArgIndex] = null;
+                                            methodArgIndex++;
+                                            given = true;
+                                        }
                                         if (arg instanceof InlineCommand) {
                                             //if method wants InlineCommand, just give it unmodified
-                                            if (ClassReflection.isAssignableFrom(paramTypes[methodArgIndex], InlineCommand.class)) {
+                                            if (ClassReflection.isAssignableFrom(InlineCommand.class,paramTypes[methodArgIndex])) {
                                                 passedArgs[methodArgIndex] = data;
                                                 methodArgIndex++;
                                                 given = true;
@@ -185,14 +179,14 @@ public class CommandParser {
                                             else data = parseCommand(((InlineCommand) arg).command);
                                         } else if (arg instanceof Argument) {
                                             //if method wants String, give it as a string
-                                            if (ClassReflection.isAssignableFrom(paramTypes[methodArgIndex], InlineCommand.class)) {
+                                            if (ClassReflection.isAssignableFrom(String.class,paramTypes[methodArgIndex])) {
                                                 passedArgs[methodArgIndex] = data;
                                                 methodArgIndex++;
                                                 given = true;
                                             }
                                         } else if (arg instanceof CommandData) {
                                             //if method wants CommandData, just give it unmodified
-                                            if (ClassReflection.isAssignableFrom(paramTypes[methodArgIndex], CommandData.class)) {
+                                            if (ClassReflection.isAssignableFrom(CommandData.class, paramTypes[methodArgIndex])) {
                                                 passedArgs[methodArgIndex] = data;
                                                 methodArgIndex++;
                                                 given = true;
@@ -200,26 +194,25 @@ public class CommandParser {
                                             //else, extract the value to data
                                             else data = ((CommandData) arg).getValue();
                                         }
-                                    }
-                                    if (!given && ClassReflection.isInstance(paramTypes[methodArgIndex],data)){
-                                        passedArgs[methodArgIndex] = data;
-                                        methodArgIndex++;
-                                    }
-                                    else if (!given){
-                                        success = false;
-                                        break;
+                                        if (!given && ClassReflection.isInstance(paramTypes[methodArgIndex], data)) {
+                                            passedArgs[methodArgIndex] = data;
+                                            methodArgIndex++;
+                                        } else if (!given) {
+                                            success = false;
+                                            break;
+                                        }
                                     }
                                 }
-                            }
-                            if (success){
-                                try {
-                                    command.setParser(this);
-                                    if (method.getReturnType().equals(Void.TYPE)){
-                                        method.invoke(command,passedArgs);
-                                        return null;
-                                    }
-                                    return method.invoke(command,passedArgs);
-                                } catch (ReflectionException ignored) {}
+                                if (success) {
+                                    try {
+                                        command.setParser(this);
+                                        if (method.getReturnType().equals(Void.TYPE)) {
+                                            method.invoke(command, passedArgs);
+                                            return null;
+                                        }
+                                        return method.invoke(command, passedArgs);
+                                    } catch (ReflectionException ignored) {
+                                }
                             }
                         }
                     }
@@ -242,7 +235,7 @@ public class CommandParser {
             return new CommandLabel(labelName);
         }
         try {
-            return Double.parseDouble(arg);
+            return Double.valueOf(arg);
         } catch (Exception ignored){}
         return new Argument(arg);
 

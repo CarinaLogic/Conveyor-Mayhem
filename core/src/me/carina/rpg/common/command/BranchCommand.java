@@ -20,7 +20,7 @@ public class BranchCommand extends Command{
     //Assuming all functions does not set delay, otherwise timing issue occurs
     @CommandFunction
     public void for_$(InlineCommand init, InlineCommand term, InlineCommand increment, CommandLabel label){
-        if (getScript().isJumped()){
+        if (getScript().getJumpCount() != 0){
             increment.parse();
         }
         else {
@@ -31,6 +31,13 @@ public class BranchCommand extends Command{
         }
         else {
             getScript().queueJump(getScript().getLabelIndex(label), getScript().cursor);
+        }
+    }
+    @CommandFunction
+    public void for_$_in(CommandData data, Object[] array, CommandLabel label){
+        data.setValue(array[getScript().getJumpCount()]);
+        if (getScript().getJumpCount() < array.length-1){
+            getScript().queueJump(getScript().getLabelIndex(label),getScript().cursor);
         }
     }
     @CommandFunction(altNames = {"j"})

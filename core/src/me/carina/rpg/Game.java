@@ -48,7 +48,9 @@ public class Game extends ApplicationAdapter{
 //		server.open(18273);
 //		client.addConnection(((ExternalClient) client).connect("localhost",18273));
 		server.getCommandParser().queueScript(new Script(
-				"for ($i = 0) ($i < 10) ($i += 1) @fin",
+				//problem, $array is registered as InlineCommand
+				"$array = (range 10)",
+				"for $i in $array @fin",
 				"print $i",
 				"wait 1",
 				"@fin",

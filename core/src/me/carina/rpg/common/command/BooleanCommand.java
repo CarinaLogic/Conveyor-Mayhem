@@ -8,33 +8,33 @@ public class BooleanCommand extends Command{
         return true;
     }
     @CommandFunction(altNames = {"$_&&"})
-    public boolean $_and(boolean a, InlineCommand b){
+    public Boolean $_and(Boolean a, InlineCommand b){
         if (!a) return false;
         return b.parse(Boolean.class);
     }
     @CommandFunction(altNames = {"$_&&"})
-    public boolean $_and(boolean a, boolean b){
+    public Boolean $_and(Boolean a, Boolean b){
         return a && b;
     }
     @CommandFunction(altNames = {"$_||"})
-    public boolean $_or(boolean a, InlineCommand b){
+    public Boolean $_or(Boolean a, InlineCommand b){
         if (a) return true;
         return b.parse(Boolean.class);
     }
     @CommandFunction(altNames = {"$_||"})
-    public boolean $_or(boolean a, boolean b){
+    public Boolean $_or(Boolean a, Boolean b){
         return a || b;
     }
     @CommandFunction(altNames = {"!"})
-    public boolean not(boolean a){
+    public Boolean not(Boolean a){
         return !a;
     }
     @CommandFunction(altNames = {"=="})
-    public boolean eq(Object a, Object b){
+    public Boolean eq(Object a, Object b){
         return Objects.equals(a,b);
     }
     @CommandFunction(altNames = {"!="})
-    public boolean ne(Object a, Object b){
+    public Boolean ne(Object a, Object b){
         return !Objects.equals(a,b);
     }
 }
