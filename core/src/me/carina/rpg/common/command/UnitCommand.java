@@ -4,7 +4,7 @@ import me.carina.rpg.Game;
 import me.carina.rpg.client.scenes.BaseScreen;
 import me.carina.rpg.common.unit.Unit;
 
-public class BattleAnimationCommand extends Command{
+public class UnitCommand extends Command{
     @Override
     public boolean enabled() {
         if (!Game.getInstance().isClient()) return false;

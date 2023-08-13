@@ -2,11 +2,13 @@ package me.carina.rpg.common.unit;
 
 import me.carina.rpg.common.*;
 import me.carina.rpg.common.file.AssetGroup;
+import me.carina.rpg.common.unit.stat.Stats;
 
 public class Unit extends Feature {
     int x;
     int y;
     //Equipments equipments = new Equipments();
+    Stats stats;
     @AutoDisplay
     public UnitParts unitParts = new UnitParts();
     public Unit(){}//for json

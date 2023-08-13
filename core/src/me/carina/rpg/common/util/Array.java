@@ -3,6 +3,7 @@ package me.carina.rpg.common.util;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.Predicate;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.Function;
@@ -20,6 +21,15 @@ public class Array<T> extends com.badlogic.gdx.utils.Array<T> {
             array.add(item);
         }
         return array;
+    }
+    public <R extends T> R getByType(Class<R> type){
+        for (T item : items) {
+            if (ClassReflection.isInstance(type,item)){
+                //noinspection unchecked
+                return (R) item;
+            }
+        }
+        return null;
     }
     public T firstMatch(Predicate<T> predicate){
         for (T item : this) {
