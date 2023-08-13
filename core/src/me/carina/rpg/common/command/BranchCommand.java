@@ -1,5 +1,7 @@
 package me.carina.rpg.common.command;
 
+import me.carina.rpg.common.util.Array;
+
 public class BranchCommand extends Command{
 
     @Override
@@ -34,9 +36,9 @@ public class BranchCommand extends Command{
         }
     }
     @CommandFunction
-    public void for_$_in(CommandData data, Object[] array, CommandLabel label){
-        data.setValue(array[getScript().getJumpCount()]);
-        if (getScript().getJumpCount() < array.length-1){
+    public void for_$_in(CommandData data, Array<?> array, CommandLabel label){
+        data.setValue(array.get(getScript().getJumpCount()));
+        if (getScript().getJumpCount() < array.size-1){
             getScript().queueJump(getScript().getLabelIndex(label),getScript().cursor);
         }
     }

@@ -1,5 +1,7 @@
 package me.carina.rpg.common.command;
 
+import me.carina.rpg.common.util.Array;
+
 @SuppressWarnings("WrapperTypeMayBePrimitive")
 public class ArrayCommand extends Command{
     @Override
@@ -7,26 +9,26 @@ public class ArrayCommand extends Command{
         return true;
     }
     @CommandFunction
-    public Double[] range(Double i){
-        Double[] a = new Double[i.intValue()];
+    public Array<Double> range(Double i){
+        Array<Double> a = new Array<>();
         for (Double j = 0.0; j < i; j++) {
-            a[j.intValue()] = j;
+            a.add(j);
         }
         return a;
     }
     @CommandFunction
-    public Double[] range(Double begin, Double end){
-        Double[] a = new Double[(int) (end-begin)];
+    public Array<Double> range(Double begin, Double end){
+        Array<Double> a = new Array<>();
         for (Double i = begin; i < end; i++) {
-            a[(int) (i-begin)] = i;
+             a.add(i);
         }
         return a;
     }
     @CommandFunction
-    public Double[] range(Double begin, Double end, Double increment){
-        Double[] a = new Double[(int) ((end-begin)/increment)];
+    public Array<Double> range(Double begin, Double end, Double increment){
+        Array<Double> a = new Array<>();
         for (Double i = begin; i < end; i += increment) {
-            a[(int) (i - begin)] = i;
+            a.add(i);
         }
         return a;
     }
