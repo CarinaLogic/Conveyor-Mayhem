@@ -1,6 +1,7 @@
 package me.carina.rpg.client.scenes;
 
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.glutils.HdpiUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -41,4 +42,11 @@ public class PerspectiveViewport extends ExtendViewport {
         return screenCoords.set(tmp.x,tmp.y);
     }
 
+    @Override
+    public void apply(boolean centerCamera) {
+        HdpiUtils.glViewport(getScreenX(), getScreenY(), getScreenWidth(), getScreenHeight());
+        getCamera().viewportWidth = getWorldWidth();
+        getCamera().viewportHeight = getWorldHeight();
+        getCamera().update();
+    }
 }

@@ -76,8 +76,7 @@ public abstract class BaseScreen implements Screen {
         for (InputProcessor processor : multiplexer.getProcessors()) {
             if (processor instanceof Stage){
                 Stage stage = (Stage) processor;
-                stage.getViewport().update(width,height);
-                stage.getCamera().update();
+                stage.getViewport().update(width,height,true);
             }
         }
     }

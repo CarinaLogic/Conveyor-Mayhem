@@ -31,7 +31,9 @@ public abstract class Client extends AbstractGameInstance{
             screenQueue.addLast(pendingScreenQueue.first());
             pendingScreenQueue.removeFirst();
         }
-        if (!screenQueue.isEmpty()) screenQueue.last().render(Gdx.graphics.getDeltaTime());
+        if (!screenQueue.isEmpty()){
+            screenQueue.last().render(Gdx.graphics.getDeltaTime());
+        }
     }
 
     @Override
