@@ -15,5 +15,9 @@ public abstract class MaxStat extends MultiStat {
         return v;
     }
 
+    public void maxOutBase(Stats stats){
+        getBaseStat(stats).maxOut(stats);
+    }
+
     public abstract FractionalStat getBaseStat(Stats stats);
 }

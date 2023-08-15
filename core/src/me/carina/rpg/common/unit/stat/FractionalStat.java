@@ -11,5 +11,10 @@ public abstract class FractionalStat extends Stat {
         return get() - v;
     }
 
+    public void maxOut(Stats stats){
+        float max = getMaxStat(stats).get();
+        set(max);
+    }
+
     public abstract MaxStat getMaxStat(Stats stats);
 }

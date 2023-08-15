@@ -2,7 +2,9 @@ package me.carina.rpg.common.unit;
 
 import me.carina.rpg.common.*;
 import me.carina.rpg.common.file.AssetGroup;
+import me.carina.rpg.common.item.EquipSlot;
 import me.carina.rpg.common.item.Equipments;
+import me.carina.rpg.common.unit.stat.MaxStat;
 import me.carina.rpg.common.unit.stat.Stat;
 import me.carina.rpg.common.unit.stat.Stats;
 
@@ -24,6 +26,19 @@ public class Unit extends Feature {
         UnitDisplay d = new UnitDisplay(this);
         setDisplay(d);
         return d;
+    }
+
+    public void reset(){
+        for (Stat stat : stats.getStats()) {
+            stat.reset();
+        }
+        equipments.getStatModifiers().modifyStats(stats);
+        for (Stat stat : stats.getStats()) {
+            if (stat instanceof MaxStat) {
+                MaxStat maxStat = (MaxStat) stat;
+                maxStat.maxOutBase(stats);
+            }
+        }
     }
 
     @Override

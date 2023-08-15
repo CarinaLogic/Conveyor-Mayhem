@@ -71,7 +71,7 @@ public abstract class Feature implements Identifiable, Defined, AssetGrouped, Di
     }
 
     public static abstract class Def implements Identifiable, Definition {
-        Identifier id;
+        transient Identifier id;
         public abstract void initFeature(Feature feature);
 
         @Override

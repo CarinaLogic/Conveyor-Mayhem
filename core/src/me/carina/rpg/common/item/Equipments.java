@@ -20,6 +20,14 @@ public class Equipments {
         return armorSlots.get(index);
     }
 
+    public Array<EquipSlot> getAllSlots(){
+        Array<EquipSlot> slots = new Array<>();
+        slots.add(weaponSlot);
+        slots.add(shieldSlot);
+        slots.addAll(armorSlots);
+        return slots;
+    }
+
     public void setWeaponSlot(Equipment equipment){
         weaponSlot.setEquipment(this,equipment);
     }

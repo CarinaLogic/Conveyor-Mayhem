@@ -20,4 +20,8 @@ public class Stats {
         //noinspection unchecked
         return (T) stats.firstMatch(s -> ClassReflection.isInstance(type,s) && s.matchAffinity(affinity));
     }
+
+    public Array<Stat> getStats() {
+        return stats;
+    }
 }
