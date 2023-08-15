@@ -1,13 +1,17 @@
 package me.carina.rpg.common.file;
 
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
@@ -59,10 +63,19 @@ public class Assets {
         else if (ClassReflection.isAssignableFrom(Drawable.class, type)){
             if (drawableCache.containsKey(path.toString())) value = (T) drawableCache.get(path.toString());
             else{
-                TextureRegion region = atlas.findRegion(path.toString());
-                if (region != null){
-                    value = (T) new TextureRegionDrawable(region);
-                    drawableCache.put(path.toString(), (Drawable) value);
+                if (ClassReflection.isAssignableFrom(NinePatchDrawable.class,type)){
+                    NinePatch patch = atlas.createPatch(path.toString());
+                    if (patch != null){
+                        value = (T) new NinePatchDrawable(patch);
+                        drawableCache.put(path.toString(), (Drawable) value);
+                    }
+                }
+                else {
+                    TextureRegion region = atlas.findRegion(path.toString());
+                    if (region != null) {
+                        value = (T) new TextureRegionDrawable(region);
+                        drawableCache.put(path.toString(), (Drawable) value);
+                    }
                 }
             }
         }

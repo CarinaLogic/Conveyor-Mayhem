@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;

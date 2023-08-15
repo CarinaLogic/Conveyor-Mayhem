@@ -23,7 +23,7 @@ public class DebugStage extends GUIStage{
     UILabel label;
     @Override
     public void init(Table table) {
-        label = new UILabel().fontHeight(1);
+        label = new UILabel();
         label.addAction(new TimedRepeatingAction(1) {
             @SuppressWarnings("DefaultLocale")
             @Override

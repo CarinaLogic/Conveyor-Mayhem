@@ -5,9 +5,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import me.carina.rpg.Game;
 import me.carina.rpg.client.scenes.GUIStage;
+import me.carina.rpg.client.ui.UILabel;
+import me.carina.rpg.client.ui.UITableView;
 import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.file.Path;
 import me.carina.rpg.packets.C2STestPacket;
@@ -28,6 +31,9 @@ public class BattleMapGUIStage extends GUIStage {
 //            }
 //            }
 //        });
+        UITableView tTable = new UITableView();
+        table.add(tTable).center();
+        tTable.add(new UILabel().text("Tada!"));
         setDebugAll(true);
     }
 }

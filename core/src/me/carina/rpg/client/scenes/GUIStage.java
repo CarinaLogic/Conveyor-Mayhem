@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 public abstract class GUIStage extends GameStage {
     Table table;
     public GUIStage(){
-        super(new ExtendViewport(16,16));
+        super(new ExtendViewport(256,256));
     }
 
     @Override

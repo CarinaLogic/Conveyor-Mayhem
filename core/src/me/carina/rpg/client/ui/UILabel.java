@@ -9,9 +9,11 @@ import me.carina.rpg.common.AbstractGameInstance;
 import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.file.Path;
 
-public class UILabel extends Label {
+public class UILabel extends Label implements UIElement{
     public UILabel(){
-        super("",new LabelStyle(Game.getInstance().getAssets().get(new Path("core", AssetGroup.ui, "font"), BitmapFont.class), Color.WHITE));
+        super("",new LabelStyle(
+                Game.getInstance().getAssets().get(new Path("core", AssetGroup.ui, "font"), BitmapFont.class),
+                Color.WHITE));
         getBitmapFontCache().setUseIntegerPositions(false);
     }
     public UILabel text(String text){
@@ -27,14 +29,24 @@ public class UILabel extends Label {
         setFontScale(height / getBitmapFontCache().getFont().getLineHeight());
         return this;
     }
-    public UILabel center(){
-        setAlignment(Align.center,Align.center);
-        return this;
-    }
+
     public UILabel pos(float x, float y){
         setPosition(x, y);
         return this;
     }
+
+    @Override
+    public UILabel align(int align) {
+        setAlignment(align);
+        return this;
+    }
+
+    @Override
+    public UILabel size(float width, float height) {
+        setSize(width, height);
+        return this;
+    }
+
     public UILabel color(Color color){
         setColor(color);
         return this;
