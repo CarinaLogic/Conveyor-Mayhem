@@ -5,5 +5,6 @@ import me.carina.rpg.common.util.Array;
 
 public class Equipment extends Item{
     EquipType equipType;
-    Array<Affinity> affinities;
+    Array<Affinity> affinities = new Array<>();
+    StatModifiers statModifiers;
 }

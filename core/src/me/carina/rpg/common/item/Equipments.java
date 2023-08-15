@@ -30,4 +30,13 @@ public class Equipments {
         if (index >= 4) throw new RuntimeException();
         armorSlots.get(index).setEquipment(this,equipment);
     }
+    public StatModifiers getStatModifiers(){
+        StatModifiers modifiers = new StatModifiers();
+        modifiers.add(weaponSlot.getStatModifiers());
+        modifiers.add(shieldSlot.getStatModifiers());
+        for (ArmorSlot armorSlot : armorSlots) {
+            modifiers.add(armorSlot.getStatModifiers());
+        }
+        return modifiers;
+    }
 }
