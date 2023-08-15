@@ -3,12 +3,10 @@ package me.carina.rpg.common.item;
 import me.carina.rpg.common.util.Array;
 
 public class WeaponSlot extends EquipSlot{
-    public WeaponSlot(Equipments equipments) {
-        super(equipments);
-    }
+    public WeaponSlot() {}
 
     @Override
-    public Array<EquipType> getAllowedTypes() {
+    public Array<EquipType> getAllowedTypes(Equipments equipments) {
         return new Array<>(EquipType.weapon);
     }
 }
