@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Array;
 import me.carina.rpg.Game;
 import me.carina.rpg.client.scenes.GUIStage;
 import me.carina.rpg.client.ui.UILabel;
+import me.carina.rpg.client.ui.UILabelButton;
 import me.carina.rpg.client.ui.UITableView;
 import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.file.Path;
@@ -33,7 +34,11 @@ public class BattleMapGUIStage extends GUIStage {
 //        });
         UITableView tTable = new UITableView();
         table.add(tTable).center();
-        tTable.add(new UILabel().text("Tada!"));
+        tTable.add(new UILabelButton().text("Tada! its meee"));
+        tTable.row();
+        tTable.add(new UILabelButton().text("Insert a sick joke here"));
+        tTable.row();
+        tTable.add(new UILabelButton().text("光の剣（攻撃力128）"));
         setDebugAll(true);
     }
 }
