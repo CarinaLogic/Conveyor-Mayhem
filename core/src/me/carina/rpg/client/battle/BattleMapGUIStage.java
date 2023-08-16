@@ -21,17 +21,6 @@ public class BattleMapGUIStage extends GUIStage {
 
     @Override
     public void init(Table table) {
-//        Button button = new Button(Game.getInstance().getAssets().get(new Path("core", AssetGroup.ui,"up"), Drawable.class),
-//                Game.getInstance().getAssets().get(new Path("core",AssetGroup.ui,"up"), Drawable.class));
-//        table.add(button).top().left().size(3);
-//        button.addListener(new ChangeListener() {
-//            @Override
-//            public void changed(ChangeEvent event, Actor actor) {
-//            for (Connection connection : new Array.ArrayIterator<>(Game.getInstance().getConnections())) {
-//                connection.send(new C2STestPacket());
-//            }
-//            }
-//        });
         UITableView tTable = new UITableView();
         table.add(tTable).center();
         tTable.add(new UILabelButton().text("Tada! its meee"));

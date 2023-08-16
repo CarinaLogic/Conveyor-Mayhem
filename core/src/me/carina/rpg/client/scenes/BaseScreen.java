@@ -6,10 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Logger;
-import com.badlogic.gdx.utils.Queue;
-import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.SnapshotArray;
+import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import me.carina.rpg.Game;
 import me.carina.rpg.client.Client;
@@ -46,7 +43,7 @@ public abstract class BaseScreen implements Screen {
 
     public void addStage(GameStage stage){
         stage.init();
-        multiplexer.addProcessor(stage);
+        multiplexer.addProcessor(0,stage);
     }
 
     public CanvasStage getCanvas() {
@@ -55,20 +52,23 @@ public abstract class BaseScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        for (InputProcessor processor : multiplexer.getProcessors()) {
+        SnapshotArray<InputProcessor> processors = multiplexer.getProcessors();
+        processors.reverse();
+        for (InputProcessor processor : processors) {
             if (processor instanceof Stage){
                 Stage stage = (Stage) processor;
                 stage.act();
             }
         }
         ScreenUtils.clear(Color.BLACK);
-        for (InputProcessor processor : multiplexer.getProcessors()) {
+        for (InputProcessor processor : processors) {
             if (processor instanceof Stage) {
                 Stage stage = (Stage) processor;
                 stage.getViewport().apply();
                 stage.draw();
             }
         }
+        processors.reverse();
     }
 
     @Override

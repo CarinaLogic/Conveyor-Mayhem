@@ -15,11 +15,7 @@ import me.carina.rpg.common.file.Path;
 
 public class UILabelButton extends TextButton {
     public UILabelButton(){
-        super("", new TextButtonStyle(
-                null,
-                Game.getClient().getAssets().get(new Path("core",AssetGroup.ui,"hovered"), Drawable.class),
-                Game.getClient().getAssets().get(new Path("core",AssetGroup.ui,"selected"), Drawable.class),
-                Game.getClient().getAssets().get(new Path("core",AssetGroup.ui,"font"), BitmapFont.class)));
+        super("", getPrefStyle());
     }
     public UILabelButton text(String text){
         setText(text);
@@ -29,6 +25,14 @@ public class UILabelButton extends TextButton {
     public UILabelButton color(Color color){
         setColor(color);
         return this;
+    }
+
+    public static TextButtonStyle getPrefStyle(){
+        TextButtonStyle style = new TextButtonStyle();
+        style.over = Game.getClient().getAssets().get(new Path("core",AssetGroup.ui,"hovered"), Drawable.class);
+        style.checked = Game.getClient().getAssets().get(new Path("core",AssetGroup.ui,"selected"), Drawable.class);
+        style.font = Game.getClient().getAssets().get(new Path("core",AssetGroup.ui,"font"), BitmapFont.class);
+        return style;
     }
 
 }
