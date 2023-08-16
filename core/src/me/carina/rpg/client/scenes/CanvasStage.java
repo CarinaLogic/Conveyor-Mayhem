@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TransformDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
@@ -16,6 +17,7 @@ import me.carina.rpg.common.world.map.CanvasActor;
 public class CanvasStage extends GameStage {
     public CanvasStage(){
         super(new ScreenViewport());
+        getRoot().setTouchable(Touchable.disabled);
     }
 
     @Override
