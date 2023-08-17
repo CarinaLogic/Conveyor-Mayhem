@@ -11,13 +11,14 @@ import me.carina.rpg.Game;
 import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.file.Path;
 
-public class UIVerticalListView extends ScrollPane{
+public class UIVerticalListView extends UITableView{
+    ScrollPane pane;
     Table innerTable;
     public UIVerticalListView(){
-        super(null,getPaneStyle());
+        pane = new ScrollPane(null);
+        super.add(pane);
         innerTable = new Table();
-        setActor(innerTable);
-        innerTable.pad(6);
+        pane.setActor(innerTable);
     }
 
     public <T extends Actor> Cell<T> add(T actor) {
@@ -25,11 +26,5 @@ public class UIVerticalListView extends ScrollPane{
         cell.expandX().fillX();
         innerTable.row();
         return cell;
-    }
-
-    public static ScrollPane.ScrollPaneStyle getPaneStyle(){
-        ScrollPane.ScrollPaneStyle style = new ScrollPane.ScrollPaneStyle();
-        style.background =Game.getClient().getAssets().get(new Path("core", AssetGroup.ui, "frame"), NinePatchDrawable.class);
-         return style;
     }
 }
