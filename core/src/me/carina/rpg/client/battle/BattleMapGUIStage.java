@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import me.carina.rpg.Game;
+import me.carina.rpg.client.misc.CursorListener;
 import me.carina.rpg.client.scenes.GUIStage;
 import me.carina.rpg.client.ui.UILabel;
 import me.carina.rpg.client.ui.UILabelButton;
@@ -23,36 +24,25 @@ public class BattleMapGUIStage extends GUIStage {
 
     @Override
     public void init(Table table) {
-        UIVerticalListView testView = new UIVerticalListView();
+        UITableView testView = new UITableView();
         table.add(testView).expand().top().right();
         testView.add(new UILabel().text("Testing"));
+        testView.row();
+        testView.add(new UILabel().text("This is row 2 with 3 items"));
+        testView.add(new UILabel().text("hi!"));
+        testView.add(new UILabel().text("bruh moment"));
+        testView.row();
+        testView.add(new UILabel().text("Row 3 has 2 items"));
+        testView.add(new UILabel().text("Hai"));
         table.row();
         UIVerticalListView listView = new UIVerticalListView();
-        table.add(listView).bottom().right().height(150);
-        listView.add(new UILabelButton().text("LMAO"));
+        table.add(listView).bottom().right().maxHeight(150);
+        UILabelButton button = new UILabelButton().text("LMAO");
+        listView.add(button);
         listView.add(new UILabelButton().text("光の剣（攻撃力128）"));
         listView.add(new UILabelButton().text("This is a very very very long text"));
-        listView.add(new UILabelButton().text("This is a very very very long text"));
-        listView.add(new UILabelButton().text("This is a very very very long text"));
-        listView.add(new UILabelButton().text("This is a very very very long text"));
-        listView.add(new UILabelButton().text("This is a very very very long text"));
-        listView.add(new UILabelButton().text("This is a very very very long text"));
-        listView.add(new UILabelButton().text("This is a very very very long text"));
-        listView.add(new UILabelButton().text("This is a very very very long text"));
-        listView.add(new UILabelButton().text("This is a very very very long text"));
-        listView.add(new UILabelButton().text("This is a very very very long text"));
-        listView.add(new UILabelButton().text("This is a very very very long text"));
-        listView.add(new UILabelButton().text("This is a very very very long text"));
-        listView.add(new UILabelButton().text("This is a very very very long text"));
-        listView.add(new UILabelButton().text("This is a very very very long text"));
-        listView.add(new UILabelButton().text("This is a very very very long text"));
-        listView.add(new UILabelButton().text("This is a very very very long text"));
-        listView.add(new UILabelButton().text("This is a very very very long text"));
-        listView.add(new UILabelButton().text("This is a very very very long text"));
-        listView.add(new UILabelButton().text("This is a very very very long text"));
-        listView.add(new UILabelButton().text("This is a very very very long text"));
-        listView.add(new UILabelButton().text("This is a very very very long text"));
-        listView.add(new UILabelButton().text("This is a very very very long text"));
+        button.addListener(new CursorListener());
+        setKeyboardFocus(button);
         setDebugAll(true);
     }
 }
