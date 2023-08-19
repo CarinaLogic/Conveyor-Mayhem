@@ -2,10 +2,7 @@ package me.carina.rpg.client.ui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -22,12 +19,26 @@ public class UILabelButton extends TextButton{
         super("", getPrefStyle());
         getLabel().setAlignment(Align.left);
         getLabelCell().left().expandX();
-        addListener(new CursorListener());
+        addListener(new CursorListener(){
+            @Override
+            public void enter(InputEvent event) {
+                UILabelButton.this.enter();
+            }
+
+            @Override
+            public void exit(InputEvent event) {
+                UILabelButton.this.exit();
+            }
+        });
     }
     public UILabelButton text(String text){
         setText(text);
         return this;
     }
+    public void enter(){
+        toggle();
+    }
+    public void exit(){}
 
     public UILabelButton color(Color color){
         setColor(color);

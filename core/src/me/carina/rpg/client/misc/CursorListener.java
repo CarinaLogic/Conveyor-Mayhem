@@ -1,5 +1,6 @@
 package me.carina.rpg.client.misc;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -10,15 +11,30 @@ import me.carina.rpg.client.ui.Selectable;
 import me.carina.rpg.common.util.Array;
 
 public class CursorListener extends InputListener {
-    //make KeyboardFocus = the item selected?
+    @Override
+    public boolean keyDown(InputEvent event, int keycode) {
+        if (keycode == Input.Keys.H) enter(event);
+        else if (keycode == Input.Keys.G) exit(event);
+        else return false;
+        return true;
+    }
 
     @Override
     public boolean keyTyped(InputEvent event, char character) {
         if (character == 'w') keyUp(event);
-        if (character == 's') keyDown(event);
-        if (character == 'a') keyLeft(event);
-        if (character == 'd') keyRight(event);
+        else if (character == 's') keyDown(event);
+        else if (character == 'a') keyLeft(event);
+        else if (character == 'd') keyRight(event);
+        else return false;
         return true;
+    }
+
+    public void enter(InputEvent event){
+
+    }
+
+    public void exit(InputEvent event){
+
     }
 
     public void keyUp(InputEvent event){
