@@ -2,7 +2,6 @@ package me.carina.rpg.common.item;
 
 import me.carina.rpg.common.Context;
 import me.carina.rpg.common.Definition;
-import me.carina.rpg.common.Display;
 import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.Feature;
 
@@ -15,7 +14,7 @@ public class Item extends Feature {
     @Override
     protected Display newDisplay() {
         ItemDisplay d = new ItemDisplay(this);
-        setDisplay(d);
+        setDisplays(d);
         return d;
     }
 

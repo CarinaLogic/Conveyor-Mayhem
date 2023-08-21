@@ -1,61 +1,49 @@
 package me.carina.rpg.common;
 
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.SnapshotArray;
 
 import java.util.Arrays;
+import java.util.function.Consumer;
 
-public abstract class ArrayDisplay<T extends Feature> extends Display{
-
-    @Override
+public class ArrayDisplay<T extends Feature>{
+    Iterable<T> iterable;
+    Group group;
+    Consumer<Feature> addFunc;
+    Consumer<Actor> removeFunc;
+    public ArrayDisplay(Iterable<T> feature, Group group, Consumer<Feature> addFunc){
+        this(feature,group,addFunc, Actor::remove);
+    }
+    public ArrayDisplay(Iterable<T> feature, Group group, Consumer<Feature> addFunc, Consumer<Actor> removeFunc){
+        this.iterable = feature;
+        this.group = group;
+        this.addFunc = addFunc;
+        this.removeFunc = removeFunc;
+    }
     public void tick() {
-        SnapshotArray<Actor> children = getChildren();
+        SnapshotArray<Actor> children = group.getChildren();
         boolean[] checkList = new boolean[children.size];
         Arrays.fill(checkList, false);
-        for (T feature : getFeature()) {
-            int i = children.indexOf(feature.getDisplay(),true);
-            if (i != -1){
-                checkList[i] = true;
+        for (T feature : iterable) {
+            boolean success = false;
+            for (Actor display : feature.getDisplays()) {
+                int i = children.indexOf(display,true);
+                if (i != -1){
+                    checkList[i] = true;
+                    success = true;
+                }
             }
-            else {
-                //there's no children corresponds to the feature array, add it to display
-                addActor(feature.generateDisplay());
+            if (!success){
+                //there's no children corresponds to the arrayFeature array, add it to displays
+                addFunc.accept(feature);
             }
         }
         for (int i = 0; i < checkList.length; i++) {
             if (!checkList[i]){
                 //there's no array entry for this child, remove it
-                removeActor(children.get(i));
+                removeFunc.accept(children.get(i));
             }
         }
     }
-
-    @Override
-    protected void drawDebugBounds(ShapeRenderer shapes) {
-        //NOOP
-    }
-
-    @Override
-    public float getDisplayX() {
-        return 0;
-    }
-
-    @Override
-    public float getDisplayY() {
-        return 0;
-    }
-
-    @Override
-    public float getDisplayWidth() {
-        return 0;
-    }
-
-    @Override
-    public float getDisplayHeight() {
-        return 0;
-    }
-
-    @Override
-    public abstract ArrayFeature<T> getFeature();
 }

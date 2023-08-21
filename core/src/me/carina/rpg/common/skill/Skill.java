@@ -2,7 +2,6 @@ package me.carina.rpg.common.skill;
 
 import me.carina.rpg.common.Context;
 import me.carina.rpg.common.Definition;
-import me.carina.rpg.common.Display;
 import me.carina.rpg.common.Feature;
 import me.carina.rpg.common.file.AssetGroup;
 

@@ -9,7 +9,7 @@ public class Tile extends Feature {
     @Override
     protected TileDisplay newDisplay() {
         TileDisplay d = new TileDisplay(this);
-        setDisplay(d);
+        setDisplays(d);
         return d;
     }
 

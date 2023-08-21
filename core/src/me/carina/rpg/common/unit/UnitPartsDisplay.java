@@ -2,8 +2,6 @@ package me.carina.rpg.common.unit;
 
 import me.carina.rpg.common.ArrayDisplay;
 import me.carina.rpg.common.ArrayFeature;
-import me.carina.rpg.common.Display;
-import me.carina.rpg.common.Feature;
 
 import java.util.Comparator;
 

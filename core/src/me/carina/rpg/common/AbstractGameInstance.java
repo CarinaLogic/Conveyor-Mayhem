@@ -19,6 +19,7 @@ public abstract class AbstractGameInstance implements PacketHandler, AssetFilter
     Serializer serializer = new JsonSerializer();
     Queue<DirectedPacket> packetQueue = new Queue<>();
     CommandParser commandParser = new CommandParser();
+    Context context = new Context();
     public AbstractGameInstance(String loggerTag) {
         this.assets = new Assets(this,this);
         this.logger = new Logger(loggerTag);
@@ -48,6 +49,7 @@ public abstract class AbstractGameInstance implements PacketHandler, AssetFilter
     @Override
     public void render() {
         assets.tick();
+        getContext().reset();
         for (DirectedPacket packet : packetQueue) {
             packet.packet.onRecieve(this, packet.connection);
             packetQueue.removeFirst();
@@ -80,6 +82,10 @@ public abstract class AbstractGameInstance implements PacketHandler, AssetFilter
 
     public CommandParser getCommandParser() {
         return commandParser;
+    }
+
+    public Context getContext() {
+        return context;
     }
 
     public abstract boolean isClient();

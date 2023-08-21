@@ -12,11 +12,16 @@ public class Context {
     public void add(Object o){
         contexts.add(o);
     }
+    public <T> void remove(Class<T> type){
+        for (Object context : contexts) {
+            if (ClassReflection.isInstance(type,context)){
+                contexts.removeIdentity(context);
+            }
+        }
+    }
 
-    public Context copy(){
-        Context context = new Context();
-        context.contexts = this.contexts.copy();
-        return context;
+    public void reset(){
+        contexts.clear();
     }
 
     public <T> T getLatest(Class<T> type){

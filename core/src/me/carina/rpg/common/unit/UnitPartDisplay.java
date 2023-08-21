@@ -3,17 +3,13 @@ package me.carina.rpg.common.unit;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import me.carina.rpg.Game;
-import me.carina.rpg.common.Display;
 import me.carina.rpg.common.Feature;
 import me.carina.rpg.common.FlatImageDisplay;
-import me.carina.rpg.common.file.AssetGroup;
-import me.carina.rpg.common.file.Path;
 import me.carina.rpg.common.util.Palette;
 
 public class UnitPartDisplay extends FlatImageDisplay {

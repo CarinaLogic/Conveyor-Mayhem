@@ -56,8 +56,6 @@ public abstract class Array2DFeature<T extends Feature> extends Feature implemen
 
     public int getWidth(){return array.getWidth();}
     public int getHeight(){return array.getHeight();}
-    @Override
-    protected abstract Array2DDisplay<T> newDisplay();
 
     public Array2D<T> getArray() {
         return array;

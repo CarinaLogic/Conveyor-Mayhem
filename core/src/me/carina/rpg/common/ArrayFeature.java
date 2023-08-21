@@ -40,8 +40,6 @@ public abstract class ArrayFeature<T extends Feature> extends Feature implements
         return array.contains(item,true);
     }
 
-    @Override
-    protected abstract ArrayDisplay<T> newDisplay();
 
     public Array<T> getArray() {
         return array;

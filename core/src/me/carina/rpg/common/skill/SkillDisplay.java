@@ -1,7 +1,5 @@
 package me.carina.rpg.common.skill;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import me.carina.rpg.common.Display;
 import me.carina.rpg.common.Feature;
 
 /**
