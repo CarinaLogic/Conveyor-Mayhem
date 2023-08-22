@@ -24,11 +24,11 @@ public class BattleMapStage extends GameStage {
     }
 
     public BattleMap getBattleMap(){
-        return ((BattleMap) battleMapDisplay.getFeature());
+        return battleMapDisplay.getFeature();
     }
 
     public void setBattleMap(BattleMap battleMap) {
-        this.battleMapDisplay = (BattleMapDisplay) battleMap.generateDisplay();
+        this.battleMapDisplay = battleMap.newDisplay(BattleMapDisplay.class);
         addActor(battleMapDisplay);
         battleMapDisplay.addAction(new CameraTargetAction(getCamera(), new Vector3(2,2,0), 1,1f,2));
     }

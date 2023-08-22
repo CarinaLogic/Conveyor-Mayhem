@@ -12,19 +12,12 @@ public class Item extends Feature {
     }
 
     @Override
-    protected Display newDisplay() {
-        ItemDisplay d = new ItemDisplay(this);
-        setDisplays(d);
-        return d;
-    }
-
-    @Override
     public AssetGroup getAssetGroup() {
         return AssetGroup.items;
     }
 
     @Override
-    public void tick(Context context) {
+    public void tick() {
 
     }
 

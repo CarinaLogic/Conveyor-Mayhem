@@ -6,12 +6,6 @@ import me.carina.rpg.common.file.AssetGroup;
 
 public class Tile extends Feature {
     public Tile(){} //for json
-    @Override
-    protected TileDisplay newDisplay() {
-        TileDisplay d = new TileDisplay(this);
-        setDisplays(d);
-        return d;
-    }
 
     @Override
     public Class<Def> getDefClass() {
@@ -24,8 +18,8 @@ public class Tile extends Feature {
     }
 
     @Override
-    public void tick(Context context) {
-        //NOOP
+    public void tick() {
+
     }
 
     public static class Def extends Feature.Def{

@@ -20,6 +20,11 @@ public class BattleScreen extends BaseScreen {
     }
 
     @Override
+    public CanvasStage getCanvas() {
+        return actorStage;
+    }
+
+    @Override
     public boolean canChangeScreen() {
         return true;
     }

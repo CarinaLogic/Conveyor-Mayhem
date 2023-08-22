@@ -10,6 +10,11 @@ public class Context {
         return (T) contexts.firstMatch(c -> ClassReflection.isInstance(type,c));
     }
     public void add(Object o){
+        for (Object context : contexts) {
+            if (ClassReflection.isInstance(o.getClass(),context)){
+                contexts.removeIdentity(context);
+            }
+        }
         contexts.add(o);
     }
     public <T> void remove(Class<T> type){

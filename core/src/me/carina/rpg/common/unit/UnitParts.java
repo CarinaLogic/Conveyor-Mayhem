@@ -19,18 +19,8 @@ public class UnitParts extends ArrayFeature<UnitPart>{
     }
 
     @Override
-    protected UnitPartsDisplay newDisplay() {
-        return new UnitPartsDisplay(this);
-    }
-
-    @Override
     public AssetGroup getAssetGroup() {
         return null;
-    }
-
-    @Override
-    public void tick(Context context) {
-
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.Constructor;
 import com.badlogic.gdx.utils.reflect.Field;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
+import me.carina.rpg.Game;
 import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.file.Identifier;
 import me.carina.rpg.common.file.Path;
@@ -26,7 +27,10 @@ public abstract class Feature implements Identifiable, Defined, AssetGrouped, Di
             Constructor c = ClassReflection.getConstructor(type,this.getClass());
             Object o = c.newInstance(this);
             //noinspection unchecked
-            return (T) o;
+            T t = (T) o;
+            displays.add(t);
+            t.addAction(Actions.forever(Actions.run(() -> Game.getInstance().getContext().add(this))));
+            return t;
         } catch (ReflectionException e) {
             throw new RuntimeException(e);
         }
@@ -99,5 +103,10 @@ public abstract class Feature implements Identifiable, Defined, AssetGrouped, Di
         }
     }
 
-    public abstract void tick(Context context);
+    public void contextAndTick(){
+        Game.getInstance().getContext().add(this);
+        tick();
+    }
+
+    public abstract void tick();
 }

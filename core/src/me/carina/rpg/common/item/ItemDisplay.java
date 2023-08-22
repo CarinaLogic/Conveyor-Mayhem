@@ -1,16 +1,14 @@
 package me.carina.rpg.common.item;
 
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import me.carina.rpg.common.Display;
 import me.carina.rpg.common.Feature;
+import me.carina.rpg.common.ImageDisplay;
 
-public class ItemDisplay extends Display {
+public class ItemDisplay extends ImageDisplay implements Display<Item> {
     Item item;
     public ItemDisplay(Item item){
         this.item = item;
-    }
-
-    @Override
-    public void tick() {
-
     }
 
     @Override
@@ -34,12 +32,12 @@ public class ItemDisplay extends Display {
     }
 
     @Override
-    public Feature getFeature() {
-        return item;
+    public Drawable getDrawable() {
+        return null;
     }
 
     @Override
-    public boolean fillChildren() {
-        return false;
+    public Item getFeature() {
+        return item;
     }
 }

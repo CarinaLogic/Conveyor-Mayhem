@@ -7,16 +7,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TransformDrawable;
+import com.badlogic.gdx.utils.Align;
 
-public abstract class ImageDisplay extends Actor {
+public abstract class ImageDisplay extends Actor{
+    Feature feature;
     boolean flipX = false;
     boolean flipY = false;
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        addContext();
-        if (!populated) populateChild();
-        tick();
         Color color = getColor();
         batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
         setSize(getDisplayWidth(),getDisplayHeight());
@@ -42,6 +41,15 @@ public abstract class ImageDisplay extends Actor {
             return;
         }
         drawable.draw(batch, x,y,w,h);
+    }
+
+    public abstract float getDisplayX();
+    public abstract float getDisplayY();
+    public abstract float getDisplayWidth();
+    public abstract float getDisplayHeight();
+
+    public int getAlignment(){
+        return Align.bottomLeft;
     }
 
     public void setFlipX(boolean flipX) {

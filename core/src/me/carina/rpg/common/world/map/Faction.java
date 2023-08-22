@@ -10,20 +10,13 @@ public class Faction extends Feature {
     Color accentColorBright;
     Color accentColorDark;
 
-
-
-    @Override
-    protected FactionDisplay newDisplay() {
-        return new FactionDisplay(this);
-    }
-
     @Override
     public AssetGroup getAssetGroup() {
         return AssetGroup.teams;
     }
 
     @Override
-    public void tick(Context context) {
+    public void tick() {
 
     }
 

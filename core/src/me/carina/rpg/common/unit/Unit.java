@@ -19,13 +19,6 @@ public class Unit extends Feature {
         return Def.class;
     }
 
-    @Override
-    protected UnitDisplay newDisplay() {
-        UnitDisplay d = new UnitDisplay(this);
-        setDisplays(d);
-        return d;
-    }
-
     public void reset(){
         for (Stat stat : stats.getStats()) {
             stat.reset();
@@ -45,7 +38,7 @@ public class Unit extends Feature {
     }
 
     @Override
-    public void tick(Context context) {
+    public void tick() {
 
     }
 

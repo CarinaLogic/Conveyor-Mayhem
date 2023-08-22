@@ -14,9 +14,6 @@ import me.carina.rpg.Game;
 public abstract class FlatImageDisplay extends ImageDisplay{
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        addContext();
-        if (!populated) populateChild();
-        tick();
         setPosition(getDisplayX(),getDisplayY(),getAlignment());
         setSize(getDisplayWidth(),getDisplayHeight());
         Vector3 camAim = getStage().getCamera().direction;

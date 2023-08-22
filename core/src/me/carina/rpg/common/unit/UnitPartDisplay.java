@@ -3,16 +3,18 @@ package me.carina.rpg.common.unit;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import me.carina.rpg.Game;
-import me.carina.rpg.common.Feature;
+import me.carina.rpg.common.Display;
 import me.carina.rpg.common.FlatImageDisplay;
 import me.carina.rpg.common.util.Palette;
 
-public class UnitPartDisplay extends FlatImageDisplay {
+public class UnitPartDisplay extends FlatImageDisplay implements Display<UnitPart> {
     UnitPart unitPart;
     TextureRegion[][] regions;
     Palette palette;
@@ -22,8 +24,7 @@ public class UnitPartDisplay extends FlatImageDisplay {
         this.unitPart = unitPart;
     }
 
-    @Override
-    public void tick() {
+    public void draw(Batch batch, float parentAlpha) {
         if (regions == null && !unitPart.bodyType.equals(BodyType.base)){
             //very inefficient
             TextureRegionDrawable regionDrawable = Game.getClient().getAssets().get(unitPart.getPath(), TextureRegionDrawable.class);
@@ -38,9 +39,9 @@ public class UnitPartDisplay extends FlatImageDisplay {
             int paletteSrcX = pixmap.getWidth() - paletteWidth;
             spriteWidth = pixmap.getWidth() / 32;
             spriteHeight = pixmap.getHeight() / 32;
-            UnitPart part  = getContext().get(UnitParts.class).getPart(BodyType.base);
-            if (part.getDisplay() == null) return;
-            Palette basePalette = ((UnitPartDisplay) part.getDisplay()).getPalette();
+            UnitPart part  = Game.getInstance().getContext().get(UnitParts.class).getPart(BodyType.base);
+            if (part.getDisplays().isEmpty()) return;
+            Palette basePalette = part.getDisplay(UnitPartDisplay.class).getPalette();
             if (basePalette != null){
                 basePalette.recolor(pixmap);
             }
@@ -58,6 +59,7 @@ public class UnitPartDisplay extends FlatImageDisplay {
             //textureMap.dispose();
         }
         setFlipX(shouldFlip());
+        super.draw(batch, parentAlpha);
     }
 
     public Palette getPalette() {
@@ -66,12 +68,12 @@ public class UnitPartDisplay extends FlatImageDisplay {
 
     @Override
     public float getDisplayX() {
-        return 0;
+        return Game.getInstance().getContext().get(Unit.class).x;
     }
 
     @Override
     public float getDisplayY() {
-        return 0;
+        return Game.getInstance().getContext().get(Unit.class).y;
     }
 
     @Override
@@ -85,13 +87,13 @@ public class UnitPartDisplay extends FlatImageDisplay {
     }
 
     @Override
-    public Feature getFeature() {
-        return unitPart;
+    public int getAlignment() {
+        return Align.bottom;
     }
 
     @Override
-    public boolean fillChildren() {
-        return true;
+    public UnitPart getFeature() {
+        return unitPart;
     }
 
     @Override
@@ -105,7 +107,7 @@ public class UnitPartDisplay extends FlatImageDisplay {
     public boolean shouldFlip(){
         Vector3 camDir = getStage().getCamera().direction.cpy();
         float camRot = (float) Math.atan2(camDir.y,camDir.x);
-        float delta = camRot - getContext().get(Unit.class).getDisplay(UnitDisplay.class).getFacing();
+        float delta = camRot - Game.getInstance().getContext().get(Unit.class).getDisplay(UnitDisplay.class).getFacing();
         return (delta+2*Math.PI) % (2*Math.PI) < Math.PI;
     }
 

@@ -62,6 +62,13 @@ public abstract class Array2DFeature<T extends Feature> extends Feature implemen
     }
 
     @Override
+    public void tick() {
+        for (Array2D.Array2DEntry<T> entry : array) {
+            entry.value.contextAndTick();
+        }
+    }
+
+    @Override
     public Iterator<Array2D.Array2DEntry<T>> iterator() {
         return new Array2D.Array2DIterator<>(array);
     }

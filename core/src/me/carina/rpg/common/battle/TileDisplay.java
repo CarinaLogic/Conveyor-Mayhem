@@ -2,27 +2,23 @@ package me.carina.rpg.common.battle;
 
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import me.carina.rpg.Game;
+import me.carina.rpg.common.Display;
 import me.carina.rpg.common.ImageDisplay;
 
-public class TileDisplay extends ImageDisplay {
+public class TileDisplay extends ImageDisplay implements Display<Tile> {
     Tile tile;
     public TileDisplay(Tile tile){
         this.tile = tile;
     }
 
     @Override
-    public void tick() {
-
-    }
-
-    @Override
     public float getDisplayX() {
-        return getContext().get(Tiles.class).getIdenticalX(tile);
+        return Game.getInstance().getContext().get(Tiles.class).getIdenticalX(tile);
     }
 
     @Override
     public float getDisplayY() {
-        return getContext().get(Tiles.class).getIdenticalY(tile);
+        return Game.getInstance().getContext().get(Tiles.class).getIdenticalY(tile);
     }
 
     @Override
@@ -38,11 +34,6 @@ public class TileDisplay extends ImageDisplay {
     @Override
     public Tile getFeature() {
         return tile;
-    }
-
-    @Override
-    public boolean fillChildren() {
-        return true;
     }
 
     @Override

@@ -1,11 +1,13 @@
 package me.carina.rpg.common.skill;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
+import me.carina.rpg.common.Display;
 import me.carina.rpg.common.Feature;
 
 /**
  * Represents skill display
  */
-public class SkillDisplay extends Display {
+public class SkillDisplay extends Stack implements Display<Skill> {
     //TODO
     Skill skill;
     public SkillDisplay(Skill skill){
@@ -13,37 +15,7 @@ public class SkillDisplay extends Display {
     }
 
     @Override
-    public void tick() {
-
-    }
-
-    @Override
-    public float getDisplayX() {
-        return 0;
-    }
-
-    @Override
-    public float getDisplayY() {
-        return 0;
-    }
-
-    @Override
-    public float getDisplayWidth() {
-        return 0;
-    }
-
-    @Override
-    public float getDisplayHeight() {
-        return 0;
-    }
-
-    @Override
-    public Feature getFeature() {
+    public Skill getFeature() {
         return skill;
-    }
-
-    @Override
-    public boolean fillChildren() {
-        return false;
     }
 }

@@ -7,25 +7,24 @@ import com.badlogic.gdx.utils.SnapshotArray;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
-public class ArrayDisplay<T extends Feature>{
-    Iterable<T> iterable;
+public abstract class ArrayDisplayHandler{
     Group group;
     Consumer<Feature> addFunc;
     Consumer<Actor> removeFunc;
-    public ArrayDisplay(Iterable<T> feature, Group group, Consumer<Feature> addFunc){
-        this(feature,group,addFunc, Actor::remove);
+    public ArrayDisplayHandler(Group group, Consumer<Feature> addFunc){
+        this(group,addFunc, Actor::remove);
     }
-    public ArrayDisplay(Iterable<T> feature, Group group, Consumer<Feature> addFunc, Consumer<Actor> removeFunc){
-        this.iterable = feature;
+    public ArrayDisplayHandler(Group group, Consumer<Feature> addFunc, Consumer<Actor> removeFunc){
         this.group = group;
         this.addFunc = addFunc;
         this.removeFunc = removeFunc;
     }
+    public abstract Iterable<? extends Feature> getIterable();
     public void tick() {
         SnapshotArray<Actor> children = group.getChildren();
         boolean[] checkList = new boolean[children.size];
         Arrays.fill(checkList, false);
-        for (T feature : iterable) {
+        for (Feature feature : getIterable()) {
             boolean success = false;
             for (Actor display : feature.getDisplays()) {
                 int i = children.indexOf(display,true);

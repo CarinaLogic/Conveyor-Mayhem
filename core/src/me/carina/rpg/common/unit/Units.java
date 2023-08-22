@@ -12,20 +12,9 @@ public class Units extends ArrayFeature<Unit>{
     }
 
     @Override
-    protected ArrayDisplay<Unit> newDisplay() {
-        return new UnitsDisplay(this);
-    }
-
-    @Override
     public AssetGroup getAssetGroup() {
         return null;
     }
-
-    @Override
-    public void tick(Context context) {
-
-    }
-
     @Override
     public Class<? extends Definition> getDefClass() {
         return null;

@@ -11,7 +11,7 @@ public class BattleMapUpdateTask extends AbstractTask{
 
     @Override
     public boolean run() {
-        map.contextAndTick(new Context());
+        map.contextAndTick();
         return false;
     }
 }

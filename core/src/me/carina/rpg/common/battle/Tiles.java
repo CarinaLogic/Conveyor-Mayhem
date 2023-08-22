@@ -9,21 +9,17 @@ public class Tiles extends Array2DFeature<Tile>{
     public Tiles(){}
 
     @Override
-    protected TilesDisplay newDisplay() {
-        return new TilesDisplay(this);
-    }
-
-    @Override
     public AssetGroup getAssetGroup() {
         return null;
     }
 
     @Override
-    public void tick(Context context) {
+    public void tick() {
         if (getArray().get(0,0) == null){
             getArray().resize(10,10);
             getArray().fill(v -> Game.getInstance().getAssets().get("core","plains", Tile.class));
         }
+        super.tick();
     }
     @Override
     public Class<? extends Definition> getDefClass() {

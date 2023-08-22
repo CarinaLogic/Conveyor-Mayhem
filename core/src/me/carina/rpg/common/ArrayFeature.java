@@ -46,6 +46,13 @@ public abstract class ArrayFeature<T extends Feature> extends Feature implements
     }
 
     @Override
+    public void tick() {
+        for (T t : array) {
+            t.contextAndTick();
+        }
+    }
+
+    @Override
     public Iterator<T> iterator() {
         return new com.badlogic.gdx.utils.Array.ArrayIterator<>(array);
     }

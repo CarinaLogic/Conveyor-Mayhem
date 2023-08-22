@@ -1,32 +1,40 @@
 package me.carina.rpg.common.unit;
 
-import me.carina.rpg.common.ArrayDisplay;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
+import me.carina.rpg.common.ArrayDisplayHandler;
 import me.carina.rpg.common.ArrayFeature;
+import me.carina.rpg.common.Display;
 
 import java.util.Comparator;
 
-public class UnitPartsDisplay extends ArrayDisplay<UnitPart> {
+public class UnitPartsDisplay extends Group implements Display<UnitParts> {
     UnitParts unitParts;
+    ArrayDisplayHandler handler = new ArrayDisplayHandler(
+            this, feature -> this.addActor(feature.newDisplay(UnitPartDisplay.class))
+    ) {
+        @Override
+        public UnitParts getIterable() {
+            return unitParts;
+        }
+    };
     public UnitPartsDisplay(UnitParts unitParts){
         this.unitParts = unitParts;
     }
 
     @Override
-    public void tick() {
+    public void draw(Batch batch, float parentAlpha) {
+        handler.tick();
         unitParts.getArray().sort(Comparator.comparingInt(p -> p.bodyType.ordinal()));
-        super.tick();
         for (int i = 0; i < unitParts.size(); i++) {
-            if (unitParts.getDisplay() != null) unitParts.get(i).getDisplay().setZIndex(i);
+            if (unitParts.getDisplay(UnitPartDisplay.class) != null) unitParts.get(i).getDisplay(UnitPartDisplay.class).setZIndex(i);
         }
+        super.draw(batch, parentAlpha);
     }
 
     @Override
-    public ArrayFeature<UnitPart> getFeature() {
+    public UnitParts getFeature() {
         return unitParts;
-    }
-
-    @Override
-    public boolean fillChildren() {
-        return true;
     }
 }

@@ -32,18 +32,13 @@ public class UnitPart extends Feature {
     }
 
     @Override
-    public void tick(Context context) {
+    public void tick() {
 
     }
 
     @Override
     public AssetGroup getAssetGroup() {
         return AssetGroup.units;
-    }
-
-    @Override
-    protected UnitPartDisplay newDisplay() {
-        return new UnitPartDisplay(this);
     }
 
     @Override

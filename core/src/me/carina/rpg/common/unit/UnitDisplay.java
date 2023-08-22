@@ -1,9 +1,12 @@
 package me.carina.rpg.common.unit;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.Align;
+import me.carina.rpg.common.Display;
 
-public class UnitDisplay extends Display {
+public class UnitDisplay extends Group implements Display<Unit> {
     Unit unit;
     float facing = 0;
     public UnitDisplay(Unit unit){
@@ -18,52 +21,12 @@ public class UnitDisplay extends Display {
         facing = (float) Math.atan2(target.y- unit.y,target.x- unit.x);
     }
 
-    @Override
-    public void tick() {
-
-    }
-
-    @Override
-    protected void drawDebugBounds(ShapeRenderer shapes) {
-        //NOOP
-    }
-
-    @Override
-    public float getDisplayX() {
-        return unit.x + 0.5f;
-    }
-
-    @Override
-    public float getDisplayY() {
-        return unit.y + 0.5f;
-    }
-
-    @Override
-    public float getDisplayWidth() {
-        return 1;
-    }
-
-    @Override
-    public float getDisplayHeight() {
-        return 1;
+    public float getFacing() {
+        return facing;
     }
 
     @Override
     public Unit getFeature() {
         return unit;
-    }
-
-    @Override
-    public boolean fillChildren() {
-        return true;
-    }
-
-    @Override
-    public int getAlignment() {
-        return Align.bottom;
-    }
-
-    public float getFacing() {
-        return facing;
     }
 }

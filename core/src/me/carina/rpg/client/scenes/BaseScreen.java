@@ -17,12 +17,9 @@ import java.util.function.Consumer;
 public abstract class BaseScreen implements Screen {
     InputMultiplexer multiplexer = new InputMultiplexer();
     Queue<BiConsumer<BaseScreen,Client>> delayedInitFunctions = new Queue<>();
-    CanvasStage canvasStage;
 
     public BaseScreen(){
         Gdx.input.setInputProcessor(multiplexer);
-        canvasStage = new CanvasStage();
-        addStage(canvasStage);
     }
 
     public abstract void init();
@@ -47,7 +44,7 @@ public abstract class BaseScreen implements Screen {
     }
 
     public CanvasStage getCanvas() {
-        return canvasStage;
+        return null;
     }
 
     @Override

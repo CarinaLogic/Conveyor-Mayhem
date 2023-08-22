@@ -15,27 +15,15 @@ public class BattleMap extends Feature {
     public int getWidth(){return tiles.getWidth();}
     public int getHeight(){return tiles.getHeight();}
 
-
-    @Override
-    protected BattleMapDisplay newDisplay() {
-        BattleMapDisplay d = new BattleMapDisplay(this);
-        setDisplays(d);
-        return d;
-    }
-
-    @Override
-    public BattleMapDisplay getDisplay() {
-        return (BattleMapDisplay) super.getDisplay();
-    }
-
     @Override
     public AssetGroup getAssetGroup() {
         return null;
     }
 
     @Override
-    public void tick(Context context) {
-
+    public void tick() {
+        tiles.contextAndTick();
+        units.contextAndTick();
     }
 
     @Override

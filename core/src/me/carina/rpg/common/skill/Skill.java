@@ -14,17 +14,12 @@ public class Skill extends Feature {
     }
 
     @Override
-    protected Display newDisplay() {
-        return new SkillDisplay(this);
-    }
-
-    @Override
     public AssetGroup getAssetGroup() {
         return AssetGroup.skills;
     }
 
     @Override
-    public void tick(Context context) {
+    public void tick() {
 
     }
 

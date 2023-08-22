@@ -1,5 +1,7 @@
 package me.carina.rpg.client.battle;
 
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.actions.RemoveListenerAction;
 import me.carina.rpg.client.misc.UIColor;
 import me.carina.rpg.client.ui.UILabel;
 import me.carina.rpg.client.ui.UIProgressBar;
