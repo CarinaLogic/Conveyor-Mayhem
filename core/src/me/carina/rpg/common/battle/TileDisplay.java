@@ -1,5 +1,6 @@
 package me.carina.rpg.common.battle;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import me.carina.rpg.Game;
 import me.carina.rpg.common.Display;
@@ -9,6 +10,12 @@ public class TileDisplay extends ImageDisplay implements Display<Tile> {
     Tile tile;
     public TileDisplay(Tile tile){
         this.tile = tile;
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        Game.getInstance().getContext().add(getFeature());
+        super.draw(batch, parentAlpha);
     }
 
     @Override

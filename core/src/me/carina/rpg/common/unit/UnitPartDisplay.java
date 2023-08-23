@@ -25,6 +25,7 @@ public class UnitPartDisplay extends FlatImageDisplay implements Display<UnitPar
     }
 
     public void draw(Batch batch, float parentAlpha) {
+        Game.getInstance().getContext().add(getFeature());
         if (regions == null && !unitPart.bodyType.equals(BodyType.base)){
             //very inefficient
             TextureRegionDrawable regionDrawable = Game.getClient().getAssets().get(unitPart.getPath(), TextureRegionDrawable.class);

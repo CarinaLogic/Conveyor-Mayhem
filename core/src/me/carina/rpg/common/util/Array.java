@@ -64,10 +64,6 @@ public class Array<T> extends com.badlogic.gdx.utils.Array<T> {
     public void remove(T... values){
         for (T value : values) {
             this.removeValue(value,false);
-            if (value instanceof Disposable) {
-                Disposable d = (Disposable) value;
-                d.dispose();
-            }
         }
     }
 
@@ -75,10 +71,6 @@ public class Array<T> extends com.badlogic.gdx.utils.Array<T> {
     public final void removeIdentity(T... values){
         for (T value : values) {
             this.removeValue(value,true);
-            if (value instanceof Disposable) {
-                Disposable d = (Disposable) value;
-                d.dispose();
-            }
         }
     }
 

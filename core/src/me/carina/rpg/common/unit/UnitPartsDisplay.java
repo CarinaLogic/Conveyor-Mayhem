@@ -3,6 +3,7 @@ package me.carina.rpg.common.unit;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
+import me.carina.rpg.Game;
 import me.carina.rpg.common.ArrayDisplayHandler;
 import me.carina.rpg.common.ArrayFeature;
 import me.carina.rpg.common.Display;
@@ -25,6 +26,7 @@ public class UnitPartsDisplay extends Group implements Display<UnitParts> {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        Game.getInstance().getContext().add(getFeature());
         handler.tick();
         unitParts.getArray().sort(Comparator.comparingInt(p -> p.bodyType.ordinal()));
         for (int i = 0; i < unitParts.size(); i++) {

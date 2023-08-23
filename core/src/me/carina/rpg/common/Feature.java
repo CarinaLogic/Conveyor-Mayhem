@@ -29,7 +29,6 @@ public abstract class Feature implements Identifiable, Defined, AssetGrouped, Di
             //noinspection unchecked
             T t = (T) o;
             displays.add(t);
-            t.addAction(Actions.forever(Actions.run(() -> Game.getInstance().getContext().add(this))));
             return t;
         } catch (ReflectionException e) {
             throw new RuntimeException(e);

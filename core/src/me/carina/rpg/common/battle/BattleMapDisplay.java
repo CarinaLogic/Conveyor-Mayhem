@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
+import me.carina.rpg.Game;
 import me.carina.rpg.client.misc.Movable;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.Feature;
@@ -18,6 +19,12 @@ public class BattleMapDisplay extends Stack implements Display<BattleMap> {
         setSize(map.getWidth(), map.getHeight());
         setTouchable(Touchable.childrenOnly);
         addListener(new Movable());
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        Game.getInstance().getContext().add(getFeature());
+        super.draw(batch, parentAlpha);
     }
 
     @Override

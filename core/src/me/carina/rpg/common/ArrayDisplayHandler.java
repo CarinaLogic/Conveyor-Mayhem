@@ -31,6 +31,7 @@ public abstract class ArrayDisplayHandler{
                 if (i != -1){
                     checkList[i] = true;
                     success = true;
+                    break;
                 }
             }
             if (!success){
