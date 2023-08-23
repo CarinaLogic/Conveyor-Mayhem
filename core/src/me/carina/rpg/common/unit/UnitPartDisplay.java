@@ -6,12 +6,17 @@ import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import me.carina.rpg.Game;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.FlatImageDisplay;
+import me.carina.rpg.common.battle.BattleMap;
+import me.carina.rpg.common.battle.BattleMapDisplay;
+import me.carina.rpg.common.battle.Tiles;
+import me.carina.rpg.common.battle.TilesDisplay;
 import me.carina.rpg.common.util.Palette;
 
 public class UnitPartDisplay extends FlatImageDisplay implements Display<UnitPart> {
@@ -69,12 +74,12 @@ public class UnitPartDisplay extends FlatImageDisplay implements Display<UnitPar
 
     @Override
     public float getDisplayX() {
-        return Game.getInstance().getContext().get(Unit.class).x;
+        return Game.getInstance().getContext().get(Unit.class).x + 0.5f;
     }
 
     @Override
     public float getDisplayY() {
-        return Game.getInstance().getContext().get(Unit.class).y;
+        return Game.getInstance().getContext().get(Unit.class).y + 0.5f;
     }
 
     @Override
@@ -111,5 +116,4 @@ public class UnitPartDisplay extends FlatImageDisplay implements Display<UnitPar
         float delta = camRot - Game.getInstance().getContext().get(Unit.class).getDisplay(UnitDisplay.class).getFacing();
         return (delta+2*Math.PI) % (2*Math.PI) < Math.PI;
     }
-
 }

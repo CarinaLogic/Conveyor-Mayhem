@@ -27,8 +27,8 @@ public class UnitPartsDisplay extends Group implements Display<UnitParts> {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         Game.getInstance().getContext().add(getFeature());
-        handler.tick();
         unitParts.getArray().sort(Comparator.comparingInt(p -> p.bodyType.ordinal()));
+        handler.tick();
         for (int i = 0; i < unitParts.size(); i++) {
             if (unitParts.getDisplay(UnitPartDisplay.class) != null) unitParts.get(i).getDisplay(UnitPartDisplay.class).setZIndex(i);
         }
