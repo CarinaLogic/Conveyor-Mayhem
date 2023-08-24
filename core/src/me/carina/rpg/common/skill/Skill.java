@@ -6,6 +6,7 @@ import me.carina.rpg.common.Feature;
 import me.carina.rpg.common.file.AssetGroup;
 
 public class Skill extends Feature {
+    String name;
     public Skill(){} //for json
 
     @Override
@@ -21,6 +22,10 @@ public class Skill extends Feature {
     @Override
     public void tick() {
 
+    }
+
+    public String getName() {
+        return name;
     }
 
     public static class Def extends Feature.Def{

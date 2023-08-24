@@ -9,10 +9,6 @@ public class Units extends ArrayFeature<Unit>{
 
     public Units(){
         add(new Unit());
-        add(new Unit());
-        add(new Unit());
-        add(new Unit());
-        add(new Unit());
     }
 
     @Override
