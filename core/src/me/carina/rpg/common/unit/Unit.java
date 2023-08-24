@@ -8,6 +8,7 @@ import me.carina.rpg.common.unit.stat.Stat;
 import me.carina.rpg.common.unit.stat.Stats;
 
 public class Unit extends Feature {
+    String name = "";
     int x;
     int y;
     Equipments equipments = new Equipments();
@@ -48,6 +49,10 @@ public class Unit extends Feature {
         public void initFeature(Feature feature) {
 
         }
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Stats getStats() {
