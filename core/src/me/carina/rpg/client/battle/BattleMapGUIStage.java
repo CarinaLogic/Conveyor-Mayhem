@@ -22,8 +22,8 @@ public class BattleMapGUIStage extends GUIStage<BattleScreen> {
 
     @Override
     public void init(Table table) {
-        table.add().expandY();
+        table.add().expand();
         table.row();
-        table.add();
+        table.add(new UIBattleStatPanels(getScreen().map.units)).left();
     }
 }
