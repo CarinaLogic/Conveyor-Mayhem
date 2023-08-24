@@ -23,10 +23,6 @@ public class BattleMapGUIStage extends GUIStage {
     public void init(Table table) {
         table.add().expandY();
         table.row();
-        table.add(new UIStatsPanel()).left();
-        table.add(new UIStatsPanel()).left();
-        table.add(new UIStatsPanel()).left();
-        table.add(new UIStatsPanel()).left();
-        table.add(new UIStatsPanel()).left();
+        table.add();
     }
 }
