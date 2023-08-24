@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import me.carina.rpg.client.scenes.GameStage;
 import me.carina.rpg.common.world.map.CanvasActor;
 
-public class CanvasStage extends GameStage {
+public class CanvasStage extends GameStage<BaseScreen> {
     public CanvasStage(){
         super(new ScreenViewport());
         getRoot().setTouchable(Touchable.disabled);

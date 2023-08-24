@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import me.carina.rpg.Game;
 import me.carina.rpg.client.misc.CursorListener;
+import me.carina.rpg.client.scenes.BaseScreen;
 import me.carina.rpg.client.scenes.GUIStage;
 import me.carina.rpg.client.ui.*;
 import me.carina.rpg.common.file.AssetGroup;
@@ -17,7 +18,7 @@ import me.carina.rpg.common.file.Path;
 import me.carina.rpg.packets.C2STestPacket;
 import me.carina.rpg.packets.connection.Connection;
 
-public class BattleMapGUIStage extends GUIStage {
+public class BattleMapGUIStage extends GUIStage<BattleScreen> {
 
     @Override
     public void init(Table table) {

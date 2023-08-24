@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import me.carina.rpg.client.actions.TimedRepeatingAction;
 
-public abstract class GUIStage extends GameStage {
+public abstract class GUIStage<T extends BaseScreen> extends GameStage<T> {
     Table table;
     public GUIStage(){
         super(new ExtendViewport(256,256));

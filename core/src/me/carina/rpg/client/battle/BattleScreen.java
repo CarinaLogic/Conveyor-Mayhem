@@ -5,9 +5,15 @@ import me.carina.rpg.client.scenes.CanvasStage;
 import me.carina.rpg.common.battle.BattleMap;
 
 public class BattleScreen extends BaseScreen {
+    BattleMap map;
     BattleMapStage battleMapStage;
     CanvasStage actorStage;
     BattleMapGUIStage guiStage;
+
+    public BattleScreen(BattleMap map){
+        super();
+        this.map = map;
+    }
 
     @Override
     public void init() {
@@ -27,13 +33,5 @@ public class BattleScreen extends BaseScreen {
     @Override
     public boolean canChangeScreen() {
         return true;
-    }
-
-    public BattleMap getBattleMap(){
-        return battleMapStage.getBattleMap();
-    }
-
-    public void setBattleMap(BattleMap battleMap){
-        battleMapStage.setBattleMap(battleMap);
     }
 }

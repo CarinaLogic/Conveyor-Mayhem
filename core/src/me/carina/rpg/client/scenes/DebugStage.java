@@ -19,7 +19,7 @@ import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.Formatter;
 
-public class DebugStage extends GUIStage{
+public class DebugStage extends GUIStage<BaseScreen>{
     UILabel label;
     @Override
     public void init(Table table) {

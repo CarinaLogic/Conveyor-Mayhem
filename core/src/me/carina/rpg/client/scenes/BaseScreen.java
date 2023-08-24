@@ -7,12 +7,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.*;
-import com.badlogic.gdx.utils.reflect.ClassReflection;
 import me.carina.rpg.Game;
 import me.carina.rpg.client.Client;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public abstract class BaseScreen implements Screen {
     InputMultiplexer multiplexer = new InputMultiplexer();
@@ -33,12 +31,9 @@ public abstract class BaseScreen implements Screen {
         }
     }
 
-    public void queueInit(BiConsumer<BaseScreen,Client> func){
-        delayedInitFunctions.addLast(func);
-    }
-
-
-    public void addStage(GameStage stage){
+    public <T extends BaseScreen> void addStage(GameStage<T> stage){
+        //noinspection unchecked
+        stage.setScreen((T) this);
         stage.init();
         multiplexer.addProcessor(0,stage);
     }
