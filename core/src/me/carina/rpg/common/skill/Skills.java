@@ -6,6 +6,12 @@ import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.util.Array;
 
 public class Skills extends ArrayFeature<Skill> {
+    public Skills(){
+        add(new Skill());
+        add(new Skill());
+        add(new Skill());
+        add(new Skill());
+    }
     public boolean add(Skill skill){
         if (this.getArray().size >= 10) return false;
         super.add(skill);

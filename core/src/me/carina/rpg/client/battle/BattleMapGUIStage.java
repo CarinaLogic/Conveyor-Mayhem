@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
@@ -22,8 +23,11 @@ public class BattleMapGUIStage extends GUIStage<BattleScreen> {
 
     @Override
     public void init(Table table) {
-        table.add().expand();
+        table.add().height(64).expandX();
         table.row();
-        table.add(new UIBattleStatPanels(getScreen().map.units)).left();
+        table.add(getScreen().map.units.newDisplay(UIBattleSkillPanels.class)).center().right().expand();
+        table.add().width(64);
+        table.row();
+        table.add(getScreen().map.units.newDisplay(UIBattleStatPanels.class)).left();
     }
 }

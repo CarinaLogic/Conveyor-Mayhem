@@ -3,6 +3,7 @@ package me.carina.rpg.common.unit;
 import me.carina.rpg.common.*;
 import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.item.Equipments;
+import me.carina.rpg.common.skill.Skills;
 import me.carina.rpg.common.unit.stat.MaxStat;
 import me.carina.rpg.common.unit.stat.Stat;
 import me.carina.rpg.common.unit.stat.Stats;
@@ -11,6 +12,7 @@ public class Unit extends Feature {
     String name = "";
     int x;
     int y;
+    Skills skills = new Skills();
     Equipments equipments = new Equipments();
     Stats stats = new Stats();
     public UnitParts unitParts = new UnitParts();
@@ -49,6 +51,10 @@ public class Unit extends Feature {
         public void initFeature(Feature feature) {
 
         }
+    }
+
+    public Skills getSkills() {
+        return skills;
     }
 
     public String getName() {

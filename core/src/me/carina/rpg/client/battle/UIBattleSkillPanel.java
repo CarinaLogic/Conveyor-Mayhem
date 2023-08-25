@@ -1,6 +1,8 @@
 package me.carina.rpg.client.battle;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import me.carina.rpg.Game;
 import me.carina.rpg.client.ui.UITableView;
 import me.carina.rpg.client.ui.UIVerticalSelection;

@@ -19,6 +19,14 @@ public abstract class ArrayFeature<T extends Feature> extends Feature implements
         return array.get(index);
     }
 
+    public int indexIdentity(T item){
+        return array.indexOf(item,true);
+    }
+
+    public int index(T item){
+        return array.indexOf(item,false);
+    }
+
     @SafeVarargs
     public final void remove(T... item){
         array.remove(item);

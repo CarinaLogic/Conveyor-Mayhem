@@ -37,7 +37,6 @@ public abstract class BaseScreen implements Screen {
         stage.init();
         multiplexer.addProcessor(0,stage);
     }
-
     public CanvasStage getCanvas() {
         return null;
     }

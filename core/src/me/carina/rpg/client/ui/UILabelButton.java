@@ -15,11 +15,12 @@ import me.carina.rpg.common.file.Path;
 
 @Selectable
 public class UILabelButton extends TextButton{
+    CursorListener cursorListener;
     public UILabelButton(){
         super("", getPrefStyle());
         getLabel().setAlignment(Align.left);
         getLabelCell().left().expandX();
-        addListener(new CursorListener(){
+        cursorListener = new CursorListener(){
             @Override
             public void enter(InputEvent event) {
                 UILabelButton.this.enter();
@@ -29,7 +30,8 @@ public class UILabelButton extends TextButton{
             public void exit(InputEvent event) {
                 UILabelButton.this.exit();
             }
-        });
+        };
+        addListener(cursorListener);
     }
     public UILabelButton text(String text){
         setText(text);
@@ -43,6 +45,16 @@ public class UILabelButton extends TextButton{
     public UILabelButton color(Color color){
         setColor(color);
         return this;
+    }
+
+    public CursorListener getCursorListener() {
+        return cursorListener;
+    }
+
+    public void setCursorListener(CursorListener cursorListener) {
+        removeListener(this.cursorListener);
+        addListener(cursorListener);
+        this.cursorListener = cursorListener;
     }
 
     public static TextButtonStyle getPrefStyle(){
