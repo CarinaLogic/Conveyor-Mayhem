@@ -28,6 +28,7 @@ public abstract class Feature implements Identifiable, Defined, AssetGrouped, Di
             Object o = c.newInstance(this);
             //noinspection unchecked
             T t = (T) o;
+            removeDisplay(type);
             displays.add(t);
             return t;
         } catch (ReflectionException e) {
@@ -47,6 +48,14 @@ public abstract class Feature implements Identifiable, Defined, AssetGrouped, Di
             }
         }
         return null;
+    }
+
+    public <T extends Actor> void removeDisplay(Class<T> type){
+        for (Actor display : displays) {
+            if (ClassReflection.isInstance(type, display)){
+                displays.remove(display);
+            }
+        }
     }
 
     public void remove(){

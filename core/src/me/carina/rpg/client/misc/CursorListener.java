@@ -13,38 +13,36 @@ import me.carina.rpg.common.util.Array;
 public class CursorListener extends InputListener {
     @Override
     public boolean keyDown(InputEvent event, int keycode) {
-        if (keycode == Input.Keys.H) enter(event);
-        else if (keycode == Input.Keys.G) exit(event);
+        if (keycode == Input.Keys.H) return enter(event);
+        else if (keycode == Input.Keys.G) return exit(event);
         else return false;
-        return true;
     }
 
     @Override
     public boolean keyTyped(InputEvent event, char character) {
-        if (character == 'w') keyUp(event);
-        else if (character == 's') keyDown(event);
-        else if (character == 'a') keyLeft(event);
-        else if (character == 'd') keyRight(event);
+        if (character == 'w') return up(event);
+        else if (character == 's') return down(event);
+        else if (character == 'a') return left(event);
+        else if (character == 'd')return right(event);
         else return false;
-        return true;
     }
 
-    public void enter(InputEvent event){
-
+    public boolean enter(InputEvent event){
+        return false;
     }
 
-    public void exit(InputEvent event){
-
+    public boolean exit(InputEvent event){
+        return false;
     }
 
-    public void keyUp(InputEvent event){
+    public boolean up(InputEvent event){
         Group root = event.getStage().getRoot();
         Actor actor = event.getTarget();
         float x = actor.getX(Align.top);
         float y = actor.getY(Align.top);
         Actor bestCandidate = actor;
         float bestScore = 10000000;
-        for (Actor child : getAllChildren(root)) {
+        for (Actor child : getAllSelectableChildren(root)) {
             float dx = child.getX(Align.bottom);
             float dy = child.getY(Align.bottom);
             float score = 0;
@@ -59,15 +57,16 @@ public class CursorListener extends InputListener {
             }
         }
         actor.getStage().setKeyboardFocus(bestCandidate);
+        return true;
     }
-    public void keyDown(InputEvent event){
+    public boolean down(InputEvent event){
         Group root = event.getStage().getRoot();
         Actor actor = event.getTarget();
         float x = actor.getX(Align.bottom);
         float y = actor.getY(Align.bottom);
         Actor bestCandidate = actor;
         float bestScore = 10000000;
-        for (Actor child : getAllChildren(root)) {
+        for (Actor child : getAllSelectableChildren(root)) {
             float dx = child.getX(Align.top);
             float dy = child.getY(Align.top);
             float score = 0;
@@ -82,15 +81,16 @@ public class CursorListener extends InputListener {
             }
         }
         actor.getStage().setKeyboardFocus(bestCandidate);
+        return true;
     }
-    public void keyLeft(InputEvent event){
+    public boolean left(InputEvent event){
         Group root = event.getStage().getRoot();
         Actor actor = event.getTarget();
         float x = actor.getX(Align.left);
         float y = actor.getY(Align.left);
         Actor bestCandidate = actor;
         float bestScore = 10000000;
-        for (Actor child : getAllChildren(root)) {
+        for (Actor child : getAllSelectableChildren(root)) {
             float dx = child.getX(Align.right);
             float dy = child.getY(Align.right);
             float score = 0;
@@ -105,15 +105,16 @@ public class CursorListener extends InputListener {
             }
         }
         actor.getStage().setKeyboardFocus(bestCandidate);
+        return true;
     }
-    public void keyRight(InputEvent event){
+    public boolean right(InputEvent event){
         Group root = event.getStage().getRoot();
         Actor actor = event.getTarget();
         float x = actor.getX(Align.right);
         float y = actor.getY(Align.right);
         Actor bestCandidate = actor;
         float bestScore = 10000000;
-        for (Actor child : getAllChildren(root)) {
+        for (Actor child : getAllSelectableChildren(root)) {
             float dx = child.getX(Align.left);
             float dy = child.getY(Align.left);
             float score = 0;
@@ -128,8 +129,9 @@ public class CursorListener extends InputListener {
             }
         }
         actor.getStage().setKeyboardFocus(bestCandidate);
+        return true;
     }
-    public static Array<Actor> getAllChildren(Actor actor){
+    public static Array<Actor> getAllSelectableChildren(Actor actor){
         Array<Actor> array = new Array<>();
         if (ClassReflection.getDeclaredAnnotation(actor.getClass(), Selectable.class) != null){
             array.add(actor);
@@ -137,7 +139,7 @@ public class CursorListener extends InputListener {
         if (actor instanceof Group) {
             Group group = (Group) actor;
             for (Actor child : group.getChildren()) {
-                array.addAll(getAllChildren(child));
+                array.addAll(getAllSelectableChildren(child));
             }
         }
         return array;

@@ -22,25 +22,28 @@ public class UILabelButton extends TextButton{
         getLabelCell().left().expandX();
         cursorListener = new CursorListener(){
             @Override
-            public void enter(InputEvent event) {
-                UILabelButton.this.enter();
+            public boolean enter(InputEvent event) {
+                return UILabelButton.this.enter();
             }
 
             @Override
-            public void exit(InputEvent event) {
-                UILabelButton.this.exit();
+            public boolean exit(InputEvent event) {
+                return UILabelButton.this.exit();
             }
         };
-        addListener(cursorListener);
+        addCaptureListener(cursorListener);
     }
     public UILabelButton text(String text){
         setText(text);
         return this;
     }
-    public void enter(){
+    public boolean enter(){
         toggle();
+        return true;
     }
-    public void exit(){}
+    public boolean exit(){
+        return false;
+    }
 
     public UILabelButton color(Color color){
         setColor(color);
@@ -69,10 +72,12 @@ public class UILabelButton extends TextButton{
     public boolean isOver() {
         boolean s = super.isOver();
         if (s) return true;
-        Stage stage = getStage();
-        if (stage == null) return false;
-        Actor f = stage.getKeyboardFocus();
-        if (f == null) return false;
-        return f == this;
+        Group parent = getParent();
+        if (parent == null) return false;
+        if (parent instanceof CursorPositionHolder) {
+            CursorPositionHolder holder = (CursorPositionHolder) parent;
+            return holder.getSelected() == this;
+        }
+        return false;
     }
 }

@@ -16,23 +16,13 @@ public class UIBattleSkillEntry extends UILabelButton implements Display<Skill> 
         text(skill.getName());
         setCursorListener(new CursorListener(){
             @Override
-            public void enter(InputEvent event) {
-                UIBattleSkillEntry.this.enter();
+            public boolean enter(InputEvent event) {
+                return UIBattleSkillEntry.this.enter();
             }
 
             @Override
-            public void exit(InputEvent event) {
-                UIBattleSkillEntry.this.exit();
-            }
-
-            @Override
-            public void keyLeft(InputEvent event) {
-                ((UIBattleSkillPanels) getParent().getParent()).goLeft();
-            }
-
-            @Override
-            public void keyRight(InputEvent event) {
-                ((UIBattleSkillPanels) getParent().getParent()).goRight();
+            public boolean exit(InputEvent event) {
+                return UIBattleSkillEntry.this.exit();
             }
         });
     }
