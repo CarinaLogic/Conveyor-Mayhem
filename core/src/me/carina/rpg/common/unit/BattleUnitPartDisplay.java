@@ -6,26 +6,21 @@ import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import me.carina.rpg.Game;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.FlatImageDisplay;
-import me.carina.rpg.common.battle.BattleMap;
-import me.carina.rpg.common.battle.BattleMapDisplay;
-import me.carina.rpg.common.battle.Tiles;
-import me.carina.rpg.common.battle.TilesDisplay;
 import me.carina.rpg.common.util.Palette;
 
-public class UnitPartDisplay extends FlatImageDisplay implements Display<UnitPart> {
+public class BattleUnitPartDisplay extends FlatImageDisplay implements Display<UnitPart> {
     UnitPart unitPart;
     TextureRegion[][] regions;
     Palette palette;
     int spriteWidth = 1;
     int spriteHeight = 1;
-    public UnitPartDisplay(UnitPart unitPart){
+    public BattleUnitPartDisplay(UnitPart unitPart){
         this.unitPart = unitPart;
     }
 
@@ -47,7 +42,7 @@ public class UnitPartDisplay extends FlatImageDisplay implements Display<UnitPar
             spriteHeight = pixmap.getHeight() / 32;
             UnitPart part  = Game.getInstance().getContext().get(UnitParts.class).getPart(BodyType.base);
             if (part.getDisplays().isEmpty()) return;
-            Palette basePalette = part.getDisplay(UnitPartDisplay.class).getPalette();
+            Palette basePalette = part.getDisplay(BattleUnitPartDisplay.class).getPalette();
             if (basePalette != null){
                 basePalette.recolor(pixmap);
             }
@@ -113,7 +108,7 @@ public class UnitPartDisplay extends FlatImageDisplay implements Display<UnitPar
     public boolean shouldFlip(){
         Vector3 camDir = getStage().getCamera().direction.cpy();
         float camRot = (float) Math.atan2(camDir.y,camDir.x);
-        float delta = camRot - Game.getInstance().getContext().get(Unit.class).getDisplay(UnitDisplay.class).getFacing();
+        float delta = camRot - Game.getInstance().getContext().get(Unit.class).getDisplay(BattleUnitDisplay.class).getFacing();
         return (delta+2*Math.PI) % (2*Math.PI) < Math.PI;
     }
 }

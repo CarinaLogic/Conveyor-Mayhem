@@ -1,19 +1,16 @@
 package me.carina.rpg.common.unit;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
-import com.badlogic.gdx.utils.Align;
 import me.carina.rpg.Game;
 import me.carina.rpg.common.Display;
 
-public class UnitDisplay extends Group implements Display<Unit> {
+public class BattleUnitDisplay extends Group implements Display<Unit> {
     Unit unit;
     float facing = 0;
-    public UnitDisplay(Unit unit){
+    public BattleUnitDisplay(Unit unit){
         this.unit = unit;
-        addActor(unit.unitParts.newDisplay(UnitPartsDisplay.class));
+        addActor(unit.unitParts.newDisplay(BattleUnitPartsDisplay.class));
     }
 
     @Override
