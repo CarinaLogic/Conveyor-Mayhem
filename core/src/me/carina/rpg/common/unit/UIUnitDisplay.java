@@ -2,6 +2,7 @@ package me.carina.rpg.common.unit;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import me.carina.rpg.Game;
 import me.carina.rpg.common.Display;
@@ -11,7 +12,7 @@ public class UIUnitDisplay extends Stack implements Display<Unit> {
     boolean flip;
     public UIUnitDisplay(Unit unit){
         this.unit = unit;
-        addActor(unit.unitParts.newDisplay(UIUnitPartsDisplay.class));
+        add(unit.unitParts.newDisplay(UIUnitPartsDisplay.class));
     }
 
     @Override

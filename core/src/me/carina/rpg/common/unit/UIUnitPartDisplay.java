@@ -27,7 +27,7 @@ public class UIUnitPartDisplay extends Image implements Display<UnitPart> {
         setScaling(Scaling.fill);
         setAlign(Align.topLeft);
     }
-
+    @Override
     public void draw(Batch batch, float parentAlpha) {
         Game.getInstance().getContext().add(getFeature());
         if (regions == null && !unitPart.bodyType.equals(BodyType.base)){

@@ -2,6 +2,7 @@ package me.carina.rpg.client.battle;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import me.carina.rpg.Game;
 import me.carina.rpg.client.misc.UIColor;
 import me.carina.rpg.client.ui.UILabel;
@@ -24,13 +25,17 @@ public class UIBattleStatPanel extends UITableView implements Display<Unit> {
     UISpBar spBar;
     public UIBattleStatPanel(Unit unit){
         this.unit = unit;
+        setClip(true);
         nameLabel = new UILabel();
         nameLabel.addAction(Actions.forever(Actions.run(() -> nameLabel.text(
                 unit.getName()
         ))));
         add(nameLabel).left().colspan(1);
+        Table unitClip = new Table();
+        unitClip.setClip(true);
+        add(unitClip).padTop(-3).fill().right();
         unitDisplay = unit.newDisplay(UIUnitDisplay.class);
-        add(unitDisplay);
+        unitClip.add(unitDisplay).right();
         row();
         add(new UILabel().text("HP")).padRight(1);
         hpBar = new UIHpBar();
