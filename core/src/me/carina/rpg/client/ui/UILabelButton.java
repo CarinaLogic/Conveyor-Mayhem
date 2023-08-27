@@ -9,29 +9,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
 import me.carina.rpg.Game;
-import me.carina.rpg.client.misc.CursorListener;
 import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.file.Path;
 
 @Selectable
-public class UILabelButton extends TextButton{
-    CursorListener cursorListener;
+public class UILabelButton extends TextButton implements CursorHandler{
     public UILabelButton(){
         super("", getPrefStyle());
         getLabel().setAlignment(Align.left);
         getLabelCell().left().expandX();
-        cursorListener = new CursorListener(){
-            @Override
-            public boolean enter(InputEvent event) {
-                return UILabelButton.this.enter();
-            }
-
-            @Override
-            public boolean exit(InputEvent event) {
-                return UILabelButton.this.exit();
-            }
-        };
-        addCaptureListener(cursorListener);
     }
     public UILabelButton text(String text){
         setText(text);
@@ -48,16 +34,6 @@ public class UILabelButton extends TextButton{
     public UILabelButton color(Color color){
         setColor(color);
         return this;
-    }
-
-    public CursorListener getCursorListener() {
-        return cursorListener;
-    }
-
-    public void setCursorListener(CursorListener cursorListener) {
-        removeListener(this.cursorListener);
-        addListener(cursorListener);
-        this.cursorListener = cursorListener;
     }
 
     public static TextButtonStyle getPrefStyle(){

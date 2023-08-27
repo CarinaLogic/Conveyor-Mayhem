@@ -14,17 +14,6 @@ public class UIBattleSkillEntry extends UILabelButton implements Display<Skill> 
         super();
         this.skill = skill;
         text(skill.getName());
-        setCursorListener(new CursorListener(){
-            @Override
-            public boolean enter(InputEvent event) {
-                return UIBattleSkillEntry.this.enter();
-            }
-
-            @Override
-            public boolean exit(InputEvent event) {
-                return UIBattleSkillEntry.this.exit();
-            }
-        });
     }
 
     @Override

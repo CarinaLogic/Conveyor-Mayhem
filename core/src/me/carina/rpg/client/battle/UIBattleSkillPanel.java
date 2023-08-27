@@ -10,15 +10,16 @@ import me.carina.rpg.common.ArrayDisplayHandler;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.Feature;
 import me.carina.rpg.common.skill.Skills;
+import me.carina.rpg.common.unit.Unit;
 
-public class UIBattleSkillPanel extends UIVerticalSelection implements Display<Skills> {
-    Skills skills;
+public class UIBattleSkillPanel extends UIVerticalSelection implements Display<Unit> {
+    Unit unit;
     ArrayDisplayHandler handler = new ArrayDisplayHandler(
             this, feature -> add(feature.newDisplay(UIBattleSkillEntry.class))
     ) {
         @Override
         public Iterable<? extends Feature> getIterable() {
-            return skills;
+            return unit.getSkills();
         }
     };
     @Override
@@ -27,11 +28,11 @@ public class UIBattleSkillPanel extends UIVerticalSelection implements Display<S
         handler.tick();
         super.draw(batch, parentAlpha);
     }
-    public UIBattleSkillPanel(Skills skills){
-        this.skills = skills;
+    public UIBattleSkillPanel(Unit unit){
+        this.unit = unit;
     }
     @Override
-    public Skills getFeature() {
-        return skills;
+    public Unit getFeature() {
+        return unit;
     }
 }

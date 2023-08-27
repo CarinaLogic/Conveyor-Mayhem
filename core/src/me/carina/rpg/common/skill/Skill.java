@@ -6,7 +6,7 @@ import me.carina.rpg.common.Feature;
 import me.carina.rpg.common.file.AssetGroup;
 
 public class Skill extends Feature {
-    String name;
+    String name = "bruh moment";
     public Skill(){} //for json
 
     @Override

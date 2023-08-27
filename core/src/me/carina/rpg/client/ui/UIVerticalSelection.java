@@ -6,10 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-public class UIVerticalSelection extends UIVerticalListView implements CursorPositionHolder{
+public class UIVerticalSelection extends UIVerticalListView implements CursorPositionHolder, CursorHandler{
     ButtonGroup<Button> group;
-    int position;
-    boolean active;
     public UIVerticalSelection(){
         super();
         group = new ButtonGroup<>();
@@ -31,21 +29,21 @@ public class UIVerticalSelection extends UIVerticalListView implements CursorPos
     }
 
     @Override
-    public boolean isActive() {
-        return active;
+    public boolean goUp() {
+        position--;
+        if (position < 0) position = group.getButtons().size;
+        return true;
     }
 
     @Override
-    public Actor getSelected() {
-        return group.getButtons().get(position);
+    public boolean goDown() {
+        position++;
+        if (position >= group.getButtons().size) position = 0;
+        return true;
     }
 
     @Override
-    public void setSelected(Actor actor) {
-        if (actor instanceof Button) {
-            Button button = (Button) actor;
-            int i = group.getButtons().indexOf(button,true);
-            if (i != 1) position = i;
-        }
+    public boolean enter() {
+        return CursorHandler.super.enter();
     }
 }

@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import me.carina.rpg.client.misc.CursorListener;
 import me.carina.rpg.client.ui.CursorHandler;
+import me.carina.rpg.client.ui.CursorPositionHolder;
 import me.carina.rpg.client.ui.Selectable;
 
 import java.util.function.Consumer;
@@ -36,55 +37,57 @@ public abstract class GameStage<T extends BaseScreen> extends Stage{
     }
 
     public CursorListener newListener(){
+        //Cursor cannot be handled by normal event propagation cuz multiple actors that might not be on the same branch as keyboardFocus can handle the event
         return new CursorListener(){
             @Override
             public boolean left(InputEvent event) {
-                if (recursiveRun(getRoot(), CursorHandler::left)) return true;
-                else return super.left(event);
+                return recursiveRun(getRoot(), CursorHandler::goLeft);
             }
 
             @Override
             public boolean right(InputEvent event) {
-                if (recursiveRun(getRoot(), CursorHandler::right)) return true;
-                else return super.right(event);
+                return recursiveRun(getRoot(), CursorHandler::goRight);
             }
 
             @Override
             public boolean up(InputEvent event) {
-                if (recursiveRun(getRoot(), CursorHandler::up)) return true;
-                else return super.up(event);
+                return recursiveRun(getRoot(), CursorHandler::goUp);
             }
 
             @Override
             public boolean down(InputEvent event) {
-                if (recursiveRun(getRoot(), CursorHandler::down)) return true;
-                else return super.down(event);
+                 return recursiveRun(getRoot(), CursorHandler::goDown);
             }
 
             @Override
             public boolean enter(InputEvent event) {
-                if (recursiveRun(getRoot(), CursorHandler::enter)) return true;
-                else return super.enter(event);
+                return recursiveRun(getRoot(), CursorHandler::enter);
             }
 
             @Override
             public boolean exit(InputEvent event) {
-                if (recursiveRun(getRoot(), CursorHandler::exit)) return true;
-                else return super.exit(event);
+                return recursiveRun(getRoot(), CursorHandler::exit);
             }
         };
     }
 
     public boolean recursiveRun(Actor actor, Function<CursorHandler,Boolean> func){
         boolean retValue = false;
+        if (actor == null) return false;
         if (actor instanceof CursorHandler) {
             CursorHandler handler = (CursorHandler) actor;
             retValue = func.apply(handler);
         }
         if (actor instanceof Group) {
             Group group = (Group) actor;
-            for (Actor child : group.getChildren()) {
-                retValue = retValue || recursiveRun(child,func);
+            if (group instanceof CursorPositionHolder) {
+                CursorPositionHolder holder = (CursorPositionHolder) group;
+                recursiveRun(holder.getSelected(),func);
+            }
+            else {
+                for (Actor child : group.getChildren()) {
+                    retValue = retValue || recursiveRun(child, func);
+                }
             }
         }
         return retValue;
