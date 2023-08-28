@@ -54,11 +54,9 @@ public abstract class FlatImageDisplay extends ImageDisplay{
     @Override
     protected void drawDebugBounds(ShapeRenderer shapes) {
         if (!getDebug()) return;
-        shapes.end();
+        shapes.flush();
         Matrix4 proj = shapes.getProjectionMatrix().cpy();
-        Matrix4 tran = shapes.getTransformMatrix().cpy();
         shapes.setProjectionMatrix(Game.getClient().getScreen().getCanvas().getCamera().combined.cpy());
-        shapes.updateMatrices();
         setPosition(getDisplayX(),getDisplayY(),getAlignment());
         setSize(getDisplayWidth(),getDisplayHeight());
         Vector3 camAim = getStage().getCamera().direction;
@@ -77,15 +75,10 @@ public abstract class FlatImageDisplay extends ImageDisplay{
         float sx = l.x;
         float sy = l.y - sh * alignY / getDisplayHeight();
         setRotation(originalRot);
-        shapes.begin();
         shapes.set(ShapeRenderer.ShapeType.Line);
         if (getStage() != null) shapes.setColor(getStage().getDebugColor());
         shapes.rect(sx, Gdx.graphics.getHeight() - sy, getOriginX(), getOriginY(), sw, sh,
                 getScaleX(), getScaleY(), getRotation());
-        shapes.end();
         shapes.setProjectionMatrix(proj.cpy());
-        shapes.setTransformMatrix(tran);
-        shapes.updateMatrices();
-        shapes.begin();
     }
 }

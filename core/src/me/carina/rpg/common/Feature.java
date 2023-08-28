@@ -47,7 +47,7 @@ public abstract class Feature implements Identifiable, Defined, AssetGrouped, Di
                 return (T) display;
             }
         }
-        return null;
+        return newDisplay(type);
     }
 
     public <T extends Actor> void removeDisplay(Class<T> type){

@@ -25,7 +25,7 @@ public class BattleMapGUIStage extends GUIStage<BattleScreen> {
     public void init(Table table) {
         table.add().height(64).expandX();
         table.row();
-        table.add(getScreen().map.units.newDisplay(UIBattleSkillPanels.class)).center().right().expand().padRight(64);
+        table.add(getScreen().map.units.newDisplay(UIBattleSkillPanels.class)).center().right().expand().padRight(32);
         table.row();
         table.add(getScreen().map.units.newDisplay(UIBattleStatPanels.class)).left();
     }

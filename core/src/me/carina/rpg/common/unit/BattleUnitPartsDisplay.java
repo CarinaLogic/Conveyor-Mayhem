@@ -28,7 +28,7 @@ public class BattleUnitPartsDisplay extends Group implements Display<UnitParts> 
         unitParts.getArray().sort(Comparator.comparingInt(p -> p.bodyType.ordinal()));
         handler.tick();
         for (int i = 0; i < unitParts.size(); i++) {
-            if (unitParts.getDisplay(BattleUnitPartDisplay.class) != null) unitParts.get(i).getDisplay(BattleUnitPartDisplay.class).setZIndex(i);
+            unitParts.get(i).getDisplay(BattleUnitPartDisplay.class).setZIndex(i);
         }
         super.draw(batch, parentAlpha);
     }

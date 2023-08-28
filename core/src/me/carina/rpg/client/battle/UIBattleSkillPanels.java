@@ -2,7 +2,10 @@ package me.carina.rpg.client.battle;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import me.carina.rpg.Game;
 import me.carina.rpg.client.ui.CursorHandler;
 import me.carina.rpg.client.ui.CursorPositionHolder;
@@ -10,7 +13,7 @@ import me.carina.rpg.common.Display;
 import me.carina.rpg.common.unit.Unit;
 import me.carina.rpg.common.unit.Units;
 
-public class UIBattleSkillPanels extends Container<UIBattleSkillPanel> implements Display<Units>, CursorHandler {
+public class UIBattleSkillPanels extends Stack implements Display<Units>, CursorHandler {
     Units units;
     Unit currentSelection = null;
     public UIBattleSkillPanels(Units units){
@@ -26,7 +29,7 @@ public class UIBattleSkillPanels extends Container<UIBattleSkillPanel> implement
     public boolean goLeft(){
         if (currentSelection == null) {
             currentSelection = units.get(units.size()-1);
-            setActor(currentSelection.newDisplay(UIBattleSkillPanel.class));
+            placeUnitOnTop(currentSelection);
             return true;
         }
         if (!units.contains(currentSelection)) currentSelection = units.get(0);
@@ -34,17 +37,17 @@ public class UIBattleSkillPanels extends Container<UIBattleSkillPanel> implement
         index--;
         if (index < 0) {
             currentSelection = null;
-            setActor(null);
+            clearChildren();
             return true;
         }
         currentSelection = units.get(index);
-        setActor(currentSelection.newDisplay(UIBattleSkillPanel.class));
+        placeUnitOnTop(currentSelection);
         return true;
     }
     public boolean goRight(){
         if (currentSelection == null) {
             currentSelection = units.get(0);
-            setActor(currentSelection.newDisplay(UIBattleSkillPanel.class));
+            placeUnitOnTop(currentSelection);
             return true;
         }
         if (!units.contains(currentSelection)) currentSelection = units.get(0);
@@ -52,14 +55,18 @@ public class UIBattleSkillPanels extends Container<UIBattleSkillPanel> implement
         index++;
         if (index >= units.size()) {
             currentSelection = null;
-            setActor(null);
+            clearChildren();
             return true;
         }
         currentSelection = units.get(index);
-        setActor(currentSelection.newDisplay(UIBattleSkillPanel.class));
+        placeUnitOnTop(currentSelection);
         return true;
     }
-
+    public void placeUnitOnTop(Unit unit){
+        UIBattleSkillPanel panel = unit.getDisplay(UIBattleSkillPanel.class);
+        removeActor(panel);
+        addActor(panel);
+    }
     @Override
     public Units getFeature() {
         return units;

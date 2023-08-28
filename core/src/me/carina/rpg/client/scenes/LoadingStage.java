@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class LoadingStage extends GameStage{
+public class LoadingStage extends GameStage<LoadingScreen>{
     Table table;
     Image image;
 
