@@ -31,7 +31,7 @@ public class UIVerticalSelection extends UIVerticalListView implements CursorPos
     @Override
     public boolean goUp() {
         position--;
-        if (position < 0) position = group.getButtons().size;
+        if (position < 0) position = group.getButtons().size-1;
         return true;
     }
 

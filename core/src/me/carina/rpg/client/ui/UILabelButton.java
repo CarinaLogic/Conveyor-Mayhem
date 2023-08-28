@@ -1,6 +1,7 @@
 package me.carina.rpg.client.ui;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -19,6 +20,14 @@ public class UILabelButton extends TextButton implements CursorHandler{
         getLabel().setAlignment(Align.left);
         getLabelCell().left().expandX();
     }
+
+    @Override
+    protected Label newLabel(String text, Label.LabelStyle style) {
+        UILabel label = new UILabel();
+        label.setStyle(style);
+        return label.text(text);
+    }
+
     public UILabelButton text(String text){
         setText(text);
         return this;

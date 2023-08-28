@@ -20,13 +20,7 @@ public abstract class GUIStage<T extends BaseScreen> extends GameStage<T> {
         table.setTouchable(Touchable.childrenOnly);
         table.setFillParent(true);
         init(table);
-        setDebugAll(true);
     }
 
     public abstract void init(Table table);
-
-    public <T extends Actor> Cell<T> add(T actor){
-        return table.add(actor);
-    }
-
 }
