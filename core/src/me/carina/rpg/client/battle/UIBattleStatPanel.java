@@ -2,6 +2,8 @@ package me.carina.rpg.client.battle;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import me.carina.rpg.Game;
 import me.carina.rpg.client.misc.UIColor;
@@ -17,7 +19,7 @@ import me.carina.rpg.common.unit.stat.HPStat;
 import me.carina.rpg.common.unit.stat.SPMaxStat;
 import me.carina.rpg.common.unit.stat.SPStat;
 
-public class UIBattleStatPanel extends UITableView implements Display<Unit> {
+public class UIBattleStatPanel extends Stack implements Display<Unit> {
     Unit unit;
     UILabel nameLabel;
     UIUnitDisplay unitDisplay;
@@ -25,31 +27,45 @@ public class UIBattleStatPanel extends UITableView implements Display<Unit> {
     UISpBar spBar;
     public UIBattleStatPanel(Unit unit){
         this.unit = unit;
-        setClip(true);
-        nameLabel = new UILabel();
-        nameLabel.addAction(Actions.forever(Actions.run(() -> nameLabel.text(
-                unit.getName()
-        ))));
-        add(nameLabel).left().colspan(1);
-        Table unitClip = new Table();
-        unitClip.setClip(true);
-        add(unitClip).padTop(-3).fill().right();
-        unitDisplay = unit.newDisplay(UIUnitDisplay.class);
-        unitClip.add(unitDisplay).right();
-        row();
-        add(new UILabel().text("HP")).padRight(1);
-        hpBar = new UIHpBar();
-        hpBar.addAction(Actions.forever(Actions.run(() -> hpBar.value(
-                unit.getStats().getStat(HPStat.class).get() * 100 /
-                        unit.getStats().getStat(HPMaxStat.class).get()))));
-        add(hpBar).expandX().fillX().colspan(1);
-        row();
-        add(new UILabel().text("SP")).padRight(1);
-        spBar = new UISpBar();
-        spBar.addAction(Actions.forever(Actions.run(() -> spBar.value(
-                unit.getStats().getStat(SPStat.class).get() * 100 /
-                        unit.getStats().getStat(SPMaxStat.class).get()))));
-        add(spBar).expandX().fillX().colspan(1);
+        setSize(72,48);
+        {
+            UITableView tableView = new UITableView();
+            add(tableView);
+            {
+                nameLabel = new UILabel();
+                nameLabel.addAction(Actions.forever(Actions.run(() -> nameLabel.text(
+                        unit.getName()
+                ))));
+                tableView.add(nameLabel).left().colspan(2);
+            }
+            tableView.row();
+            {
+                tableView.add(new UILabel().text("HP")).padRight(1);
+                hpBar = new UIHpBar();
+                hpBar.addAction(Actions.forever(Actions.run(() -> hpBar.value(
+                        unit.getStats().getStat(HPStat.class).get() * 100 /
+                                unit.getStats().getStat(HPMaxStat.class).get()))));
+                tableView.add(hpBar).expandX().fillX();
+            }
+            tableView.row();
+            {
+                tableView.add(new UILabel().text("SP")).padRight(1);
+                spBar = new UISpBar();
+                spBar.addAction(Actions.forever(Actions.run(() -> spBar.value(
+                        unit.getStats().getStat(SPStat.class).get() * 100 /
+                                unit.getStats().getStat(SPMaxStat.class).get()))));
+                tableView.add(spBar).expandX().fillX();
+            }
+        }
+        {
+            Table unitContainer = new Table();
+            add(unitContainer);
+            Table unitTable = new Table();
+            unitTable.setClip(true);
+            unitContainer.add(unitTable).expand().top().right().size(32, 22);
+            unitDisplay = unit.newDisplay(UIUnitDisplay.class);
+            unitTable.add(unitDisplay).top().right();
+        }
     }
 
     @Override

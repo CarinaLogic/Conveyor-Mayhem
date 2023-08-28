@@ -9,7 +9,7 @@ import me.carina.rpg.common.unit.stat.Stat;
 import me.carina.rpg.common.unit.stat.Stats;
 
 public class Unit extends Feature {
-    String name = "LongLongName";
+    String name = "Alice";
     int x;
     int y;
     Skills skills = new Skills();
