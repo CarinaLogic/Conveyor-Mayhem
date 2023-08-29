@@ -12,6 +12,7 @@ import me.carina.rpg.common.file.Path;
 public class UITableView extends Table{
     public UITableView() {
         pad(6);
+        setTransform(true);
         setBackground(Game.getClient().getAssets().get(new Path("core", AssetGroup.ui, "frame"), NinePatchDrawable.class));
     }
 }

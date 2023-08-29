@@ -30,6 +30,7 @@ public class UIBattleStatPanel extends Stack implements Display<Unit> {
     boolean selected = false;
     public UIBattleStatPanel(Unit unit){
         this.unit = unit;
+        setTransform(true);
         {
             tableView = new UITableView();
             add(tableView);
@@ -79,11 +80,11 @@ public class UIBattleStatPanel extends Stack implements Display<Unit> {
     public void draw(Batch batch, float parentAlpha) {
         Game.getInstance().getContext().add(getFeature());
         if (Game.getClient().getContext().get(BattleMapGUIStage.class).getSelectedUnit() == unit && !selected){
-            setSize(96,72);
+            addAction(Actions.scaleTo(1.3f,1.3f,0.1f));
             selected = true;
         }
         else if (Game.getClient().getContext().get(BattleMapGUIStage.class).getSelectedUnit() != unit && selected){
-            setSize(72,48);
+            addAction(Actions.scaleTo(1f,1f,0.1f));
             selected = false;
         }
         super.draw(batch, parentAlpha);

@@ -11,7 +11,7 @@ import me.carina.rpg.common.unit.Units;
 public class UIBattleStatPanels extends Table implements Display<Units> {
     Units units;
     ArrayDisplayHandler handler = new ArrayDisplayHandler(
-            this, feature -> add(feature.newDisplay(UIBattleStatPanel.class))
+            this, feature -> add(feature.newDisplay(UIBattleStatPanel.class)).size(72,48)
     ) {
         @Override
         public Iterable<? extends Feature> getIterable() {
