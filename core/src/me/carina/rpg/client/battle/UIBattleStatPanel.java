@@ -2,6 +2,7 @@ package me.carina.rpg.client.battle;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -20,16 +21,17 @@ import me.carina.rpg.common.unit.stat.SPMaxStat;
 import me.carina.rpg.common.unit.stat.SPStat;
 
 public class UIBattleStatPanel extends Stack implements Display<Unit> {
+    UITableView tableView;
     Unit unit;
     UILabel nameLabel;
     UIUnitDisplay unitDisplay;
     UIHpBar hpBar;
     UISpBar spBar;
+    boolean selected = false;
     public UIBattleStatPanel(Unit unit){
         this.unit = unit;
-        setSize(72,48);
         {
-            UITableView tableView = new UITableView();
+            tableView = new UITableView();
             add(tableView);
             {
                 nameLabel = new UILabel();
@@ -76,8 +78,14 @@ public class UIBattleStatPanel extends Stack implements Display<Unit> {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         Game.getInstance().getContext().add(getFeature());
-        if (Game.getClient().getContext().get(BattleMapGUIStage.class).getSelectedUnit() == unit) setScale(1.3f);
-        else setScale(1f);
+        if (Game.getClient().getContext().get(BattleMapGUIStage.class).getSelectedUnit() == unit && !selected){
+            setSize(96,72);
+            selected = true;
+        }
+        else if (Game.getClient().getContext().get(BattleMapGUIStage.class).getSelectedUnit() != unit && selected){
+            setSize(72,48);
+            selected = false;
+        }
         super.draw(batch, parentAlpha);
     }
 
@@ -86,16 +94,6 @@ public class UIBattleStatPanel extends Stack implements Display<Unit> {
             super();
             color(UIColor.hp);
         }
-    }
-
-    @Override
-    public float getPrefWidth() {
-        return 72;
-    }
-
-    @Override
-    public float getPrefHeight() {
-        return 48;
     }
 
     public static class UISpBar extends UIProgressBar{
