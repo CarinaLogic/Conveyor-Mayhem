@@ -7,4 +7,5 @@ public interface CursorHandler {
     default boolean goDown(){return false;}
     default boolean enter(){return false;}
     default boolean exit(){return false;}
+    default int priority(){return 0;}
 }

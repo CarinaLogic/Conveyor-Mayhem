@@ -15,7 +15,6 @@ import me.carina.rpg.common.unit.Units;
 
 public class UIBattleSkillPanels extends Stack implements Display<Units>, CursorHandler {
     Units units;
-    Unit currentSelection = null;
     public UIBattleSkillPanels(Units units){
         this.units = units;
     }
@@ -23,50 +22,21 @@ public class UIBattleSkillPanels extends Stack implements Display<Units>, Cursor
     @Override
     public void draw(Batch batch, float parentAlpha) {
         Game.getInstance().getContext().add(getFeature());
+        placeUnitOnTop(Game.getClient().getContext().get(BattleMapGUIStage.class).getSelectedUnit());
         super.draw(batch, parentAlpha);
     }
 
-    public boolean goLeft(){
-        if (currentSelection == null) {
-            currentSelection = units.get(units.size()-1);
-            placeUnitOnTop(currentSelection);
-            return true;
-        }
-        if (!units.contains(currentSelection)) currentSelection = units.get(0);
-        int index = units.indexIdentity(currentSelection);
-        index--;
-        if (index < 0) {
-            currentSelection = null;
-            clearChildren();
-            return true;
-        }
-        currentSelection = units.get(index);
-        placeUnitOnTop(currentSelection);
-        return true;
-    }
-    public boolean goRight(){
-        if (currentSelection == null) {
-            currentSelection = units.get(0);
-            placeUnitOnTop(currentSelection);
-            return true;
-        }
-        if (!units.contains(currentSelection)) currentSelection = units.get(0);
-        int index = units.indexIdentity(currentSelection);
-        index++;
-        if (index >= units.size()) {
-            currentSelection = null;
-            clearChildren();
-            return true;
-        }
-        currentSelection = units.get(index);
-        placeUnitOnTop(currentSelection);
-        return true;
-    }
     public void placeUnitOnTop(Unit unit){
+        if (unit == null){
+            clearChildren();
+            return;
+        }
         UIBattleSkillPanel panel = unit.getDisplay(UIBattleSkillPanel.class);
+        if (getChildren().notEmpty() && getChildren().peek() == panel) return;
         removeActor(panel);
         addActor(panel);
     }
+
     @Override
     public Units getFeature() {
         return units;

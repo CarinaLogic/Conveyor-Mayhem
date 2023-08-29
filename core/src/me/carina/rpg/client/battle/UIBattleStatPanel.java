@@ -76,6 +76,8 @@ public class UIBattleStatPanel extends Stack implements Display<Unit> {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         Game.getInstance().getContext().add(getFeature());
+        if (Game.getClient().getContext().get(BattleMapGUIStage.class).getSelectedUnit() == unit) setScale(1.3f);
+        else setScale(1f);
         super.draw(batch, parentAlpha);
     }
 

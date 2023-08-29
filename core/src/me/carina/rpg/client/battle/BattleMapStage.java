@@ -21,12 +21,6 @@ public class BattleMapStage extends GameStage<BattleScreen> {
         getCamera().far = 100;
         getCamera().position.set(5,3,5);
         getCamera().lookAt(5,5,0);
-        setDebugAll(true);
-    }
-
-    @Override
-    public void draw() {
-        super.draw();
     }
 
 }

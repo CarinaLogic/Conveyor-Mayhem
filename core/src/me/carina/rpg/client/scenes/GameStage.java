@@ -5,27 +5,34 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.badlogic.gdx.utils.IntIntMap;
+import com.badlogic.gdx.utils.ObjectIntMap;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import me.carina.rpg.Game;
 import me.carina.rpg.client.misc.CursorListener;
 import me.carina.rpg.client.ui.CursorHandler;
 import me.carina.rpg.client.ui.CursorPositionHolder;
-import me.carina.rpg.client.ui.Selectable;
+import me.carina.rpg.common.util.Array;
+import me.carina.rpg.common.util.Map;
 
-import java.util.function.Consumer;
+import java.util.Comparator;
 import java.util.function.Function;
 
-public abstract class GameStage<T extends BaseScreen> extends Stage{
+public abstract class GameStage<T extends BaseScreen> extends Stage implements CursorHandler{
     T screen;
     
     public GameStage(Viewport viewport){
         super(viewport);
         addListener(newListener());
+        setDebugAll(true);
     }
-    public GameStage(Viewport viewport, Batch batch){
-        super(viewport, batch);
-        addListener(newListener());
+
+    @Override
+    public void draw() {
+        Game.getClient().getContext().add(this);
+        super.draw();
     }
+
     public abstract void init();
 
     public T getScreen() {
@@ -41,55 +48,65 @@ public abstract class GameStage<T extends BaseScreen> extends Stage{
         return new CursorListener(){
             @Override
             public boolean left(InputEvent event) {
-                return recursiveRun(getRoot(), CursorHandler::goLeft);
+                return recursiveRun(CursorHandler::goLeft);
             }
 
             @Override
             public boolean right(InputEvent event) {
-                return recursiveRun(getRoot(), CursorHandler::goRight);
+                return recursiveRun(CursorHandler::goRight);
             }
 
             @Override
             public boolean up(InputEvent event) {
-                return recursiveRun(getRoot(), CursorHandler::goUp);
+                return recursiveRun(CursorHandler::goUp);
             }
 
             @Override
             public boolean down(InputEvent event) {
-                 return recursiveRun(getRoot(), CursorHandler::goDown);
+                return recursiveRun(CursorHandler::goDown);
             }
 
             @Override
             public boolean enter(InputEvent event) {
-                return recursiveRun(getRoot(), CursorHandler::enter);
+                return recursiveRun(CursorHandler::enter);
             }
 
             @Override
             public boolean exit(InputEvent event) {
-                return recursiveRun(getRoot(), CursorHandler::exit);
+                return recursiveRun(CursorHandler::exit);
             }
         };
     }
 
-    public boolean recursiveRun(Actor actor, Function<CursorHandler,Boolean> func){
-        boolean retValue = false;
-        if (actor == null) return false;
+    public boolean recursiveRun(Function<CursorHandler,Boolean> func){
+        Array<CursorHandler> handlers = new Array<>();
+        handlers.add(this);
+        recursiveRun(getRoot(),handlers);
+        handlers.sort(Comparator.comparingInt(CursorHandler::priority));
+        handlers.reverse();
+        for (CursorHandler handler : handlers) {
+            if (func.apply(handler)) return true;
+        }
+        return false;
+    }
+
+    public void recursiveRun(Actor actor, Array<CursorHandler> candidates){
+        if (actor == null) return;
         if (actor instanceof CursorHandler) {
             CursorHandler handler = (CursorHandler) actor;
-            retValue = func.apply(handler);
+            candidates.add(handler);
         }
         if (actor instanceof Group) {
             Group group = (Group) actor;
             if (group instanceof CursorPositionHolder) {
                 CursorPositionHolder holder = (CursorPositionHolder) group;
-                recursiveRun(holder.getSelected(),func);
+                recursiveRun(holder.getSelected(),candidates);
             }
             else {
                 for (Actor child : group.getChildren()) {
-                    retValue = retValue || recursiveRun(child, func);
+                    recursiveRun(child,candidates);
                 }
             }
         }
-        return retValue;
     }
 }
