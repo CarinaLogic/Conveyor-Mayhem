@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import me.carina.rpg.Game;
+import me.carina.rpg.client.actions.Actions;
 import me.carina.rpg.common.ArrayDisplayHandler;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.Feature;
@@ -41,16 +42,17 @@ public class UIBattleStatPanels extends Table implements Display<Units> {
     public void resizeAll(){
         Unit unit = Game.getClient().getContext().get(BattleMapGUIStage.class).getSelectedUnit();
         if (chachedUnit == unit) return;
-        for (Cell<?> cell : getCells()) {
-            cell.size(72, 48);
-        }
+        Cell<?> currentTargetCell = null;
         if (unit != null) {
             UIBattleStatPanel panel = unit.getDisplay(UIBattleStatPanel.class);
             Cell<?> cell = getCell(panel);
-            if (cell != null) cell.size(96, 72);
+            if (cell != null) currentTargetCell = cell;
+        }
+        for (Cell<?> cell : getCells()) {
+            if (cell == currentTargetCell) cell.getActor().addAction(Actions.uiSizeTo(96,72,0.2f));
+            else cell.getActor().addAction(Actions.uiSizeTo(72,48,0.2f));
         }
         chachedUnit = unit;
-        invalidateHierarchy();
     }
 
     @Override
