@@ -9,11 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import me.carina.rpg.Game;
 import me.carina.rpg.client.ui.CursorHandler;
 import me.carina.rpg.client.ui.CursorPositionHolder;
+import me.carina.rpg.client.ui.UIAnimatedContainer;
+import me.carina.rpg.client.ui.UIAnimatedStack;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.unit.Unit;
 import me.carina.rpg.common.unit.Units;
 
-public class UIBattleSkillPanels extends Stack implements Display<Units>, CursorHandler {
+public class UIBattleSkillPanels extends UIAnimatedContainer<UIBattleSkillPanel> implements Display<Units>, CursorHandler {
     Units units;
     public UIBattleSkillPanels(Units units){
         this.units = units;
@@ -34,7 +36,7 @@ public class UIBattleSkillPanels extends Stack implements Display<Units>, Cursor
         UIBattleSkillPanel panel = unit.getDisplay(UIBattleSkillPanel.class);
         if (getChildren().notEmpty() && getChildren().peek() == panel) return;
         removeActor(panel);
-        addActor(panel);
+        addFromScreenRight(panel);
     }
 
     @Override
