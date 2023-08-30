@@ -24,15 +24,16 @@ public class UIUnitPartsDisplay extends Stack implements Display<UnitParts> {
     }
 
     @Override
-    public void draw(Batch batch, float parentAlpha) {
+    public void act(float delta) {
         Game.getInstance().getContext().add(getFeature());
         unitParts.getArray().sort(Comparator.comparingInt(p -> p.bodyType.ordinal()));
         handler.tick();
         for (int i = 0; i < unitParts.size(); i++) {
             unitParts.get(i).getDisplay(UIUnitPartDisplay.class).setZIndex(i);
         }
-        super.draw(batch, parentAlpha);
+        super.act(delta);
     }
+
 
     @Override
     public UnitParts getFeature() {

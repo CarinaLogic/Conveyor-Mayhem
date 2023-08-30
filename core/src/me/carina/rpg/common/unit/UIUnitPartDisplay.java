@@ -27,8 +27,9 @@ public class UIUnitPartDisplay extends Image implements Display<UnitPart> {
         setScaling(Scaling.fill);
         setAlign(Align.topLeft);
     }
+
     @Override
-    public void draw(Batch batch, float parentAlpha) {
+    public void act(float delta) {
         Game.getInstance().getContext().add(getFeature());
         if (regions == null && !unitPart.bodyType.equals(BodyType.base)){
             //very inefficient
@@ -64,6 +65,11 @@ public class UIUnitPartDisplay extends Image implements Display<UnitPart> {
             //textureMap.dispose();
         }
         setDrawable(getPrefDrawable());
+        super.act(delta);
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
         validate();
         Color color = getColor();
         batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);

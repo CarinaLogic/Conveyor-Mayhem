@@ -26,11 +26,15 @@ public class UIBattleStatPanels extends Table implements Display<Units> {
     }
 
     @Override
-    public void draw(Batch batch, float parentAlpha) {
-        //TODO MOVE THIS TO act() so that it updates the parent hierarchy before it's drawn
+    public void act(float delta) {
         Game.getInstance().getContext().add(getFeature());
         handler.tick();
         resizeAll();
+        super.act(delta);
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
     }
 

@@ -28,9 +28,9 @@ public abstract class GameStage<T extends BaseScreen> extends Stage implements C
     }
 
     @Override
-    public void draw() {
+    public void act(float delta) {
         Game.getClient().getContext().add(this);
-        super.draw();
+        super.act(delta);
     }
 
     public abstract void init();

@@ -20,10 +20,10 @@ public class UIBattleSkillPanels extends Stack implements Display<Units>, Cursor
     }
 
     @Override
-    public void draw(Batch batch, float parentAlpha) {
+    public void act(float delta) {
         Game.getInstance().getContext().add(getFeature());
         placeUnitOnTop(Game.getClient().getContext().get(BattleMapGUIStage.class).getSelectedUnit());
-        super.draw(batch, parentAlpha);
+        super.act(delta);
     }
 
     public void placeUnitOnTop(Unit unit){

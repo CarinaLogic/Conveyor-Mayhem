@@ -15,6 +15,7 @@ import me.carina.rpg.common.FlatImageDisplay;
 import me.carina.rpg.common.util.Palette;
 
 public class BattleUnitPartDisplay extends FlatImageDisplay implements Display<UnitPart> {
+    Unit targetUnit;
     UnitPart unitPart;
     TextureRegion[][] regions;
     Palette palette;
@@ -24,7 +25,8 @@ public class BattleUnitPartDisplay extends FlatImageDisplay implements Display<U
         this.unitPart = unitPart;
     }
 
-    public void draw(Batch batch, float parentAlpha) {
+    @Override
+    public void act(float delta) {
         Game.getInstance().getContext().add(getFeature());
         if (regions == null && !unitPart.bodyType.equals(BodyType.base)){
             //very inefficient
@@ -60,7 +62,8 @@ public class BattleUnitPartDisplay extends FlatImageDisplay implements Display<U
             //textureMap.dispose();
         }
         setFlipX(shouldFlip());
-        super.draw(batch, parentAlpha);
+        targetUnit = Game.getClient().getContext().get(Unit.class);
+        super.act(delta);
     }
 
     public Palette getPalette() {
@@ -69,12 +72,12 @@ public class BattleUnitPartDisplay extends FlatImageDisplay implements Display<U
 
     @Override
     public float getDisplayX() {
-        return Game.getInstance().getContext().get(Unit.class).x + 0.5f;
+        return targetUnit.x + 0.5f;
     }
 
     @Override
     public float getDisplayY() {
-        return Game.getInstance().getContext().get(Unit.class).y + 0.5f;
+        return targetUnit.y + 0.5f;
     }
 
     @Override

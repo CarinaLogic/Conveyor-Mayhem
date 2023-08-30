@@ -16,10 +16,11 @@ public class UIUnitDisplay extends Stack implements Display<Unit> {
     }
 
     @Override
-    public void draw(Batch batch, float parentAlpha) {
+    public void act(float delta) {
         Game.getInstance().getContext().add(getFeature());
-        super.draw(batch, parentAlpha);
+        super.act(delta);
     }
+
 
     @Override
     public Unit getFeature() {

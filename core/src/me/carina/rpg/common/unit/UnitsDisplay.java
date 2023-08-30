@@ -22,9 +22,14 @@ public class UnitsDisplay extends Group implements Display<Units> {
     }
 
     @Override
-    public void draw(Batch batch, float parentAlpha) {
+    public void act(float delta) {
         Game.getInstance().getContext().add(getFeature());
         handler.tick();
+        super.act(delta);
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
     }
 

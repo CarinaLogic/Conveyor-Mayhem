@@ -23,11 +23,12 @@ public class TilesDisplay extends Group implements Display<Tiles> {
     }
 
     @Override
-    public void draw(Batch batch, float parentAlpha) {
+    public void act(float delta) {
         Game.getInstance().getContext().add(getFeature());
         handler.tick();
-        super.draw(batch, parentAlpha);
+        super.act(delta);
     }
+
 
     @Override
     public Tiles getFeature() {
