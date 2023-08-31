@@ -1,13 +1,10 @@
-package me.carina.rpg.common.command;
+package me.carina.rpg.common.command.commands;
 
+import me.carina.rpg.common.command.*;
 import me.carina.rpg.common.util.Array;
 
-public class BranchCommand extends Command{
+public class BranchCommand extends Command {
 
-    @Override
-    public boolean enabled() {
-        return true;
-    }
     @CommandFunction
     public void if_$(boolean condition, CommandLabel label){
         if (!condition){
@@ -16,7 +13,7 @@ public class BranchCommand extends Command{
     }
     @CommandFunction
     public void while_$(boolean condition, CommandLabel label){
-        if (condition) getScript().queueJump(getScript().getLabelIndex(label), getScript().cursor);
+        if (condition) getScript().queueJump(getScript().getLabelIndex(label), getScript().getCursor());
         else getScript().jumpToLabel(label);
     }
     //Assuming all functions does not set delay, otherwise timing issue occurs
@@ -32,14 +29,14 @@ public class BranchCommand extends Command{
             getScript().jumpToLabel(label);
         }
         else {
-            getScript().queueJump(getScript().getLabelIndex(label), getScript().cursor);
+            getScript().queueJump(getScript().getLabelIndex(label), getScript().getCursor());
         }
     }
     @CommandFunction
     public void for_$_in(CommandData data, Array<?> array, CommandLabel label){
         data.setValue(array.get(getScript().getJumpCount()));
         if (getScript().getJumpCount() < array.size-1){
-            getScript().queueJump(getScript().getLabelIndex(label),getScript().cursor);
+            getScript().queueJump(getScript().getLabelIndex(label),getScript().getCursor());
         }
     }
     @CommandFunction(altNames = {"j"})

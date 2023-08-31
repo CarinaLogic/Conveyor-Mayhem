@@ -1,10 +1,11 @@
-package me.carina.rpg.common.command;
+package me.carina.rpg.common.command.commands;
 
-public class MathCommand extends Command{
-    @Override
-    public boolean enabled() {
-        return true;
-    }
+import me.carina.rpg.common.command.Command;
+import me.carina.rpg.common.command.CommandData;
+import me.carina.rpg.common.command.CommandException;
+import me.carina.rpg.common.command.CommandFunction;
+
+public class MathCommand extends Command {
     @CommandFunction(altNames = {"$_+"})
     public Double add(Double a, Double b){
         return a + b;

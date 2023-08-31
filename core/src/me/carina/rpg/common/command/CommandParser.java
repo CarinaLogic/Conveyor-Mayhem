@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.reflect.Annotation;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.Method;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
+import me.carina.rpg.common.command.commands.*;
 import me.carina.rpg.common.util.Array;
 import me.carina.rpg.common.util.Map;
 
@@ -126,8 +127,9 @@ public class CommandParser {
 
     public Object parseArgArray(Array<Object> args){
         //Nested hell
+        CommandExecutionPolicy policy = getScript().executionPolicy;
         for (Command command : commands) {
-            if (command.enabled()) {
+            if (policy.isAllowed(command)) {
                 for (Method method : ClassReflection.getDeclaredMethods(command.getClass())) {
                     Annotation annotation = method.getDeclaredAnnotation(CommandFunction.class);
                     if (annotation != null) {
@@ -217,6 +219,13 @@ public class CommandParser {
                         }
                     }
                 }
+            }
+            else if (policy.isSkipped(command)){
+                //NOOP
+                return null;
+            }
+            else if (policy.isBlocked(command)){
+                throw new CommandException(CommandException.ExceptionType.command_blocked);
             }
         }
         throw new CommandException(CommandException.ExceptionType.command_not_found);

@@ -1,12 +1,12 @@
-package me.carina.rpg.common.command;
+package me.carina.rpg.common.command.commands;
+
+import me.carina.rpg.common.command.Command;
+import me.carina.rpg.common.command.CommandFunction;
+import me.carina.rpg.common.command.InlineCommand;
 
 import java.util.Objects;
 
-public class BooleanCommand extends Command{
-    @Override
-    public boolean enabled() {
-        return true;
-    }
+public class BooleanCommand extends Command {
     @CommandFunction(altNames = {"$_&&"})
     public Boolean $_and(Boolean a, InlineCommand b){
         if (!a) return false;

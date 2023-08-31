@@ -7,6 +7,7 @@ public class Script {
     String[] commands;
     int cursor = 0;
     float waitTime = 0;
+    CommandExecutionPolicy executionPolicy;
     IntIntMap jumpMap = new IntIntMap();
     //Recorded at destination
     IntIntMap jumpCounter = new IntIntMap();
@@ -69,5 +70,21 @@ public class Script {
             i++;
         }
         return i;
+    }
+
+    public float getWaitTime() {
+        return waitTime;
+    }
+
+    public void setWaitTime(float waitTime) {
+        this.waitTime = waitTime;
+    }
+
+    public int getCursor() {
+        return cursor;
+    }
+
+    public void setCursor(int cursor) {
+        this.cursor = cursor;
     }
 }

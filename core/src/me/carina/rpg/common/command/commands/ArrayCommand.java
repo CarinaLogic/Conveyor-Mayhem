@@ -1,13 +1,10 @@
-package me.carina.rpg.common.command;
+package me.carina.rpg.common.command.commands;
 
+import me.carina.rpg.common.command.Command;
+import me.carina.rpg.common.command.CommandFunction;
 import me.carina.rpg.common.util.Array;
 
-@SuppressWarnings("WrapperTypeMayBePrimitive")
-public class ArrayCommand extends Command{
-    @Override
-    public boolean enabled() {
-        return true;
-    }
+public class ArrayCommand extends Command {
     @CommandFunction
     public Array<Double> range(Double i){
         Array<Double> a = new Array<>();
