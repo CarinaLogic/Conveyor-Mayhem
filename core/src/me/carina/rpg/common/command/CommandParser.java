@@ -182,9 +182,21 @@ public class CommandParser {
                                         } else if (arg instanceof Argument) {
                                             //if method wants String, give it as a string
                                             if (ClassReflection.isAssignableFrom(String.class,paramTypes[methodArgIndex])) {
-                                                passedArgs[methodArgIndex] = data;
+                                                passedArgs[methodArgIndex] = ((Argument) arg).name;
                                                 methodArgIndex++;
                                                 given = true;
+                                            }
+                                            //if method wants enum,
+                                            else if (ClassReflection.isEnum(paramTypes[methodArgIndex])){
+                                                Object[] constants = ClassReflection.getEnumConstants(paramTypes[methodArgIndex]);
+                                                for (Object constant : constants) {
+                                                    if (((Enum<?>) constant).name().equals(((Argument) arg).name)){
+                                                        passedArgs[methodArgIndex] = constant;
+                                                        methodArgIndex++;
+                                                        given = true;
+                                                        break;
+                                                    }
+                                                }
                                             }
                                         } else if (arg instanceof CommandData) {
                                             //if method wants CommandData, just give it unmodified

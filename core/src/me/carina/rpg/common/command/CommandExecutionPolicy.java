@@ -46,13 +46,13 @@ public class CommandExecutionPolicy {
     }
     public static CommandExecutionPolicy clientPolicy(){
         CommandExecutionPolicy policy = new CommandExecutionPolicy();
-        policy.allow(AnimationCommand.class, ArrayCommand.class, BranchCommand.class, BooleanCommand.class, DataCommand.class,
-                IOCommand.class, MathCommand.class, WaitCommand.class);
+        policy.allow(AnimationCommand.class, ArrayCommand.class, BranchCommand.class, BooleanCommand.class, BattleProcessCommand.class,
+                DataCommand.class, IOCommand.class, MathCommand.class, WaitCommand.class);
         return policy;
     }
     public static CommandExecutionPolicy skillEvaluationPolicy(){
         CommandExecutionPolicy policy = new CommandExecutionPolicy();
-        policy.allow(ArrayCommand.class, BooleanCommand.class, BranchCommand.class, DataCommand.class,
+        policy.allow(ArrayCommand.class, BooleanCommand.class, BranchCommand.class, BattleProcessCommand.class,DataCommand.class,
                 IOCommand.class, MathCommand.class);
         policy.skip(AnimationCommand.class, WaitCommand.class);
         return policy;

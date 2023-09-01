@@ -7,7 +7,7 @@ public class Script {
     String[] commands;
     int cursor = 0;
     float waitTime = 0;
-    CommandExecutionPolicy executionPolicy;
+    CommandExecutionPolicy executionPolicy = CommandExecutionPolicy.clientPolicy();
     IntIntMap jumpMap = new IntIntMap();
     //Recorded at destination
     IntIntMap jumpCounter = new IntIntMap();
