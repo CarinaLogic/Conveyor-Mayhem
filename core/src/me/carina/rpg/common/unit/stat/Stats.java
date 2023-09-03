@@ -11,6 +11,7 @@ public class Stats {
         for (Affinity affinity : Affinity.values()) {
             stats.add(new AffinityStat(affinity), new AffinityMaxStat(affinity));
             stats.add(new AffinityAttack(affinity), new AffinityDefence(affinity));
+            stats.add(new AffinityHit(affinity), new AffinityAvoid(affinity));
         }
     }
     public <T extends Stat> T getStat(Class<T> type){
