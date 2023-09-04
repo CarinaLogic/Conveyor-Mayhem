@@ -4,6 +4,7 @@ import me.carina.rpg.common.*;
 import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.item.Equipments;
 import me.carina.rpg.common.skill.Skills;
+import me.carina.rpg.common.unit.newstat.StatusEffects;
 import me.carina.rpg.common.unit.stat.MaxStat;
 import me.carina.rpg.common.unit.stat.Stat;
 import me.carina.rpg.common.unit.stat.Stats;
@@ -15,6 +16,7 @@ public class Unit extends Feature {
     Skills skills = new Skills();
     Equipments equipments = new Equipments();
     Stats stats = new Stats();
+    StatusEffects effects = new StatusEffects();
     public UnitParts unitParts = new UnitParts();
     public Unit(){}//for json
     @Override
@@ -63,5 +65,9 @@ public class Unit extends Feature {
 
     public Stats getStats() {
         return stats;
+    }
+
+    public StatusEffects getEffects() {
+        return effects;
     }
 }
