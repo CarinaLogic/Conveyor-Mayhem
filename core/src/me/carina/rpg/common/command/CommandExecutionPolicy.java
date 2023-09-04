@@ -52,7 +52,7 @@ public class CommandExecutionPolicy {
     }
     public static CommandExecutionPolicy skillEvaluationPolicy(){
         CommandExecutionPolicy policy = new CommandExecutionPolicy();
-        policy.allow(ArrayCommand.class, BooleanCommand.class, BranchCommand.class, BattleProcessCommand.class,DataCommand.class,
+        policy.allow(ArrayCommand.class, BooleanCommand.class, BranchCommand.class, BattlePredictionCommand.class,DataCommand.class,
                 IOCommand.class, MathCommand.class);
         policy.skip(AnimationCommand.class, WaitCommand.class);
         return policy;

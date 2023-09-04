@@ -87,4 +87,15 @@ public class Script {
     public void setCursor(int cursor) {
         this.cursor = cursor;
     }
+
+    public Script copyAs(CommandExecutionPolicy policy){
+        Script script = new Script();
+        script.commands = commands.clone();
+        script.cursor = cursor;
+        script.executionPolicy = policy;
+        script.waitTime = waitTime;
+        script.jumpMap = new IntIntMap(jumpMap);
+        script.jumpCounter = new IntIntMap(jumpCounter);
+        return script;
+    }
 }
