@@ -3,10 +3,7 @@ package me.carina.rpg.common;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Disposable;
-import com.badlogic.gdx.utils.reflect.ClassReflection;
-import com.badlogic.gdx.utils.reflect.Constructor;
-import com.badlogic.gdx.utils.reflect.Field;
-import com.badlogic.gdx.utils.reflect.ReflectionException;
+import com.badlogic.gdx.utils.reflect.*;
 import me.carina.rpg.Game;
 import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.file.Identifier;
@@ -114,6 +111,17 @@ public abstract class Feature implements Identifiable, Defined, AssetGrouped, Di
     public void contextAndTick(){
         Game.getInstance().getContext().add(this);
         tick();
+        Field[] fields = ClassReflection.getDeclaredFields(getClass());
+        for (Field field : fields) {
+            if (field.isAnnotationPresent(ChildFeature.class)){
+                try {
+                    Object o = field.get(this);
+                    if (o instanceof Feature){
+                        ((Feature) o).contextAndTick();
+                    }
+                } catch (ReflectionException ignored) {}
+            }
+        }
     }
 
     public abstract void tick();

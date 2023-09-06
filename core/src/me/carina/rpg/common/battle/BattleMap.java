@@ -7,7 +7,9 @@ import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.unit.Units;
 
 public class BattleMap extends Feature {
+    @ChildFeature
     public Tiles tiles;
+    @ChildFeature
     public Units units;
     public BattleMap() {
         tiles = new Tiles();
@@ -24,9 +26,9 @@ public class BattleMap extends Feature {
 
     @Override
     public void tick() {
-        tiles.contextAndTick();
-        units.contextAndTick();
+
     }
+
 
     @Override
     public Class<? extends Definition> getDefClass() {
