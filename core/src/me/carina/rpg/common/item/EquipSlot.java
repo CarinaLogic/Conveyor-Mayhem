@@ -11,4 +11,8 @@ public abstract class EquipSlot {
         if (getAllowedTypes(equipments).contains(equipment.equipType,false)) this.equipment = equipment;
         else throw new RuntimeException();
     }
+
+    public Equipment getEquipment() {
+        return equipment;
+    }
 }

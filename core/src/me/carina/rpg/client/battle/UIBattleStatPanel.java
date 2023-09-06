@@ -1,9 +1,6 @@
 package me.carina.rpg.client.battle;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import me.carina.rpg.Game;
@@ -13,9 +10,8 @@ import me.carina.rpg.client.ui.UIProgressBar;
 import me.carina.rpg.client.ui.UITableView;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.unit.UIUnitDisplay;
-import me.carina.rpg.common.unit.UIUnitPartDisplay;
 import me.carina.rpg.common.unit.Unit;
-import me.carina.rpg.common.unit.stat.StatType;
+import me.carina.rpg.common.stat.StatType;
 
 public class UIBattleStatPanel extends Stack implements Display<Unit> {
     UITableView tableView;

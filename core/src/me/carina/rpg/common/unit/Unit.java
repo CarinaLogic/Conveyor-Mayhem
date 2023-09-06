@@ -4,8 +4,8 @@ import me.carina.rpg.common.*;
 import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.item.Equipments;
 import me.carina.rpg.common.skill.Skills;
-import me.carina.rpg.common.unit.stat.StatusEffects;
-import me.carina.rpg.common.unit.stat.UnitStats;
+import me.carina.rpg.common.stat.StatusEffects;
+import me.carina.rpg.common.stat.UnitStats;
 
 public class Unit extends Feature {
     String name = "Alice";

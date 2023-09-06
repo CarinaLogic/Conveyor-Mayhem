@@ -1,4 +1,4 @@
-package me.carina.rpg.common.unit.stat;
+package me.carina.rpg.common.stat;
 
 public enum StatType {
     hp(true), sp(true), ap(true), attack, defence, hit, avoid;
