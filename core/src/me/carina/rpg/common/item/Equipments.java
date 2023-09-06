@@ -1,6 +1,9 @@
 package me.carina.rpg.common.item;
 
+import me.carina.rpg.common.ArrayFeature;
 import me.carina.rpg.common.util.Array;
+
+import java.util.Iterator;
 
 public class Equipments {
     WeaponSlot weaponSlot = new WeaponSlot();
@@ -37,14 +40,5 @@ public class Equipments {
     public void setArmorSlot(Equipment equipment, int index){
         if (index >= 4) throw new RuntimeException();
         armorSlots.get(index).setEquipment(this,equipment);
-    }
-    public StatModifiers getStatModifiers(){
-        StatModifiers modifiers = new StatModifiers();
-        modifiers.add(weaponSlot.getStatModifiers());
-        modifiers.add(shieldSlot.getStatModifiers());
-        for (ArmorSlot armorSlot : armorSlots) {
-            modifiers.add(armorSlot.getStatModifiers());
-        }
-        return modifiers;
     }
 }

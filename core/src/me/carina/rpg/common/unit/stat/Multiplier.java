@@ -1,4 +1,4 @@
-package me.carina.rpg.common.unit.newstat;
+package me.carina.rpg.common.unit.stat;
 
 public class Multiplier extends StatusEffect{
     float addAmount = 0;

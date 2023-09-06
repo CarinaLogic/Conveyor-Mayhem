@@ -15,10 +15,7 @@ import me.carina.rpg.common.Display;
 import me.carina.rpg.common.unit.UIUnitDisplay;
 import me.carina.rpg.common.unit.UIUnitPartDisplay;
 import me.carina.rpg.common.unit.Unit;
-import me.carina.rpg.common.unit.stat.HPMaxStat;
-import me.carina.rpg.common.unit.stat.HPStat;
-import me.carina.rpg.common.unit.stat.SPMaxStat;
-import me.carina.rpg.common.unit.stat.SPStat;
+import me.carina.rpg.common.unit.stat.StatType;
 
 public class UIBattleStatPanel extends Stack implements Display<Unit> {
     UITableView tableView;
@@ -27,7 +24,6 @@ public class UIBattleStatPanel extends Stack implements Display<Unit> {
     UIUnitDisplay unitDisplay;
     UIHpBar hpBar;
     UISpBar spBar;
-    boolean selected = false;
     public UIBattleStatPanel(Unit unit){
         this.unit = unit;
         {
@@ -45,8 +41,8 @@ public class UIBattleStatPanel extends Stack implements Display<Unit> {
                 tableView.add(new UILabel().text("HP")).padRight(1);
                 hpBar = new UIHpBar();
                 hpBar.addAction(Actions.forever(Actions.run(() -> hpBar.value(
-                        unit.getStats().getStat(HPStat.class).get() * 100 /
-                                unit.getStats().getStat(HPMaxStat.class).get()))));
+                        unit.getStats().getStat(StatType.hp).get(unit) * 100 /
+                                unit.getStats().getStat(StatType.hp).getMax(unit)))));
                 tableView.add(hpBar).expandX().fillX();
             }
             tableView.row();
@@ -54,8 +50,8 @@ public class UIBattleStatPanel extends Stack implements Display<Unit> {
                 tableView.add(new UILabel().text("SP")).padRight(1);
                 spBar = new UISpBar();
                 spBar.addAction(Actions.forever(Actions.run(() -> spBar.value(
-                        unit.getStats().getStat(SPStat.class).get() * 100 /
-                                unit.getStats().getStat(SPMaxStat.class).get()))));
+                        unit.getStats().getStat(StatType.sp).get(unit) * 100 /
+                                unit.getStats().getStat(StatType.sp).getMax(unit)))));
                 tableView.add(spBar).expandX().fillX();
             }
         }

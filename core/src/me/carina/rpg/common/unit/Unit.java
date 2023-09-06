@@ -4,10 +4,8 @@ import me.carina.rpg.common.*;
 import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.item.Equipments;
 import me.carina.rpg.common.skill.Skills;
-import me.carina.rpg.common.unit.newstat.StatusEffects;
-import me.carina.rpg.common.unit.stat.MaxStat;
-import me.carina.rpg.common.unit.stat.Stat;
-import me.carina.rpg.common.unit.stat.Stats;
+import me.carina.rpg.common.unit.stat.StatusEffects;
+import me.carina.rpg.common.unit.stat.UnitStats;
 
 public class Unit extends Feature {
     String name = "Alice";
@@ -15,26 +13,13 @@ public class Unit extends Feature {
     int y;
     Skills skills = new Skills();
     Equipments equipments = new Equipments();
-    Stats stats = new Stats();
+    UnitStats stats = new UnitStats();
     StatusEffects effects = new StatusEffects();
     public UnitParts unitParts = new UnitParts();
     public Unit(){}//for json
     @Override
     public Class<? extends Definition> getDefClass() {
         return Def.class;
-    }
-
-    public void reset(){
-        for (Stat stat : stats.getStats()) {
-            stat.reset();
-        }
-        equipments.getStatModifiers().modifyStats(stats);
-        for (Stat stat : stats.getStats()) {
-            if (stat instanceof MaxStat) {
-                MaxStat maxStat = (MaxStat) stat;
-                maxStat.maxOutBase(stats);
-            }
-        }
     }
 
     @Override
@@ -63,8 +48,12 @@ public class Unit extends Feature {
         return name;
     }
 
-    public Stats getStats() {
+    public UnitStats getStats() {
         return stats;
+    }
+
+    public Equipments getEquipments() {
+        return equipments;
     }
 
     public StatusEffects getEffects() {

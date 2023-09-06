@@ -1,4 +1,4 @@
-package me.carina.rpg.common.unit.newstat;
+package me.carina.rpg.common.unit.stat;
 
 import me.carina.rpg.common.ArrayFeature;
 import me.carina.rpg.common.Definition;
