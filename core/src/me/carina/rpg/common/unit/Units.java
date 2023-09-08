@@ -5,9 +5,7 @@ import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.skill.Skill;
 
 public class Units extends ArrayFeature<Unit>{
-    Skill activeSkill;
-
-    public Units(){
+   public Units(){
         Unit unit1 = new Unit();
         unit1.x = 3;
         unit1.y = 1;

@@ -266,6 +266,15 @@ public class CommandParser {
         data.put(name,value);
     }
 
+    public <T> T getData(String name, Class<T> type){
+        Object o = data.get(name);
+        if (ClassReflection.isInstance(type,o)){
+            //noinspection unchecked
+            return (T) o;
+        }
+        throw new CommandException(CommandException.ExceptionType.type_mismatch);
+    }
+
     public static class Argument{
         final String name;
         public Argument(String name){

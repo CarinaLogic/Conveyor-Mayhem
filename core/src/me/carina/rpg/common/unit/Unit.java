@@ -1,6 +1,7 @@
 package me.carina.rpg.common.unit;
 
 import me.carina.rpg.common.*;
+import me.carina.rpg.common.faction.Faction;
 import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.item.Equipments;
 import me.carina.rpg.common.skill.Skills;

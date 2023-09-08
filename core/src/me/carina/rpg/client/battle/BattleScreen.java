@@ -3,9 +3,11 @@ package me.carina.rpg.client.battle;
 import me.carina.rpg.client.scenes.BaseScreen;
 import me.carina.rpg.client.scenes.CanvasStage;
 import me.carina.rpg.common.battle.BattleMap;
+import me.carina.rpg.common.faction.Faction;
 
 public class BattleScreen extends BaseScreen {
     BattleMap map;
+    Faction controlledFaction;
     BattleMapStage battleMapStage;
     CanvasStage actorStage;
     BattleMapGUIStage guiStage;

@@ -8,6 +8,8 @@ import me.carina.rpg.Game;
 import me.carina.rpg.client.misc.Movable;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.Feature;
+import me.carina.rpg.common.faction.Faction;
+import me.carina.rpg.common.faction.FactionsDisplay;
 import me.carina.rpg.common.unit.UnitsDisplay;
 
 public class BattleMapDisplay extends Stack implements Display<BattleMap> {
@@ -15,7 +17,7 @@ public class BattleMapDisplay extends Stack implements Display<BattleMap> {
     public BattleMapDisplay(BattleMap map){
         this.map = map;
         addActor(map.tiles.newDisplay(TilesDisplay.class));
-        addActor(map.units.newDisplay(UnitsDisplay.class));
+        addActor(map.factions.newDisplay(FactionsDisplay.class));
         setSize(map.getWidth(), map.getHeight());
         setTouchable(Touchable.childrenOnly);
         addListener(new Movable());
