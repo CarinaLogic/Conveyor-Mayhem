@@ -19,7 +19,7 @@ public abstract class Feature implements Identifiable, Defined, AssetGrouped, Di
     transient Array<Actor> displays = new Array<>();
     Identifier id;
     public Feature(){} //for json
-    public <T extends Actor> T newDisplay(Class<T> type){
+    public <T extends Actor & Display<? extends Feature>> T newDisplay(Class<T> type){
         try {
             Constructor c = ClassReflection.getConstructor(type,this.getClass());
             Object o = c.newInstance(this);
@@ -37,7 +37,7 @@ public abstract class Feature implements Identifiable, Defined, AssetGrouped, Di
         return displays;
     }
 
-    public <T extends Actor> T getDisplay(Class<T> type){
+    public <T extends Actor & Display<? extends Feature>> T getDisplay(Class<T> type){
         for (Actor display : displays) {
             if (ClassReflection.isInstance(type, display)){
                 //noinspection unchecked

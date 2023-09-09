@@ -28,14 +28,21 @@ public class UIBattleSkillPanels extends UIAnimatedContainer<UIBattleSkillPanel>
         super.act(delta);
     }
 
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+    }
+
     public void placeUnitOnTop(Unit unit){
         if (unit == null){
+            for (Unit u : units) {
+                u.removeDisplay(UIBattleSkillPanel.class);
+            }
             clearChildren();
             return;
         }
         UIBattleSkillPanel panel = unit.getDisplay(UIBattleSkillPanel.class);
-        if (getChildren().notEmpty() && getChildren().peek() == panel) return;
-        removeActor(panel);
+        if (getActor() == panel) return;
         addFromScreenRight(panel);
     }
 

@@ -7,11 +7,9 @@ import me.carina.rpg.common.faction.Faction;
 
 public class BattleScreen extends BaseScreen {
     BattleMap map;
-    Faction controlledFaction;
     BattleMapStage battleMapStage;
     CanvasStage actorStage;
     BattleMapGUIStage guiStage;
-
     public BattleScreen(BattleMap map){
         super();
         this.map = map;
