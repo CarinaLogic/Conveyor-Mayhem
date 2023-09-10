@@ -29,4 +29,39 @@ public class ArrayCommand extends Command {
         }
         return a;
     }
+    @CommandFunction(altNames = {"$_+=","$_<-"})
+    public <T> Array<T> array_add(Array<T> array, T obj){
+        array.add(obj);
+        return array;
+    }
+    @CommandFunction
+    public <T> Array<T> array_addfirst(Array<T> array, T obj){
+        array.add(obj);
+        return array;
+    }
+    @CommandFunction(altNames = {"$_->"},suppressOriginalName = true)
+    public <T> Array<T> array_addfirst(T obj, Array<T> array){
+        array.insert(0,obj);
+        return array;
+    }
+    @CommandFunction(altNames = {"$_->"})
+    public <T> Array<T> array_remove(Array<T> array, T obj){
+        //noinspection unchecked
+        array.remove(obj);
+        return array;
+    }
+    @CommandFunction(altNames = {"<-_$"})
+    public <T> Array<T> array_removefirst(Array<T> array){
+        array.removeIndex(0);
+        return array;
+    }
+    @CommandFunction(altNames = {"$_->"})
+    public <T> Array<T> array_removelast(Array<T> array){
+        array.removeIndex(array.size-1);
+        return array;
+    }
+    @CommandFunction
+    public <T> Double array_size(Array<T> array){
+        return (double) array.size;
+    }
 }

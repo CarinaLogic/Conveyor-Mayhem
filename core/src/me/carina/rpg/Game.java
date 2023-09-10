@@ -49,6 +49,9 @@ public class Game extends ApplicationAdapter{
 //		client.addConnection(((ExternalClient) client).connect("localhost",18273));
 		server.getCommandParser().queueScript(new Script(
 				"$array = (range 10)",
+				"<- $array",
+				"$array <- 3.5",
+				"100 -> $array",
 				"for $i in $array @fin",
 				"print $i",
 				"wait 1",

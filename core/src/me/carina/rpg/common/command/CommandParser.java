@@ -133,7 +133,10 @@ public class CommandParser {
                 for (Method method : ClassReflection.getDeclaredMethods(command.getClass())) {
                     Annotation annotation = method.getDeclaredAnnotation(CommandFunction.class);
                     if (annotation != null) {
-                        Array<String> names = new Array<>(method.getName());
+                        Array<String> names = new Array<>();
+                        if (!annotation.getAnnotation(CommandFunction.class).suppressOriginalName()){
+                            names.add(method.getName());
+                        }
                         names.addAll(annotation.getAnnotation(CommandFunction.class).altNames());
                         @SuppressWarnings("rawtypes")
                         Class[] paramTypes = method.getParameterTypes();
@@ -143,7 +146,7 @@ public class CommandParser {
                             for (String dclArg : dclArgs) {
                                 if (!dclArg.equals("$")) keys++;
                             }
-                            if (args.size != keys + paramTypes.length) break;
+                            if (args.size != keys + paramTypes.length) continue;
                             boolean success = true;
                             Object[] passedArgs = new Object[paramTypes.length];
                             int methodArgIndex = 0;

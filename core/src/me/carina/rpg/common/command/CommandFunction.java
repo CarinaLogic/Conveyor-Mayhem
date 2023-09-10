@@ -9,4 +9,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface CommandFunction {
     String[] altNames() default {};
+    boolean suppressOriginalName() default false;
 }
