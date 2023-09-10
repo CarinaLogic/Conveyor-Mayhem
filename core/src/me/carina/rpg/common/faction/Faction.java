@@ -13,6 +13,11 @@ public class Faction extends Feature {
     @ChildFeature
     Units units = new Units();
     String name = "";
+    int team = 0;
+
+    public boolean alliedWith(Faction faction){
+        return this.team == faction.team;
+    }
 
     @Override
     public Class<? extends Definition> getDefClass() {

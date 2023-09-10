@@ -1,7 +1,9 @@
 package me.carina.rpg.common.command.commands;
 
 import me.carina.rpg.common.command.Command;
+import me.carina.rpg.common.faction.Factions;
 import me.carina.rpg.common.unit.Unit;
+import me.carina.rpg.common.unit.Units;
 import me.carina.rpg.common.util.Array;
 
 public class PredefinedTargetCommand extends Command {
@@ -9,6 +11,8 @@ public class PredefinedTargetCommand extends Command {
 //        return nearest(type,1.0);
 //    }
 //    public Array<Unit> nearest(TargetType type, Double amount){
-//        Unit user = getParser().getData("$user", Unit.class);
+//        Unit user = getParser().getData("user", Unit.class);
+//        Factions factions = getParser().getData("factions", Factions.class);
+//
 //    }
 }

@@ -18,12 +18,11 @@ public class UIAnimatedContainer<T extends Actor & Layout> extends Container<T> 
 
     public void addFromScreenTop(T actor){
         setActor(actor);
-        clearActions();
-        setPosition(0,screenToLocalCoordinates(new Vector2(
+        actor.clearActions();
+        actor.setPosition(0,screenToLocalCoordinates(new Vector2(
                 0,0
         )).y, Align.bottomLeft);
-        addAction(Actions.moveTo(0,0,0.2f));
-        invalidateHierarchy();
+        actor.addAction(Actions.moveTo(0,0,0.2f));
     }
     public void addFromScreenBottom(T actor){
         setActor(actor);
@@ -32,7 +31,6 @@ public class UIAnimatedContainer<T extends Actor & Layout> extends Container<T> 
                 0, Gdx.graphics.getHeight()
         )).y,Align.topLeft);
         actor.addAction(Actions.moveTo(0,0,0.2f));
-        invalidateHierarchy();
     }
     public void addFromScreenLeft(T actor){
         setActor(actor);
@@ -41,7 +39,6 @@ public class UIAnimatedContainer<T extends Actor & Layout> extends Container<T> 
                 0,0
         )).x,0,Align.bottomRight);
         actor.addAction(Actions.moveTo(0,0,0.2f));
-        invalidateHierarchy();
     }
     public void addFromScreenRight(T actor){
         setActor(actor);
