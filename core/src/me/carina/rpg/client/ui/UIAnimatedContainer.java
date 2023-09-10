@@ -51,4 +51,14 @@ public class UIAnimatedContainer<T extends Actor & Layout> extends Container<T> 
         )).x,0,Align.bottomLeft);
         actor.addAction(Actions.moveTo(0,0,0.2f));
     }
+
+    @Override
+    public void layout() {
+        Actor actor = getActor();
+        if (actor == null) return;
+        float x = actor.getX();
+        float y = actor.getY();
+        super.layout();
+        actor.setPosition(x,y);
+    }
 }
