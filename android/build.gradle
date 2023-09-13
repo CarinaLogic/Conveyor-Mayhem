@@ -19,7 +19,7 @@ android {
         }
     }
     defaultConfig {
-        applicationId "me.carina.rpg"
+        applicationId "me.carina.conveyor"
         minSdkVersion 24
         targetSdkVersion 32
         versionCode 1
@@ -86,7 +86,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'me.carina.rpg/me.carina.rpg.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'me.carina.conveyor/me.carina.conveyor.AndroidLauncher'
 }
 
 eclipse.project.name = appName + "-android"

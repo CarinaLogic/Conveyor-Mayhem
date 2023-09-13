@@ -4,8 +4,8 @@ gwt {
     minHeapSize="1G"
 
     src = files(file("src/")) // Needs to be in front of "modules" below.
-    modules 'me.carina.rpg.GdxDefinition'
-    devModules 'me.carina.rpg.GdxDefinitionSuperdev'
+    modules 'me.carina.conveyor.GdxDefinition'
+    devModules 'me.carina.conveyor.GdxDefinitionSuperdev'
     project.webAppDirName = 'webapp'
 
     compiler {
