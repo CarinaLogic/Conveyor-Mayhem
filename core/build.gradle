@@ -1,7 +1,9 @@
-sourceCompatibility = 8
-targetCompatibility = 8
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+eclipse.project.name = appName + '-core'
 
-sourceSets.main.java.srcDirs = [ "src/" ]
-
-eclipse.project.name = appName + "-core"
+dependencies {
+  api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
+  api "com.badlogicgames.gdx:gdx:$gdxVersion"
+  api "com.github.MrStahlfelge.gdx-websockets:core:$websocketVersion"
+  api "com.github.MrStahlfelge.gdx-websockets:serialization:$websocketSerializationVersion"
+}

@@ -1,137 +1,47 @@
 buildscript {
-    
+  repositories {
+    mavenCentral()
+    maven { url 'https://s01.oss.sonatype.org' }
+    mavenLocal()
+    google()
+    gradlePluginPortal()
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
+  }
+  dependencies {
+    classpath "com.android.tools.build:gradle:$androidPluginVersion"
 
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        gradlePluginPortal()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        google()
-    }
-    dependencies {
-        classpath 'org.wisepersist:gwt-gradle-plugin:1.1.16'
-        classpath 'org.gretty:gretty:3.0.7'
-        classpath 'com.android.tools.build:gradle:7.4.1'
-        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.16'
-        
-
-    }
+  }
 }
 
 allprojects {
-    apply plugin: "eclipse"
-
-    version = '1.0'
-    ext {
-        appName = "conveyor"
-        gdxVersion = '1.12.0'
-        roboVMVersion = '2.3.16'
-        ashleyVersion = '1.7.4'
-        aiVersion = '1.8.2'
-        gdxControllersVersion = '2.2.1'
-        wsVersion = '1.9.10.3'
-        visuiVersion = '1.5.1'
-    }
-
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        google()
-        gradlePluginPortal()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
-        maven { url "https://jitpack.io" }
-    }
+  apply plugin: 'eclipse'
+  apply plugin: 'idea'
 }
 
-project(":desktop") {
-    apply plugin: "java-library"
-
-
-    dependencies {
-        implementation project(":core")
-        implementation project(":server")
-        api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
-        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        api "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:$gdxControllersVersion"
-        implementation "com.github.MrStahlfelge.gdx-websockets:common:$wsVersion"
-    }
+configure(subprojects - project(':android')) {
+  apply plugin: 'java-library'
+  sourceCompatibility = 11
+  compileJava {
+    options.incremental = true
+  }
 }
 
-project(":android") {
-    apply plugin: "com.android.application"
 
-    configurations { natives }
-
-    dependencies {
-        implementation project(":core")
-        implementation project(":server")
-        api "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
-        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
-        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"
-        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
-        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
-        api "com.badlogicgames.gdx-controllers:gdx-controllers-android:$gdxControllersVersion"
-        implementation "com.github.MrStahlfelge.gdx-websockets:common:$wsVersion"
-    }
+subprojects {
+  version = '1.0.0'
+  ext.appName = 'ConveyorMayhem'
+  repositories {
+    mavenCentral()
+    maven { url 'https://s01.oss.sonatype.org' }
+    // You may want to remove the following line if you have errors downloading dependencies.
+    mavenLocal()
+    gradlePluginPortal()
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
+    maven { url 'https://jitpack.io' }
+    maven { url 'https://teavm.org/maven/repository/' }
+  }
 }
 
-project(":ios") {
-    apply plugin: "java-library"
-    apply plugin: "robovm"
-
-
-    dependencies {
-        implementation project(":core")
-        implementation project(":server")
-        api "com.mobidevelop.robovm:robovm-rt:$roboVMVersion"
-        api "com.mobidevelop.robovm:robovm-cocoatouch:$roboVMVersion"
-        api "com.badlogicgames.gdx:gdx-backend-robovm:$gdxVersion"
-        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
-        api "com.badlogicgames.gdx-controllers:gdx-controllers-ios:$gdxControllersVersion"
-        implementation "com.github.MrStahlfelge.gdx-websockets:common:$wsVersion"
-    }
-}
-
-project(":server"){
-    apply plugin: "java-library"
-    dependencies {
-        implementation project(":core")
-        api "com.badlogicgames.gdx:gdx:$gdxVersion"
-        implementation "com.github.MrStahlfelge.gdx-websockets:core:$wsVersion"
-        implementation 'org.java-websocket:Java-WebSocket:1.5.3'
-        implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
-    }
-}
-
-project(":html") {
-    apply plugin: "java-library"
-    apply plugin: "gwt"
-    apply plugin: "war"
-    apply plugin: "org.gretty"
-
-
-    dependencies {
-        implementation project(":core")
-        api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
-        api "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
-        api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
-        api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion:sources"
-        api "com.badlogicgames.gdx-controllers:gdx-controllers-gwt:$gdxControllersVersion"
-        api "com.badlogicgames.gdx-controllers:gdx-controllers-gwt:$gdxControllersVersion:sources"
-        implementation "com.github.MrStahlfelge.gdx-websockets:core:$wsVersion:sources"
-        implementation "com.github.MrStahlfelge.gdx-websockets:html:$wsVersion"
-        implementation "com.github.MrStahlfelge.gdx-websockets:html:$wsVersion:sources"
-    }
-}
-
-project(":core") {
-    apply plugin: "java-library"
-
-
-    dependencies {
-        api "com.badlogicgames.gdx:gdx:$gdxVersion"
-        api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
-        implementation "com.github.MrStahlfelge.gdx-websockets:core:$wsVersion"
-    }
-}
+eclipse.project.name = 'ConveyorMayhem' + '-parent'

@@ -46,17 +46,7 @@ public class Game extends ApplicationAdapter{
 		server.addConnection(new S2CInternalConnection((InternalServer) server, (InternalClient) client));
 //		server.open(18273);
 //		client.addConnection(((ExternalClient) client).connect("localhost",18273));
-		server.getCommandParser().queueScript(new Script(
-				"$array = (range 10)",
-				"<- $array",
-				"$array <- 3.5",
-				"100 -> $array",
-				"for $i in $array @fin",
-				"print $i",
-				"wait 1",
-				"@fin",
-				"print finished"
-		));
+
 	}
 
 	@Override

@@ -10,6 +10,7 @@ public class LoadingTask extends AbstractTask{
     public LoadingTask(FileHandle root) {
         prioritize();
         this.root = root;
+        timed();
     }
 
     @Override

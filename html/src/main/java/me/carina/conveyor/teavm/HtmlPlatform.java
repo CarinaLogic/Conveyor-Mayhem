@@ -1,15 +1,16 @@
-package me.carina.conveyor;
+package me.carina.conveyor.teavm;
 
+import me.carina.conveyor.Platform;
 import me.carina.conveyor.server.AbstractExternalServer;
 
-public class DesktopPlatform implements Platform{
+public class HtmlPlatform implements Platform {
     @Override
     public boolean canHostServer() {
-        return true;
+        return false;
     }
 
     @Override
     public AbstractExternalServer newServer() {
-        return new ExternalServer();
+        return null;
     }
 }
