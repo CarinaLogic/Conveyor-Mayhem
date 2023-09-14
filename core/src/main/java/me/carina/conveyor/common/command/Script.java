@@ -2,9 +2,10 @@ package me.carina.conveyor.common.command;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.IntIntMap;
+import me.carina.conveyor.common.util.Array;
 
 public class Script {
-    String[] commands;
+    Array<String> commands = new Array<>();
     int cursor = 0;
     float waitTime = 0;
     CommandExecutionPolicy executionPolicy = CommandExecutionPolicy.clientPolicy();
@@ -12,7 +13,7 @@ public class Script {
     //Recorded at destination
     IntIntMap jumpCounter = new IntIntMap();
     public Script(String... commands){
-        this.commands = commands;
+        this.commands.addAll(commands);
     }
     //true if it should be removed
     public boolean tick(CommandParser parser){
@@ -22,7 +23,7 @@ public class Script {
         }
         while (true){
             if (waitTime > 0) return false;
-            if (cursor >= commands.length){
+            if (cursor >= commands.size){
                 reset();
                 return true;
             }
@@ -32,7 +33,7 @@ public class Script {
                 cursor = j;
                 jumpCounter.put(j,jumpCounter.get(j,0)+1);
             }
-            parser.parseCommand(commands[cursor]);
+            parser.parseCommand(commands.get(cursor));
             cursor++;
         }
     }
@@ -45,10 +46,10 @@ public class Script {
         return jumpCounter.get(cursor,0);
     }
     public String getCommandAt(int index){
-        return commands[index];
+        return commands.get(index);
     }
     public int getCommandLength(){
-        return commands.length;
+        return commands.size;
     }
     public void queueJump(int source, int dest){
         jumpMap.put(source, dest);
@@ -90,7 +91,7 @@ public class Script {
 
     public Script copyAs(CommandExecutionPolicy policy){
         Script script = new Script();
-        script.commands = commands.clone();
+        script.commands = commands.copy();
         script.cursor = cursor;
         script.executionPolicy = policy;
         script.waitTime = waitTime;

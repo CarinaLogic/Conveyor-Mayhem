@@ -18,8 +18,8 @@ else {
 }
 
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
-mainClassName = 'me.carina.conveyor.DesktopLauncher'
-eclipse.project.name = appName + '-desktop'
+mainClassName = 'me.carina.conveyor.lwjgl3.Lwjgl3Launcher'
+eclipse.project.name = appName + '-lwjgl3'
 sourceCompatibility = 11
 
 dependencies {

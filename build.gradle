@@ -10,6 +10,7 @@ buildscript {
   }
   dependencies {
     classpath "com.android.tools.build:gradle:$androidPluginVersion"
+    classpath "org.wisepersist:gwt-gradle-plugin:$gwtPluginVersion"
 
   }
 }
@@ -27,7 +28,6 @@ configure(subprojects - project(':android')) {
   }
 }
 
-
 subprojects {
   version = '1.0.0'
   ext.appName = 'ConveyorMayhem'
@@ -40,7 +40,6 @@ subprojects {
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
     maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
     maven { url 'https://jitpack.io' }
-    maven { url 'https://teavm.org/maven/repository/' }
   }
 }
 

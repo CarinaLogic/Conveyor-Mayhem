@@ -1,4 +1,4 @@
-package me.carina.conveyor.teavm;
+package me.carina.conveyor.gwt;
 
 import me.carina.conveyor.Platform;
 import me.carina.conveyor.server.AbstractExternalServer;

@@ -1,20 +1,44 @@
-# RPG
-An open-source action rpg with building element. Top-down 3d maps with 2d sprites. Made using libGDX.
-## Note
-This is a personal project made by a CS student with little java experiences. 
-Do not expect me to make a high-quality code.
-Also, I will never make it pay-to-win / put adverts for profit.
-My goal is to make an enjoyable game while getting touch with java, and nothing more.
+# ConveyorMayhem
+
+A complex puzzle game based around processing and transporting materials with conveyors.
+Built using [libGDX](https://libgdx.com/), Project files are generated with [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff).
+
 
 ## Licence
 This project is licenced under the GNU Affero General Public License v3.0.
 If you are one of those corporation that take open-source projects, infest it with ads & microtransactions, and publicize it without credit / without releasing the source code, FUCK YOU.
 
-## Goals
-Here's a list of things that I keep in mind while making this.
-- Not making the action too fast, giving players enough time to make thoughtful decisions
-- Low dependency on RNG
-- Ease to predict what will happen (previews, no hidden mechanic)
-- Minimal grinding
-- Absolutely no pay-to-win
-- Absolutely no ads
+
+## Platforms
+
+- `core`: Main module with the application logic shared by all platforms.
+- `lwjgl3`: Primary desktop platform using LWJGL3.
+- `android`: Android mobile platform. Needs Android SDK.
+- `ios`: iOS mobile platform using RoboVM.
+- `html`: Web platform using GWT and WebGL. Supports only Java projects.
+
+## Gradle
+
+This project uses [Gradle](http://gradle.org/) to manage dependencies.
+The Gradle wrapper was included, so you can run Gradle tasks using `gradlew.bat` or `./gradlew` commands.
+Useful Gradle tasks and flags:
+
+- `--continue`: when using this flag, errors will not stop the tasks from running.
+- `--daemon`: thanks to this flag, Gradle daemon will be used to run chosen tasks.
+- `--offline`: when using this flag, cached dependency archives will be used.
+- `--refresh-dependencies`: this flag forces validation of all dependencies. Useful for snapshot versions.
+- `android:lint`: performs Android project validation.
+- `build`: builds sources and archives of every project.
+- `cleanEclipse`: removes Eclipse project data.
+- `cleanIdea`: removes IntelliJ project data.
+- `clean`: removes `build` folders, which store compiled classes and built archives.
+- `eclipse`: generates Eclipse project data.
+- `html:dist`: compiles GWT sources. The compiled application can be found at `html/build/dist`: you can use any HTTP server to deploy it.
+- `html:superDev`: compiles GWT sources and runs the application in SuperDev mode. It will be available at [localhost:8080/html](http://localhost:8080/html). Use only during development.
+- `idea`: generates IntelliJ project data.
+- `lwjgl3:jar`: builds application's runnable jar, which can be found at `lwjgl3/build/libs`.
+- `lwjgl3:run`: starts the application.
+- `test`: runs unit tests (if any).
+
+Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
+For example, `core:clean` removes `build` folder only from the `core` project.
