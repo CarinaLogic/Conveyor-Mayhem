@@ -1,16 +1,12 @@
 package me.carina.conveyor.common.block;
 
+import me.carina.conveyor.common.ArrayFeature;
 import me.carina.conveyor.common.Definition;
-import me.carina.conveyor.common.Feature;
 import me.carina.conveyor.common.file.AssetGroup;
+import me.carina.conveyor.common.resource.Resource;
+import me.carina.conveyor.common.util.Array;
 
-public class Block extends Feature {
-    Direction direction;
-    int width, height;
-    int x,y,z;
-    Recipes recipes;
-    IOProperties ioProperties;
-
+public class Recipes extends ArrayFeature<Recipe> {
     @Override
     public Class<? extends Definition> getDefClass() {
         return null;
@@ -21,8 +17,9 @@ public class Block extends Feature {
         return null;
     }
 
-    @Override
-    public void tick() {
-        recipes.
+    public Array<Resource> process(Block block){
+        for (Recipe recipe : this) {
+
+        }
     }
 }

@@ -1,16 +1,11 @@
-package me.carina.conveyor.common.block;
+package me.carina.conveyor.common.resource;
 
 import me.carina.conveyor.common.Definition;
 import me.carina.conveyor.common.Feature;
 import me.carina.conveyor.common.file.AssetGroup;
 
-public class Block extends Feature {
-    Direction direction;
-    int width, height;
-    int x,y,z;
-    Recipes recipes;
-    IOProperties ioProperties;
-
+public class Resource extends Feature {
+    int count;
     @Override
     public Class<? extends Definition> getDefClass() {
         return null;
@@ -23,6 +18,6 @@ public class Block extends Feature {
 
     @Override
     public void tick() {
-        recipes.
+
     }
 }
