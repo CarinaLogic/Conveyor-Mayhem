@@ -4,7 +4,7 @@ import me.carina.conveyor.common.ArrayFeature;
 import me.carina.conveyor.common.Definition;
 import me.carina.conveyor.common.file.AssetGroup;
 
-public class IOProperties extends ArrayFeature<IOProperty> {
+public class Outputs extends ArrayFeature<ResourceFlow> {
     @Override
     public Class<? extends Definition> getDefClass() {
         return null;
