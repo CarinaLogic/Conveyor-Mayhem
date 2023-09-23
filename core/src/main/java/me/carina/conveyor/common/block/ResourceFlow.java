@@ -10,6 +10,8 @@ public class ResourceFlow extends Feature {
     @ChildFeature
     Resource resource;
     int x,y,z;
+    float flow;
+    float maxFlow;
 
     @Override
     public Class<? extends Definition> getDefClass() {
@@ -27,6 +29,6 @@ public class ResourceFlow extends Feature {
     }
 
     public boolean isValid(Block block){
-        block.direction
+        return false;
     }
 }

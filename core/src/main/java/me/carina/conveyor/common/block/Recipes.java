@@ -18,8 +18,6 @@ public class Recipes extends ArrayFeature<Recipe> {
     }
 
     public Array<Resource> process(Block block){
-        for (Recipe recipe : this) {
-
-        }
+        return null;
     }
 }

@@ -45,6 +45,7 @@ public class CommandParser {
         //Quoted string = String
         //Starts with $ = CommandData that is registered on its name
         //Starts with @ = CommandLabel
+        //Number~Number = DataRange
         //Number = double
         //true/false = boolean
         //Anything else = Argument
@@ -253,6 +254,22 @@ public class CommandParser {
         if (arg.startsWith("$")){
             String regName = arg.substring(1);
             return new CommandData(this,regName,data.get(regName));
+        }
+        if (arg.contains("~")){
+            String[] num = arg.split("~");
+            if (num.length == 2){
+                try {
+                    if (num[0].isEmpty()){
+                        return DataRange.max(Double.valueOf(num[1]).floatValue());
+                    }
+                    else if (num[1].isEmpty()){
+                        return DataRange.min(Double.valueOf(num[0]).floatValue());
+                    }
+                    else {
+                        return DataRange.minMax(Double.valueOf(num[0]).floatValue(),Double.valueOf(num[1]).floatValue());
+                    }
+                } catch (Exception ignored){}
+            }
         }
         if (arg.startsWith("@")){
             String labelName = arg.substring(1);
