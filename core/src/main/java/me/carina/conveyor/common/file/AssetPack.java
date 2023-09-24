@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.ObjectMap;
+import me.carina.conveyor.common.Definition;
 import me.carina.conveyor.common.util.ArrayMap;
 import me.carina.conveyor.common.util.TripleMap;
 import me.carina.conveyor.common.AbstractGameInstance;

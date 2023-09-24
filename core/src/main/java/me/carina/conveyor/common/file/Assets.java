@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import me.carina.conveyor.common.*;
@@ -87,7 +88,7 @@ public class Assets {
                 for (AssetPack group : assetGroups) {
                     JsonValue jsonValue = group.get(path, JsonValue.class);
                     if (jsonValue != null) {
-                        value = json.readValue(type, jsonValue);
+                        value = json.fromJson(null, jsonValue.toJson(JsonWriter.OutputType.json));
                     }
                 }
             }
