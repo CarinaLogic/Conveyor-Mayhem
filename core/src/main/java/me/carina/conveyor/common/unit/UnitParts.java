@@ -23,8 +23,4 @@ public class UnitParts extends ArrayFeature<UnitPart>{
         return null;
     }
 
-    @Override
-    public Class<? extends Definition> getDefClass() {
-        return null;
-    }
 }

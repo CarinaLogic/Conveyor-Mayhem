@@ -42,10 +42,6 @@ public class Equipments extends Feature {
         armorSlots.get(index).setEquipment(this,equipment);
     }
 
-    @Override
-    public Class<? extends Definition> getDefClass() {
-        return null;
-    }
 
     @Override
     public AssetGroup getAssetGroup() {

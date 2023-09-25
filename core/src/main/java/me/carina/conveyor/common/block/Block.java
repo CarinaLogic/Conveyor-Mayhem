@@ -14,11 +14,6 @@ public class Block extends Feature {
     Outputs outputs;
 
     @Override
-    public Class<? extends Definition> getDefClass() {
-        return null;
-    }
-
-    @Override
     public AssetGroup getAssetGroup() {
         return null;
     }

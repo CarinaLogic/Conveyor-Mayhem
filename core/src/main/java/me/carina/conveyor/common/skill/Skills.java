@@ -17,10 +17,6 @@ public class Skills extends ArrayFeature<Skill> {
         return true;
     }
 
-    @Override
-    public Class<? extends Definition> getDefClass() {
-        return null;
-    }
 
     @Override
     public AssetGroup getAssetGroup() {

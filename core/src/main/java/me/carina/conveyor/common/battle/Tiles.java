@@ -21,8 +21,5 @@ public class Tiles extends Array2DFeature<Tile>{
         }
         super.tick();
     }
-    @Override
-    public Class<? extends Definition> getDefClass() {
-        return null;
-    }
+
 }

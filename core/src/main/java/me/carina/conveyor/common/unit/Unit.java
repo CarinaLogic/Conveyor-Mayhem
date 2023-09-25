@@ -18,11 +18,6 @@ public class Unit extends Feature {
     public UnitParts unitParts = new UnitParts();
     public Unit(){}//for json
     @Override
-    public Class<? extends Definition> getDefClass() {
-        return Def.class;
-    }
-
-    @Override
     public AssetGroup getAssetGroup() {
         return AssetGroup.units;
     }
@@ -32,10 +27,15 @@ public class Unit extends Feature {
 
     }
 
-    public static class Def extends Feature.Def{
+    public static class Def extends Definition<Unit>{
 
         @Override
-        public void initFeature(Feature feature) {
+        public Class<Unit> getDefinedClass() {
+            return Unit.class;
+        }
+
+        @Override
+        public void init(Unit definedObject) {
 
         }
     }

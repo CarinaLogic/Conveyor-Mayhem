@@ -82,31 +82,6 @@ public abstract class Feature implements Identifiable, Defined, AssetGrouped, Di
         return getId().toPath(getAssetGroup());
     }
 
-
-    public static abstract class Def implements Identifiable, Definition {
-        transient Identifier id;
-        public abstract void initFeature(Feature feature);
-
-        @Override
-        public void init(Defined definedObject) {
-            if (definedObject instanceof Feature) {
-                Feature feature = (Feature) definedObject;
-                feature.setId(id);
-                initFeature(feature);
-            }
-        }
-
-        @Override
-        public Identifier getId() {
-            return id;
-        }
-
-        @Override
-        public void setId(Identifier id) {
-            this.id = id;
-        }
-    }
-
     public void contextAndTick(){
         Game.getInstance().getContext().add(this);
         tick();

@@ -7,10 +7,6 @@ import me.carina.conveyor.common.resource.Resource;
 import me.carina.conveyor.common.util.Array;
 
 public class Recipes extends ArrayFeature<Recipe> {
-    @Override
-    public Class<? extends Definition> getDefClass() {
-        return null;
-    }
 
     @Override
     public AssetGroup getAssetGroup() {

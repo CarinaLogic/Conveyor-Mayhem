@@ -17,10 +17,6 @@ public class Factions extends ArrayFeature<Faction> {
     public Faction getFaction(Unit unit){
         return this.firstMatch(f -> f.getUnits().contains(unit));
     }
-    @Override
-    public Class<? extends Definition> getDefClass() {
-        return null;
-    }
 
     @Override
     public AssetGroup getAssetGroup() {

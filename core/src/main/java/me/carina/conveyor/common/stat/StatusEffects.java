@@ -5,10 +5,6 @@ import me.carina.conveyor.common.Definition;
 import me.carina.conveyor.common.file.AssetGroup;
 
 public class StatusEffects extends ArrayFeature<StatusEffect> {
-    @Override
-    public Class<? extends Definition> getDefClass() {
-        return null;
-    }
 
     @Override
     public AssetGroup getAssetGroup() {

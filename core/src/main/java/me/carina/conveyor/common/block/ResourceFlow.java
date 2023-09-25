@@ -13,10 +13,6 @@ public class ResourceFlow extends Feature {
     float flow;
     float maxFlow;
 
-    @Override
-    public Class<? extends Definition> getDefClass() {
-        return null;
-    }
 
     @Override
     public AssetGroup getAssetGroup() {

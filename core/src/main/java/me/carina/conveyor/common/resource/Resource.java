@@ -5,10 +5,6 @@ import me.carina.conveyor.common.Feature;
 import me.carina.conveyor.common.file.AssetGroup;
 
 public class Resource extends Feature {
-    @Override
-    public Class<? extends Definition> getDefClass() {
-        return null;
-    }
 
     @Override
     public AssetGroup getAssetGroup() {

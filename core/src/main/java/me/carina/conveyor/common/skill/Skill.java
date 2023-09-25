@@ -9,11 +9,6 @@ public class Skill extends Feature {
     public Skill(){} //for json
 
     @Override
-    public Class<? extends Definition> getDefClass() {
-        return Def.class;
-    }
-
-    @Override
     public AssetGroup getAssetGroup() {
         return AssetGroup.skills;
     }
@@ -27,14 +22,15 @@ public class Skill extends Feature {
         return name;
     }
 
-    public static class Def extends Feature.Def{
+    public static class Def extends Definition<Skill>{
 
         @Override
-        public void initFeature(Feature feature) {
-            if (feature instanceof Skill) {
-                Skill skill = (Skill) feature;
-                //TODO
-            }
+        public Class<Skill> getDefinedClass() {
+            return Skill.class;
+        }
+
+        @Override
+        public void init(Skill definedObject) {
 
         }
     }

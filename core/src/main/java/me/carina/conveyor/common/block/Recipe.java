@@ -9,10 +9,6 @@ import me.carina.conveyor.common.util.Array;
 public class Recipe extends Feature {
     Array<Resource> input;
     Array<Resource> output;
-    @Override
-    public Class<? extends Definition> getDefClass() {
-        return null;
-    }
 
     @Override
     public AssetGroup getAssetGroup() {

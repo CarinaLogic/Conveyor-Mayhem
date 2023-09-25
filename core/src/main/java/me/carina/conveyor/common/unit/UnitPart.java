@@ -41,8 +41,4 @@ public class UnitPart extends Feature {
         return AssetGroup.units;
     }
 
-    @Override
-    public Class<? extends Definition> getDefClass() {
-        return null;
-    }
 }

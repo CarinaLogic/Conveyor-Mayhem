@@ -28,9 +28,4 @@ public class BattleMap extends Feature {
     }
 
 
-    @Override
-    public Class<? extends Definition> getDefClass() {
-        return null;
-    }
-
 }

@@ -4,14 +4,16 @@ import me.carina.conveyor.common.Definition;
 import me.carina.conveyor.common.Feature;
 
 public class Item extends Resource{
-    @Override
-    public Class<? extends Definition> getDefClass() {
-        return Def.class;
-    }
-    public static class Def extends Feature.Def {
+
+    public static class Def extends Definition<Item> {
 
         @Override
-        public void initFeature(Feature feature) {
+        public Class<Item> getDefinedClass() {
+            return Item.class;
+        }
+
+        @Override
+        public void init(Item definedObject) {
 
         }
     }

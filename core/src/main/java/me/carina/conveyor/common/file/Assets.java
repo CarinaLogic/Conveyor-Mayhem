@@ -50,8 +50,10 @@ public class Assets {
         T value = defaultValue;
         if (ClassReflection.isAssignableFrom(Defined.class, type)){
             try {
-                Defined v = (Defined) ClassReflection.newInstance(type);
-                value = (T) v;
+                Defined d = getAsDefined(path);
+                if (d != null && ClassReflection.isAssignableFrom(type,d.getClass())){
+                    value = (T) d;
+                }
             } catch (ReflectionException e) {
                 game.getLogger().error("Could not initialize " + type.getSimpleName());
             }
@@ -96,11 +98,22 @@ public class Assets {
         if (value instanceof Identifiable){
             ((Identifiable)value).setId(path.toIdentifier());
         }
-        if (value instanceof Defined){
-            Definition def = get(path,((Defined)value).getDefClass());
-            if (def != null) def.init(((Defined) value));
-        }
         return value;
+    }
+    public <T extends Defined> T getAsDefined(Path path) throws ReflectionException {
+        Definition<T> def;
+        for (AssetPack group : assetGroups) {
+            JsonValue jsonValue = group.get(path, JsonValue.class);
+            if (jsonValue != null) {
+                def = json.fromJson(null, jsonValue.toJson(JsonWriter.OutputType.json));
+                if (def != null){
+                    T t = ClassReflection.newInstance(def.getDefinedClass());
+                    def.init(t);
+                    return t;
+                }
+            }
+        }
+        return null;
     }
     public <T> T get(Path path, Class<T> type){
         return get(path, type, null);

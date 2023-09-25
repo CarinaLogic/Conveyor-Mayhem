@@ -16,10 +16,6 @@ public class Faction extends Feature {
         return this.team == faction.team;
     }
 
-    @Override
-    public Class<? extends Definition> getDefClass() {
-        return null;
-    }
 
     @Override
     public AssetGroup getAssetGroup() {

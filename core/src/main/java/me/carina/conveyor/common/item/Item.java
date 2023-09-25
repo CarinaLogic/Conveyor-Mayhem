@@ -5,10 +5,6 @@ import me.carina.conveyor.common.file.AssetGroup;
 import me.carina.conveyor.common.Feature;
 
 public class Item extends Feature {
-    @Override
-    public Class<? extends Definition> getDefClass() {
-        return Def.class;
-    }
 
     @Override
     public AssetGroup getAssetGroup() {
@@ -20,9 +16,15 @@ public class Item extends Feature {
 
     }
 
-    public static class Def extends Feature.Def {
+    public static class Def extends Definition<Item> {
+
         @Override
-        public void initFeature(Feature feature) {
+        public Class<Item> getDefinedClass() {
+            return Item.class;
+        }
+
+        @Override
+        public void init(Item definedObject) {
 
         }
     }

@@ -31,8 +31,4 @@ public class Units extends ArrayFeature<Unit>{
     public AssetGroup getAssetGroup() {
         return null;
     }
-    @Override
-    public Class<? extends Definition> getDefClass() {
-        return null;
-    }
 }

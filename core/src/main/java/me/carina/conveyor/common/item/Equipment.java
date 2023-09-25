@@ -9,20 +9,19 @@ public class Equipment extends Item{
     EquipType equipType;
     Array<Multiplier> multipliers = new Array<>();
 
-    @Override
-    public Class<? extends Definition> getDefClass() {
-        return Def.class;
-    }
-    public static class Def extends Feature.Def {
+    public static class Def extends Definition<Equipment> {
         EquipType equipType;
         Array<Multiplier> multipliers;
+
         @Override
-        public void initFeature(Feature feature) {
-            if (feature instanceof Equipment) {
-                Equipment equipment = (Equipment) feature;
-                equipment.equipType = equipType;
-                equipment.multipliers = multipliers;
-            }
+        public Class<Equipment> getDefinedClass() {
+            return Equipment.class;
+        }
+
+        @Override
+        public void init(Equipment definedObject) {
+            definedObject.equipType = equipType;
+            definedObject.multipliers = multipliers;
         }
     }
 
