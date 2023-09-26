@@ -4,6 +4,9 @@ import me.carina.conveyor.common.Definition;
 import me.carina.conveyor.common.Feature;
 
 public class Item extends Resource{
+    public Item(){
+        type = ResourceType.item;
+    }
 
     public static class Def extends Definition<Item> {
 

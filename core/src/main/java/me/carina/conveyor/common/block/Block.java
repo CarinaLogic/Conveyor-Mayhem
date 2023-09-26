@@ -1,17 +1,18 @@
 package me.carina.conveyor.common.block;
 
 import com.badlogic.gdx.math.Vector3;
-import me.carina.conveyor.common.Definition;
+import me.carina.conveyor.Game;
 import me.carina.conveyor.common.Feature;
+import me.carina.conveyor.common.command.CommandExecutionPolicy;
+import me.carina.conveyor.common.command.Script;
 import me.carina.conveyor.common.file.AssetGroup;
 
 public class Block extends Feature {
     Direction direction;
     Vector3 size;
     Vector3 pos;
-    Inputs inputs;
-    Recipes recipes;
-    Outputs outputs;
+    String script;
+    boolean updated;
 
     @Override
     public AssetGroup getAssetGroup() {
@@ -20,8 +21,22 @@ public class Block extends Feature {
 
     @Override
     public void tick() {
-
+        Script script = new Script(this.script);
+        script.setExecutionPolicy(CommandExecutionPolicy.blockProcessingPolicy());
+        Game.getInstance().getCommandParser().immediateRun(script);
     }
+    public boolean update(){
+        updated = false;
+        Script script = new Script(this.script);
+        script.setExecutionPolicy(CommandExecutionPolicy.blockProcessingPolicy());
+        Game.getInstance().getCommandParser().immediateRun(script);
+        return updated;
+    }
+
+    public void setUpdated(boolean updated) {
+        this.updated = updated;
+    }
+
     public Vector3 toGlobalCoords(Vector3 localCoords){
         return direction.transform(localCoords,size).add(pos);
     }

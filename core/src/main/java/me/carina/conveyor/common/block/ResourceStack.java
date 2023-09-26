@@ -2,12 +2,11 @@ package me.carina.conveyor.common.block;
 
 import me.carina.conveyor.common.Feature;
 import me.carina.conveyor.common.file.AssetGroup;
-import me.carina.conveyor.common.util.Array;
+import me.carina.conveyor.common.resource.Resource;
 
-public class Recipe extends Feature {
-    Array<ResourceStack> input;
-    Array<ResourceStack> output;
-
+public class ResourceStack extends Feature {
+    Resource resource;
+    float consumption;
     @Override
     public AssetGroup getAssetGroup() {
         return null;
@@ -17,6 +16,4 @@ public class Recipe extends Feature {
     public void tick() {
 
     }
-
-
 }

@@ -37,6 +37,9 @@ public class Script {
             cursor++;
         }
     }
+    public void setExecutionPolicy(CommandExecutionPolicy policy){
+        this.executionPolicy = policy;
+    }
     public void reset(){
         this.cursor = 0;
         this.jumpCounter.clear();

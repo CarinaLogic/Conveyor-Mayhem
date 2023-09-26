@@ -13,13 +13,17 @@ public class CommandParser {
     Array<Command> commands = new Array<>();
     Array<Script> scripts = new Array<>();
     int cursor = 0;
+    Script immediateRunningScript = null;
     public CommandParser(){
+        commands.add(new AnimationCommand());
         commands.add(new ArrayCommand());
         commands.add(new BooleanCommand());
         commands.add(new BranchCommand());
         commands.add(new DataCommand());
         commands.add(new IOCommand());
         commands.add(new MathCommand());
+        commands.add(new ResourceCommand());
+        commands.add(new WaitCommand());
     }
     public void tick(){
         while (cursor < scripts.size) {
@@ -32,7 +36,14 @@ public class CommandParser {
         cursor = 0;
     }
 
+    public synchronized void immediateRun(Script script){
+        immediateRunningScript = script;
+        script.tick(this);
+        immediateRunningScript = null;
+    }
+
     public Script getScript(){
+        if (immediateRunningScript != null) return immediateRunningScript;
         return scripts.get(cursor);
     }
 

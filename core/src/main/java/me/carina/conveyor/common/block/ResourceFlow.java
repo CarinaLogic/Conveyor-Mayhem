@@ -1,17 +1,18 @@
 package me.carina.conveyor.common.block;
 
+import com.badlogic.gdx.math.Vector3;
 import me.carina.conveyor.common.ChildFeature;
 import me.carina.conveyor.common.Definition;
 import me.carina.conveyor.common.Feature;
+import me.carina.conveyor.common.command.DataRange;
 import me.carina.conveyor.common.file.AssetGroup;
 import me.carina.conveyor.common.resource.Resource;
 
 public class ResourceFlow extends Feature {
     @ChildFeature
     Resource resource;
-    int x,y,z;
-    float flow;
-    float maxFlow;
+    Vector3 direction;
+    DataRange flow;
 
 
     @Override
@@ -24,7 +25,4 @@ public class ResourceFlow extends Feature {
 
     }
 
-    public boolean isValid(Block block){
-        return false;
-    }
 }
