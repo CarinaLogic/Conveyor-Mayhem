@@ -6,7 +6,7 @@ import me.carina.conveyor.common.resource.Resource;
 
 public class ResourceStack extends Feature {
     Resource resource;
-    float consumption;
+    float count;
     @Override
     public AssetGroup getAssetGroup() {
         return null;
