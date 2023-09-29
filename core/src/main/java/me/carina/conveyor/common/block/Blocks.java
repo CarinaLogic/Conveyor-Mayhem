@@ -6,10 +6,11 @@ import me.carina.conveyor.Game;
 import me.carina.conveyor.common.ArrayFeature;
 import me.carina.conveyor.common.Definition;
 import me.carina.conveyor.common.file.AssetGroup;
+import me.carina.conveyor.common.util.Array;
 import me.carina.conveyor.common.util.Map;
 
 public class Blocks extends ArrayFeature<Block> {
-    public Map<Vector3,ResourceStack> facingItems = new Map<>();
+    public Array<ResourceFacing> facingItems = new Array<>();
     boolean updated;
 
     @Override
@@ -17,14 +18,20 @@ public class Blocks extends ArrayFeature<Block> {
         return null;
     }
 
-    public void addFacingItem(Vector3 facing, ResourceStack item){
-        if (Facing.isValid(facing)){
-            facingItems.put(facing.cpy(),item);
+    public void addFacingItem(ResourceFlow item, Vector3 pos){
+        if (Facing.isValid(pos)){
+            Array<ResourceFacing> duplicates = facingItems.match(f -> f.direction.equals(pos));
+            if (duplicates.isEmpty()){
+                facingItems.add(new ResourceFacing(item));
+            }
+            else {
+                facingItems.get(0).merge(item);
+            }
         }
-        else Game.getInstance().getLogger().error("Failed to register an item due to invalid Facing "+facing);
+        else Game.getInstance().getLogger().error("Failed to register an item due to invalid facing " + item);
     }
-    public ResourceStack getFacingItem(Vector3 facing){
-        return facingItems.get(facing);
+    public ResourceFacing getFacingItem(Vector3 facing){
+        return facingItems.firstMatch(f -> f.direction.equals(facing));
     }
     public void reset(){
         facingItems.clear();
@@ -37,7 +44,11 @@ public class Blocks extends ArrayFeature<Block> {
         while (updated){
             updated = false;
             for (Block block : this) {
-                if (block.update()) updated = true;
+                block.tick();
+                if (block.updated){
+                    block.updated = false;
+                    updated = true;
+                }
             }
         }
     }

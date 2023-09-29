@@ -5,6 +5,7 @@ import me.carina.conveyor.Game;
 import me.carina.conveyor.common.Feature;
 import me.carina.conveyor.common.command.CommandExecutionPolicy;
 import me.carina.conveyor.common.command.Script;
+import me.carina.conveyor.common.command.scripts.ResourceScript;
 import me.carina.conveyor.common.file.AssetGroup;
 
 public class Block extends Feature {
@@ -12,7 +13,7 @@ public class Block extends Feature {
     Vector3 size;
     Vector3 pos;
     String script;
-    boolean updated;
+    boolean updated = false;
 
     @Override
     public AssetGroup getAssetGroup() {
@@ -21,17 +22,11 @@ public class Block extends Feature {
 
     @Override
     public void tick() {
-        Script script = new Script(this.script);
-        script.setExecutionPolicy(CommandExecutionPolicy.blockProcessingPolicy());
-        Game.getInstance().getCommandParser().immediateRun(script);
-    }
-    public boolean update(){
         updated = false;
-        Script script = new Script(this.script);
-        script.setExecutionPolicy(CommandExecutionPolicy.blockProcessingPolicy());
-        Game.getInstance().getCommandParser().immediateRun(script);
-        return updated;
+        Game.getInstance().getCommandParser().immediateRun(new ResourceScript(this,
+            Game.getInstance().getContext().get(Blocks.class),script));
     }
+
 
     public void setUpdated(boolean updated) {
         this.updated = updated;

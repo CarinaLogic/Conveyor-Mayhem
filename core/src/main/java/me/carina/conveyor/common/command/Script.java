@@ -2,6 +2,7 @@ package me.carina.conveyor.common.command;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.IntIntMap;
+import me.carina.conveyor.Game;
 import me.carina.conveyor.common.util.Array;
 
 public class Script {
@@ -16,7 +17,7 @@ public class Script {
         this.commands.addAll(commands);
     }
     //true if it should be removed
-    public boolean tick(CommandParser parser){
+    public boolean tick(){
         if (waitTime != 0){
             waitTime -= Gdx.graphics.getDeltaTime();
             if (waitTime <= 0) waitTime = 0;
@@ -33,7 +34,7 @@ public class Script {
                 cursor = j;
                 jumpCounter.put(j,jumpCounter.get(j,0)+1);
             }
-            parser.parseCommand(commands.get(cursor));
+            Game.getInstance().getCommandParser().parseCommand(commands.get(cursor));
             cursor++;
         }
     }

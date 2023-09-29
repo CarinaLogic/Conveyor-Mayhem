@@ -27,7 +27,7 @@ public class CommandParser {
     }
     public void tick(){
         while (cursor < scripts.size) {
-            if (scripts.get(cursor).tick(this)) {
+            if (scripts.get(cursor).tick()) {
                 scripts.removeIndex(cursor);
             } else {
                 cursor++;
@@ -38,7 +38,7 @@ public class CommandParser {
 
     public synchronized void immediateRun(Script script){
         immediateRunningScript = script;
-        script.tick(this);
+        script.tick();
         immediateRunningScript = null;
     }
 
@@ -303,6 +303,14 @@ public class CommandParser {
             //noinspection unchecked
             return (T) o;
         }
+        throw new CommandException(CommandException.ExceptionType.type_mismatch);
+    }
+    public <T> Array<T> getDataAsArray(String name, Class<T> type){
+        Object o = data.get(name);
+        try {
+            //noinspection unchecked
+            return (Array<T>) o;
+        }catch (Exception ignored){}
         throw new CommandException(CommandException.ExceptionType.type_mismatch);
     }
 

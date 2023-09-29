@@ -16,4 +16,12 @@ public class ResourceStack extends Feature {
     public void tick() {
 
     }
+
+    public Resource getResource() {
+        return resource;
+    }
+
+    public float getCount() {
+        return count;
+    }
 }

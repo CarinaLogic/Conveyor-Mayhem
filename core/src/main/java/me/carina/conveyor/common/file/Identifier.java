@@ -10,6 +10,18 @@ public class Identifier {
         this.nameSpace = nameSpace;
         this.id = id;
     }
+    public Identifier(String id){
+        String[] ids = id.split(":");
+        if (ids.length == 1){
+            this.nameSpace = "core";
+            this.id = ids[0];
+        }
+        else if (ids.length == 2){
+            this.nameSpace = ids[0];
+            this.id = ids[1];
+        }
+        else throw new RuntimeException();
+    }
 
     public String getIdString() {
         return id;

@@ -11,8 +11,9 @@ import me.carina.conveyor.common.resource.Resource;
 public class ResourceFlow extends Feature {
     @ChildFeature
     Resource resource;
-    Vector3 direction;
-    DataRange flow;
+    float flow;
+    DataRange size;
+    DataRange heat;
 
 
     @Override
@@ -23,6 +24,15 @@ public class ResourceFlow extends Feature {
     @Override
     public void tick() {
 
+    }
+
+    public ResourceFlow merge(ResourceFlow f){
+        ResourceFlow nFlow = new ResourceFlow();
+        nFlow.flow = this.flow + f.flow;
+        nFlow.size = this.size.expand(f.size);
+        nFlow.heat = this.heat.expand(f.heat);
+        nFlow.resource = this.resource;
+        return nFlow;
     }
 
 }

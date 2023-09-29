@@ -6,9 +6,18 @@ import me.carina.conveyor.common.util.Array;
 public class BranchCommand extends Command {
 
     @CommandFunction
-    public void if_$(boolean condition, CommandLabel label){
+    public void if_$(boolean condition, CommandLabel onFalse){
         if (!condition){
-            getScript().jumpToLabel(label);
+            getScript().jumpToLabel(onFalse);
+        }
+    }
+    @CommandFunction
+    public void if_$_$_else(boolean condition, CommandLabel onFalse, CommandLabel dest){
+        if (!condition){
+            getScript().jumpToLabel(onFalse);
+        }
+        else {
+            getScript().queueJump(getScript().getLabelIndex(onFalse), getScript().getLabelIndex(dest));
         }
     }
     @CommandFunction

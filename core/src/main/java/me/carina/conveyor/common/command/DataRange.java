@@ -2,6 +2,8 @@ package me.carina.conveyor.common.command;
 
 import com.badlogic.gdx.math.MathUtils;
 
+import java.util.Objects;
+
 public class DataRange {
     //INCLUSIVE ON BOTH SIDES
     float min = 0;
@@ -37,6 +39,9 @@ public class DataRange {
         if (minSpecified && value < min) return false;
         if (maxSpecified && value > max) return false;
         return true;
+    }
+    public boolean isInRange(DataRange parent){
+        return parent.expand(this).equals(parent);
     }
 
     public void setMax(float max) {
@@ -78,5 +83,18 @@ public class DataRange {
             else ma = Math.min(this.max, range.max);
         }
         return new DataRange(mi,ma,mis,mas);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DataRange range = (DataRange) o;
+        return Float.compare(min, range.min) == 0 && minSpecified == range.minSpecified && Float.compare(max, range.max) == 0 && maxSpecified == range.maxSpecified;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(min, minSpecified, max, maxSpecified);
     }
 }
