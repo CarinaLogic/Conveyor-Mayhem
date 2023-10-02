@@ -9,7 +9,7 @@ public class Resource extends Feature {
 
     @Override
     public AssetGroup getAssetGroup() {
-        return null;
+        return AssetGroup.resources;
     }
 
     @Override

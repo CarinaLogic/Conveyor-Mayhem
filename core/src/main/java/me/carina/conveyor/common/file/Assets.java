@@ -45,6 +45,9 @@ public class Assets {
             return null;
         }
     }
+    public <T extends AssetGrouped> T get(Identifier id, Class<T> type){
+        return this.get(id,type,null);
+    }
     @SuppressWarnings("unchecked")
     public <T> T get(Path path, Class<T> type, T defaultValue){
         T value = defaultValue;

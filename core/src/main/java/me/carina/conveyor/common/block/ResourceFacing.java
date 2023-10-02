@@ -8,7 +8,7 @@ public class ResourceFacing {
     boolean clogged;
     public ResourceFacing(ResourceFlow flow){
         this.flow = flow;
-        this.clogged = true;
+        this.clogged = false;
     }
 
     public void setClogged(boolean clogged) {
@@ -19,6 +19,15 @@ public class ResourceFacing {
         return flow;
     }
     public void merge(ResourceFlow flow){
-        this.flow = this.flow.merge(flow);
+        if (this.flow.resource.equals(flow.resource)){
+            this.flow.flow += flow.flow;
+        }
+        else {
+            this.clogged = true;
+        }
+    }
+
+    public boolean isClogged() {
+        return clogged;
     }
 }

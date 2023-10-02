@@ -1,7 +1,9 @@
 package me.carina.conveyor.common.block;
 
+import me.carina.conveyor.Game;
 import me.carina.conveyor.common.command.DataRange;
 import me.carina.conveyor.common.file.Identifier;
+import me.carina.conveyor.common.resource.Resource;
 import me.carina.conveyor.common.resource.ResourceType;
 
 public class ResourceMatcher {
@@ -10,6 +12,7 @@ public class ResourceMatcher {
     DataRange flow;
     DataRange size;
     DataRange heat;
+    float consumption;
     public boolean matches(ResourceFlow resourceFlow){
         if (type != null && !type.equals(resourceFlow.resource.getType())) return false;
         if (id != null && !id.equals(resourceFlow.resource.getId())) return false;
@@ -37,5 +40,21 @@ public class ResourceMatcher {
 
     public void setType(ResourceType type) {
         this.type = type;
+    }
+
+    public void setConsumption(float consumption) {
+        this.consumption = consumption;
+    }
+    public float getConsumption() {
+        return consumption;
+    }
+
+    public ResourceFlow constructFlow(){
+        ResourceFlow flow = new ResourceFlow();
+        flow.resource = Game.getInstance().getAssets().get(id,Resource.class);
+        flow.heat = heat;
+        flow.size = size;
+        flow.flow = this.flow.getMax();
+        return flow;
     }
 }

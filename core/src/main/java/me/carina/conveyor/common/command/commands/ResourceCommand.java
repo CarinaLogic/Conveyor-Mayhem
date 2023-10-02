@@ -1,7 +1,6 @@
 package me.carina.conveyor.common.command.commands;
 
 import com.badlogic.gdx.math.Vector3;
-import me.carina.conveyor.Game;
 import me.carina.conveyor.common.block.*;
 import me.carina.conveyor.common.command.Command;
 import me.carina.conveyor.common.command.CommandFunction;
@@ -52,18 +51,48 @@ public class ResourceCommand extends Command {
         //TODO
         return true;
     }
-    public void take(Vector3 coords){
+    @CommandFunction
+    public void resource_take(Vector3 coords){
         Blocks blocks = getParser().getData("$blocks", Blocks.class);
         ResourceFacing facing = blocks.getFacingItem(coords);
         if (facing != null){
-            ResourceMatcher matcher = getParser().getData("$resource", ResourceMatcher.class);
-            if (matcher.matches(facing.getFlow())){
-                Array<ResourceFlow> inv = getParser().getDataAsArray("$inventory",ResourceFlow.class);
-                inv.add(facing.getFlow());
+            if (!facing.isClogged()){
+                ResourceMatcher matcher = getParser().getData("$resource", ResourceMatcher.class);
+                if (matcher.matches(facing.getFlow())){
+                    Array<ResourceFlow> inv = getParser().getDataAsArray("$inventory",ResourceFlow.class);
+                    inv.add(facing.getFlow());
+                    facing.setClogged(false);
+                }
+                else facing.setClogged(true);
+            }
+        }
+        getParser().setData("$resource", new ResourceMatcher());
+    }
+    @CommandFunction
+    public void resource_craft_input(){
+        ResourceMatcher matcher = getParser().getData("$resource", ResourceMatcher.class);
+        Array<ResourceMatcher> buffer = getParser().getDataAsArray("$buffer",ResourceMatcher.class);
+        buffer.add(matcher);
+    }
+    public void resource_craft_output(){
+        ResourceMatcher matcher = getParser().getData("$resource", ResourceMatcher.class);
+        Array<ResourceMatcher> buffer = getParser().getDataAsArray("$buffer",ResourceMatcher.class);
+        Array<ResourceFlow> inv = getParser().getDataAsArray("$inventory", ResourceFlow.class);
+        for (ResourceMatcher b : buffer) {
+            boolean matched = false;
+            for (ResourceFlow flow : inv) {
+                if (b.matches(flow)){
+                    inv.remove(flow);
+                    matched = true;
+                }
             }
         }
     }
-    public void give(Vector3 coords){
-
+    @CommandFunction
+    public void resource_give(Vector3 coords){
+        ResourceMatcher matcher = getParser().getData("$resource", ResourceMatcher.class);
+        Blocks blocks = getParser().getData("$blocks", Blocks.class);
+        blocks.addFacingItem(matcher.constructFlow(),coords);
+        getParser().setData("$resource", new ResourceMatcher());
     }
 }

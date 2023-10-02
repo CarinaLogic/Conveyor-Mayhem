@@ -16,7 +16,7 @@ public class ResourceScript extends Script {
         Game.getInstance().getCommandParser().setData("$block", block);
         Game.getInstance().getCommandParser().setData("$blocks", blocks);
         Game.getInstance().getCommandParser().setData("$inventory",new Array<ResourceFlow>());
-        Game.getInstance().getCommandParser().setData("$error",false);
+        Game.getInstance().getCommandParser().setData("$buffer",new Array<ResourceMatcher>());
         setExecutionPolicy(CommandExecutionPolicy.blockProcessingPolicy());
     }
 }

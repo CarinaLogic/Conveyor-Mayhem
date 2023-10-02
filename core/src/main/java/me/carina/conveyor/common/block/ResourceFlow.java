@@ -26,13 +26,4 @@ public class ResourceFlow extends Feature {
 
     }
 
-    public ResourceFlow merge(ResourceFlow f){
-        ResourceFlow nFlow = new ResourceFlow();
-        nFlow.flow = this.flow + f.flow;
-        nFlow.size = this.size.expand(f.size);
-        nFlow.heat = this.heat.expand(f.heat);
-        nFlow.resource = this.resource;
-        return nFlow;
-    }
-
 }

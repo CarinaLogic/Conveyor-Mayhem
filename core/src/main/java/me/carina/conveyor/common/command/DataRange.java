@@ -49,6 +49,14 @@ public class DataRange {
         this.maxSpecified = true;
     }
 
+    public float getMax() {
+        return max;
+    }
+
+    public float getMin() {
+        return min;
+    }
+
     public void setMin(float min) {
         this.min = min;
         this.minSpecified = true;
