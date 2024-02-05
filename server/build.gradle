@@ -1,7 +1,7 @@
 apply plugin: 'application'
 
 sourceCompatibility = 11
-mainClassName = 'me.carina.conveyor.server.ServerLauncher'
+mainClassName = 'me.carina.rpg.server.ServerLauncher'
 eclipse.project.name = appName + '-server'
 
 dependencies {

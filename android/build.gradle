@@ -32,14 +32,14 @@ android {
     exclude '**/*.gwt.xml'
   }
   defaultConfig {
-    applicationId 'me.carina.conveyor'
+    applicationId 'me.carina.rpg'
     minSdkVersion 24
     targetSdkVersion 32
     versionCode 1
     versionName "1.0"
     multiDexEnabled true
   }
-  namespace "me.carina.conveyor"
+  namespace "me.carina.rpg"
   compileOptions {
     sourceCompatibility "11"
     targetCompatibility "11"
@@ -124,7 +124,7 @@ tasks.register('run', Exec) {
   }
 
   def adb = path + "/platform-tools/adb"
-  commandLine "$adb", 'shell', 'am', 'start', '-n', 'me.carina.conveyor/me.carina.conveyor.android.AndroidLauncher'
+  commandLine "$adb", 'shell', 'am', 'start', '-n', 'me.carina.rpg/me.carina.rpg.android.AndroidLauncher'
 }
 
 eclipse.project.name = appName + "-android"
