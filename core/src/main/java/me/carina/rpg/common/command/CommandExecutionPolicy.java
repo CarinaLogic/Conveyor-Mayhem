@@ -50,7 +50,7 @@ public class CommandExecutionPolicy {
                 DataCommand.class, IOCommand.class, MathCommand.class, WaitCommand.class);
         return policy;
     }
-    public static CommandExecutionPolicy blockProcessingPolicy(){
+    public static CommandExecutionPolicy skillEvaluationPolicy(){
         CommandExecutionPolicy policy = new CommandExecutionPolicy();
         policy.allow(ArrayCommand.class, BooleanCommand.class, BranchCommand.class, SkillPredictionCommand.class,DataCommand.class,
                 IOCommand.class, MathCommand.class);

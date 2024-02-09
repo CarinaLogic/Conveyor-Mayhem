@@ -1,28 +1,30 @@
 package me.carina.rpg.common.rng;
 
+import com.badlogic.gdx.math.RandomXS128;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.LongQueue;
 import com.badlogic.gdx.utils.Queue;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
+import me.carina.rpg.Game;
 import me.carina.rpg.common.Feature;
 import me.carina.rpg.common.file.AssetGroup;
 
 import java.util.Random;
 
 public class RandomNumberGenerator extends Feature {
-    static long MASK = 0xc18f771905d3L;
-    static long MULTIPLIER = 0xd6ca9689174eL;
-    static long MASK2 = 0x495952b7117eL;
-    long seed;
-    long amplitude; //default=0 always_same=-1 always_max_or_min=1
-    long frequency; //default=20
-    long variation; //default=20 always_aligned_to_curve=0
-    long timeOffset; //default=0 starts_at_max=0.5 start_downward=1 start_at_min=1.5
-    long valueOffset; //default=0 mid_is_0=-50 mid_is_100=50
-    long index;
-
-    public long getNumber(long offset){
-        //TODO
-        return 0;
+    RandomXS128 random;
+    public RandomNumberGenerator(){
+        random = new RandomXS128();
+    }
+    public int getUntil(int max){
+        return random.nextInt(max);
+    }
+    public <T extends Enum<?>> T getEnum(Class<T> cls) {
+        if (ClassReflection.isEnum(cls)) return null;
+        Object[] constants = ClassReflection.getEnumConstants(cls);
+        if (constants.length == 0) return null;
+        //noinspection unchecked
+        return (T) constants[this.getUntil(constants.length)];
     }
 
     @Override
@@ -32,6 +34,7 @@ public class RandomNumberGenerator extends Feature {
 
     @Override
     public void tick() {
-
+        //How to combat rng abusing #1, advance the rng every tick
+        random.nextInt();
     }
 }

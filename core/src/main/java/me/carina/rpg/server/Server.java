@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import me.carina.rpg.common.AbstractGameInstance;
 import me.carina.rpg.common.battle.BattleMap;
+import me.carina.rpg.common.rng.RandomNumberGenerator;
 import me.carina.rpg.common.util.Array;
 import me.carina.rpg.packets.connection.Connection;
 import me.carina.rpg.server.tasks.AbstractTask;
