@@ -3,12 +3,12 @@ package me.carina.rpg.common;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TransformDrawable;
 import com.badlogic.gdx.utils.Align;
 
-public abstract class ImageDisplay extends Actor{
-    Feature feature;
+public abstract class ImageDisplay extends Image {
     boolean flipX = false;
     boolean flipY = false;
 

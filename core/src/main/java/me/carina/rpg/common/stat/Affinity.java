@@ -11,7 +11,7 @@ public class Affinity extends Feature {
     }
     @Override
     public AssetGroup getAssetGroup() {
-        return null;
+        return AssetGroup.ui;
     }
 
     @Override
@@ -19,7 +19,9 @@ public class Affinity extends Feature {
 
     }
 
-
+    public AffinityType getType() {
+        return type;
+    }
 
     public enum AffinityType{
         fire,water

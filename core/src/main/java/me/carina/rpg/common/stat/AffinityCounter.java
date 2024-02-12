@@ -1,8 +1,7 @@
 package me.carina.rpg.common.stat;
 
-import me.carina.rpg.common.util.CounterMap;
-import me.carina.rpg.common.util.Map;
+import me.carina.rpg.common.CounterMapFeature;
 
-public class AffinityCounter extends CounterMap<Affinity> {
+public class AffinityCounter extends CounterMapFeature<Affinity> {
 
 }

@@ -1,6 +1,7 @@
 package me.carina.rpg.client.battle;
 
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import me.carina.rpg.client.ui.UILabel;
 import me.carina.rpg.client.ui.UITableView;
 import me.carina.rpg.common.Display;
@@ -12,7 +13,7 @@ public class UISkillInfo extends UITableView implements Display<Skill> {
         this.skill = skill;
         add(new UILabel().supply(skill::getName));
         row();
-        add(new UILabel().supply())
+
     }
     @Override
     public Skill getFeature() {
