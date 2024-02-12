@@ -1,15 +1,9 @@
 package me.carina.rpg.common.rng;
 
 import com.badlogic.gdx.math.RandomXS128;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
-import com.badlogic.gdx.utils.LongQueue;
-import com.badlogic.gdx.utils.Queue;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
-import me.carina.rpg.Game;
 import me.carina.rpg.common.Feature;
 import me.carina.rpg.common.file.AssetGroup;
-
-import java.util.Random;
 
 public class RandomNumberGenerator extends Feature {
     RandomXS128 random;
@@ -26,6 +20,7 @@ public class RandomNumberGenerator extends Feature {
         //noinspection unchecked
         return (T) constants[this.getUntil(constants.length)];
     }
+
 
     @Override
     public AssetGroup getAssetGroup() {

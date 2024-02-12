@@ -1,7 +1,7 @@
 package me.carina.rpg.common.stat;
 
 public enum StatType {
-    hp(true), sp(true), ap(true), attack, defence, hit, avoid;
+    hp(true), sp(true), mp(true), attack, defence, hit, avoid;
     final boolean variable;
     StatType(){
         variable = false;

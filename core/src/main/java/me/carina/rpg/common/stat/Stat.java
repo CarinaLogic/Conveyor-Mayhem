@@ -16,6 +16,7 @@ public class Stat {
         this.statType = type;
         this.affinity = affinity;
     }
+
     public float getBase(){
         return base;
     }

@@ -9,12 +9,12 @@ public class UnitStats {
     public UnitStats(){
         stats.add(new Stat(StatType.hp,null));
         stats.add(new Stat(StatType.sp,null));
-        for (Affinity affinity : Affinity.values()) {
-            stats.add(new Stat(StatType.ap,affinity));
-            stats.add(new Stat(StatType.attack,affinity));
-            stats.add(new Stat(StatType.defence,affinity));
-            stats.add(new Stat(StatType.hit,affinity));
-            stats.add(new Stat(StatType.avoid,affinity));
+        for (Affinity.AffinityType affinity : Affinity.AffinityType.values()) {
+            stats.add(new Stat(StatType.mp,new Affinity(affinity)));
+            stats.add(new Stat(StatType.attack,new Affinity(affinity)));
+            stats.add(new Stat(StatType.defence,new Affinity(affinity)));
+            stats.add(new Stat(StatType.hit,new Affinity(affinity)));
+            stats.add(new Stat(StatType.avoid,new Affinity(affinity)));
         }
     }
     public Stat getStat(StatType type, Affinity affinity){

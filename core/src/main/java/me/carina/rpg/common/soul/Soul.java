@@ -13,7 +13,7 @@ public class Soul extends Feature {
     public Soul(){} //for json
     public void generateRandom(){
         this.strength = Game.getInstance().getContext().get(RandomNumberGenerator.class).getUntil(20);
-        this.affinity = Game.getInstance().getContext().get(RandomNumberGenerator.class).getEnum(Affinity.class);
+        this.affinity = new Affinity(Game.getInstance().getContext().get(RandomNumberGenerator.class).getEnum(Affinity.AffinityType.class));
     }
 
     @Override

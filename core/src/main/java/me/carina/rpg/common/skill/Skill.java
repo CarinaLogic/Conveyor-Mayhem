@@ -12,6 +12,9 @@ public class Skill extends Feature {
     String name = "クラスターフォール";
     int growth;
     AffinityCounter power;
+    int wt;
+    int sp;
+    int mp;
     AffinityCounter affinities;
     SkillStatusEffects statusEffects;
     Script animationScript;
@@ -29,6 +32,34 @@ public class Skill extends Feature {
 
     public String getName() {
         return name;
+    }
+
+    public int getMp() {
+        return mp;
+    }
+
+    public int getSp() {
+        return sp;
+    }
+
+    public int getWt() {
+        return wt;
+    }
+
+    public int getGrowth() {
+        return growth;
+    }
+
+    public AffinityCounter getPower() {
+        return power;
+    }
+
+    public SkillStatusEffects getStatusEffects() {
+        return statusEffects;
+    }
+
+    public AffinityCounter getAffinities() {
+        return affinities;
     }
 
     public static class Def extends Definition<Skill>{
