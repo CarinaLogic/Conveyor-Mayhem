@@ -9,8 +9,19 @@ import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 import com.badlogic.gdx.utils.Align;
 
 public class UIAnimatedContainer<T extends Actor & Layout> extends Container<T> {
-    public UIAnimatedContainer(){}
-
+    public UIAnimatedContainer(){
+        hide();
+    }
+    public UIAnimatedContainer<T> hide(){
+        setScale(0);
+        setVisible(false);
+        return this;
+    }
+    public UIAnimatedContainer<T> show(){
+        setScale(1);
+        setVisible(true);
+        return this;
+    }
     public void addFromScreenTop(T actor){
         setActor(actor);
         actor.clearActions();

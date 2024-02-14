@@ -27,6 +27,10 @@ public class UIVerticalSelection extends UIVerticalListView implements CursorPos
         group.setMinCheckCount(count);
     }
 
+    public int getCheckedIndex(){
+        return group.getCheckedIndex();
+    }
+
     @Override
     public boolean goUp() {
         position--;

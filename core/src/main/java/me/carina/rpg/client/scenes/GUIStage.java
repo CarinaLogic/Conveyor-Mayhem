@@ -20,4 +20,8 @@ public abstract class GUIStage<T extends BaseScreen> extends GameStage<T> {
     }
 
     public abstract void init(Table table);
+
+    public Table getTable() {
+        return table;
+    }
 }
