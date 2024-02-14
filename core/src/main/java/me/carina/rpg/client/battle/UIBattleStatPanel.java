@@ -34,17 +34,18 @@ public class UIBattleStatPanel extends Stack implements Display<Unit> {
             }
             tableView.row();
             {
-                tableView.add(new UILabel().text("HP")).padRight(1);
-                hpBar = new UIHpBar();
+                tableView.add(new UILabel().supplyString(()->"HP")).padRight(1);
+                hpBar = new UIHpBar().supplyValue(()-> unit.getStats().getStat(StatType.hp).get(unit));
                 hpBar.addAction(Actions.forever(Actions.run(() -> hpBar.value(
                         unit.getStats().getStat(StatType.hp).get(unit) * 100 /
                                 unit.getStats().getStat(StatType.hp).getMax(unit)))));
-                tableView.add(hpBar).expandX().fillX();
+                tableView.add(new UIHpBar().supplyValue(()-> unit.getStats().getStat(StatType.hp).get(unit))
+                    .supplyMax()).expandX().fillX();
             }
             tableView.row();
             {
-                tableView.add(new UILabel().text("SP")).padRight(1);
-                spBar = new UISpBar();
+                tableView.add(new UILabel().supplyString(()->"SP")).padRight(1);
+                spBar = new UISpBar().supplyValue();
                 spBar.addAction(Actions.forever(Actions.run(() -> spBar.value(
                         unit.getStats().getStat(StatType.sp).get(unit) * 100 /
                                 unit.getStats().getStat(StatType.sp).getMax(unit)))));
@@ -76,14 +77,14 @@ public class UIBattleStatPanel extends Stack implements Display<Unit> {
     public static class UIHpBar extends UIProgressBar{
         public UIHpBar(){
             super();
-            color(UIColor.hp);
+            supplyColor(()->UIColor.hp);
         }
     }
 
     public static class UISpBar extends UIProgressBar{
         public UISpBar(){
             super();
-            color(UIColor.sp);
+            supplyColor(()->UIColor.sp);
         }
     }
 }

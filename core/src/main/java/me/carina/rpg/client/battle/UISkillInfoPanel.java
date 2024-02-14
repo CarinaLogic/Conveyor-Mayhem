@@ -10,11 +10,11 @@ public class UISkillInfoPanel extends UITableView implements Display<Skill> {
     Skill skill;
     public UISkillInfoPanel(Skill skill){
         this.skill = skill;
-        add(new UILabel().supply(skill::getName));
+        add(new UILabel().supplyString(skill::getName));
         row();
         add(skill.getAffinities().newDisplay(AffinityIconsDisplay.class));
         row();
-        add(new UILabel().supply(() -> Integer.toString(skill.getMp())));
+        add(new UILabel().supplyString(() -> Integer.toString(skill.getMp())));
     }
     @Override
     public Skill getFeature() {

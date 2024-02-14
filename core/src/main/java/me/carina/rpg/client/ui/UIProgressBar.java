@@ -7,17 +7,35 @@ import me.carina.rpg.Game;
 import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.file.Path;
 
+import java.util.function.IntSupplier;
+import java.util.function.Supplier;
+
 public class UIProgressBar extends ProgressBar {
+    IntSupplier maxSupplier = ()->100;
+    IntSupplier valueSupplier = ()->0;
+    Supplier<Color> colorSupplier = ()->Color.WHITE;
     public UIProgressBar() {
-        super(0,100,0.1f,false,getPrefStyle());
+        super(0,100,1,false,getPrefStyle());
     }
-    public UIProgressBar color(Color color){
-        setColor(color);
+    public UIProgressBar supplyMax(IntSupplier supplier){
+        maxSupplier = supplier;
         return this;
     }
-    public UIProgressBar value(float percent){
-        setValue(percent);
+    public UIProgressBar supplyValue(IntSupplier supplier){
+        valueSupplier = supplier;
         return this;
+    }
+    public UIProgressBar supplyColor(Supplier<Color> supplier){
+        colorSupplier = supplier;
+        return this;
+    }
+
+    @Override
+    public void act(float delta) {
+        setRange(0,maxSupplier.getAsInt());
+        setValue(valueSupplier.getAsInt());
+        setColor(colorSupplier.get());
+        super.act(delta);
     }
 
     @Override

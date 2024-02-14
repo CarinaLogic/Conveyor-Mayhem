@@ -8,26 +8,31 @@ import me.carina.rpg.Game;
 import me.carina.rpg.common.file.AssetGroup;
 import me.carina.rpg.common.file.Path;
 
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class UILabel extends Label{
     boolean shadowed = true;
-    Supplier<String> supplier = null;
+    Supplier<String> stringSupplier = ()->"";
+    Supplier<Color> colorSupplier = ()->Color.WHITE;
     public UILabel(){
         super("",new LabelStyle(
                 Game.getInstance().getAssets().get(new Path("core", AssetGroup.ui, "font"), BitmapFont.class),
                 Color.WHITE));
         getBitmapFontCache().setUseIntegerPositions(false);
     }
-    public UILabel supply(Supplier<String> supplier){
-        this.supplier = supplier;
+    public UILabel supplyString(Supplier<String> supplier){
+        this.stringSupplier = supplier;
+        return this;
+    }
+
+    public UILabel supplyColor(Supplier<Color> supplier){
+        colorSupplier = supplier;
         return this;
     }
 
     @Override
     public void act(float delta) {
-        if (supplier != null) setText(supplier.get());
+        if (stringSupplier != null) setText(stringSupplier.get());
         super.act(delta);
     }
 
@@ -52,12 +57,6 @@ public class UILabel extends Label{
         getBitmapFontCache().setPosition(getX(), getY());
         getBitmapFontCache().draw(batch);
     }
-
-    public UILabel text(String text){
-        setText(text);
-        return this;
-    }
-
 
     public UILabel color(Color color){
         setColor(color);

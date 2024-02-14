@@ -22,37 +22,44 @@ public class UIAnimatedContainer<T extends Actor & Layout> extends Container<T> 
         setVisible(true);
         return this;
     }
-    public void addFromScreenTop(T actor){
+    public T unpack(){
+        return getActor();
+    }
+    public UIAnimatedContainer<T> addFromScreenTop(T actor){
         setActor(actor);
         actor.clearActions();
         actor.setPosition(0,screenToLocalCoordinates(new Vector2(
                 0,0
         )).y, Align.bottomLeft);
         actor.addAction(Actions.moveTo(0,0,0.2f));
+        return this;
     }
-    public void addFromScreenBottom(T actor){
+    public UIAnimatedContainer<T> addFromScreenBottom(T actor){
         setActor(actor);
         actor.clearActions();
         actor.setPosition(0,screenToLocalCoordinates(new Vector2(
                 0, Gdx.graphics.getHeight()
         )).y,Align.topLeft);
         actor.addAction(Actions.moveTo(0,0,0.2f));
+        return this;
     }
-    public void addFromScreenLeft(T actor){
+    public UIAnimatedContainer<T> addFromScreenLeft(T actor){
         setActor(actor);
         actor.clearActions();
         actor.setPosition(screenToLocalCoordinates(new Vector2(
                 0,0
         )).x,0,Align.bottomRight);
         actor.addAction(Actions.moveTo(0,0,0.2f));
+        return this;
     }
-    public void addFromScreenRight(T actor){
+    public UIAnimatedContainer<T> addFromScreenRight(T actor){
         setActor(actor);
         actor.clearActions();
         actor.setPosition(screenToLocalCoordinates(new Vector2(
                 Gdx.graphics.getWidth(),0
         )).x,0,Align.bottomLeft);
         actor.addAction(Actions.moveTo(0,0,0.2f));
+        return this;
     }
 
     @Override
