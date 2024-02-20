@@ -11,7 +11,7 @@ public class UIBattleSkillEntry extends UILabelButton implements Display<Skill> 
     public UIBattleSkillEntry(Skill skill) {
         super();
         this.skill = skill;
-        text(skill.getName());
+        supplyString(skill::getName);
     }
 
     @Override

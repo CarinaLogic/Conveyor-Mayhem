@@ -18,8 +18,6 @@ public class UIBattleStatPanel extends Stack implements Display<Unit> {
     Unit unit;
     UILabel nameLabel;
     UIUnitDisplay unitDisplay;
-    UIHpBar hpBar;
-    UISpBar spBar;
     public UIBattleStatPanel(Unit unit){
         this.unit = unit;
         {
@@ -27,29 +25,24 @@ public class UIBattleStatPanel extends Stack implements Display<Unit> {
             add(tableView);
             {
                 nameLabel = new UILabel();
-                nameLabel.addAction(Actions.forever(Actions.run(() -> nameLabel.text(
-                        unit.getName()
-                ))));
+                nameLabel.supplyString(unit::getName);
                 tableView.add(nameLabel).left().colspan(2);
             }
             tableView.row();
             {
                 tableView.add(new UILabel().supplyString(()->"HP")).padRight(1);
-                hpBar = new UIHpBar().supplyValue(()-> unit.getStats().getStat(StatType.hp).get(unit));
-                hpBar.addAction(Actions.forever(Actions.run(() -> hpBar.value(
-                        unit.getStats().getStat(StatType.hp).get(unit) * 100 /
-                                unit.getStats().getStat(StatType.hp).getMax(unit)))));
-                tableView.add(new UIHpBar().supplyValue(()-> unit.getStats().getStat(StatType.hp).get(unit))
-                    .supplyMax()).expandX().fillX();
+                tableView.add(new UIHpBar()
+                    .supplyValue(()-> unit.getStats().getStat(StatType.hp).get(unit))
+                    .supplyMax(()-> unit.getStats().getStat(StatType.hp).getMax(unit)))
+                    .expandX().fillX();
             }
             tableView.row();
             {
                 tableView.add(new UILabel().supplyString(()->"SP")).padRight(1);
-                spBar = new UISpBar().supplyValue();
-                spBar.addAction(Actions.forever(Actions.run(() -> spBar.value(
-                        unit.getStats().getStat(StatType.sp).get(unit) * 100 /
-                                unit.getStats().getStat(StatType.sp).getMax(unit)))));
-                tableView.add(spBar).expandX().fillX();
+                tableView.add(new UISpBar()
+                        .supplyValue(()-> unit.getStats().getStat(StatType.sp).get(unit))
+                        .supplyMax(()-> unit.getStats().getStat(StatType.sp).getMax(unit)))
+                    .expandX().fillX();
             }
         }
         {

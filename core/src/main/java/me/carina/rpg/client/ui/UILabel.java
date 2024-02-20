@@ -32,7 +32,8 @@ public class UILabel extends Label{
 
     @Override
     public void act(float delta) {
-        if (stringSupplier != null) setText(stringSupplier.get());
+        setText(stringSupplier.get());
+        setColor(colorSupplier.get());
         super.act(delta);
     }
 

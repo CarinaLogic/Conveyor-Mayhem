@@ -42,6 +42,7 @@ public class UILabelButton extends TextButton implements CursorHandler{
     @Override
     public void act(float delta) {
         setText(stringSupplier.get());
+        setColor(colorSupplier.get());
         super.act(delta);
     }
 

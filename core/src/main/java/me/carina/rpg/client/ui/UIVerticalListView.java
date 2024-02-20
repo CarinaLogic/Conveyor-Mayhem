@@ -1,13 +1,22 @@
 package me.carina.rpg.client.ui;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.utils.SnapshotArray;
+import me.carina.rpg.common.ArrayDisplayHandler;
+import me.carina.rpg.common.Feature;
+import me.carina.rpg.common.util.Array;
+
+import java.util.function.Supplier;
 
 public class UIVerticalListView extends UITableView implements CursorPositionHolder{
     int position;
+    Supplier<Array<Actor>> entrySupplier = Array::new;
+    Supplier<Color> colorSupplier = ()->Color.WHITE;
     ScrollPane pane;
     InnerTable innerTable;
     public UIVerticalListView(){
@@ -15,6 +24,13 @@ public class UIVerticalListView extends UITableView implements CursorPositionHol
         super.add(pane);
         innerTable = new InnerTable(this);
         pane.setActor(innerTable);
+    }
+
+    @Override
+    public void act(float delta) {
+        setColor(colorSupplier.get());
+
+        super.act(delta);
     }
 
     public <T extends Actor> Cell<T> add(T actor) {
