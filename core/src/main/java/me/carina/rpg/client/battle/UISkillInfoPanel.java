@@ -14,7 +14,14 @@ public class UISkillInfoPanel extends UITableView implements Display<Skill> {
         row();
         add(skill.getAffinities().newDisplay(AffinityIconsDisplay.class));
         row();
+        add(new UILabel().supplyString(() -> "MP"));
         add(new UILabel().supplyString(() -> Integer.toString(skill.getMp())));
+        row();
+        add(new UILabel().supplyString(() -> "SP"));
+        add(new UILabel().supplyString(() -> Integer.toString(skill.getSp())));
+        row();
+        add(new UILabel().supplyString(() -> "WT"));
+        add(new UILabel().supplyString(() -> Integer.toString(skill.getWt())));
     }
     @Override
     public Skill getFeature() {

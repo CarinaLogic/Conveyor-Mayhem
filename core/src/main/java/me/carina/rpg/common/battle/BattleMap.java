@@ -10,12 +10,9 @@ public class BattleMap extends Feature {
     public Tiles tiles;
     @ChildFeature
     public Factions factions;
-    @ChildFeature
-    public TurnOrder turnOrder;
     public BattleMap() {
         tiles = new Tiles();
         factions = new Factions();
-        turnOrder = new TurnOrder();
     }
 
     public int getWidth(){return tiles.getWidth();}

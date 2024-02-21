@@ -28,13 +28,13 @@ public class ExternalClient extends Client {
 
             @Override
             public boolean onMessage(WebSocket webSocket, String packet) {
-                recieve(webSocket.getSerializer().deserialize(packet), getConnection(webSocket));
+                recieve(webSocket.getSerializer().deserialize(packet), getConnections().get(webSocket));
                 return true;
             }
 
             @Override
             public boolean onMessage(WebSocket webSocket, byte[] packet) {
-                recieve(webSocket.getSerializer().deserialize(packet), getConnection(webSocket));
+                recieve(webSocket.getSerializer().deserialize(packet), getConnections().get(webSocket));
                 return true;
             }
 

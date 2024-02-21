@@ -29,6 +29,14 @@ public class BattleScreen extends BaseScreen {
         return actorStage;
     }
 
+    public BattleMap getBattleMap() {
+        return map;
+    }
+
+    public void setBattleMap(BattleMap map) {
+        this.map = map;
+    }
+
     @Override
     public boolean canChangeScreen() {
         return true;

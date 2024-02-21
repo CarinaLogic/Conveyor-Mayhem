@@ -64,4 +64,8 @@ public class Unit extends Feature {
     public int getWt() {
         return wt;
     }
+
+    public void setWt(int wt) {
+        this.wt = wt;
+    }
 }

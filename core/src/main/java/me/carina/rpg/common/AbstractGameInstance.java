@@ -11,11 +11,12 @@ import me.carina.rpg.common.file.AssetFilterProvider;
 import me.carina.rpg.common.file.Assets;
 import me.carina.rpg.packets.Packet;
 import me.carina.rpg.packets.connection.Connection;
+import me.carina.rpg.packets.connection.Connections;
 
 public abstract class AbstractGameInstance implements PacketHandler, AssetFilterProvider, ApplicationListener {
     Logger logger;
     Assets assets;
-    Array<Connection> connections;
+    Connections connections;
     Serializer serializer = new JsonSerializer();
     Queue<DirectedPacket> packetQueue = new Queue<>();
     CommandParser commandParser = new CommandParser();
@@ -23,7 +24,7 @@ public abstract class AbstractGameInstance implements PacketHandler, AssetFilter
     public AbstractGameInstance(String loggerTag) {
         this.assets = new Assets(this,this);
         this.logger = new Logger(loggerTag);
-        connections = new Array<>();
+        connections = new Connections();
     }
 
     @Override
@@ -35,16 +36,10 @@ public abstract class AbstractGameInstance implements PacketHandler, AssetFilter
         else logger.error("Received non-packet object ("+object.getClass().getSimpleName()+"), ignoring");
     }
 
-    public Array<Connection> getConnections() {
+    public Connections getConnections() {
         return connections;
     }
 
-    public Connection getConnection(Object object){
-        for (Connection connection : connections) {
-            if (connection.match(object)) return connection;
-        }
-        return null;
-    }
 
     @Override
     public void render() {
@@ -65,7 +60,7 @@ public abstract class AbstractGameInstance implements PacketHandler, AssetFilter
     }
 
     public boolean removeConnection(Connection connection){
-        return connections.removeValue(connection, false);
+        return connections.remove(connection);
     }
 
     public Assets getAssets() {

@@ -15,7 +15,6 @@ import java.util.function.Supplier;
 
 public class UIVerticalListView extends UITableView implements CursorPositionHolder{
     int position;
-    Supplier<Array<Actor>> entrySupplier = Array::new;
     Supplier<Color> colorSupplier = ()->Color.WHITE;
     ScrollPane pane;
     InnerTable innerTable;

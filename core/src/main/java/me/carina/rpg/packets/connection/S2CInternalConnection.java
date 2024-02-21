@@ -15,7 +15,7 @@ public class S2CInternalConnection extends S2CConnection{
     @Override
     public void send(Packet object) {
         Game.getInstance().getLogger().debug(object.toString());
-        client.recieve(client.getSerializer().deserialize(client.getSerializer().serializeAsString(object)), client.getConnection(server));
+        client.recieve(client.getSerializer().deserialize(client.getSerializer().serializeAsString(object)), client.getConnections().get(server));
     }
 
     @Override
