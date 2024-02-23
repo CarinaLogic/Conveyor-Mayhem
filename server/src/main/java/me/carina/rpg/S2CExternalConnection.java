@@ -15,6 +15,7 @@ public class S2CExternalConnection extends S2CConnection {
     @Override
     public void send(Packet object) {
         webSocket.send(getServer().getSerializer().serialize(object));
+        Game.getInstance().getLogger().debug("Sent "+object);
     }
 
     @Override

@@ -9,6 +9,7 @@ import me.carina.rpg.common.unit.Units;
 import me.carina.rpg.packets.S2CBattleRefreshPacket;
 
 public class Factions extends ArrayFeature<Faction> {
+    transient Unit prevActiveUnit = null;
 
     public Factions(){
         add(new Faction());
@@ -24,15 +25,24 @@ public class Factions extends ArrayFeature<Faction> {
     @Override
     public void tick() {
         super.tick();
-        Unit u = getActiveUnit();
-        if (u == null){
-            for (Faction faction : this) {
-                for (Unit unit : faction.getUnits()) {
-                    unit.setWt(unit.getWt()-1);
-                }
-            }
-            if (getActiveUnit() != null){
+        if (prevActiveUnit == null || prevActiveUnit.getWt() > 0){
+            Unit activeUnit = getActiveUnit();
+            if (activeUnit != null){
+                prevActiveUnit = activeUnit;
                 Game.getInstance().getConnections().sendAll(new S2CBattleRefreshPacket());
+            }
+            else {
+                prevActiveUnit = null;
+                for (Faction faction : this) {
+                    for (Unit unit : faction.getUnits()) {
+                        unit.setWt(unit.getWt() - 1);
+                    }
+                }
+                Unit newActiveUnit = getActiveUnit();
+                if (newActiveUnit != null){
+                    prevActiveUnit = newActiveUnit;
+                    Game.getInstance().getConnections().sendAll(new S2CBattleRefreshPacket());
+                }
             }
         }
     }

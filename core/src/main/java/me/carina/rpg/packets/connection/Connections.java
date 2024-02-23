@@ -1,5 +1,6 @@
 package me.carina.rpg.packets.connection;
 
+import me.carina.rpg.Game;
 import me.carina.rpg.common.util.Array;
 import me.carina.rpg.packets.Packet;
 

@@ -11,7 +11,7 @@ public class Unit extends Feature {
     String name = "Alice";
     int x;
     int y;
-    int wt = 0;
+    int wt = 10;
     Skills skills = new Skills();
     Equipments equipments = new Equipments();
     UnitStats stats = new UnitStats();

@@ -14,6 +14,7 @@ public abstract class C2SPacket implements Packet{
         if (instance instanceof Server && connection instanceof S2CConnection){
             Server server = (Server) instance;
             S2CConnection con = (S2CConnection) connection;
+            server.getLogger().debug("Received "+ this);
             onRecieve(server,con);
         }
     }
