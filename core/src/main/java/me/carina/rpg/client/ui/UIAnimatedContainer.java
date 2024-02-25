@@ -7,8 +7,15 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 import com.badlogic.gdx.utils.Align;
+import me.carina.rpg.common.block.Direction;
+
+import java.util.function.BooleanSupplier;
+import java.util.function.Supplier;
 
 public class UIAnimatedContainer<T extends Actor & Layout> extends Container<T> {
+    BooleanSupplier displaySupplier = () -> false;
+    Supplier<Direction> directionSupplier = () -> Direction.none;
+    Supplier<T> actorSupplier = () -> null;
     public UIAnimatedContainer(){
         hide();
     }
@@ -22,9 +29,46 @@ public class UIAnimatedContainer<T extends Actor & Layout> extends Container<T> 
         setVisible(true);
         return this;
     }
+    public UIAnimatedContainer<T> supplyDisplay(BooleanSupplier supplier){
+        this.displaySupplier = supplier;
+        return this;
+    }
+    //Direction that the Actor is coming FROM, not velocity
+    public UIAnimatedContainer<T> supplyDirection(Supplier<Direction> supplier){
+        this.directionSupplier = supplier;
+        return this;
+    }
+    public UIAnimatedContainer<T> supplyActor(Supplier<T> supplier){
+        this.actorSupplier = supplier;
+        return this;
+    }
+
+    @Override
+    public void act(float delta) {
+        T actor = getActor();
+        T newActor = actorSupplier.get();
+        if (actor != newActor){
+            if (newActor == null){
+                hide();
+                setActor(null);
+            }
+            else {
+                show();
+                Direction d = directionSupplier.get();
+                if (d == Direction.top) addFromScreenTop(newActor);
+                if (d == Direction.bottom) addFromScreenBottom(newActor);
+                if (d == Direction.left) addFromScreenLeft(newActor);
+                if (d == Direction.right) addFromScreenRight(newActor);
+                if (d == Direction.none) setActor(newActor);
+            }
+        }
+        super.act(delta);
+    }
+
     public T unpack(){
         return getActor();
     }
+
     public UIAnimatedContainer<T> addFromScreenTop(T actor){
         setActor(actor);
         actor.clearActions();
@@ -60,6 +104,9 @@ public class UIAnimatedContainer<T extends Actor & Layout> extends Container<T> 
         )).x,0,Align.bottomLeft);
         actor.addAction(Actions.moveTo(0,0,0.2f));
         return this;
+    }
+    public enum Direction{
+        top, bottom, left, right, none;
     }
 
     @Override

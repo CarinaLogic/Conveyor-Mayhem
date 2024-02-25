@@ -11,7 +11,12 @@ public class BattleMapGUIStage extends GUIStage<BattleScreen> {
     public void init(Table table) {
         table.add().height(64).expandX();
         table.row();
-        skillPanel = new UIAnimatedContainer<>();
+        skillPanel = new UIAnimatedContainer<UIBattleSkillPanel>()
+            .supplyDirection(() -> UIAnimatedContainer.Direction.right)
+            .supplyActor(() -> {
+                Unit u = getSelectedUnit();
+                return u != null ? u.getDisplay(UIBattleSkillPanel.class) : null;
+            });
         table.add(skillPanel).top().right().expand().padRight(32);
         table.row();
         table.add(getScreen().map.factions.getFaction("").getUnits().newDisplay(UIBattleStatPanels.class)).left();
