@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.reflect.ClassReflection;
 import me.carina.rpg.client.scenes.BaseScreen;
 import me.carina.rpg.client.scenes.LoadingScreen;
 import me.carina.rpg.common.AbstractGameInstance;
+import me.carina.rpg.common.Displays;
 
 /**
  * Abstract implementation of a client.
@@ -14,6 +15,8 @@ import me.carina.rpg.common.AbstractGameInstance;
 public abstract class Client extends AbstractGameInstance{
     Queue<BaseScreen> screenQueue = new Queue<>();
     Queue<BaseScreen> pendingScreenQueue = new Queue<>();
+
+    Displays displays = new Displays();
     public Client() {
         super("Client");
     }
@@ -76,6 +79,10 @@ public abstract class Client extends AbstractGameInstance{
     @Override
     public boolean isClient() {
         return true;
+    }
+
+    public Displays getDisplays() {
+        return displays;
     }
 
     @Override

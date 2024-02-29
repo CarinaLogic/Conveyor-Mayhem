@@ -7,6 +7,8 @@ import me.carina.rpg.client.misc.Movable;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.faction.FactionsDisplay;
 
+import java.util.function.Supplier;
+
 public class BattleMapDisplay extends Stack implements Display<BattleMap> {
     BattleMap map;
     public BattleMapDisplay(BattleMap map){
@@ -26,7 +28,7 @@ public class BattleMapDisplay extends Stack implements Display<BattleMap> {
 
 
     @Override
-    public BattleMap getFeature() {
-        return map;
+    public Supplier<BattleMap> getFeatureSupplier() {
+        return null;
     }
 }

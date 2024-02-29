@@ -6,16 +6,14 @@ import me.carina.rpg.Game;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.ImageDisplay;
 
+import java.util.function.Supplier;
+
 public class AffinityIconDisplay extends ImageDisplay implements Display<Affinity> {
-    Affinity affinity;
-    public AffinityIconDisplay(Affinity affinity){
-        this.affinity = affinity;
+    Supplier<Affinity> affinitySupplier;
+    public AffinityIconDisplay(Supplier<Affinity> affinitySupplier){
+        this.affinitySupplier = affinitySupplier;
     }
 
-    @Override
-    public Affinity getFeature() {
-        return null;
-    }
 
     @Override
     public float getDisplayX() {
@@ -39,6 +37,11 @@ public class AffinityIconDisplay extends ImageDisplay implements Display<Affinit
 
     @Override
     public Drawable getDrawable() {
-        return Game.getInstance().getAssets().get(affinity.getPath(),Drawable.class);
+        return Game.getInstance().getAssets().get(getFeature().getPath(),Drawable.class);
+    }
+
+    @Override
+    public Supplier<Affinity> getFeatureSupplier() {
+        return affinitySupplier;
     }
 }

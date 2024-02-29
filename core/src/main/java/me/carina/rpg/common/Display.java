@@ -3,5 +3,9 @@ package me.carina.rpg.common;
 import java.util.function.Supplier;
 
 public interface Display<T extends Feature> {
-    T getFeature();
+    Supplier<T> getFeatureSupplier();
+    void setFeatureSupplier();
+    default T getFeature(){
+        return getFeatureSupplier().get();
+    }
 }

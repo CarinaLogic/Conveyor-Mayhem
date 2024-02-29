@@ -24,6 +24,7 @@ import me.carina.rpg.common.util.Array;
  */
 public abstract class Feature implements Identifiable, Defined, AssetGrouped, Disposable {
     transient Array<Actor> displays = new Array<>();
+    //TODO add displays like Features.newDisplay(()->map.tiles, TilesDisplay.class)
     Identifier id;
     public Feature(){} //for json
     public <T extends Actor & Display<? extends Feature>> T newDisplay(Class<T> type){

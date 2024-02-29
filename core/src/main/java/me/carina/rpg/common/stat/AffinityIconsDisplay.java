@@ -6,18 +6,20 @@ import me.carina.rpg.Game;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.MapDisplayHandler;
 
+import java.util.function.Supplier;
+
 public class AffinityIconsDisplay extends Table implements Display<AffinityCounter> {
-    AffinityCounter counter;
+    Supplier<AffinityCounter> counterSupplier;
     MapDisplayHandler<Affinity,Integer> handler = new MapDisplayHandler<>(this,
         entry -> this.add(entry.key.newDisplay(AffinityIconsDisplay.class))) {
         @Override
         public Iterable<ObjectMap.Entry<Affinity, Integer>> getIterable() {
-            return counter;
+            return getFeature();
         }
     };
 
-    public AffinityIconsDisplay(AffinityCounter counter){
-        this.counter = counter;
+    public AffinityIconsDisplay(Supplier<AffinityCounter> counterSupplier){
+        this.counterSupplier = counterSupplier;
     }
 
     @Override
@@ -28,7 +30,7 @@ public class AffinityIconsDisplay extends Table implements Display<AffinityCount
     }
 
     @Override
-    public AffinityCounter getFeature() {
-        return counter;
+    public Supplier<AffinityCounter> getFeatureSupplier() {
+        return counterSupplier;
     }
 }
