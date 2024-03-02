@@ -26,7 +26,7 @@ public final class Displays {
             Object o = c.newInstance();
             //noinspection unchecked
             D t = (D) o;
-            t.setFeatureSupplier(()->null);
+            t.setFeatureSupplier(supplier);
             addNewDisplay(supplier,t);
             return t;
         } catch (ReflectionException e) {
