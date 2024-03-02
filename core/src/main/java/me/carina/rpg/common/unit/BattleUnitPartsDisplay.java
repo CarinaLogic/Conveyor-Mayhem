@@ -6,33 +6,40 @@ import me.carina.rpg.common.ArrayDisplayHandler;
 import me.carina.rpg.common.Display;
 
 import java.util.Comparator;
+import java.util.function.Supplier;
 
 public class BattleUnitPartsDisplay extends Group implements Display<UnitParts> {
-    UnitParts unitParts;
-    ArrayDisplayHandler handler = new ArrayDisplayHandler(
-            this, feature -> this.addActor(feature.newDisplay(BattleUnitPartDisplay.class))
+    Supplier<UnitParts> unitPartsSupplier;
+    ArrayDisplayHandler<UnitPart> handler = new ArrayDisplayHandler<>(
+            this, feature -> this.addActor(Game.getClient().getDisplays().get(()->feature, BattleUnitPartDisplay.class))
     ) {
         @Override
         public UnitParts getIterable() {
-            return unitParts;
+            return unitPartsSupplier.get();
         }
     };
-    public BattleUnitPartsDisplay(UnitParts unitParts){
-        this.unitParts = unitParts;
+    public BattleUnitPartsDisplay(){
     }
 
     @Override
     public void act(float delta) {
         Game.getInstance().getContext().add(getFeature());
-        unitParts.getArray().sort(Comparator.comparingInt(p -> p.bodyType.ordinal()));
+        unitPartsSupplier.get().getArray().sort(Comparator.comparingInt(p -> p.bodyType.ordinal()));
         handler.tick();
-        for (int i = 0; i < unitParts.size(); i++) {
-            unitParts.get(i).getDisplay(BattleUnitPartDisplay.class).setZIndex(i);
+        for (int i = 0; i < unitPartsSupplier.get().size(); i++) {
+            int finalI = i;
+            Game.getClient().getDisplays().get(()->unitPartsSupplier.get().get(finalI),BattleUnitPartDisplay.class).setZIndex(i);
         }
         super.act(delta);
     }
+
     @Override
-    public UnitParts getFeature() {
-        return unitParts;
+    public Supplier<UnitParts> getFeatureSupplier() {
+        return unitPartsSupplier;
+    }
+
+    @Override
+    public void setFeatureSupplier(Supplier<UnitParts> supplier) {
+        this.unitPartsSupplier = supplier;
     }
 }

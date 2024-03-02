@@ -13,23 +13,24 @@ import me.carina.rpg.common.Display;
 import me.carina.rpg.common.FlatImageDisplay;
 import me.carina.rpg.common.util.Palette;
 
+import java.util.function.Supplier;
+
 public class BattleUnitPartDisplay extends FlatImageDisplay implements Display<UnitPart> {
     Unit targetUnit;
-    UnitPart unitPart;
+    Supplier<UnitPart> unitPartSupplier;
     TextureRegion[][] regions;
     Palette palette;
     int spriteWidth = 1;
     int spriteHeight = 1;
-    public BattleUnitPartDisplay(UnitPart unitPart){
-        this.unitPart = unitPart;
+    public BattleUnitPartDisplay(){
     }
 
     @Override
     public void act(float delta) {
         Game.getInstance().getContext().add(getFeature());
-        if (regions == null && !unitPart.bodyType.equals(BodyType.base)){
+        if (regions == null && !unitPartSupplier.get().bodyType.equals(BodyType.base)){
             //very inefficient
-            TextureRegionDrawable regionDrawable = Game.getClient().getAssets().get(unitPart.getPath(), TextureRegionDrawable.class);
+            TextureRegionDrawable regionDrawable = Game.getClient().getAssets().get(unitPartSupplier.get().getPath(), TextureRegionDrawable.class);
             TextureRegion region = regionDrawable.getRegion();
             TextureData data = region.getTexture().getTextureData();
             if (!data.isPrepared()) data.prepare();
@@ -42,15 +43,15 @@ public class BattleUnitPartDisplay extends FlatImageDisplay implements Display<U
             spriteWidth = pixmap.getWidth() / 32;
             spriteHeight = pixmap.getHeight() / 32;
             UnitPart part  = Game.getInstance().getContext().get(UnitParts.class).getPart(BodyType.base);
-            if (part.getDisplays().isEmpty()) return;
-            Palette basePalette = part.getDisplay(BattleUnitPartDisplay.class).getPalette();
+            if (Game.getClient().getDisplays().getAll(part).isEmpty()) return;
+            Palette basePalette = Game.getClient().getDisplays().get(()->part,BattleUnitPartDisplay.class).getPalette();
             if (basePalette != null){
                 basePalette.recolor(pixmap);
             }
             if (paletteWidth != 0){
                 Pixmap paletteMap = new Pixmap(paletteWidth,region.getRegionHeight(), Pixmap.Format.RGBA8888);
                 paletteMap.drawPixmap(pixmap,0,0,paletteSrcX,0,paletteWidth,region.getRegionHeight());
-                palette = new Palette(paletteMap, unitPart.colorIndex);
+                palette = new Palette(paletteMap, unitPartSupplier.get().colorIndex);
                 palette.recolor(pixmap);
                 paletteMap.dispose();
             }
@@ -95,14 +96,9 @@ public class BattleUnitPartDisplay extends FlatImageDisplay implements Display<U
     }
 
     @Override
-    public UnitPart getFeature() {
-        return unitPart;
-    }
-
-    @Override
     public Drawable getDrawable() {
-        int index = unitPart.property.ordinal();
-        if (this.unitPart.bodyType.equals(BodyType.base)) return null;
+        int index = unitPartSupplier.get().property.ordinal();
+        if (this.unitPartSupplier.get().bodyType.equals(BodyType.base)) return null;
         if (index > spriteWidth * spriteHeight) return null;
         return new TextureRegionDrawable(regions[index / spriteWidth][index % spriteWidth]);
     }
@@ -110,7 +106,18 @@ public class BattleUnitPartDisplay extends FlatImageDisplay implements Display<U
     public boolean shouldFlip(){
         Vector3 camDir = getStage().getCamera().direction.cpy();
         float camRot = (float) Math.atan2(camDir.y,camDir.x);
-        float delta = camRot - Game.getInstance().getContext().get(Unit.class).getDisplay(BattleUnitDisplay.class).getFacing();
+        float delta = camRot - Game.getClient().getDisplays().get(()->Game.getInstance().getContext().get(Unit.class), BattleUnitDisplay.class).getFacing();
         return (delta+2*Math.PI) % (2*Math.PI) < Math.PI;
+    }
+
+
+    @Override
+    public Supplier<UnitPart> getFeatureSupplier() {
+        return unitPartSupplier;
+    }
+
+    @Override
+    public void setFeatureSupplier(Supplier<UnitPart> supplier) {
+        this.unitPartSupplier = supplier;
     }
 }

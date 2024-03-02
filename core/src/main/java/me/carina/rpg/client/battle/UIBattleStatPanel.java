@@ -13,35 +13,36 @@ import me.carina.rpg.common.unit.UIUnitDisplay;
 import me.carina.rpg.common.unit.Unit;
 import me.carina.rpg.common.stat.StatType;
 
+import java.util.function.Supplier;
+
 public class UIBattleStatPanel extends Stack implements Display<Unit> {
     UITableView tableView;
-    Unit unit;
+    Supplier<Unit> unitSupplier;
     UILabel nameLabel;
     UIUnitDisplay unitDisplay;
-    public UIBattleStatPanel(Unit unit){
-        this.unit = unit;
+    public UIBattleStatPanel(){
         {
             tableView = new UITableView();
             add(tableView);
             {
                 nameLabel = new UILabel();
-                nameLabel.supplyString(unit::getName);
+                nameLabel.supplyString(()->unitSupplier.get().getName());
                 tableView.add(nameLabel).left().colspan(2);
             }
             tableView.row();
             {
                 tableView.add(new UILabel().supplyString(()->"HP")).padRight(1);
                 tableView.add(new UIHpBar()
-                    .supplyValue(()-> unit.getStats().getStat(StatType.hp).get(unit))
-                    .supplyMax(()-> unit.getStats().getStat(StatType.hp).getMax(unit)))
+                    .supplyValue(()-> unitSupplier.get().getStats().getStat(StatType.hp).get(unitSupplier.get()))
+                    .supplyMax(()-> unitSupplier.get().getStats().getStat(StatType.hp).getMax(unitSupplier.get())))
                     .expandX().fillX();
             }
             tableView.row();
             {
                 tableView.add(new UILabel().supplyString(()->"SP")).padRight(1);
                 tableView.add(new UISpBar()
-                        .supplyValue(()-> unit.getStats().getStat(StatType.sp).get(unit))
-                        .supplyMax(()-> unit.getStats().getStat(StatType.sp).getMax(unit)))
+                        .supplyValue(()-> unitSupplier.get().getStats().getStat(StatType.sp).get(unitSupplier.get()))
+                        .supplyMax(()-> unitSupplier.get().getStats().getStat(StatType.sp).getMax(unitSupplier.get())))
                     .expandX().fillX();
             }
         }
@@ -51,20 +52,25 @@ public class UIBattleStatPanel extends Stack implements Display<Unit> {
             Table unitTable = new Table();
             unitTable.setClip(true);
             unitContainer.add(unitTable).expand().top().right().size(32, 22);
-            unitDisplay = unit.newDisplay(UIUnitDisplay.class);
+            unitDisplay = Game.getClient().getDisplays().get(unitSupplier, UIUnitDisplay.class);
             unitTable.add(unitDisplay).top().right();
         }
-    }
-
-    @Override
-    public Unit getFeature() {
-        return unit;
     }
 
     @Override
     public void act(float delta) {
         Game.getInstance().getContext().add(getFeature());
         super.act(delta);
+    }
+
+    @Override
+    public Supplier<Unit> getFeatureSupplier() {
+        return unitSupplier;
+    }
+
+    @Override
+    public void setFeatureSupplier(Supplier<Unit> supplier) {
+        this.unitSupplier = supplier;
     }
 
     public static class UIHpBar extends UIProgressBar{

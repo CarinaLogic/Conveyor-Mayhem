@@ -4,21 +4,21 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import me.carina.rpg.Game;
 import me.carina.rpg.common.ArrayDisplayHandler;
 import me.carina.rpg.common.Display;
-import me.carina.rpg.common.Feature;
+
+import java.util.function.Supplier;
 
 public class FactionsDisplay extends Group implements Display<Factions> {
-    Factions factions;
-    ArrayDisplayHandler handler = new ArrayDisplayHandler(
-            this, f -> addActor(f.newDisplay(FactionDisplay.class))
+    Supplier<Factions> factionsSupplier;
+    ArrayDisplayHandler<Faction> handler = new ArrayDisplayHandler<>(
+            this, f -> addActor(Game.getClient().getDisplays().get(()->f,FactionDisplay.class))
     ) {
         @Override
-        public Iterable<? extends Feature> getIterable() {
-            return factions;
+        public Iterable<Faction> getIterable() {
+            return factionsSupplier.get();
         }
     };
 
-    public FactionsDisplay(Factions factions){
-        this.factions = factions;
+    public FactionsDisplay(){
     }
 
     @Override
@@ -28,8 +28,14 @@ public class FactionsDisplay extends Group implements Display<Factions> {
         super.act(delta);
     }
 
+
     @Override
-    public Factions getFeature() {
-        return factions;
+    public Supplier<Factions> getFeatureSupplier() {
+        return factionsSupplier;
+    }
+
+    @Override
+    public void setFeatureSupplier(Supplier<Factions> supplier) {
+        this.factionsSupplier = supplier;
     }
 }

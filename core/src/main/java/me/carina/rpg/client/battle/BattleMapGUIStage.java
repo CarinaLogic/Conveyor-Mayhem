@@ -1,6 +1,7 @@
 package me.carina.rpg.client.battle;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import me.carina.rpg.Game;
 import me.carina.rpg.client.scenes.GUIStage;
 import me.carina.rpg.client.ui.UIAnimatedContainer;
 import me.carina.rpg.common.unit.Unit;
@@ -13,13 +14,10 @@ public class BattleMapGUIStage extends GUIStage<BattleScreen> {
         table.row();
         skillPanel = new UIAnimatedContainer<UIBattleSkillPanel>()
             .supplyDirection(() -> UIAnimatedContainer.Direction.right)
-            .supplyActor(() -> {
-                Unit u = getSelectedUnit();
-                return u != null ? u.getDisplay(UIBattleSkillPanel.class) : null;
-            });
+            .supplyActor(() -> Game.getClient().getDisplays().get(this::getSelectedUnit,UIBattleSkillPanel.class));
         table.add(skillPanel).top().right().expand().padRight(32);
         table.row();
-        table.add(getScreen().map.factions.getFaction("").getUnits().newDisplay(UIBattleStatPanels.class)).left();
+        table.add(Game.getClient().getDisplays().get(()->getScreen().map.factions.getFaction("").getUnits() ,UIBattleStatPanels.class)).left();
     }
 
 

@@ -4,12 +4,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import me.carina.rpg.Game;
 import me.carina.rpg.common.Display;
 
+import java.util.function.Supplier;
+
 public class UIUnitDisplay extends Stack implements Display<Unit> {
-    Unit unit;
+    Supplier<Unit> unitSupplier;
     boolean flip;
-    public UIUnitDisplay(Unit unit){
-        this.unit = unit;
-        add(unit.unitParts.newDisplay(UIUnitPartsDisplay.class));
+    public UIUnitDisplay(){
+        add(Game.getClient().getDisplays().get(()->unitSupplier.get().unitParts,UIUnitPartsDisplay.class));
     }
 
     @Override
@@ -19,12 +20,17 @@ public class UIUnitDisplay extends Stack implements Display<Unit> {
     }
 
 
-    @Override
-    public Unit getFeature() {
-        return unit;
-    }
-
     public void setFlip(boolean flip) {
         this.flip = flip;
+    }
+
+    @Override
+    public Supplier<Unit> getFeatureSupplier() {
+        return unitSupplier;
+    }
+
+    @Override
+    public void setFeatureSupplier(Supplier<Unit> supplier) {
+        this.unitSupplier = supplier;
     }
 }

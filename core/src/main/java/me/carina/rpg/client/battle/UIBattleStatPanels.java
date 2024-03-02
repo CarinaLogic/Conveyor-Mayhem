@@ -11,19 +11,20 @@ import me.carina.rpg.common.Feature;
 import me.carina.rpg.common.unit.Unit;
 import me.carina.rpg.common.unit.Units;
 
+import java.util.function.Supplier;
+
 public class UIBattleStatPanels extends Table implements Display<Units> {
-    Units units;
+    Supplier<Units> unitsSupplier;
     Unit chachedUnit;
-    ArrayDisplayHandler handler = new ArrayDisplayHandler(
-            this, feature -> add(feature.newDisplay(UIBattleStatPanel.class)).size(72,48).bottom().left()
+    ArrayDisplayHandler<Unit> handler = new ArrayDisplayHandler<>(
+            this, feature -> add(Game.getClient().getDisplays().get(()->feature,UIBattleStatPanel.class)).size(72,48).bottom().left()
     ) {
         @Override
-        public Iterable<? extends Feature> getIterable() {
-            return units;
+        public Iterable<Unit> getIterable() {
+            return unitsSupplier.get();
         }
     };
-    public UIBattleStatPanels(Units units){
-        this.units = units;
+    public UIBattleStatPanels(){
     }
 
     @Override
@@ -44,7 +45,7 @@ public class UIBattleStatPanels extends Table implements Display<Units> {
         if (chachedUnit == unit) return;
         Cell<?> currentTargetCell = null;
         if (unit != null) {
-            UIBattleStatPanel panel = unit.getDisplay(UIBattleStatPanel.class);
+            UIBattleStatPanel panel = Game.getClient().getDisplays().get(()->unit, UIBattleStatPanel.class);
             Cell<?> cell = getCell(panel);
             if (cell != null) currentTargetCell = cell;
         }
@@ -56,7 +57,12 @@ public class UIBattleStatPanels extends Table implements Display<Units> {
     }
 
     @Override
-    public Units getFeature() {
-        return units;
+    public Supplier<Units> getFeatureSupplier() {
+        return unitsSupplier;
+    }
+
+    @Override
+    public void setFeatureSupplier(Supplier<Units> supplier) {
+        this.unitsSupplier = supplier;
     }
 }

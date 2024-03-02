@@ -5,12 +5,13 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import me.carina.rpg.Game;
 import me.carina.rpg.common.Display;
 
+import java.util.function.Supplier;
+
 public class BattleUnitDisplay extends Group implements Display<Unit> {
-    Unit unit;
+    Supplier<Unit> unitSupplier;
     float facing = 0;
-    public BattleUnitDisplay(Unit unit){
-        this.unit = unit;
-        addActor(unit.unitParts.newDisplay(BattleUnitPartsDisplay.class));
+    public BattleUnitDisplay(){
+        addActor(Game.getClient().getDisplays().get(() -> unitSupplier.get().unitParts,BattleUnitPartsDisplay.class));
     }
 
     @Override
@@ -25,19 +26,25 @@ public class BattleUnitDisplay extends Group implements Display<Unit> {
     }
 
     public void lookAt(float x, float y){
-        facing = (float) Math.atan2(y- unit.y,x- unit.x);
+        facing = (float) Math.atan2(y- unitSupplier.get().y,x- unitSupplier.get().x);
     }
 
     public void lookAt(Unit target){
-        facing = (float) Math.atan2(target.y- unit.y,target.x- unit.x);
+        facing = (float) Math.atan2(target.y- unitSupplier.get().y,target.x- unitSupplier.get().x);
     }
 
     public float getFacing() {
         return facing;
     }
 
+
     @Override
-    public Unit getFeature() {
-        return unit;
+    public Supplier<Unit> getFeatureSupplier() {
+        return unitSupplier;
+    }
+
+    @Override
+    public void setFeatureSupplier(Supplier<Unit> supplier) {
+        this.unitSupplier = supplier;
     }
 }

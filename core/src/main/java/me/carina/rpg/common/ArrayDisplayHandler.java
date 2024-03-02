@@ -3,30 +3,38 @@ package me.carina.rpg.common;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.SnapshotArray;
+import me.carina.rpg.Game;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
 
-public abstract class ArrayDisplayHandler{
+public abstract class ArrayDisplayHandler<T>{
     Group group;
-    Consumer<Feature> addFunc;
+    Consumer<T> addFunc;
     Consumer<Actor> removeFunc;
-    public ArrayDisplayHandler(Group group, Consumer<Feature> addFunc){
+    public ArrayDisplayHandler(Group group, Consumer<T> addFunc){
         this(group,addFunc, Actor::remove);
     }
-    public ArrayDisplayHandler(Group group, Consumer<Feature> addFunc, Consumer<Actor> removeFunc){
+    public ArrayDisplayHandler(Group group, Consumer<T> addFunc, Consumer<Actor> removeFunc){
         this.group = group;
         this.addFunc = addFunc;
         this.removeFunc = removeFunc;
     }
-    public abstract Iterable<? extends Feature> getIterable();
+    public abstract Iterable<T> getIterable();
     public void tick() {
+        Iterable<T> iterable;
+        try {
+            iterable = getIterable();
+        } catch (Exception ignored){
+            return;
+        }
+        if (iterable == null) return;
         SnapshotArray<Actor> children = group.getChildren();
         boolean[] checkList = new boolean[children.size];
         Arrays.fill(checkList, false);
-        for (Feature feature : getIterable()) {
+        for (T feature : getIterable()) {
             boolean success = false;
-            for (Actor display : feature.getDisplays()) {
+            for (Actor display : Game.getClient().getDisplays().getAll((Feature) feature)) {
                 int i = children.indexOf(display,true);
                 if (i != -1){
                     checkList[i] = true;

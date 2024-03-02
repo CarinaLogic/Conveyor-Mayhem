@@ -5,18 +5,19 @@ import me.carina.rpg.Game;
 import me.carina.rpg.common.Array2DDisplayHandler;
 import me.carina.rpg.common.Display;
 
+import java.util.function.Supplier;
+
 public class TilesDisplay extends Group implements Display<Tiles> {
-    Tiles tiles;
-    Array2DDisplayHandler handler = new Array2DDisplayHandler(
-            this, feature -> addActor(feature.newDisplay(TileDisplay.class))
-    ) {
+    Supplier<Tiles> tilesSupplier;
+    Array2DDisplayHandler<Tile> handler = new Array2DDisplayHandler<>(
+            this, feature -> addActor(Game.getClient().getDisplays().get(()->feature,TileDisplay.class)))
+    {
         @Override
         public Tiles getIterable() {
-            return tiles;
+            return tilesSupplier.get();
         }
     };
-    public TilesDisplay(Tiles tiles){
-        this.tiles = tiles;
+    public TilesDisplay(){
     }
 
     @Override
@@ -26,9 +27,13 @@ public class TilesDisplay extends Group implements Display<Tiles> {
         super.act(delta);
     }
 
+    @Override
+    public Supplier<Tiles> getFeatureSupplier() {
+        return tilesSupplier;
+    }
 
     @Override
-    public Tiles getFeature() {
-        return tiles;
+    public void setFeatureSupplier(Supplier<Tiles> supplier) {
+        this.tilesSupplier = supplier;
     }
 }

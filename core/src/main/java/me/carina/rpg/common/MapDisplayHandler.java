@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.SnapshotArray;
+import me.carina.rpg.Game;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
@@ -28,7 +29,7 @@ public abstract class MapDisplayHandler<K extends Feature,V> {
         for (ObjectMap.Entry<K,V> entry : getIterable()) {
             Feature feature = entry.key;
             boolean success = false;
-            for (Actor display : feature.getDisplays()) {
+            for (Actor display : Game.getClient().getDisplays().getAll(feature)) {
                 int i = children.indexOf(display,true);
                 if (i != -1){
                     checkList[i] = true;

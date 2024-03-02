@@ -44,4 +44,9 @@ public class AffinityIconDisplay extends ImageDisplay implements Display<Affinit
     public Supplier<Affinity> getFeatureSupplier() {
         return affinitySupplier;
     }
+
+    @Override
+    public void setFeatureSupplier(Supplier<Affinity> supplier) {
+        this.affinitySupplier = supplier;
+    }
 }

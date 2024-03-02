@@ -6,16 +6,21 @@ import me.carina.rpg.client.ui.UIVerticalSelection;
 import me.carina.rpg.common.ArrayDisplayHandler;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.Feature;
+import me.carina.rpg.common.skill.Skill;
+import me.carina.rpg.common.skill.Skills;
 import me.carina.rpg.common.unit.Unit;
 
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
 public class UIBattleSkillPanel extends UIVerticalSelection implements Display<Unit> {
-    Unit unit;
-    ArrayDisplayHandler handler = new ArrayDisplayHandler(
-            this, feature -> add(feature.newDisplay(UIBattleSkillEntry.class))
-    ) {
+    Supplier<Unit> unitSupplier;
+    ArrayDisplayHandler<Skill> handler = new ArrayDisplayHandler<>(
+            this, skill -> add(Game.getClient().getDisplays().get(()->skill,UIBattleSkillEntry.class)))
+    {
         @Override
-        public Iterable<? extends Feature> getIterable() {
-            return unit.getSkills();
+        public Skills getIterable() {
+            return unitSupplier.get().getSkills();
         }
     };
 
@@ -26,11 +31,16 @@ public class UIBattleSkillPanel extends UIVerticalSelection implements Display<U
         super.act(delta);
     }
 
-    public UIBattleSkillPanel(Unit unit){
-        this.unit = unit;
+    public UIBattleSkillPanel(){
     }
+
     @Override
-    public Unit getFeature() {
-        return unit;
+    public Supplier<Unit> getFeatureSupplier() {
+        return unitSupplier;
+    }
+
+    @Override
+    public void setFeatureSupplier(Supplier<Unit> supplier) {
+        this.unitSupplier = supplier;
     }
 }

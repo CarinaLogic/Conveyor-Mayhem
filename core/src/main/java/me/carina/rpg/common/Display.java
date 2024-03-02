@@ -4,8 +4,12 @@ import java.util.function.Supplier;
 
 public interface Display<T extends Feature> {
     Supplier<T> getFeatureSupplier();
-    void setFeatureSupplier();
+    void setFeatureSupplier(Supplier<T> supplier);
     default T getFeature(){
-        return getFeatureSupplier().get();
+        try{
+            return getFeatureSupplier().get();
+        } catch (Exception e){
+            return null;
+        }
     }
 }

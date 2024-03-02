@@ -4,10 +4,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.ImageDisplay;
 
+import java.util.function.Supplier;
+
 public class ItemDisplay extends ImageDisplay implements Display<Item> {
-    Item item;
+    Supplier<Item> itemSupplier;
     public ItemDisplay(Item item){
-        this.item = item;
     }
 
     @Override
@@ -35,8 +36,14 @@ public class ItemDisplay extends ImageDisplay implements Display<Item> {
         return null;
     }
 
+
     @Override
-    public Item getFeature() {
-        return item;
+    public Supplier<Item> getFeatureSupplier() {
+        return itemSupplier;
+    }
+
+    @Override
+    public void setFeatureSupplier(Supplier<Item> supplier) {
+        this.itemSupplier = supplier;
     }
 }

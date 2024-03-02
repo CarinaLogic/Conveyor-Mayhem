@@ -5,10 +5,11 @@ import me.carina.rpg.Game;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.ImageDisplay;
 
+import java.util.function.Supplier;
+
 public class TileDisplay extends ImageDisplay implements Display<Tile> {
-    Tile tile;
-    public TileDisplay(Tile tile){
-        this.tile = tile;
+    Supplier<Tile> tileSupplier;
+    public TileDisplay(){
     }
 
     @Override
@@ -20,12 +21,12 @@ public class TileDisplay extends ImageDisplay implements Display<Tile> {
 
     @Override
     public float getDisplayX() {
-        return Game.getInstance().getContext().get(Tiles.class).getIdenticalX(tile);
+        return Game.getInstance().getContext().get(Tiles.class).getIdenticalX(tileSupplier.get());
     }
 
     @Override
     public float getDisplayY() {
-        return Game.getInstance().getContext().get(Tiles.class).getIdenticalY(tile);
+        return Game.getInstance().getContext().get(Tiles.class).getIdenticalY(tileSupplier.get());
     }
 
     @Override
@@ -38,13 +39,19 @@ public class TileDisplay extends ImageDisplay implements Display<Tile> {
         return 1;
     }
 
-    @Override
-    public Tile getFeature() {
-        return tile;
-    }
 
     @Override
     public Drawable getDrawable() {
-        return Game.getInstance().getAssets().get(tile.getPath(), Drawable.class);
+        return Game.getInstance().getAssets().get(tileSupplier.get().getPath(), Drawable.class);
+    }
+
+    @Override
+    public Supplier<Tile> getFeatureSupplier() {
+        return tileSupplier;
+    }
+
+    @Override
+    public void setFeatureSupplier(Supplier<Tile> supplier) {
+        this.tileSupplier = supplier;
     }
 }

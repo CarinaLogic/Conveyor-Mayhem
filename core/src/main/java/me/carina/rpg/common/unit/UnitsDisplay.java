@@ -7,18 +7,19 @@ import me.carina.rpg.common.ArrayDisplayHandler;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.Feature;
 
+import java.util.function.Supplier;
+
 public class UnitsDisplay extends Group implements Display<Units> {
-    Units units;
-    ArrayDisplayHandler handler = new ArrayDisplayHandler(
-            this, feature -> addActor(feature.newDisplay(BattleUnitDisplay.class))
+    Supplier<Units> unitsSupplier;
+    ArrayDisplayHandler<Unit> handler = new ArrayDisplayHandler<>(
+            this, feature -> addActor(Game.getClient().getDisplays().get(()->feature,BattleUnitDisplay.class))
     ) {
         @Override
-        public Iterable<? extends Feature> getIterable() {
-            return units;
+        public Units getIterable() {
+            return unitsSupplier.get();
         }
     };
-    public UnitsDisplay(Units units) {
-        this.units = units;
+    public UnitsDisplay() {
     }
 
     @Override
@@ -34,7 +35,12 @@ public class UnitsDisplay extends Group implements Display<Units> {
     }
 
     @Override
-    public Units getFeature() {
-        return units;
+    public Supplier<Units> getFeatureSupplier() {
+        return unitsSupplier;
+    }
+
+    @Override
+    public void setFeatureSupplier(Supplier<Units> supplier) {
+        this.unitsSupplier = supplier;
     }
 }

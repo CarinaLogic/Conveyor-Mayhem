@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 public class AffinityIconsDisplay extends Table implements Display<AffinityCounter> {
     Supplier<AffinityCounter> counterSupplier;
     MapDisplayHandler<Affinity,Integer> handler = new MapDisplayHandler<>(this,
-        entry -> this.add(entry.key.newDisplay(AffinityIconsDisplay.class))) {
+        entry -> this.add(Game.getClient().getDisplays().get(()->entry.key,AffinityIconDisplay.class))) {
         @Override
         public Iterable<ObjectMap.Entry<Affinity, Integer>> getIterable() {
             return getFeature();
@@ -32,5 +32,10 @@ public class AffinityIconsDisplay extends Table implements Display<AffinityCount
     @Override
     public Supplier<AffinityCounter> getFeatureSupplier() {
         return counterSupplier;
+    }
+
+    @Override
+    public void setFeatureSupplier(Supplier<AffinityCounter> supplier) {
+        this.counterSupplier = supplier;
     }
 }

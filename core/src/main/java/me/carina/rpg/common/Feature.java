@@ -23,56 +23,15 @@ import me.carina.rpg.common.util.Array;
  * Feature can have multiple displays. If the feature is destroyed, the associated displays will also be destroyed.
  */
 public abstract class Feature implements Identifiable, Defined, AssetGrouped, Disposable {
-    transient Array<Actor> displays = new Array<>();
-    //TODO add displays like Features.newDisplay(()->map.tiles, TilesDisplay.class)
     Identifier id;
     public Feature(){} //for json
-    public <T extends Actor & Display<? extends Feature>> T newDisplay(Class<T> type){
-        try {
-            Constructor c = ClassReflection.getConstructor(type,this.getClass());
-            Object o = c.newInstance(this);
-            //noinspection unchecked
-            T t = (T) o;
-            removeDisplay(type);
-            displays.add(t);
-            return t;
-        } catch (ReflectionException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public Array<Actor> getDisplays() {
-        return displays;
-    }
-
-    public <T extends Actor & Display<? extends Feature>> T getDisplay(Class<T> type){
-        for (Actor display : displays) {
-            if (ClassReflection.isInstance(type, display)){
-                //noinspection unchecked
-                return (T) display;
-            }
-        }
-        return newDisplay(type);
-    }
-
-    public <T extends Actor> void removeDisplay(Class<T> type){
-        for (Actor display : displays) {
-            if (ClassReflection.isInstance(type, display)){
-                displays.remove(display);
-            }
-        }
-    }
 
     public void remove(){
-        for (Actor display : displays) {
-            display.remove();
-        }
+        Game.getClient().getDisplays().remove(this);
     }
     @Override
     public void dispose() {
-        for (Actor display : displays) {
-            display.remove();
-        }
+        Game.getClient().getDisplays().remove(this);
     }
 
     public abstract AssetGroup getAssetGroup();

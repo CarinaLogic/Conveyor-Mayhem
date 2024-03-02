@@ -5,17 +5,24 @@ import me.carina.rpg.client.ui.UILabelButton;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.skill.Skill;
 
+import java.util.function.Supplier;
+
 @Selectable
 public class UIBattleSkillEntry extends UILabelButton implements Display<Skill> {
-    Skill skill;
-    public UIBattleSkillEntry(Skill skill) {
+    Supplier<Skill> skillSupplier;
+    public UIBattleSkillEntry() {
         super();
-        this.skill = skill;
-        supplyString(skill::getName);
+        supplyString(()->skillSupplier.get().getName());
+    }
+
+
+    @Override
+    public Supplier<Skill> getFeatureSupplier() {
+        return skillSupplier;
     }
 
     @Override
-    public Skill getFeature() {
-        return skill;
+    public void setFeatureSupplier(Supplier<Skill> supplier) {
+        this.skillSupplier = supplier;
     }
 }
