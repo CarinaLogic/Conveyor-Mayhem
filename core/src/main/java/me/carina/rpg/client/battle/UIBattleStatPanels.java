@@ -1,7 +1,9 @@
 package me.carina.rpg.client.battle;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import me.carina.rpg.Game;
 import me.carina.rpg.client.actions.Actions;
@@ -13,11 +15,15 @@ import me.carina.rpg.common.unit.Units;
 
 import java.util.function.Supplier;
 
-public class UIBattleStatPanels extends Table implements Display<Units> {
+public class UIBattleStatPanels extends HorizontalGroup implements Display<Units> {
     Supplier<Units> unitsSupplier;
-    Unit chachedUnit;
     ArrayDisplayHandler<Unit> handler = new ArrayDisplayHandler<>(
-            this, feature -> add(Game.getClient().getDisplays().get(()->feature,UIBattleStatPanel.class)).size(72,48).bottom().left()
+        this,
+        feature -> {
+            UIBattleStatPanel pan = Game.getClient().getDisplays().get(()->feature,UIBattleStatPanel.class);
+            pan.setSize(72,48);
+            addActor(pan);
+        }
     ) {
         @Override
         public Iterable<Unit> getIterable() {
@@ -25,6 +31,7 @@ public class UIBattleStatPanels extends Table implements Display<Units> {
         }
     };
     public UIBattleStatPanels(){
+        this.bottom().left();
     }
 
     @Override
@@ -42,18 +49,15 @@ public class UIBattleStatPanels extends Table implements Display<Units> {
 
     public void resizeAll(){
         Unit unit = Game.getClient().getContext().get(BattleMapGUIStage.class).getSelectedUnit();
-        if (chachedUnit == unit) return;
-        Cell<?> currentTargetCell = null;
-        if (unit != null) {
-            UIBattleStatPanel panel = Game.getClient().getDisplays().get(()->unit, UIBattleStatPanel.class);
-            Cell<?> cell = getCell(panel);
-            if (cell != null) currentTargetCell = cell;
+        UIBattleStatPanel panel = Game.getClient().getDisplays().get(()->unit, UIBattleStatPanel.class);
+        for (Actor child : getChildren()) {
+            if (child.equals(panel)){
+                child.addAction(Actions.uiSizeTo(96,72,0.2f));
+            }
+            else {
+                child.addAction(Actions.uiSizeTo(72,48,0.2f));
+            }
         }
-        for (Cell<?> cell : getCells()) {
-            if (cell == currentTargetCell) cell.getActor().addAction(Actions.uiSizeTo(96,72,0.2f));
-            else cell.getActor().addAction(Actions.uiSizeTo(72,48,0.2f));
-        }
-        chachedUnit = unit;
     }
 
     @Override
