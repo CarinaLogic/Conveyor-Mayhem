@@ -24,6 +24,7 @@ public class UIBattleSkillPanel extends UIVerticalSelection implements Display<U
         }
     };
 
+
     @Override
     public void act(float delta) {
         Game.getInstance().getContext().add(getFeature());
@@ -32,6 +33,7 @@ public class UIBattleSkillPanel extends UIVerticalSelection implements Display<U
     }
 
     public UIBattleSkillPanel(){
+        super();
     }
 
     @Override

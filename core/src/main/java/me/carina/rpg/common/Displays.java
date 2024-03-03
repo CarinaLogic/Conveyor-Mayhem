@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.Constructor;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
+import me.carina.rpg.Game;
 import me.carina.rpg.common.util.Array;
 
 import java.util.function.Supplier;
@@ -19,6 +20,13 @@ public final class Displays {
         } catch (Exception e){
             feature = null;
         }
+        if (feature == null){
+            for (DisplayEntry<?, ?> entry : displays) {
+                if (entry.supplier.equals(supplier)){
+                    return (D) entry.display;
+                }
+            }
+        }
         D dis = getEntry(feature, cls);
         if (dis != null) return dis;
         try {
@@ -28,6 +36,7 @@ public final class Displays {
             D t = (D) o;
             t.setFeatureSupplier(supplier);
             addNewDisplay(supplier,t);
+            Game.getInstance().getLogger().debug("Created "+t.getClass().getSimpleName());
             return t;
         } catch (ReflectionException e) {
             throw new RuntimeException(e);

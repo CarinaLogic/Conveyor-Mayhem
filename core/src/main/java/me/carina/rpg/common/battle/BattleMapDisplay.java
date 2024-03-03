@@ -6,15 +6,18 @@ import me.carina.rpg.Game;
 import me.carina.rpg.client.misc.Movable;
 import me.carina.rpg.common.Display;
 import me.carina.rpg.common.Displays;
+import me.carina.rpg.common.faction.Factions;
 import me.carina.rpg.common.faction.FactionsDisplay;
 
 import java.util.function.Supplier;
 
 public class BattleMapDisplay extends Stack implements Display<BattleMap> {
     Supplier<BattleMap> mapSupplier;
+    Supplier<Tiles> invTiles = () -> mapSupplier.get().tiles;
+    Supplier<Factions> invFactions = ()-> mapSupplier.get().factions;
     public BattleMapDisplay(){
-        addActor(Game.getClient().getDisplays().get(()-> mapSupplier.get().tiles, TilesDisplay.class));
-        addActor(Game.getClient().getDisplays().get(()-> mapSupplier.get().factions, FactionsDisplay.class));
+        addActor(Game.getClient().getDisplays().get(invTiles, TilesDisplay.class));
+        addActor(Game.getClient().getDisplays().get(invFactions, FactionsDisplay.class));
         setTouchable(Touchable.childrenOnly);
         addListener(new Movable());
     }

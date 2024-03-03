@@ -6,15 +6,18 @@ import me.carina.rpg.client.scenes.GUIStage;
 import me.carina.rpg.client.ui.UIAnimatedContainer;
 import me.carina.rpg.common.unit.Unit;
 
+import java.util.function.Supplier;
+
 public class BattleMapGUIStage extends GUIStage<BattleScreen> {
     UIAnimatedContainer<UIBattleSkillPanel> skillPanel;
+    Supplier<UIBattleSkillPanel> invSkillPanel = () -> Game.getClient().getDisplays().get(this::getSelectedUnit,UIBattleSkillPanel.class);
     @Override
     public void init(Table table) {
         table.add().height(64).expandX();
         table.row();
         skillPanel = new UIAnimatedContainer<UIBattleSkillPanel>()
             .supplyDirection(() -> UIAnimatedContainer.Direction.right)
-            .supplyActor(() -> Game.getClient().getDisplays().get(this::getSelectedUnit,UIBattleSkillPanel.class));
+            .supplyActor(invSkillPanel);
         table.add(skillPanel).top().right().expand().padRight(32);
         table.row();
         table.add(Game.getClient().getDisplays().get(()->getScreen().map.factions.getFaction("").getUnits() ,UIBattleStatPanels.class)).left();

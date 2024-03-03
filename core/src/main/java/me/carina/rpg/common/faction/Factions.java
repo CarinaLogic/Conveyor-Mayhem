@@ -8,6 +8,8 @@ import me.carina.rpg.common.unit.Unit;
 import me.carina.rpg.common.unit.Units;
 import me.carina.rpg.packets.S2CBattleRefreshPacket;
 
+import java.lang.invoke.LambdaMetafactory;
+
 public class Factions extends ArrayFeature<Faction> {
     transient Unit prevActiveUnit = null;
 
@@ -51,7 +53,7 @@ public class Factions extends ArrayFeature<Faction> {
         Unit u = null;
         for (Faction faction : this) {
             for (Unit unit : faction.getUnits()) {
-                if (unit.getWt() <= min){
+                if (unit.getWt() < min){
                     u = unit;
                     min = unit.getWt();
                 }
