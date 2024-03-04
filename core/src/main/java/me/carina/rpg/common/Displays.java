@@ -12,6 +12,9 @@ import java.util.function.Supplier;
 public final class Displays {
     Array<DisplayEntry<?,?>> displays = new Array<>();
 
+    /**
+     * *WARNING: Use static Supplier object*
+     */
     public <F extends Feature, D extends Actor & Display<F>> D get(Supplier<F> supplier, Class<D> cls){
         if (supplier == null) return null;
         F feature;
