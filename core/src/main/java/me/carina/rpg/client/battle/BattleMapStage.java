@@ -12,7 +12,7 @@ import me.carina.rpg.common.battle.BattleMapDisplay;
 import java.util.function.Supplier;
 
 public class BattleMapStage extends GameStage<BattleScreen> {
-    static Supplier<BattleMap> invBattleMap = () -> Game.getClient().getContext().get(BattleMap.class);
+    Supplier<BattleMap> invBattleMap = () -> getScreen().map;
     public BattleMapStage(){
         super(new PerspectiveViewport(10,10,new PerspectiveCamera(70,10,10)));
     }
