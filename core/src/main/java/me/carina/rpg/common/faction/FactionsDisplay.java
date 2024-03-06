@@ -9,11 +9,11 @@ import java.util.function.Supplier;
 
 public class FactionsDisplay extends Group implements Display<Factions> {
     Supplier<Factions> factionsSupplier;
-    ArrayDisplayHandler<Faction> handler = new ArrayDisplayHandler<>(
-            this, f -> addActor(Game.getClient().getDisplays().get(()->f,FactionDisplay.class))
+    ArrayDisplayHandler<Faction,FactionDisplay> handler = new ArrayDisplayHandler<>(
+            this, FactionDisplay.class, this::addActor
     ) {
         @Override
-        public Iterable<Faction> getIterable() {
+        public Factions getIterable() {
             return factionsSupplier.get();
         }
     };

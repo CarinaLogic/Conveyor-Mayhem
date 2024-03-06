@@ -10,8 +10,8 @@ import java.util.function.Supplier;
 
 public class UIUnitPartsDisplay extends Stack implements Display<UnitParts> {
     Supplier<UnitParts> unitPartsSupplier;
-    ArrayDisplayHandler<UnitPart> handler = new ArrayDisplayHandler<>(
-            this, feature -> this.add(Game.getClient().getDisplays().get(()->feature,UIUnitPartDisplay.class))
+    ArrayDisplayHandler<UnitPart,UIUnitPartDisplay> handler = new ArrayDisplayHandler<>(
+            this, UIUnitPartDisplay.class, this::add
     ) {
         @Override
         public UnitParts getIterable() {

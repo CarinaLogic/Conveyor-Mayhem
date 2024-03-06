@@ -11,8 +11,8 @@ import java.util.function.Supplier;
 
 public class UnitsDisplay extends Group implements Display<Units> {
     Supplier<Units> unitsSupplier;
-    ArrayDisplayHandler<Unit> handler = new ArrayDisplayHandler<>(
-            this, feature -> addActor(Game.getClient().getDisplays().get(()->feature,BattleUnitDisplay.class))
+    ArrayDisplayHandler<Unit,BattleUnitDisplay> handler = new ArrayDisplayHandler<>(
+            this, BattleUnitDisplay.class, this::addActor
     ) {
         @Override
         public Units getIterable() {

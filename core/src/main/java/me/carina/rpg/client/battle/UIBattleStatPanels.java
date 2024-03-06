@@ -17,16 +17,15 @@ import java.util.function.Supplier;
 
 public class UIBattleStatPanels extends HorizontalGroup implements Display<Units> {
     Supplier<Units> unitsSupplier;
-    ArrayDisplayHandler<Unit> handler = new ArrayDisplayHandler<>(
-        this,
-        feature -> {
-            UIBattleStatPanel pan = Game.getClient().getDisplays().get(()->feature,UIBattleStatPanel.class);
-            pan.setSize(72,48);
-            addActor(pan);
+    ArrayDisplayHandler<Unit,UIBattleStatPanel> handler = new ArrayDisplayHandler<>(
+        this, UIBattleStatPanel.class,
+        display -> {
+            display.setSize(72,48);
+            addActor(display);
         }
     ) {
         @Override
-        public Iterable<Unit> getIterable() {
+        public Units getIterable() {
             return unitsSupplier.get();
         }
     };
