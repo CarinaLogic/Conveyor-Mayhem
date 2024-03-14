@@ -9,8 +9,8 @@ import java.util.function.Supplier;
 
 public class TilesDisplay extends Group implements Display<Tiles> {
     Supplier<Tiles> tilesSupplier;
-    Array2DDisplayHandler<Tile> handler = new Array2DDisplayHandler<>(
-            this, feature -> addActor(Game.getClient().getDisplays().get(()->feature,TileDisplay.class)))
+    Array2DDisplayHandler<Tile,TileDisplay> handler = new Array2DDisplayHandler<>(
+            this, TileDisplay.class, this::addActor)
     {
         @Override
         public Tiles getIterable() {

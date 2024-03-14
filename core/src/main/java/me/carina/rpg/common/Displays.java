@@ -115,5 +115,10 @@ public final class Displays {
                 return null;
             }
         }
+
+        @Override
+        public String toString() {
+            return display.toString();
+        }
     }
 }

@@ -26,15 +26,18 @@ public abstract class Array2DFeature<T extends Feature> extends Feature implemen
     public void fill(Function<Vector2,T> func){
         array.fill(func);
     }
+    public void fillEmpty(Function<Vector2,T> func){array.fillEmpty(func);}
     public void clear(){
         array.clear();
     }
+    public Array2D<T> resize(Vector2 size){return array.resize(size);}
     public Array2D<T> resize(int width, int height){
         return array.resize(width,height);
     }
     public Array2D<T> resize(int top, int bottom, int left, int right){
         return array.resize(top,bottom,left,right);
     }
+    public Vector2 size(){return array.size();}
     public int getX(T obj){
         return array.getX(obj);
     }

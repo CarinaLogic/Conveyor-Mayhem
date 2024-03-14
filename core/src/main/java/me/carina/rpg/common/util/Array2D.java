@@ -54,6 +54,15 @@ public class Array2D<T> implements Iterable<Array2D.Array2DEntry<T>>{
             }
         }
     }
+    public void fillEmpty(Function<Vector2,T> func){
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < values.length / width; y++) {
+                if (get(x,y) == null) {
+                    set(x, y, func.apply(new Vector2(x, y)));
+                }
+            }
+        }
+    }
     public void clear(){
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < values.length / width; y++) {
@@ -61,10 +70,17 @@ public class Array2D<T> implements Iterable<Array2D.Array2DEntry<T>>{
             }
         }
     }
+    public int count(){
+        return values.length;
+    }
+    public Array2D<T> resize(Vector2 size){
+        return resize((int) size.x, (int) size.y);
+    }
     public Array2D<T> resize(int width, int height){
         return resize(0,height - this.values.length / this.width,0, width - this.width);
     }
     public Array2D<T> resize(int top, int bottom, int left, int right){
+        if (top == 0 && bottom == 0 && left == 0 && right == 0) return this;
         Array2D<T> oldArray = this.copy();
         this.width = oldArray.width+top+bottom;
         this.height = oldArray.values.length/oldArray.width+left+right;
@@ -81,6 +97,9 @@ public class Array2D<T> implements Iterable<Array2D.Array2DEntry<T>>{
             }
         }
         return this;
+    }
+    public Vector2 size(){
+        return new Vector2(width,height);
     }
     public int getX(T obj){
         if (obj == null) return -1;
