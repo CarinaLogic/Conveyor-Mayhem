@@ -15,15 +15,10 @@ import me.carina.rpg.common.unit.Units;
 
 import java.util.function.Supplier;
 
-public class UIBattleStatPanels extends HorizontalGroup implements Display<Units> {
+public class UIBattleStatPanels extends Table implements Display<Units> {
     Supplier<Units> unitsSupplier;
     ArrayDisplayHandler<Unit,UIBattleStatPanel> handler = new ArrayDisplayHandler<>(
-        this, UIBattleStatPanel.class,
-        display -> {
-            display.setSize(72,48);
-            addActor(display);
-        }
-    ) {
+        this, UIBattleStatPanel.class, this::add){
         @Override
         public Units getIterable() {
             return unitsSupplier.get();

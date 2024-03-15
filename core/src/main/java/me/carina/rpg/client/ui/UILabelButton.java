@@ -14,8 +14,6 @@ import java.util.function.Supplier;
 
 @Selectable
 public class UILabelButton extends TextButton implements CursorHandler{
-    Supplier<String> stringSupplier = ()->"";
-    Supplier<Color> colorSupplier = ()->Color.WHITE;
     public UILabelButton(){
         super("", getPrefStyle());
         getLabel().setAlignment(Align.left);
@@ -30,19 +28,17 @@ public class UILabelButton extends TextButton implements CursorHandler{
         return label;
     }
     public UILabelButton supplyString(Supplier<String> supplier){
-        this.stringSupplier = supplier;
+        ((UILabel)getLabel()).supplyString(supplier);
         return this;
     }
 
     public UILabelButton supplyColor(Supplier<Color> supplier){
-        colorSupplier = supplier;
+        ((UILabel)getLabel()).supplyColor(supplier);
         return this;
     }
 
     @Override
     public void act(float delta) {
-        setText(stringSupplier.get());
-        setColor(colorSupplier.get());
         super.act(delta);
     }
 

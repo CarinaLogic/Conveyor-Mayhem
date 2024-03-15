@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 public class UIBattleSkillPanel extends UIVerticalSelection implements Display<Unit> {
     Supplier<Unit> unitSupplier;
     ArrayDisplayHandler<Skill,UIBattleSkillEntry> handler = new ArrayDisplayHandler<>(
-            this, UIBattleSkillEntry.class, display -> add(display))
+            this, UIBattleSkillEntry.class, this::add)
     {
         @Override
         public Skills getIterable() {

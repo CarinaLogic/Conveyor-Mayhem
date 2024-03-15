@@ -15,6 +15,10 @@ public class UIBattleSkillEntry extends UILabelButton implements Display<Skill> 
         supplyString(()->skillSupplier.get().getName());
     }
 
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+    }
 
     @Override
     public Supplier<Skill> getFeatureSupplier() {
