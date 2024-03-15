@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.TemporalAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import me.carina.rpg.Game;
 import me.carina.rpg.common.util.Array;
 
 public class UISizeToAction extends TemporalAction implements ResizeAction{
@@ -31,6 +32,10 @@ public class UISizeToAction extends TemporalAction implements ResizeAction{
             target.removeAction(action);
         }
         if (toRemove.contains(this,true)){
+            // update() will be called once right after even if you remove it from list
+            // those with width|height of -1 will be ignored upon update()
+            startWidth = -1;
+            startHeight = -1;
             return;
         }
         Group parent = target.getParent();
@@ -55,6 +60,9 @@ public class UISizeToAction extends TemporalAction implements ResizeAction{
 
     @Override
     protected void update(float percent) {
+        if (startWidth == -1 || startHeight == -1){
+            return;
+        }
         Group parent = target.getParent();
         if (parent instanceof Table) {
             Table table = (Table) parent;

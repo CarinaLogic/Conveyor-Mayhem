@@ -30,7 +30,7 @@ configure(subprojects - project(':android')) {
 
 subprojects {
   version = '1.0.0'
-  ext.appName = 'ConveyorMayhem'
+  ext.appName = 'RPG'
   repositories {
     mavenCentral()
     maven { url 'https://s01.oss.sonatype.org' }
@@ -43,4 +43,4 @@ subprojects {
   }
 }
 
-eclipse.project.name = 'ConveyorMayhem' + '-parent'
+eclipse.project.name = 'RPG' + '-parent'

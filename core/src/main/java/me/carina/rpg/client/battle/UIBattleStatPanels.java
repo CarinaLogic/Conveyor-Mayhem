@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 public class UIBattleStatPanels extends Table implements Display<Units> {
     Supplier<Units> unitsSupplier;
     ArrayDisplayHandler<Unit,UIBattleStatPanel> handler = new ArrayDisplayHandler<>(
-        this, UIBattleStatPanel.class, this::add){
+        this, UIBattleStatPanel.class, display -> add(display).bottom().left()){
         @Override
         public Units getIterable() {
             return unitsSupplier.get();
