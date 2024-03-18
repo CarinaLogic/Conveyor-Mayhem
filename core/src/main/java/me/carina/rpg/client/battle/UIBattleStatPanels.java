@@ -13,6 +13,7 @@ import me.carina.rpg.common.Feature;
 import me.carina.rpg.common.unit.Unit;
 import me.carina.rpg.common.unit.Units;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class UIBattleStatPanels extends Table implements Display<Units> {
@@ -43,7 +44,7 @@ public class UIBattleStatPanels extends Table implements Display<Units> {
 
     public void resizeAll(){
         Unit unit = Game.getClient().getContext().get(BattleMapGUIStage.class).getSelectedUnit();
-        UIBattleStatPanel panel = Game.getClient().getDisplays().get(()->unit, UIBattleStatPanel.class);
+        UIBattleStatPanel panel = Game.getClient().getDisplays().getOrNull(unit, UIBattleStatPanel.class);
         for (Actor child : getChildren()) {
             if (child.equals(panel)){
                 child.addAction(Actions.uiSizeTo(96,72,0.2f));

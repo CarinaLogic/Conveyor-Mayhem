@@ -11,6 +11,9 @@ public class BattleUnitDisplay extends Group implements Display<Unit> {
     Supplier<Unit> unitSupplier;
     float facing = 0;
     public BattleUnitDisplay(){
+    }
+
+    public void init() {
         addActor(Game.getClient().getDisplays().get(() -> unitSupplier.get().unitParts,BattleUnitPartsDisplay.class));
     }
 

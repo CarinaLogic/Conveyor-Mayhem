@@ -17,10 +17,13 @@ import java.util.function.Supplier;
 
 public class UIBattleStatPanel extends Stack implements Display<Unit> {
     UITableView tableView;
-    Supplier<Unit> unitSupplier;
+    Supplier<Unit> unitSupplier = () -> null;
     UILabel nameLabel;
     UIUnitDisplay unitDisplay;
     public UIBattleStatPanel(){
+    }
+
+    public void init() {
         {
             tableView = new UITableView();
             add(tableView);

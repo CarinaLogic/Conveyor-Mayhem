@@ -24,11 +24,12 @@ public class UIUnitPartsDisplay extends Stack implements Display<UnitParts> {
     @Override
     public void act(float delta) {
         Game.getInstance().getContext().add(getFeature());
-        unitPartsSupplier.get().getArray().sort(Comparator.comparingInt(p -> p.bodyType.ordinal()));
         handler.tick();
-        for (int i = 0; i < unitPartsSupplier.get().size(); i++) {
+        UnitParts parts = unitPartsSupplier.get();
+        parts.getArray().sort(Comparator.comparingInt(p -> p.bodyType.ordinal()));
+        for (int i = 0; i < parts.size(); i++) {
             int finalI = i;
-            Game.getClient().getDisplays().get(()->unitPartsSupplier.get().get(finalI), UIUnitPartDisplay.class).setZIndex(i);
+            Game.getClient().getDisplays().get(() -> parts.get(finalI), UIUnitPartDisplay.class).setZIndex(i);
         }
         super.act(delta);
     }

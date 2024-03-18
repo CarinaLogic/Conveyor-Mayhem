@@ -5,8 +5,10 @@ import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.Constructor;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import me.carina.rpg.Game;
+import me.carina.rpg.client.battle.UIBattleStatPanel;
 import me.carina.rpg.common.util.Array;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public final class Displays {
@@ -40,10 +42,14 @@ public final class Displays {
             t.setFeatureSupplier(supplier);
             addNewDisplay(supplier,t);
             Game.getInstance().getLogger().debug("Created "+t.getClass().getSimpleName());
+            t.init();
             return t;
         } catch (ReflectionException e) {
             throw new RuntimeException(e);
         }
+    }
+    public <F extends Feature, D extends Actor & Display<F>> D getOrNull(F feature, Class<D> cls){
+        return getEntry(feature, cls);
     }
     public <F extends Feature, D extends Actor & Display<F>> Array<D> getAll(F feature){
         Array<D> toReturn = new Array<>();

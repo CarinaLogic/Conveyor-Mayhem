@@ -12,4 +12,5 @@ public interface Display<T extends Feature> {
             return null;
         }
     }
+    default void init(){}
 }

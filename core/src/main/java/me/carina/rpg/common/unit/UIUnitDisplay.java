@@ -7,10 +7,13 @@ import me.carina.rpg.common.Display;
 import java.util.function.Supplier;
 
 public class UIUnitDisplay extends Stack implements Display<Unit> {
-    Supplier<Unit> unitSupplier;
+    Supplier<Unit> unitSupplier = ()->null;
     boolean flip;
     public UIUnitDisplay(){
-        add(Game.getClient().getDisplays().get(()->unitSupplier.get().unitParts,UIUnitPartsDisplay.class));
+    }
+
+    public void init() {
+        add(Game.getClient().getDisplays().get(()-> unitSupplier.get() == null ? null : unitSupplier.get().unitParts,UIUnitPartsDisplay.class));
     }
 
     @Override
