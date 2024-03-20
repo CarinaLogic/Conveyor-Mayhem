@@ -46,23 +46,30 @@ public class UIAnimatedContainer<T extends Actor & Layout> extends Container<T> 
     @Override
     public void act(float delta) {
         T actor = getActor();
-        T newActor = actorSupplier.get();
-        if (actor != newActor){
-            if (newActor == null){
-                hide();
-                setActor(null);
-            }
-            else {
-                show();
-                Direction d = directionSupplier.get();
-                if (d == Direction.top) addFromScreenTop(newActor);
-                if (d == Direction.bottom) addFromScreenBottom(newActor);
-                if (d == Direction.left) addFromScreenLeft(newActor);
-                if (d == Direction.right) addFromScreenRight(newActor);
-                if (d == Direction.none) setActor(newActor);
-            }
+        T newActor;
+        try {
+            newActor = actorSupplier.get();
+        } catch (Exception e){
+            newActor = null;
         }
-        super.act(delta);
+        //if new actor is null, hide, don't execute act() on child
+        if (newActor == null){
+            hide();
+            setActor(null);
+        }
+        //if actor was changed to another non-null object, animate
+        else if (actor != newActor){
+            show();
+            Direction d = directionSupplier.get();
+            if (d == Direction.top) addFromScreenTop(newActor);
+            if (d == Direction.bottom) addFromScreenBottom(newActor);
+            if (d == Direction.left) addFromScreenLeft(newActor);
+            if (d == Direction.right) addFromScreenRight(newActor);
+            if (d == Direction.none) setActor(newActor);
+        }
+        if (isVisible()) {
+            super.act(delta);
+        }
     }
 
     public T unpack(){

@@ -32,6 +32,10 @@ public class UIBattleSkillPanel extends UIVerticalSelection implements Display<U
         super.act(delta);
     }
 
+    public Skill getSelectedSkill(){
+        return unitSupplier.get().getSkills().get(getCheckedIndex());
+    }
+
     public UIBattleSkillPanel(){
         super();
     }

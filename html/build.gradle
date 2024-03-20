@@ -23,8 +23,8 @@ gwt {
 
   compiler.strict = true
   compiler.disableCastChecking = true
-  //// The next line can be useful to uncomment if you want output that hasn't been obfuscated.
-//  compiler.style = org.wisepersist.gradle.plugins.gwt.Style.DETAILED
+  // The next line can be useful to uncomment if you want output that hasn't been obfuscated.
+  compiler.style = org.wisepersist.gradle.plugins.gwt.Style.DETAILED
 
   sourceLevel = 1.11
 }
@@ -45,6 +45,7 @@ dependencies {
 
 import org.akhikhl.gretty.AppBeforeIntegrationTestTask
 import org.wisepersist.gradle.plugins.gwt.GwtSuperDev
+import org.wisepersist.gradle.plugins.gwt.Style
 
 gretty.httpPort = 8080
 gretty.resourceBase = project.buildDir.path + "/gwt/draftOut"
