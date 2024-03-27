@@ -19,7 +19,7 @@ public class Array<T> extends com.badlogic.gdx.utils.Array<T> {
         }
         return array;
     }
-    public <R extends T> R getByType(Class<R> type){
+    public <R> R getByType(Class<R> type){
         for (T item : items) {
             if (ClassReflection.isInstance(type,item)){
                 //noinspection unchecked
