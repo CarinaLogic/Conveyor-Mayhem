@@ -44,9 +44,9 @@ public class UIBattleStatPanels extends Table implements Display<Units> {
 
     public void resizeAll(){
         Unit unit = Game.getClient().getContext().get(BattleMapGUIStage.class).getSelectedUnit();
-        UIBattleStatPanel panel = Game.getClient().getDisplays().getOrNull(unit, UIBattleStatPanel.class);
+        Optional<UIBattleStatPanel> panel = Game.getClient().getDisplays().getOrNull(unit, UIBattleStatPanel.class);
         for (Actor child : getChildren()) {
-            if (child.equals(panel)){
+            if (panel.equals(Optional.of(child))){
                 child.addAction(Actions.uiSizeTo(96,72,0.2f));
             }
             else {

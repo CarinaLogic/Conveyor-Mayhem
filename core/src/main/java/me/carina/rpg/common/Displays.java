@@ -20,7 +20,8 @@ import java.util.function.Supplier;
 public final class Displays {
     //TODO fix performance
     Map<Supplier<?>, Array<Display<?>>> displays = new Map<>();
-    OrderedMap<Feature, Array<Display<?>>> featureCache = new OrderedMap<>();
+    OrderedMap<Feature, Array<Supplier<?>>> featureCache = new OrderedMap<>();
+    int LRUCounter = 0;
     /**
      * *WARNING: Use static Supplier object*
      */
@@ -50,12 +51,12 @@ public final class Displays {
                 //add to featureCache
                 F f = getFeature(supplier);
                 if (f != null){
-                    Array<Display<?>> q = featureCache.get(f);
+                    Array<Supplier<?>> q = featureCache.get(f);
                     if (q == null){
-                        featureCache.put(f,new Array<>(t));
+                        featureCache.put(f,new Array<>(supplier));
                     }
                     else {
-                        q.add(t);
+                        q.add(supplier);
                     }
                 }
                 Game.getInstance().getLogger().debug("Created "+t.getClass().getSimpleName());
@@ -78,12 +79,12 @@ public final class Displays {
             //add to featureCache
             F f = getFeature(supplier);
             if (f != null){
-                Array<Display<?>> q = featureCache.get(f);
+                Array<Supplier<?>> q = featureCache.get(f);
                 if (q == null){
-                    featureCache.put(f,new Array<>(t));
+                    featureCache.put(f,new Array<>(supplier));
                 }
                 else {
-                    q.add(t);
+                    q.add(supplier);
                 }
             }
             Game.getInstance().getLogger().debug("Created "+t.getClass().getSimpleName());
@@ -94,37 +95,49 @@ public final class Displays {
         }
     }
     public <F extends Feature, D extends Actor & Display<F>> Optional<D> getOrNull(F feature, Class<D> cls){
-        Array<Display<?>> queue = featureCache.get(feature);
+        if (feature == null) return Optional.empty();
+        Array<Supplier<?>> queue = featureCache.get(feature);
         if (queue != null){
             //cache hit
-            Display<?> toRemove = null;
-            for (Display<?> display : queue) {
-                if (ClassReflection.isInstance(cls,display)){
-                    Feature feature1 = display.getFeature();
-                    if (feature1.equals(feature)){
-                        if (toRemove != null) queue.removeValue(toRemove,true);
-                        //noinspection unchecked
-                        return Optional.of((D) display);
+            Supplier<?> supplierToRemove = null;
+            for (Supplier<?> supplier : queue) {
+                if (Objects.equals(getFeature(supplier), feature)) {
+                    Display<?> toRemove = null;
+                    Array<Display<?>> displays1 = displays.get(supplier);
+                    for (Display<?> display : displays1) {
+                        if (ClassReflection.isInstance(cls, display)) {
+                            Feature feature1 = display.getFeature();
+                            if (feature1.equals(feature)) {
+                                if (supplierToRemove != null) queue.removeValue(supplierToRemove,true);
+                                if (toRemove != null) displays1.removeValue(toRemove, true);
+                                LRUReset(feature);
+                                //noinspection unchecked
+                                return Optional.of((D) display);
+                            } else {
+                                toRemove = display;
+                            }
+                        }
                     }
-                    else {
-                        toRemove = display;
-                    }
+                    if (toRemove != null) displays1.removeValue(toRemove,true);
+                }
+                else {
+                    supplierToRemove = supplier;
                 }
             }
-            queue.removeValue(toRemove,true);
+            if (supplierToRemove != null) queue.removeValue(supplierToRemove,true);
         }
         //cache miss, search from displays
+        Array<Supplier<?>> newArray = new Array<>();
         for (ObjectMap.Entry<Supplier<?>, Array<Display<?>>> entry : displays) {
             if (Objects.equals(getFeature(entry.key), feature)){
                 //Supplier which provides the desired feature is found
+                if (newArray.isEmpty()) featureCache.put(feature,newArray);
+                newArray.add(entry.key);
                 for (Display<?> display : entry.value) {
                     if (ClassReflection.isInstance(cls,display)){
                         //Display with matching class is found
                         //noinspection unchecked
                         D d = (D) display;
-                        //add it to cache
-                        Array<Display<?>> queue1 = new Array<>(d);
-                        featureCache.put(feature,queue1);
                         return Optional.of(d);
                     }
                 }
@@ -133,6 +146,13 @@ public final class Displays {
         }
         return Optional.empty();
     }
+    public void tick(){
+        if (LRUCounter == 4){
+            remove(featureCache.orderedKeys().get(0));
+            LRUCounter = 0;
+        }
+        LRUCounter++;
+    }
     private  <F> F getFeature(Supplier<F> supplier){
         try {
             return supplier.get();
@@ -140,42 +160,43 @@ public final class Displays {
             return null;
         }
     }
+    private void LRUReset(Feature feature){
+        com.badlogic.gdx.utils.Array<Feature> keys = featureCache.orderedKeys();
+        if (keys.get(0).equals(feature)){
+            keys.removeIndex(0);
+            keys.add(feature);
+            LRUCounter = 0;
+        }
+    }
     /**
      * Grantees all returned displays are/were registered under the provided feature.
      * Does NOT grantee all displays are there
      */
     public <F extends Feature, D extends Actor & Display<F>> Array<D> getAll(F feature){
+        Array<Supplier<?>> suppliers = featureCache.get(feature);
+        if (suppliers.size == 0) return new Array<>();
         //Dirty works
-        //noinspection unchecked,rawtypes
-        return (Array) featureCache.get(feature);
+        if (suppliers.size == 1) {
+            //noinspection unchecked,rawtypes
+            return (Array) displays.get(suppliers.get(0));
+        }
+        Array<D> a = new Array<>();
+        for (Supplier<?> supplier : suppliers) {
+            for (Display<?> display : displays.get(supplier)) {
+                //noinspection unchecked
+                a.add((D) display);
+            }
+        }
+        return a;
     }
     public void remove(Feature feature){
-        Array<DisplayEntry<?,?>> toRemove = new Array<>();
-        for (DisplayEntry<?, ?> entry : displays) {
-            Feature f = entry.supplier.get();
-            if (f != null && f.equals(feature)){
-                toRemove.add(entry);
+        for (Supplier<?> supplier : featureCache.get(feature)) {
+            if (Objects.equals(getFeature(supplier), feature)){
+                Object f = getFeature(supplier);
+                if (f != null) Game.getInstance().getLogger().debug("Removed "+f.getClass().getSimpleName());
+                displays.remove(supplier);
             }
         }
-        displays.removeAll(toRemove,false);
-    }
-    private <F extends Feature, D extends Actor & Display<F>> void addNewDisplay(Supplier<F> supplier, D display){
-        displays.get(supplier)
-    }
-
-    private <F extends Feature, D extends Actor & Display<F>> D getEntry(F feature, Class<D> type){
-        if (feature == null) return null;
-        for (DisplayEntry<?, ?> entry : displays) {
-            Feature f = entry.getFeature();
-            if (f == null) continue;
-            if (f.equals(feature)){
-                Display<?> d = entry.getDisplay();
-                if (d != null && ClassReflection.isInstance(type,d)){
-                    //noinspection unchecked
-                    return (D) d;
-                }
-            }
-        }
-        return null;
+        featureCache.remove(feature);
     }
 }
