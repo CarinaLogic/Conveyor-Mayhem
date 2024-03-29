@@ -14,8 +14,7 @@ public class BattleUnitDisplay extends Group implements Display<Unit> {
     }
 
     public void init() {
-        addActor(Game.getClient().getDisplays().get(() -> unitSupplier.get().unitParts,BattleUnitPartsDisplay.class));
-    }
+        addActor(Game.getClient().getDisplays().get(() -> unitSupplier.get().unitParts,BattleUnitPartsDisplay.class));    }
 
     @Override
     public void act(float delta) {

@@ -24,14 +24,17 @@ public class BattleMapGUIStage extends GUIStage<BattleScreen> {
         table.row();
         skillPanel = new UIAnimatedContainer<UIBattleSkillPanel>()
             .supplyDirection(() -> UIAnimatedContainer.Direction.right)
-            .supplyActor(() -> Game.getClient().getDisplays().get(invSelectedUnit,UIBattleSkillPanel.class));
+            .supplyActor(() -> Game.getClient().getDisplays().get(
+                () -> Game.getClient().getContext().get(BattleMapGUIStage.class).getSelectedUnit(),UIBattleSkillPanel.class));
         skillInfoPanel = new UIAnimatedContainer<UIBattleSkillInfoPanel>()
             .supplyDirection(() -> UIAnimatedContainer.Direction.right)
-            .supplyActor(() -> Game.getClient().getDisplays().get(invSelectedSkill,UIBattleSkillInfoPanel.class));
+            .supplyActor(() -> Game.getClient().getDisplays().get(
+                () -> Game.getClient().getContext().get(BattleMapGUIStage.class).skillPanel.unpack().getSelectedSkill(),UIBattleSkillInfoPanel.class));
         table.add(skillPanel).top().right().expand();
         //table.add(skillInfoPanel).top().right().padRight(8);
         table.row();
-        table.add(Game.getClient().getDisplays().get(invFactionUnits ,UIBattleStatPanels.class)).left();
+        table.add(Game.getClient().getDisplays().get(
+            ()-> Game.getClient().getContext().get(BattleMap.class).factions.getFaction("").getUnits() ,UIBattleStatPanels.class)).left();
     }
 
 
