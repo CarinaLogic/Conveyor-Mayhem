@@ -25,7 +25,6 @@ import java.util.function.Supplier;
  * </ul>
  */
 public final class Displays {
-    //TODO fix performance
     Map<Supplier<?>, Array<Display<?>>> displays = new Map<>();
     OrderedMap<Feature, Array<Supplier<?>>> featureCache = new OrderedMap<>();
     int LRUCounter = 0;
@@ -100,7 +99,7 @@ public final class Displays {
                         if (ClassReflection.isInstance(cls, display)) {
                             //Display with matching class is found
                             LRUReset(feature);
-                            Game.getInstance().getLogger().debug("Lookup T3 " + display.getClass().getSimpleName());
+                            Game.getInstance().getLogger().debug("Display cache miss on get() of " + display.getClass().getSimpleName());
                             //noinspection unchecked
                             return (D) display;
                         }
@@ -136,7 +135,7 @@ public final class Displays {
                     q.add(supplier);
                 }
             }
-            Game.getInstance().getLogger().debug("Created " + t.getClass().getSimpleName());
+            Game.getInstance().getLogger().debug("Display created: " + t.getClass().getSimpleName());
             t.init();
             return t;
         } catch (ReflectionException e) {
@@ -187,6 +186,8 @@ public final class Displays {
                         //Display with matching class is found
                         //noinspection unchecked
                         D d = (D) display;
+                        LRUReset(feature);
+                        Game.getInstance().getLogger().debug("Display cache miss on getOrNull() of " + display.getClass().getSimpleName());
                         return Optional.of(d);
                     }
                 }
@@ -199,7 +200,9 @@ public final class Displays {
         if (featureCache.notEmpty()) {
             if (LRUCounter >= 4) {
                 //if feature at featureCache index 0 is not used for 4 ticks, remove from cache
-                featureCache.remove(featureCache.orderedKeys().get(0));
+                Feature f = featureCache.orderedKeys().get(0);
+                //Game.getInstance().getLogger().debug("Display cache removed: " + f.getClass().getSimpleName());
+                featureCache.remove(f);
                 LRUCounter = 0;
             }
             LRUCounter++;

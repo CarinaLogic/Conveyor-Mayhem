@@ -11,6 +11,7 @@ import me.carina.rpg.common.file.Path;
 import java.util.function.Supplier;
 
 public class UILabel extends Label{
+    //TODO fix BitmapFontCache being on the different atlas
     boolean shadowed = true;
     Supplier<String> stringSupplier = ()->"";
     Supplier<Color> colorSupplier = ()->Color.WHITE;

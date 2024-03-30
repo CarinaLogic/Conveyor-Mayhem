@@ -28,7 +28,7 @@ public class UIUnitPartDisplay extends Image implements Display<UnitPart> {
         setScaling(Scaling.fill);
         setAlign(Align.topLeft);
     }
-
+    //TODO fix issue of TextureRegion being in a different atlas
     @Override
     public void act(float delta) {
         Game.getInstance().getContext().add(getFeature());

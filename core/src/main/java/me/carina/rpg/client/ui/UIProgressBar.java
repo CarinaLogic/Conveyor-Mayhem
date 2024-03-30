@@ -11,6 +11,7 @@ import java.util.function.IntSupplier;
 import java.util.function.Supplier;
 
 public class UIProgressBar extends ProgressBar {
+    //TODO fix progressbar texture not in atlas
     IntSupplier maxSupplier = ()->100;
     IntSupplier valueSupplier = ()->0;
     Supplier<Color> colorSupplier = ()->Color.WHITE;

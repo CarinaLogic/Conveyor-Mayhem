@@ -19,7 +19,7 @@ public class CanvasStage extends GameStage<BaseScreen> {
     public void draw() {
         //NOOP
     }
-
+    //TODO fix performance issue
     //The operation is HEAVY, use accordingly
     public void draw(Drawable drawable, float x, float y, float width, float height, Color color, float parentAlpha) {
         Camera camera = getViewport().getCamera();
