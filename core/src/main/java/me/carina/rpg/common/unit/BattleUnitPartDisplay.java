@@ -44,10 +44,13 @@ public class BattleUnitPartDisplay extends FlatImageDisplay implements Display<U
             spriteHeight = pixmap.getHeight() / 32;
             UnitPart part  = Game.getInstance().getContext().get(UnitParts.class).getPart(BodyType.base);
             if (Game.getClient().getDisplays().getAll(part).isEmpty()) return;
-            Palette basePalette = Game.getClient().getDisplays().get(()->part,BattleUnitPartDisplay.class).getPalette();
-            if (basePalette != null){
-                basePalette.recolor(pixmap);
-            }
+            Game.getClient().getDisplays().getOrNull(part,BattleUnitPartDisplay.class)
+                .ifPresent(d -> {
+                    Palette basePalette = d.getPalette();
+                    if (basePalette != null){
+                        basePalette.recolor(pixmap);
+                    }
+                });
             if (paletteWidth != 0){
                 Pixmap paletteMap = new Pixmap(paletteWidth,region.getRegionHeight(), Pixmap.Format.RGBA8888);
                 paletteMap.drawPixmap(pixmap,0,0,paletteSrcX,0,paletteWidth,region.getRegionHeight());
@@ -106,7 +109,8 @@ public class BattleUnitPartDisplay extends FlatImageDisplay implements Display<U
     public boolean shouldFlip(){
         Vector3 camDir = getStage().getCamera().direction.cpy();
         float camRot = (float) Math.atan2(camDir.y,camDir.x);
-        float delta = camRot - Game.getClient().getDisplays().get(()->Game.getInstance().getContext().get(Unit.class), BattleUnitDisplay.class).getFacing();
+        float delta = camRot - Game.getClient().getDisplays().getOrNull(Game.getInstance().getContext().get(Unit.class), BattleUnitDisplay.class)
+            .map(BattleUnitDisplay::getFacing).orElse(0f);
         return (delta+2*Math.PI) % (2*Math.PI) < Math.PI;
     }
 

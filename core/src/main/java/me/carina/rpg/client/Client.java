@@ -37,6 +37,7 @@ public abstract class Client extends AbstractGameInstance{
         if (!screenQueue.isEmpty()){
             screenQueue.last().render(Gdx.graphics.getDeltaTime());
         }
+        displays.tick();
     }
 
     @Override

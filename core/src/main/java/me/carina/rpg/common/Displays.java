@@ -42,6 +42,7 @@ public final class Displays {
         if (supplier == null) return null;
         //Step 1
         //if supplier is the same instance as the registered one (guaranteed to return same Feature upon evaluation)
+        //O(1) search
         Array<Display<?>> displaysQueue = displays.get(supplier);
         if (displaysQueue != null){
             //return the first Display matching the class
@@ -55,7 +56,7 @@ public final class Displays {
         //Step 2
         //if supplier with same instance not found
         //or if supplier with the same instance does not contain desired Display (The Display can still be registered under different supplier retuning same Feature)
-        //search from featureCache
+        //O(1) search from featureCache
         F feature = getFeature(supplier);
         //Feature has to be nonnull to have an entry on cache
         if (feature != null) {
@@ -86,6 +87,7 @@ public final class Displays {
 
             //Step 3
             //Cache misses, perform full scan for displays
+            //O(n) search
             if (featureCacheQueue == null) featureCacheQueue = new Array<>();
             for (ObjectMap.Entry<Supplier<?>, Array<Display<?>>> entry : displays) {
                 if (Objects.equals(getFeature(entry.key), feature)) {
@@ -98,6 +100,7 @@ public final class Displays {
                         if (ClassReflection.isInstance(cls, display)) {
                             //Display with matching class is found
                             LRUReset(feature);
+                            Game.getInstance().getLogger().debug("Lookup T3 " + display.getClass().getSimpleName());
                             //noinspection unchecked
                             return (D) display;
                         }
@@ -115,8 +118,14 @@ public final class Displays {
             D t = (D) o;
             t.setFeatureSupplier(supplier);
             //add to displays map
-            Array<Display<?>> queue1 = new Array<>(t);
-            displays.put(supplier, queue1);
+            if (displaysQueue == null) {
+                displaysQueue = new Array<>(t);
+                displays.put(supplier, displaysQueue);
+
+            }
+            else {
+                displaysQueue.add(t);
+            }
             //add to featureCache
             F f = getFeature(supplier);
             if (f != null) {
@@ -187,12 +196,14 @@ public final class Displays {
         return Optional.empty();
     }
     public void tick(){
-        if (LRUCounter == 4){
-            //if feature at featureCache index 0 is not used for 4 ticks, remove from cache
-            featureCache.remove(featureCache.orderedKeys().get(0));
-            LRUCounter = 0;
+        if (featureCache.notEmpty()) {
+            if (LRUCounter >= 4) {
+                //if feature at featureCache index 0 is not used for 4 ticks, remove from cache
+                featureCache.remove(featureCache.orderedKeys().get(0));
+                LRUCounter = 0;
+            }
+            LRUCounter++;
         }
-        LRUCounter++;
     }
     private  <F> F getFeature(Supplier<F> supplier){
         try {

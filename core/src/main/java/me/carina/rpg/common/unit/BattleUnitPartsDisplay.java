@@ -28,7 +28,7 @@ public class BattleUnitPartsDisplay extends Group implements Display<UnitParts> 
         handler.tick();
         for (int i = 0; i < unitPartsSupplier.get().size(); i++) {
             int finalI = i;
-            Game.getClient().getDisplays().get(()->unitPartsSupplier.get().get(finalI),BattleUnitPartDisplay.class).setZIndex(i);
+            Game.getClient().getDisplays().getOrNull(unitPartsSupplier.get().get(i),BattleUnitPartDisplay.class).ifPresent(d -> setZIndex(finalI));
         }
         super.act(delta);
     }
