@@ -7,9 +7,16 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TransformDrawable;
+import com.badlogic.gdx.utils.IntMap;
+import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.PooledLinkedList;
+import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import me.carina.rpg.common.util.Map;
 
 public class CanvasStage extends GameStage<BaseScreen> {
+    private final Pool<DrawEntry> pool = Pools.get(DrawEntry.class);
+
     public CanvasStage(){
         super(new ScreenViewport());
         getRoot().setTouchable(Touchable.disabled);
@@ -57,5 +64,12 @@ public class CanvasStage extends GameStage<BaseScreen> {
     @Override
     public void init() {
 
+    }
+
+    public static class DrawEntry{
+        TransformDrawable drawable;
+        float x,  y, originX,  originY, width, height, scaleX, scaleY, rotation;
+        Color color;
+        float parentAlpha;
     }
 }
