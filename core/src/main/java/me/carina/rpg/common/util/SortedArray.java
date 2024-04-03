@@ -1,6 +1,7 @@
 package me.carina.rpg.common.util;
 
 import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.ReflectionPool;
 
 import java.util.Iterator;
 
@@ -17,6 +18,14 @@ public class SortedArray<T> implements Iterable<T>{
     Pool<Node<T>> nodePool;
     Pool<T> valuePool;
     int size;
+    public SortedArray(){
+        nodePool = new Pool<Node<T>>() {
+            @Override
+            protected Node<T> newObject() {
+                return new Node<>();
+            }
+        };
+    }
 
     /**
      * Insert a new value at specified index
@@ -24,6 +33,7 @@ public class SortedArray<T> implements Iterable<T>{
      * @return New instance of T, which was inserted
      */
     public T add(int index){
+        size++;
         //if tree is empty, create new node and assign it to root as black
         if (root == null){
             root = insertRoot(index,BLACK);
@@ -54,9 +64,6 @@ public class SortedArray<T> implements Iterable<T>{
             colorCheck(current.parentNode);
             return current.value;
         }
-    }
-    public void clear(){
-
     }
     private void colorCheck(Node<T> node){
         //if brother is red, swap color with parent (guaranteed to be black)
@@ -152,20 +159,60 @@ public class SortedArray<T> implements Iterable<T>{
     public static class SortedArrayIterator<T> implements Iterator<T>{
         SortedArray<T> array;
         Node<T> node;
+        Node<T> prevNode;
+        int index;
         public SortedArrayIterator(SortedArray<T> array){
             this.array = array;
             node = array.root;
+            prevNode = null;
+            index = 0;
         }
         @Override
         public boolean hasNext() {
-            if (node.leftNode == null){
-
-            }
+            return index++ < array.size;
         }
 
         @Override
         public T next() {
-            return null;
+            while (true){
+                //Going down from parent
+                if (node.parentNode == prevNode){
+                    //Left node is not found, return itself & assign right node to be traversed
+                    if (node.leftNode == null){
+                        prevNode = node;
+                        return node.value;
+                    }
+                    //Left node found, go deeper
+                    else {
+                        prevNode = node;
+                        node = node.leftNode;
+                    }
+                }
+                //just returned itself, traverse right nodes
+                else if (node == prevNode){
+                    //Right node not found, bubble up
+                    if (node.rightNode == null){
+                        node = node.parentNode;
+                        prevNode = node;
+                    }
+                    //Right node found, go deeper
+                    else {
+                        node = node.rightNode;
+                    }
+                }
+                //Bubbling up from left
+                else if (node.leftNode == prevNode){
+                    //return itself and & assign right node to be traversed
+                    prevNode = node;
+                    return node.value;
+                }
+                //Bubbling up from right
+                else if (node.rightNode == prevNode) {
+                    //Bubble up further
+                    prevNode = node;
+                    node = node.parentNode;
+                }
+            }
         }
     }
 }
