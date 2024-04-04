@@ -2,8 +2,10 @@ package me.carina.rpg.common.util;
 
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.ReflectionPool;
+import me.carina.rpg.Game;
 
 import java.util.Iterator;
+import java.util.function.Supplier;
 
 /**
  * Double-linked red-black binary tree that uses int provided upon insertion to keep it sorted.
@@ -13,18 +15,43 @@ import java.util.Iterator;
  */
 public class SortedArray<T> implements Iterable<T>{
     static final int BLACK = 0, RED = 1;
+
+    static SortedArray<Ts> s = new SortedArray<>(Ts::new);
+    public static void addAll(){
+        s.add(10).s = "10";
+        s.add(5).s = "5";
+        s.add(2).s = "2";
+        s.add(4).s = "4";
+        s.add(6).s = "6";
+        s.add(7).s = "7";
+        s.add(1).s = "1";
+        s.add(10).s = "10";
+        for (Ts ts : s) {
+            Game.getInstance().getLogger().debug(ts.s);
+        }
+    }
+
     Node<T> root;
     Node<T> current;
     Pool<Node<T>> nodePool;
     Pool<T> valuePool;
     int size;
-    public SortedArray(){
+    public SortedArray(Supplier<T> initializer){
         nodePool = new Pool<Node<T>>() {
             @Override
             protected Node<T> newObject() {
                 return new Node<>();
             }
         };
+        valuePool = new Pool<T>() {
+            @Override
+            protected T newObject() {
+                return initializer.get();
+            }
+        };
+    }
+    public static class Ts{
+        String s;
     }
 
     /**
@@ -43,7 +70,7 @@ public class SortedArray<T> implements Iterable<T>{
         else {
             current = root;
             while (true){
-                if (current.index < index){
+                if (current.index > index){
                     if (current.leftNode == null){
                         current = insertLeft(current,index,RED);
                         break;
@@ -67,7 +94,8 @@ public class SortedArray<T> implements Iterable<T>{
     }
     private void colorCheck(Node<T> node){
         //if brother is red, swap color with parent (guaranteed to be black)
-        if (node.getBrother().color == RED){
+        Node<T> brother = node.getBrother();
+        if (brother != null && brother.color == RED){
             colorSwap(node.parentNode);
             colorCheck(node.parentNode);
         }
@@ -76,36 +104,51 @@ public class SortedArray<T> implements Iterable<T>{
         }
     }
     private void colorSwap(Node<T> node){
-        node.leftNode.color = node.color;
-        node.color = node.rightNode.color;
-        node.rightNode.color = node.leftNode.color;
+        int color = node.color;
+        if (node.leftNode != null) node.leftNode.color = color;
+        node.color = 1-color;
+        if (node.rightNode != null) node.rightNode.color = color;
     }
 
     private void rotate(Node<T> node){
         if (node.parentNode == null) return;
         if (node.parentNode.leftNode == node){
             //if right node is red, left rotate so that left becomes red
-            if (node.rightNode.color == RED) node = rotateLeft(node);
+            if (node.rightNode != null && node.rightNode.color == RED) node = rotateLeft(node);
             //rotate right
             node = rotateRight(node.parentNode);
             node.color = BLACK;
-            node.rightNode.color = RED;
+            if (node.rightNode != null) node.rightNode.color = RED;
+        }
+        else if (node.parentNode.rightNode == node){
+            //if left node is red, right rotate so that right becomes red
+            if (node.leftNode != null && node.leftNode.color == RED) node = rotateRight(node);
+            //rotate left
+            node = rotateLeft(node.parentNode);
+            node.color = BLACK;
+            if (node.leftNode != null) node.leftNode.color = RED;
         }
     }
     private Node<T> rotateRight(Node<T> node){
         node.leftNode.parentNode = node.parentNode;
         node.parentNode = node.leftNode;
         node.leftNode = node.parentNode.rightNode;
-        node.leftNode.parentNode = node;
+        if (node.leftNode != null) node.leftNode.parentNode = node;
         node.parentNode.rightNode = node;
+        if (node.parentNode.parentNode == null) root = node.parentNode;
+        else if (node.parentNode.parentNode.leftNode == node) node.parentNode.parentNode.leftNode = node.parentNode;
+        else node.parentNode.parentNode.rightNode = node.parentNode;
         return node.parentNode;
     }
     private Node<T> rotateLeft(Node<T> node){
         node.rightNode.parentNode = node.parentNode;
         node.parentNode = node.rightNode;
         node.rightNode = node.parentNode.leftNode;
-        node.rightNode.parentNode = node;
+        if (node.rightNode != null) node.rightNode.parentNode = node;
         node.parentNode.leftNode = node;
+        if (node.parentNode.parentNode == null) root = node.parentNode;
+        else if (node.parentNode.parentNode.leftNode == node) node.parentNode.parentNode.leftNode = node.parentNode;
+        else node.parentNode.parentNode.rightNode = node.parentNode;
         return node.parentNode;
     }
     private T newValue(){
@@ -152,6 +195,7 @@ public class SortedArray<T> implements Iterable<T>{
         public Node() {
         }
         public Node<T> getBrother(){
+            if (parentNode == null) return null;
             return parentNode.leftNode == this ? parentNode.rightNode : parentNode.leftNode;
         }
     }
@@ -193,7 +237,6 @@ public class SortedArray<T> implements Iterable<T>{
                     //Right node not found, bubble up
                     if (node.rightNode == null){
                         node = node.parentNode;
-                        prevNode = node;
                     }
                     //Right node found, go deeper
                     else {
